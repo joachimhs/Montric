@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel='stylesheet' type='text/css'
+	href='${request.contextPath}/stylesheets/standard.css' />
+<title>EurekaJ Manger version 0.1</title>
+
+<jsflot:resources debug="false" />
+</head>
+<body>
+
+<h:form id="managerForm">
+
+	<rich:tabPanel id="topTabPanel" switchType="ajax" style="width: 100%;"
+		contentStyle="width: 100%;">
+		<rich:tab id="instrumentationTab" label="Instrumentation">
+			<a4j:outputPanel id="contentsOutputPanel" ajaxRendered="true">
+				<ui:insert name="toptabContents">
+					
+				</ui:insert>
+			</a4j:outputPanel>
+		</rich:tab>
+		<rich:tab id="dashboardTab" label="Dashboards">
+			Dashboard
+		</rich:tab>
+		<rich:tab id="logviewTab" label="Logview">
+			Logview
+		</rich:tab>
+		<rich:tab id="administrationTab" label="Administration">
+			Administration
+		</rich:tab>
+
+	</rich:tabPanel>
+	
+	<a4j:loadScript src="/scripts/modalpanelscript.js"></a4j:loadScript>
+	<a4j:status onstart="showModalInfoWindow();"
+		onstop="hideModalInfoWindow()"></a4j:status>
+
+	<rich:modalPanel id="ajaxLoadingModalBox" minHeight="200"
+		minWidth="450" left="350" top="350" height="100" width="250"
+		zindex="2000">
+		<f:facet name="header">
+			<h:outputText value="Request being processed"></h:outputText>
+		</f:facet>
+		<h:outputText value="Your request is being processed, please wait."></h:outputText>
+	</rich:modalPanel>
+
+</h:form>
+</body>
+</html>

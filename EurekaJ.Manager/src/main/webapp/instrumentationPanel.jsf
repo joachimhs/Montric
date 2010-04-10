@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+
+	<rich:panel id="timePeriodPanel" style="width: 100%">
+		<f:facet name="header">TimePeriod</f:facet>
+		<h:panelGrid columns="4" width="100%">
+			<h:panelGroup>From: <rich:calendar locale="NO" popup="true" showApplyButton="true"
+				cellWidth="24px" cellHeight="22px" style="width:200px"
+				disabled="#{treeMenuMBean.showLiveData}" required="true"
+				value="#{treeMenuMBean.showChartFrom}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
+			
+			<h:panelGroup>To: <rich:calendar locale="NO" popup="true" showApplyButton="true"
+				cellWidth="24px" cellHeight="22px" style="width:200px"
+				disabled="#{treeMenuMBean.showLiveData}" required="true"
+				value="#{treeMenuMBean.showChartTo}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
+				
+			<h:selectBooleanCheckbox title="Show Live Data (Last 10 minutes)"
+				value="#{treeMenuMBean.showLiveData}"
+				label="Show Live Data (Last 10 minutes)">
+				<h:outputText value="Show Live Data" />
+				<a4j:support event="onchange"
+					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+			</h:selectBooleanCheckbox>
+			
+			<h:outputText id="instrPanelDummyText"></h:outputText>
+			
+			<h:panelGroup>Chart Timespan: <h:selectOneListbox label="Chart Timespan" id="chartTimespanListbox"
+				value="#{treeMenuMBean.chartTimespan}" size="1">
+				<f:selectItem itemLabel="10 minutes" itemValue="10" />
+				<f:selectItem itemLabel="20 minutes" itemValue="20" />
+				<f:selectItem itemLabel="30 minutes" itemValue="30" />
+				<f:selectItem itemLabel="60 minutes" itemValue="60" />
+				<f:selectItem itemLabel="2 hours" itemValue="120" />
+				<f:selectItem itemLabel="6 hours" itemValue="360" />
+				<f:selectItem itemLabel="12 hours" itemValue="720" />
+				<f:selectItem itemLabel="24 hours" itemValue="1440" />
+				<a4j:support event="onchange" ajaxSingle="true"
+					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+			</h:selectOneListbox></h:panelGroup>
+			
+			<h:panelGroup>Chart Resolution: <h:selectOneListbox label="Chart Resolution"
+				id="chartResolutionListbox" value="#{treeMenuMBean.chartResolution}"
+				size="1">
+				<f:selectItem itemLabel="15 seconds" itemValue="15" />
+				<f:selectItem itemLabel="30 seconds" itemValue="30" />
+				<f:selectItem itemLabel="45 seconds" itemValue="45" />
+				<f:selectItem itemLabel="60 seconds" itemValue="60" />
+				<f:selectItem itemLabel="3 minutes" itemValue="180" />
+				<f:selectItem itemLabel="10 minutes" itemValue="600" />
+				<f:selectItem itemLabel="20 minutes" itemValue="1200" />
+				<f:selectItem itemLabel="40 minutes" itemValue="2400" />
+				<a4j:support event="onchange" ajaxSingle="true"
+					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+			</h:selectOneListbox></h:panelGroup>
+			
+			<h:outputText id="instrPanelDummyText2"></h:outputText>
+			
+			<a4j:commandButton value="Update Chart"
+				actionListener="#{treeMenuMBean.updateChart}"
+				reRender="chartOutputPanel"></a4j:commandButton>
+				
+				
+		</h:panelGrid>
+	</rich:panel>
+
+</ui:composition>

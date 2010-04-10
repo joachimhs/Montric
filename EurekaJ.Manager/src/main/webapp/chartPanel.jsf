@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+
+
+	<a4j:outputPanel id="chartOutputPanel" ajaxRendered="true">
+		<jsflot:flotChart id="totalExecTimeChart"
+			rendered="#{treeMenuMBean.showChart}"
+			value="#{treeMenuMBean.totalExecXYData}"
+			actionListener="#{treeMenuMBean.chartListener}"
+			chartDraggable="#{!treeMenuMBean.showLiveData}" ajaxSingle="true"
+			reRender="timePeriodPanel,callsPerIntervalTimeChart" width="600"
+			height="200" showLines="true" fillLines="true" legendColor="#ffffcc"
+			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
+			timeFormat="%d/%m/%y %h:%M:%S" title="Total Execution Time (ms)"
+			subtitle="#{treeMenuMBean.avgExecTimeChartTitle}" 
+			xaxisMinValue="#{treeMenuMBean.minXAxis}" xaxisMaxValue="#{treeMenuMBean.maxXAxis}"
+			showXaxisLabels="true" xaxisLabelRotation="10" chartType="Series"
+			showYaxisLabels="true" crosshair="xy" />
+
+
+		<jsflot:flotChart id="avgExecTimeChart"
+			rendered="#{treeMenuMBean.showChart}"
+			value="#{treeMenuMBean.avgExecXYData}"
+			actionListener="#{treeMenuMBean.chartListener}"
+			chartDraggable="#{!treeMenuMBean.showLiveData}" ajaxSingle="true"
+			reRender="timePeriodPanel,callsPerIntervalTimeChart" width="600"
+			height="200" showLines="true" fillLines="true" legendColor="#ffffcc"
+			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
+			timeFormat="%d/%m/%y %h:%M:%S" title="Average Execution Time (ms)"
+			subtitle="#{treeMenuMBean.avgExecTimeChartTitle}"
+			xaxisMinValue="#{treeMenuMBean.minXAxis}" xaxisMaxValue="#{treeMenuMBean.maxXAxis}"
+			showXaxisLabels="true" xaxisLabelRotation="10" chartType="Series"
+			showYaxisLabels="true" crosshair="xy" />
+
+		<jsflot:flotChart id="callsPerIntervalTimeChart"
+			rendered="#{treeMenuMBean.showCallsPerIntervalChart}"
+			value="#{treeMenuMBean.callsPerIntervalData}"
+			actionListener="#{treeMenuMBean.chartListener}"
+			chartDraggable="#{!treeMenuMBean.showLiveData}" ajaxSingle="true"
+			reRender="timePeriodPanel,avgExecTimeChart" width="600" height="200"
+			showLines="true" fillLines="true" legendColor="#ffffcc"
+			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
+			timeFormat="%d/%m/%y %h:%M:%S" title="Calls Per Interval"
+			subtitle="#{treeMenuMBean.callsPerIntervalChartTitle}"
+			xaxisMinValue="#{treeMenuMBean.minXAxis}" xaxisMaxValue="#{treeMenuMBean.maxXAxis}"
+			showXaxisLabels="true" showYaxisLabels="true" xaxisLabelRotation="10"
+			chartType="Series" crosshair="xy" />
+
+		<jsflot:flotChart id="valueTimeChart"
+			rendered="#{treeMenuMBean.showValueChart}"
+			value="#{treeMenuMBean.valueLineData}"
+			actionListener="#{treeMenuMBean.chartListener}"
+			chartDraggable="#{!treeMenuMBean.showLiveData}" ajaxSingle="true"
+			reRender="timePeriodPanel" width="600" height="200" showLines="true"
+			legendColumns="2" fillLines="true" legendColor="#ffffcc"
+			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
+			timeFormat="%d/%m/%y %h:%M:%S" title="Value"
+			subtitle="#{treeMenuMBean.valueChartTitle}" showXaxisLabels="true"
+			xaxisMinValue="#{treeMenuMBean.minXAxis}" xaxisMaxValue="#{treeMenuMBean.maxXAxis}"
+			xaxisTitle="Time" showYaxisLabels="true" xaxisLabelRotation="10"
+			chartType="Series" crosshair="xy" />
+
+		<a4j:region>
+			<a4j:poll enabled="#{treeMenuMBean.showLiveData}" interval="#{treeMenuMBean.chartResolution * 1000}"
+				reRender="timePeriodPanel, chartOutputPanel">
+			</a4j:poll>
+		</a4j:region>
+	</a4j:outputPanel>
+</ui:composition>

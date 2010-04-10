@@ -1,0 +1,46 @@
+<!DOCTYPE instrumentations [
+	<!ELEMENT class ( #PCDATA ) >
+	<!ELEMENT classType ( #PCDATA) >
+	<!ELEMENT instrumentation ( package, class, method, classType, path ) >
+	<!ELEMENT instrumentations ( instrumentation )* >
+	<!ELEMENT method ( #PCDATA ) >
+	<!ELEMENT package ( #PCDATA ) >
+	<!ELEMENT path ( #PCDATA ) >
+]>
+<instrumentations>
+	<instrumentation>
+		<package>org.apache.commons.httpclient.*</package>
+		<class>{all}</class>
+		<method>{all}</method>
+		<classType>Backend</classType>
+		<path>HttpClient</path>
+	</instrumentation>
+	<instrumentation>
+		<package>java.sql</package>
+		<class>{all}</class>
+		<method>{all}</method>
+		<classType>Backend</classType>
+		<path>JDBC</path>
+	</instrumentation>
+	<instrumentation>
+		<package>org.mortbay</package>
+		<class>{all}</class>
+		<method>{all}</method>
+		<classType>Custom</classType>
+		<path>Jetty</path>
+	</instrumentation>
+	<instrumentation>
+		<package>org.eurekaJ</package>
+		<class>EurekaJMainTest</class>
+		<method>{all}</method>
+		<classType>Frontend</classType>
+		<path></path>
+	</instrumentation>
+	<instrumentation>
+		<package>org.eurekaJ.test</package>
+		<class>TestMethodCalls</class>
+		<method>{all}</method>
+		<classType>Custom</classType>
+		<path>Test</path>
+	</instrumentation>
+</instrumentations>

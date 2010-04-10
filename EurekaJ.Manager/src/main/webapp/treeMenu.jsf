@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+
+	<a4j:outputPanel ajaxRendered="true" id="TreeMenuOutputPanel">
+		<rich:panel bodyClass="scrollPanel" style="height: 540px;">
+			<rich:tree style="width:340px; font-size: 7pt;" id="managerTreeMenu"
+				nodeSelectListener="#{treeMenuMBean.processSelection}"
+				reRender="selectedNode, contentsOutputPanel"
+				ajaxSubmitSelection="true" switchType="ajax"
+				value="#{treeMenuMBean.rootNode}" var="item" rowKeyVar="rowKeyVar"
+				treeNodeVar="treeNodeVar" styleClass="smallText">
+
+				<rich:treeNode>
+					<h:outputText value="#{item.label}"></h:outputText>
+					<rich:contextMenu attached="true" id="treecontextMenu"
+						submitMode="ajax">
+						<rich:menuItem ajaxSingle="true">
+			                		Create new <b>Instrumentation Group</b> based on #{item.key}
+			                		<a4j:actionparam
+								name="selectedInstrumentationGroup"
+								assignTo="#{treeMenuMBean.selectedInstrumentationGroup}"
+								value="#{item.key}" />
+						</rich:menuItem>
+						<rich:menuItem ajaxSingle="true">
+			                		Create new <b>alert</b> based on #{rowKeyVar}
+			                		<a4j:actionparam name="selectedAlert"
+								assignTo="#{treeMenuMBean.selectedAlertGroup}"
+								value="#{item.key}" />
+						</rich:menuItem>
+
+					</rich:contextMenu>
+				</rich:treeNode>
+
+			</rich:tree>
+
+
+		</rich:panel>
+		<a4j:region>
+			<a4j:poll interval="60000" reRender="TreeMenuOutputPanel">
+			</a4j:poll>
+		</a4j:region>
+	</a4j:outputPanel>
+
+</ui:composition>
