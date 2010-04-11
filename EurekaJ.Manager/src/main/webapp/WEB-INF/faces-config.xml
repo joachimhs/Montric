@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+
+<faces-config>
+		
+	<managed-bean>
+		<managed-bean-name>treeMenuMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.TreeMenuMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>groupInstrumentationMbean</property-name>
+			<property-class>org.eurekaJ.manager.managed.GroupInstrumentationMBean</property-class>
+			<value>#{groupInstrumentationMbean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>alertMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.AlertMBean</property-class>
+			<value>#{alertMBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>navigationMbean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.NavigationMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>groupInstrumentationMbean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.GroupInstrumentationMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>alertMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.AlertMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>navigateTo.instrumentation</from-outcome>
+			<to-view-id>/index.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>navigateTo.groupInstrumentation</from-outcome>
+			<to-view-id>/groupInstrumentation.jsf</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+	<lifecycle/>
+		<!--phase-listener>net.sf.jsfcomp.chartcreator.ChartListener</phase-listener>
+	</lifecycle-->
+	<application>
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+		<locale-config>
+			<default-locale>no</default-locale>
+		</locale-config>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+	</application>
+</faces-config>

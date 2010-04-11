@@ -12,6 +12,7 @@
 		<module>eurekaJ.Agent</module>
 		<module>eurekaJ.Manager</module>
 		<module>eurekaJ.ManagerServer</module>
+		<module>eurekaJ.Proxy</module>
 	</modules>
 
 	<dependencies>
