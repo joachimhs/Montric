@@ -194,6 +194,12 @@
                         <url>https://dav.codehaus.org/repository/eurekaj</url>
                         <layout>default</layout>
 		</repository>
+		<repository>
+                        <id>Oracle Repo</id>
+                        <name>Oracle Repo</name>
+                        <url>http://download.oracle.com/</url>
+                        <layout>default</layout>
+                </repository>
 		<!-- JBoss RichFaces Repository -->
 		<repository>
 			<releases>
