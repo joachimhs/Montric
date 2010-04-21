@@ -16,6 +16,7 @@ public class NavigationMBean  implements AlertableMBean {
 	
 	public void setUserMBean(UserMBean userMBean) {
 		this.userMBean = userMBean;
+		this.userMBean.addMBeanToAlertList(this);
 	}
 	
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
@@ -32,7 +33,6 @@ public class NavigationMBean  implements AlertableMBean {
 	
 	@Override
 	public void processPathChange() {
-		// TODO Auto-generated method stub
-		
+		//No processing as of yet. 
 	}
 }

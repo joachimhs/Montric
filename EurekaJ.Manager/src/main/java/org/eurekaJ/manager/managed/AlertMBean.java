@@ -33,6 +33,7 @@ public class AlertMBean  implements AlertableMBean {
 	
 	public void setUserMBean(UserMBean userMBean) {
 		this.userMBean = userMBean;
+		this.userMBean.addMBeanToAlertList(this);
 	}
 	
 	public TreeMenuService getTreeMenuService() {
