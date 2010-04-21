@@ -14,7 +14,13 @@ import java.util.regex.Pattern;
 
 import javax.xml.namespace.QName;
 
+import org.apache.cxf.endpoint.Client;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.frontend.ClientProxyFactoryBean;
 import org.apache.cxf.interceptor.Fault;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
+import org.apache.cxf.interceptor.LoggingOutInterceptor;
+import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.eurekaj.proxy.parser.StatisticsParser;
 import org.eurekaj.webservice.EurekaJService;
 import org.eurekaj.webservice.EurekaJServiceService;
@@ -23,7 +29,7 @@ import org.eurekaj.webservice.StoreIncomingStatisticsElement;
 public class Main {
 	private String scriptPath;
 	private Pattern filePattern = Pattern.compile(".*\\d+");
-	private static final QName SERVICE_NAME = new QName("http://webservice.eurekaj.org/", "EurekaJServiceService");
+	private static final QName SERVICE_NAME = new QName("http://eurekaJService.ws.eurekaJ.org/", "EurekaJServiceService");
 	private URL wsdlUrl;
 	public static void main(String[] args) {
 		if (args.length != 2 ) {
@@ -33,17 +39,14 @@ public class Main {
 		}
 	}
 	
-	public Main(String scriptPath, String wsdlFileStr) {
-        try {
-        	wsdlUrl = new URL(wsdlFileStr);
-        } catch (MalformedURLException e) {
-            System.err.println("Unable to connect to Manager via : " + wsdlFileStr);
-            e.printStackTrace();
-            System.exit(1);
-        }
-        
-        EurekaJServiceService ss = new EurekaJServiceService();//wsdlUrl, SERVICE_NAME);
-        EurekaJService port = ss.getEurekaJServicePort();
+	public Main(String scriptPath, String endpointUrl) {        
+        JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
+
+    	factory.getInInterceptors().add(new LoggingInInterceptor());
+    	factory.getOutInterceptors().add(new LoggingOutInterceptor());
+    	factory.setServiceClass(EurekaJService.class);
+    	factory.setAddress(endpointUrl);
+    	EurekaJService client = (EurekaJService) factory.create();        
         
 		this.scriptPath = scriptPath;
 		
@@ -62,7 +65,7 @@ public class Main {
 							List<StoreIncomingStatisticsElement> statElemList = parseBtraceFile(scriptFile);
 							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Finished parsing contents. Read " + statElemList.size() + " elements from file,");
 							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Sending elements over Webservice");
-							port.storeIncomingStatistics(statElemList);
+							client.storeIncomingStatistics(statElemList);
 							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Deleting file " + scriptFile.getName());
 							scriptFile.delete();
 							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Finished with file\n\n");

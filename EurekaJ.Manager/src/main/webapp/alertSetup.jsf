@@ -9,7 +9,7 @@
 
 	<a4j:outputPanel id="alertSetupPanel">
 		<h:outputText id="selectedAlertPointText"
-			value="Selected alert point: #{alertMBean.selectedPath}"></h:outputText><br />
+			value="Selected alert point: #{userMBean.selectedPath}"></h:outputText><br />
 		<rich:spacer height="5"></rich:spacer>
 		
 		<h:panelGrid rendered="#{!alertMBean.nodeAlertable}" columns="2" style="border: 1px dashed #999;" columnClasses="alignTop">

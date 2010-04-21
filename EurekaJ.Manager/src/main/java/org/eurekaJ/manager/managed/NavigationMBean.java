@@ -2,12 +2,20 @@ package org.eurekaJ.manager.managed;
 
 import org.eurekaJ.manager.service.TreeMenuService;
 
-public class NavigationMBean {
-	
+public class NavigationMBean  implements AlertableMBean {
+	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
 	
 	public TreeMenuService getTreeMenuService() {
 		return treeMenuService;
+	}
+	
+	public UserMBean getUserMBean() {
+		return userMBean;
+	}
+	
+	public void setUserMBean(UserMBean userMBean) {
+		this.userMBean = userMBean;
 	}
 	
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
@@ -20,5 +28,11 @@ public class NavigationMBean {
 	
 	public String navigateToGroupInstrumentation() {
 		return "navigateTo.groupInstrumentation";
+	}
+	
+	@Override
+	public void processPathChange() {
+		// TODO Auto-generated method stub
+		
 	}
 }

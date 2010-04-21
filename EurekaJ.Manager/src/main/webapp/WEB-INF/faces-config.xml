@@ -6,6 +6,12 @@
 <faces-config>
 		
 	<managed-bean>
+		<managed-bean-name>userMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.UserMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>treeMenuMBean</managed-bean-name>
 		<managed-bean-class>org.eurekaJ.manager.managed.TreeMenuMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -15,14 +21,9 @@
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
-			<property-name>groupInstrumentationMbean</property-name>
-			<property-class>org.eurekaJ.manager.managed.GroupInstrumentationMBean</property-class>
-			<value>#{groupInstrumentationMbean}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>alertMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.AlertMBean</property-class>
-			<value>#{alertMBean}</value>
+			<property-name>userMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
@@ -35,6 +36,11 @@
 			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>userMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<value>#{userMBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
@@ -46,6 +52,11 @@
 			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
+		<managed-property>
+			<property-name>userMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<value>#{userMBean}</value>
+		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
@@ -56,6 +67,11 @@
 			<property-name>treeMenuService</property-name>
 			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>userMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 

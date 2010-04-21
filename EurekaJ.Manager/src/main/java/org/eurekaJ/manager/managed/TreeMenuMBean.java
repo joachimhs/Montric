@@ -26,25 +26,22 @@ import org.richfaces.event.NodeSelectedEvent;
 import org.richfaces.model.TreeNode;
 import org.richfaces.model.TreeNodeImpl;
 
-public class TreeMenuMBean {
+public class TreeMenuMBean implements AlertableMBean {
 	private static Logger log = Logger.getLogger(TreeMenuMBean.class);
-	private GroupInstrumentationMBean groupInstrumentationMbean;
-	private AlertMBean alertMBean;
+	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
 	private TreeNode<TreeMenuNodeData> rootNode = null;
+	private Date menuLastLoaded = null;
+	
+	/* Chart Data. Consider moving to a seperate ChartMBean */
 	private boolean showChart = false;
 	private boolean showValueChart = false;
 	private boolean showCallsPerIntervalChart = false;
-	private String currTitle = "";
-	private String currKey = "";
 	private XYDataSetCollection avgExecCollection;
 	private XYDataSetCollection valueCollection;
 	private XYDataSetCollection callsPerIntervalCollection;
 	private XYDataSetCollection totalExecCollection;
 	private List<LiveStatistics> liveList;
-	private Long customerID = null;
-	private String path = null;
-	private Date menuLastLoaded = null;
 	private String valueChartTitle = "";
 	private String callsPerIntervalChartTitle = "";
 	private String avgExecTimeChartTitle = "";
@@ -55,9 +52,7 @@ public class TreeMenuMBean {
 	private Date showChartFrom;
 	private Date showChartTo;
 	private boolean showLiveData;
-	private String selectedInstrumentationGroup;
-	private String selectedAlertGroup;
-	private String contextKey;
+	/*// End Chart data */
 
 	public TreeMenuMBean() {
 		// Vis default graf for siste 20 minutter
@@ -73,20 +68,12 @@ public class TreeMenuMBean {
 		callsPerIntervalCollection = new XYDataSetCollection();
 	}
 
-	public GroupInstrumentationMBean getGroupInstrumentationMbean() {
-		return groupInstrumentationMbean;
+	public UserMBean getUserMBean() {
+		return userMBean;
 	}
 	
-	public void setGroupInstrumentationMbean(GroupInstrumentationMBean groupInstrumentationMbean) {
-		this.groupInstrumentationMbean = groupInstrumentationMbean;
-	}
-	
-	public AlertMBean getAlertMBean() {
-		return alertMBean;
-	}
-	
-	public void setAlertMBean(AlertMBean alertMBean) {
-		this.alertMBean = alertMBean;
+	public void setUserMBean(UserMBean userMBean) {
+		this.userMBean = userMBean;
 	}
 	
 	public TreeMenuService getTreeMenuService() {
@@ -95,38 +82,6 @@ public class TreeMenuMBean {
 
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
 		this.treeMenuService = treeMenuService;
-	}
-	
-	public String getCurrKey() {
-		return currKey;
-	}
-	
-	public String getSelectedPath() {
-		return path;
-	}
-	
-	public String getSelectedAlertGroup() {
-		return selectedAlertGroup;
-	}
-	
-	public void setSelectedAlertGroup(String selectedAlertGroup) {
-		this.selectedAlertGroup = selectedAlertGroup;
-	}
-	
-	public String getSelectedInstrumentationGroup() {
-		return selectedInstrumentationGroup;
-	}
-	
-	public void setSelectedInstrumentationGroup(String selectedInstrumentationGroup) {
-		this.selectedInstrumentationGroup = selectedInstrumentationGroup;
-	}
-	
-	public String getContextKey() {
-		return contextKey;
-	}
-	
-	public void setContextKey(String contextKey) {
-		this.contextKey = contextKey;
 	}
 	
 	public Long getMinXAxis() {
@@ -153,7 +108,7 @@ public class TreeMenuMBean {
 		//Update TreeMenuNode in Database
 		rootNode = new TreeNodeImpl<TreeMenuNodeData>();
 		
-		String custName = "Customername";
+		String custName = "Instrumentations";
 		TreeNodeImpl<TreeMenuNodeData> customerNode = new TreeNodeImpl<TreeMenuNodeData>();
 		customerNode.setData(new TreeMenuNodeData(custName, custName));
 		rootNode.addChild(custName, customerNode);
@@ -189,23 +144,13 @@ public class TreeMenuMBean {
 		showValueChart = false;
 		showCallsPerIntervalChart = false;
 		HtmlTree tree = (HtmlTree) event.getComponent();
-		currTitle = ((TreeMenuNodeData) tree.getRowData()).getLabel();
-		currKey = tree.getRowKey().toString();
-		System.out.println("key: " + currKey + " value: " + currTitle);
-
-		customerID = null;
-		path = null;
+		String currKey = tree.getRowKey().toString();
 
 		String[] pathVars = currKey.split(":");
-		customerID = 1l; // pathVars[0];
 
-		//Remove Customer Name from Path
-		path = currKey.substring(pathVars[0].length() + 1);
-		System.out.println("custID: " + customerID + " path: " + path);
+		//Remove RootNode Name from Path
+		userMBean.setSelectedPath(currKey.substring(pathVars[0].length() + 1));
 		updateDataset();
-		groupInstrumentationMbean.setSelectedPath(path);
-		groupInstrumentationMbean.updateGroupSelection();
-		alertMBean.setSelectedPath(path);
 	}
 	
 	public void processContextMenu(ActionEvent event) {
@@ -252,7 +197,7 @@ public class TreeMenuMBean {
 
 		LiveStatistics currStat = null;
 		long numStatsPerChartTick = (RESOLUTION * 1000) / 15000;
-		long numStatsInCurrTick = -1;
+		long numStatsInCurrTick = -0;
 		//Loop over all stats for each 15 second period
 		for (Long i = millisThen; i <= millisNow; i += 15000) {
 			++numStatsInCurrTick;
@@ -273,34 +218,34 @@ public class TreeMenuMBean {
 						totalValue += l.getValue();
 						currStat.setValue(totalValue / numStatsInCurrTick);
 					}
-					
-					if (numStatsInCurrTick >= numStatsPerChartTick) {
-						//place currStat in chart, set currStat to null
-						long gmtMillis = i - (offsetMiutes * 60 * 1000);
-						if (currStat.getAvgExecutionTime() != null) {
-							execList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getAvgExecutionTime()));
-						} else {
-							execList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-						}
-						if (currStat.getTotalExecutionTime() != null) {
-							totalList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getTotalExecutionTimeMillis()));
-						} else {
-							totalList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-						}
-						if (currStat.getCallsPerInterval() != null) {
-							callsList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getCallsPerInterval()));
-						} else {
-							callsList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-						}
-						if (currStat.getValue() != null) {
-							valueList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getValue()));
-						} else {
-							valueList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-						}
-						
-						currStat = null;
-						numStatsInCurrTick = -1;
+				}
+				
+				if (numStatsInCurrTick >= numStatsPerChartTick) {
+					//place currStat in chart, set currStat to null
+					long gmtMillis = i - (offsetMiutes * 60 * 1000);
+					if (currStat.getAvgExecutionTime() != null) {
+						execList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getAvgExecutionTime()));
+					} else {
+						execList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
 					}
+					if (currStat.getTotalExecutionTime() != null) {
+						totalList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getTotalExecutionTimeMillis()));
+					} else {
+						totalList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
+					}
+					if (currStat.getCallsPerInterval() != null) {
+						callsList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getCallsPerInterval()));
+					} else {
+						callsList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
+					}
+					if (currStat.getValue() != null) {
+						valueList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getValue()));
+					} else {
+						valueList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
+					}
+					
+					currStat = null;
+					numStatsInCurrTick = -0;
 				}
 			}
 			
@@ -309,26 +254,27 @@ public class TreeMenuMBean {
 		if (liveList != null && liveList.size() > 0) {
 			LiveStatistics ls = liveList.get(0);
 			
-			determineWhichChartsToDisplay(path);
+			determineWhichChartsToDisplay(userMBean.getSelectedPath());
 			//If this node has grouped statistics, show them
-			GroupedStatistics gs = treeMenuService.getGroupedStatistics(path);
+			GroupedStatistics gs = treeMenuService.getGroupedStatistics(userMBean.getSelectedPath());
 			if (gs != null) {
 				for (String groupedPath : gs.getGroupedPathList()) {
 					determineWhichChartsToDisplay(groupedPath);
 				}
 			}
 
+			String currPath = userMBean.getSelectedPath();
 			if (showChart) {
-				avgExecTimeChartTitle = currKey;
+				avgExecTimeChartTitle = currPath;
 				avgExecCollection.addDataList(execList);
 				totalExecCollection.addDataList(totalList);
 			}
 			if (showValueChart) {
-				valueChartTitle = currKey;
+				valueChartTitle = currPath;
 				valueCollection.addDataList(valueList);
 			}
 			if (showCallsPerIntervalChart) {
-				callsPerIntervalChartTitle = currKey;
+				callsPerIntervalChartTitle = currPath;
 				callsPerIntervalCollection.addDataList(callsList);
 			}
 		}
@@ -350,7 +296,8 @@ public class TreeMenuMBean {
 		}
 	}
 	public void updateDataset() {
-		if (customerID != null && path != null) {
+		String path = userMBean.getSelectedPath();
+		if (path != null) {
 			Long fromPeriod = showChartFrom.getTime() / 15000;
 			Long toPeriod = showChartTo.getTime() / 15000;
 			
@@ -429,14 +376,6 @@ public class TreeMenuMBean {
 	public XYDataSetCollection getCallsPerIntervalData() {
 		updateDataset();
 		return callsPerIntervalCollection;
-	}
-
-	public String getCurrTitle() {
-		return currTitle;
-	}
-
-	public void setCurrTitle(String currTitle) {
-		this.currTitle = currTitle;
 	}
 
 	public String getValueChartTitle() {
@@ -621,5 +560,11 @@ public class TreeMenuMBean {
 			
 			updateDataset();
 		}
+	}
+	
+	@Override
+	public void processPathChange() {
+		// TODO Auto-generated method stub
+		
 	}
 }

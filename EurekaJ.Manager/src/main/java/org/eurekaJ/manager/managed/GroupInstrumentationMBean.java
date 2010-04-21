@@ -11,17 +11,25 @@ import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
 import org.eurekaJ.manager.service.TreeMenuService;
 
-public class GroupInstrumentationMBean {
+public class GroupInstrumentationMBean  implements AlertableMBean {
+	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
 	List<SelectItem> groupList;
 	List<String> selectedGroupList;
-	String selectedPath;
 	List<GroupedStatistics> storedGroupedStatistics;
 	
 	public GroupInstrumentationMBean() {
 		groupList = new ArrayList<SelectItem>();
 		selectedGroupList = new ArrayList<String>();
 		storedGroupedStatistics = new ArrayList<GroupedStatistics>();
+	}
+	
+	public UserMBean getUserMBean() {
+		return userMBean;
+	}
+	
+	public void setUserMBean(UserMBean userMBean) {
+		this.userMBean = userMBean;
 	}
 	
 	public TreeMenuService getTreeMenuService() {
@@ -31,15 +39,7 @@ public class GroupInstrumentationMBean {
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
 		this.treeMenuService = treeMenuService;
 	}
-	
-	public String getSelectedPath() {
-		return selectedPath;
-	}
-	
-	public void setSelectedPath(String selectedPath) {
-		this.selectedPath = selectedPath;
-	}
-	
+		
 	public List<SelectItem> getAvailableGroups() {
 		List<TreeMenuNode> menuNodeList = treeMenuService.getTreeMenu();
 		List<SelectItem> groupList = new ArrayList<SelectItem>();
@@ -65,6 +65,7 @@ public class GroupInstrumentationMBean {
 	}
 	
 	public void updateGroupSelection() {
+		String selectedPath = userMBean.getSelectedPath();
 		selectedGroupList = new ArrayList<String>();
 		List<TreeMenuNode> menuNodeList = treeMenuService.getTreeMenu();
 		groupList = new ArrayList<SelectItem>();
@@ -122,10 +123,15 @@ public class GroupInstrumentationMBean {
 	
 	public void persistGroupInstrumentation(ActionEvent event) {
 		GroupedStatistics gs = new GroupedStatistics();
-		gs.setGuiPath(selectedPath);
+		gs.setGuiPath(userMBean.getSelectedPath());
 		for (String selectPath : selectedGroupList) {
 			gs.getGroupedPathList().add(selectPath);
 		}
 		treeMenuService.persistGroupInstrumentation(gs);
+	}
+	
+	@Override
+	public void processPathChange() {
+		updateGroupSelection();
 	}
 }

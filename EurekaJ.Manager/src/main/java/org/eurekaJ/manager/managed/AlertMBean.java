@@ -10,9 +10,9 @@ import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaJ.manager.perst.alert.Alert;
 import org.eurekaJ.manager.service.TreeMenuService;
 
-public class AlertMBean {
+public class AlertMBean  implements AlertableMBean {
+	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
-	private String selectedPath;
 	private TreeMenuNode selectedTreeMenuNode;
 	private List<SelectItem> alertTypes;
 	private List<SelectItem> alertOnTypes;
@@ -27,6 +27,14 @@ public class AlertMBean {
 		alertOnTypes = new ArrayList<SelectItem>();
 	}
 	
+	public UserMBean getUserMBean() {
+		return userMBean;
+	}
+	
+	public void setUserMBean(UserMBean userMBean) {
+		this.userMBean = userMBean;
+	}
+	
 	public TreeMenuService getTreeMenuService() {
 		return treeMenuService;
 	}
@@ -34,16 +42,7 @@ public class AlertMBean {
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
 		this.treeMenuService = treeMenuService;
 	}
-	
-	public String getSelectedPath() {
-		return selectedPath;
-	}
-	
-	public void setSelectedPath(String selectedPath) {
-		this.selectedPath = selectedPath;
-		updateModelAfterPathChange();
-	}
-	
+		
 	public TreeMenuNode getSelectedTreeMenuNode() {
 		return selectedTreeMenuNode;
 	}
@@ -85,6 +84,7 @@ public class AlertMBean {
 	}
 	
 	private void updateModelAfterPathChange() {
+		String selectedPath = userMBean.getSelectedPath();
 		selectedTreeMenuNode = treeMenuService.getTreeMenu(selectedPath);
 		if (selectedTreeMenuNode != null) {
 			alertOnTypes = new ArrayList<SelectItem>();
@@ -109,6 +109,11 @@ public class AlertMBean {
 				this.alert.setGuiPath(selectedPath);
 			}
 		}
+	}
+	
+	@Override
+	public void processPathChange() {
+		updateModelAfterPathChange();
 	}
 	
 }

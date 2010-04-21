@@ -81,6 +81,6 @@
 	
 	<jaxws:endpoint id="eurekaJWebserviceEndpoint" 
 		implementor="#eurekaJWebservice" 
-		address="/webservices/eurekaJService" />
+		address="/EurekaJServiceService" />
 	<!-- //Webservices -->
 </beans>

@@ -239,7 +239,7 @@
 	
 	<wsdl:service name="EurekaJServiceService">
 		<wsdl:port name="EurekaJServicePort" binding="tns:EurekaJServiceServiceSoapBinding">
-			<soap:address location="http://localhost:8081/eurekaJ.Manager/webservices/webservices/eurekaJService" />
+			<soap:address location="http://localhost:8081/eurekaJ.Manager/webservices/eurekaJService" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
