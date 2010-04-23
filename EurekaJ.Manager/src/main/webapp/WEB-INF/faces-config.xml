@@ -28,6 +28,22 @@
 	</managed-bean>
 	
 	<managed-bean>
+		<managed-bean-name>chartMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.ChartMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>userMBean</property-name>
+			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<value>#{userMBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>navigationMbean</managed-bean-name>
 		<managed-bean-class>org.eurekaJ.manager.managed.NavigationMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>

@@ -12,16 +12,16 @@
 		<h:panelGrid columns="4" width="100%">
 			<h:panelGroup>From: <rich:calendar locale="NO" popup="true" showApplyButton="true"
 				cellWidth="24px" cellHeight="22px" style="width:200px"
-				disabled="#{treeMenuMBean.showLiveData}" required="true"
-				value="#{treeMenuMBean.showChartFrom}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
+				disabled="#{chartMBean.showLiveData}" required="true"
+				value="#{chartMBean.showChartFrom}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
 			
 			<h:panelGroup>To: <rich:calendar locale="NO" popup="true" showApplyButton="true"
 				cellWidth="24px" cellHeight="22px" style="width:200px"
-				disabled="#{treeMenuMBean.showLiveData}" required="true"
-				value="#{treeMenuMBean.showChartTo}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
+				disabled="#{chartMBean.showLiveData}" required="true"
+				value="#{chartMBean.showChartTo}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
 				
 			<h:selectBooleanCheckbox title="Show Live Data (Last 10 minutes)"
-				value="#{treeMenuMBean.showLiveData}"
+				value="#{chartMBean.showLiveData}"
 				label="Show Live Data (Last 10 minutes)">
 				<h:outputText value="Show Live Data" />
 				<a4j:support event="onchange"
@@ -31,7 +31,7 @@
 			<h:outputText id="instrPanelDummyText"></h:outputText>
 			
 			<h:panelGroup>Chart Timespan: <h:selectOneListbox label="Chart Timespan" id="chartTimespanListbox"
-				value="#{treeMenuMBean.chartTimespan}" size="1">
+				value="#{chartMBean.chartTimespan}" size="1">
 				<f:selectItem itemLabel="10 minutes" itemValue="10" />
 				<f:selectItem itemLabel="20 minutes" itemValue="20" />
 				<f:selectItem itemLabel="30 minutes" itemValue="30" />
@@ -45,7 +45,7 @@
 			</h:selectOneListbox></h:panelGroup>
 			
 			<h:panelGroup>Chart Resolution: <h:selectOneListbox label="Chart Resolution"
-				id="chartResolutionListbox" value="#{treeMenuMBean.chartResolution}"
+				id="chartResolutionListbox" value="#{chartMBean.chartResolution}"
 				size="1">
 				<f:selectItem itemLabel="15 seconds" itemValue="15" />
 				<f:selectItem itemLabel="30 seconds" itemValue="30" />
@@ -62,7 +62,7 @@
 			<h:outputText id="instrPanelDummyText2"></h:outputText>
 			
 			<a4j:commandButton value="Update Chart"
-				actionListener="#{treeMenuMBean.updateChart}"
+				actionListener="#{chartMBean.updateChart}"
 				reRender="chartOutputPanel"></a4j:commandButton>
 				
 				

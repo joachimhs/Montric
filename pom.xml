@@ -14,6 +14,10 @@
 		<module>EurekaJ.ManagerServer</module>
 		<module>EurekaJ.Proxy</module>
 	</modules>
+	
+	<build>
+		<!-- directory>/Volumes/ramdisk/testtarget</directory-->
+	</build>
 
 	<dependencies>
 		<dependency>
