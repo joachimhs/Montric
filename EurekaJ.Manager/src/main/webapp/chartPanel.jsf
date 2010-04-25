@@ -15,12 +15,13 @@
 			actionListener="#{chartMBean.chartListener}"
 			chartDraggable="#{!chartMBean.showLiveData}" ajaxSingle="true"
 			reRender="timePeriodPanel,callsPerIntervalTimeChart" width="600"
-			height="200" showLines="true" fillLines="true" legendColor="#ffffcc"
-			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			height="200" showLines="true" fillLines="false" legendColor="#ffffcc"
+			showDataPoints="false" legendPosition="nw" showTooltip="true"
 			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
 			timeFormat="%d/%m/%y %h:%M:%S" title="Total Execution Time (ms)"
 			subtitle="#{chartMBean.avgExecTimeChartTitle}" 
 			xaxisMinValue="#{chartMBean.minXAxis}" xaxisMaxValue="#{chartMBean.maxXAxis}"
+			yaxisMinValue="0"
 			showXaxisLabels="true" xaxisLabelRotation="10" chartType="Series"
 			showYaxisLabels="true" crosshair="xy" />
 
@@ -31,12 +32,13 @@
 			actionListener="#{chartMBean.chartListener}"
 			chartDraggable="#{!chartMBean.showLiveData}" ajaxSingle="true"
 			reRender="timePeriodPanel,callsPerIntervalTimeChart" width="600"
-			height="200" showLines="true" fillLines="true" legendColor="#ffffcc"
-			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			height="200" showLines="true" fillLines="false" legendColor="#ffffcc"
+			showDataPoints="false" legendPosition="nw" showTooltip="true"
 			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
 			timeFormat="%d/%m/%y %h:%M:%S" title="Average Execution Time (ms)"
 			subtitle="#{chartMBean.avgExecTimeChartTitle}"
 			xaxisMinValue="#{chartMBean.minXAxis}" xaxisMaxValue="#{chartMBean.maxXAxis}"
+			yaxisMinValue="0"
 			showXaxisLabels="true" xaxisLabelRotation="10" chartType="Series"
 			showYaxisLabels="true" crosshair="xy" />
 
@@ -46,12 +48,13 @@
 			actionListener="#{chartMBean.chartListener}"
 			chartDraggable="#{!chartMBean.showLiveData}" ajaxSingle="true"
 			reRender="timePeriodPanel,avgExecTimeChart" width="600" height="200"
-			showLines="true" fillLines="true" legendColor="#ffffcc"
-			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			showLines="true" fillLines="false" legendColor="#ffffcc"
+			showDataPoints="false" legendPosition="nw" showTooltip="true"
 			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
 			timeFormat="%d/%m/%y %h:%M:%S" title="Calls Per Interval"
 			subtitle="#{chartMBean.callsPerIntervalChartTitle}"
 			xaxisMinValue="#{chartMBean.minXAxis}" xaxisMaxValue="#{chartMBean.maxXAxis}"
+			yaxisMinValue="0"
 			showXaxisLabels="true" showYaxisLabels="true" xaxisLabelRotation="10"
 			chartType="Series" crosshair="xy" />
 
@@ -61,12 +64,13 @@
 			actionListener="#{chartMBean.chartListener}"
 			chartDraggable="#{!chartMBean.showLiveData}" ajaxSingle="true"
 			reRender="timePeriodPanel" width="600" height="200" showLines="true"
-			legendColumns="2" fillLines="true" legendColor="#ffffcc"
-			showDataPoints="true" legendPosition="nw" showTooltip="true"
+			legendColumns="2" fillLines="false" legendColor="#ffffcc"
+			showDataPoints="false" legendPosition="nw" showTooltip="true"
 			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
 			timeFormat="%d/%m/%y %h:%M:%S" title="Value"
 			subtitle="#{chartMBean.valueChartTitle}" showXaxisLabels="true"
 			xaxisMinValue="#{chartMBean.minXAxis}" xaxisMaxValue="#{chartMBean.maxXAxis}"
+			yaxisMinValue="0"
 			xaxisTitle="Time" showYaxisLabels="true" xaxisLabelRotation="10"
 			chartType="Series" crosshair="xy" />
 

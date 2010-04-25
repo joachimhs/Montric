@@ -28,11 +28,20 @@ public class UserMBean {
 	}
 
 	public void setSelectedPath(String selectedPath) {
-		if (this.selectedPath != null && selectedPath != null 
-				&& !this.selectedPath.equals(selectedPath)) {
+		if (this.selectedPath == null) {
+			this.selectedPath = "";
+			
+		} 
+		
+		if (selectedPath == null) {
+			selectedPath = "";
+		}
+		
+		if (!this.selectedPath.equals(selectedPath)) {
+			this.selectedPath = selectedPath;
 			alertAllMBeans();
 		}
-		this.selectedPath = selectedPath;
+		
 	}
 
 	public String getSelectedInstrumentationGroup() {

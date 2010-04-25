@@ -20,9 +20,9 @@ public class AlertMBean  implements AlertableMBean {
 	
 	public AlertMBean() {
 		alertTypes = new ArrayList<SelectItem>();
-		alertTypes.add(new SelectItem("gt", "Greater Than"));
-		alertTypes.add(new SelectItem("lt", "Less Than"));
-		alertTypes.add(new SelectItem("eq", "Equals"));
+		alertTypes.add(new SelectItem(Alert.GREATER_THAN, "Greater Than"));
+		alertTypes.add(new SelectItem(Alert.LESS_THAN, "Less Than"));
+		alertTypes.add(new SelectItem(Alert.EQUALS, "Equals"));
 		
 		alertOnTypes = new ArrayList<SelectItem>();
 	}

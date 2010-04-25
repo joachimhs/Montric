@@ -133,6 +133,11 @@ public class Alert implements Comparable<Alert>{
 	public void setSelectedAlertType(int selectedAlertType) {
 		this.selectedAlertType = selectedAlertType;
 	}
+	
+	public void setSelectedAlertType(String selectedAlertType) {
+		int alertType = getIntValueForStringvalue(selectedAlertType);
+		this.selectedAlertType = alertType;
+	}
 
 	public long getAlertDelay() {
 		return alertDelay;

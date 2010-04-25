@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,17 +13,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.soap.SOAPFaultException;
 
-import org.apache.cxf.endpoint.Client;
-import org.apache.cxf.frontend.ClientProxy;
-import org.apache.cxf.frontend.ClientProxyFactoryBean;
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.eurekaj.proxy.parser.StatisticsParser;
 import org.eurekaj.webservice.EurekaJService;
-import org.eurekaj.webservice.EurekaJServiceService;
 import org.eurekaj.webservice.StoreIncomingStatisticsElement;
 
 public class Main {
@@ -42,8 +39,8 @@ public class Main {
 	public Main(String scriptPath, String endpointUrl) {        
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 
-    	factory.getInInterceptors().add(new LoggingInInterceptor());
-    	factory.getOutInterceptors().add(new LoggingOutInterceptor());
+    	//factory.getInInterceptors().add(new LoggingInInterceptor());
+    	//factory.getOutInterceptors().add(new LoggingOutInterceptor());
     	factory.setServiceClass(EurekaJService.class);
     	factory.setAddress(endpointUrl);
     	EurekaJService client = (EurekaJService) factory.create();        
@@ -51,33 +48,34 @@ public class Main {
 		this.scriptPath = scriptPath;
 		
 		while (true) {
-			File file = new File(scriptPath);
-			if (file != null && file.exists() && file.isDirectory()) {
-				for (File scriptFile : file.listFiles()) {
-					String filename = scriptFile.getName();
-					Matcher matcher = filePattern.matcher(filename);
-					boolean match = matcher.matches();
-					if (match) {
-						Long startMillis = Calendar.getInstance().getTimeInMillis();
-						System.out.println("Attemting to send file contents of file:  " + scriptFile.getName());
-						try {
-							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Parsing contents...");
-							List<StoreIncomingStatisticsElement> statElemList = parseBtraceFile(scriptFile);
-							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Finished parsing contents. Read " + statElemList.size() + " elements from file,");
-							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Sending elements over Webservice");
-							client.storeIncomingStatistics(statElemList);
-							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Deleting file " + scriptFile.getName());
-							scriptFile.delete();
-							//System.out.println((Calendar.getInstance().getTimeInMillis() - startMillis) + " :: Finished with file\n\n");
-						} catch (IOException e) {
-							System.err.println(e.getMessage() + "Unable to parse or delete file: " + scriptFile.getName());
-						} catch (Fault cxfFault) {
-							System.err.println("Unable to send file contents to manager: " + cxfFault.getMessage());
+			try {
+				File file = new File(scriptPath);
+				if (file != null && file.exists() && file.isDirectory()) {
+					for (File scriptFile : file.listFiles()) {
+						String filename = scriptFile.getName();
+						Matcher matcher = filePattern.matcher(filename);
+						boolean match = matcher.matches();
+						if (match) {
+							Long startMillis = Calendar.getInstance().getTimeInMillis();
+							System.out.println("Attemting to send file contents of file:  " + scriptFile.getName());
+							try {
+								List<StoreIncomingStatisticsElement> statElemList = parseBtraceFile(scriptFile);
+								client.storeIncomingStatistics(statElemList);
+								scriptFile.delete();
+							} catch (IOException e) {
+								System.err.println(e.getMessage() + "Unable to parse or delete file: " + scriptFile.getName());
+							} catch (Fault cxfFault) {
+								System.err.println("Unable to send file contents to manager: " + cxfFault.getMessage());
+							}
 						}
 					}
+				} else {
+					System.err.println("Argument is not a valid directory with BTrace Output files: " + scriptPath);
 				}
-			} else {
-				System.err.println("Argument is not a valid directory with BTrace Output files: " + scriptPath);
+			} catch (Fault cxfFault) {
+				System.err.println("Unable to send contents over WebService. Retrying in 5 seconds. " + cxfFault.getMessage());
+			} catch (SOAPFaultException soapFault) {
+				System.err.println("Unable to send contents over WebService. Retrying in 5 seconds. " + soapFault.getMessage());
 			}
 			
 			try {
@@ -100,7 +98,7 @@ public class Main {
 			if (line.startsWith("[") && line.endsWith("]")) {
 	    		line = line.substring(1, line.length()-1);
 	    	} else {
-	    		//If line does not start and end with square branckets, ignore line
+	    		//If line does not start and end with square brackets, ignore line
 	    		line = inStream.readLine();
 	    		continue;
 	    	}

@@ -14,25 +14,30 @@
 			columnClasses="treeMenu, mainContents" style="height: 100%">
 			<ui:include src="treeMenu.jsf"></ui:include>
 
-			<rich:tabPanel switchType="ajax" style="width: 100%;"
-				contentStyle="width: 100%;">
-				<rich:tab id="statisticsTab" label="Statistics">
-					<ui:include src="instrumentationPanel.jsf"></ui:include>
-					<ui:include src="chartPanel.jsf"></ui:include>
-				</rich:tab>
-				<rich:tab id="groupsTab" label="Groups" actionListener="#{groupInstrumentationMbean.processGroupSelection}">
-					<ui:include src="groupSetup.jsf"></ui:include>
-				</rich:tab>
-				<rich:tab id="alertsTab" label="Alerts" actionListener="#{alertMBean.navigateToTab}">
-					<ui:include src="alertSetup.jsf"></ui:include>
-				</rich:tab>
-				<rich:tab id="errorsTab" label="Errors">
+			<h:panelGroup>
+				<rich:tabPanel switchType="ajax" style="width: 100%;"
+					contentStyle="width: 100%;">
+					<rich:tab id="statisticsTab" label="Statistics">
+						<ui:include src="instrumentationPanel.jsf"></ui:include>
+					</rich:tab>
+					<rich:tab id="groupsTab" label="Groups"
+						actionListener="#{groupInstrumentationMbean.processGroupSelection}">
+						<ui:include src="groupSetup.jsf"></ui:include>
+					</rich:tab>
+					<rich:tab id="alertsTab" label="Alerts"
+						actionListener="#{alertMBean.navigateToTab}">
+						<ui:include src="alertSetup.jsf"></ui:include>
+					</rich:tab>
+					<rich:tab id="errorsTab" label="Errors">
 					Errors
 				</rich:tab>
-				<rich:tab id="exceptionsTab" label="Exceptions">
+					<rich:tab id="exceptionsTab" label="Exceptions">
 					Exceptions
 				</rich:tab>
-			</rich:tabPanel>
+				</rich:tabPanel>
+
+				<ui:include src="chartPanel.jsf"></ui:include>
+			</h:panelGroup>
 		</h:panelGrid>
 
 	</ui:define>

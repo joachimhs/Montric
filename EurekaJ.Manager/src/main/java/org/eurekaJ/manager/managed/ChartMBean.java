@@ -12,6 +12,7 @@ import javax.faces.event.ValueChangeEvent;
 import org.apache.log4j.Logger;
 import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaJ.manager.perst.alert.Alert;
 import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
 import org.eurekaJ.manager.service.TreeMenuService;
 import org.jsflot.components.FlotChartClickedEvent;
@@ -98,15 +99,23 @@ public class ChartMBean implements AlertableMBean {
 		return retVal;
 	}
 	
-	private void generateDataset(List<LiveStatistics> liveList, String seriesLabel) {
+	private void generateDataset(List<LiveStatistics> liveList, String seriesLabel, Alert alert) {
 		XYDataList execList = new XYDataList();
 		execList.setLabel(seriesLabel);
+		execList.setFillLines(true);
+		execList.setShowDataPoints(true);
 		XYDataList totalList = new XYDataList();
 		totalList.setLabel(seriesLabel);
+		totalList.setFillLines(true);
+		totalList.setShowDataPoints(true);
 		XYDataList callsList = new XYDataList();
 		callsList.setLabel(seriesLabel);
+		callsList.setFillLines(true);
+		callsList.setShowDataPoints(true);
 		XYDataList valueList = new XYDataList();
 		valueList.setLabel(seriesLabel);
+		valueList.setFillLines(true);
+		valueList.setShowDataPoints(true);
 		
 		Hashtable<Long, LiveStatistics> liveHash = new Hashtable<Long, LiveStatistics>();
 		for (LiveStatistics l : liveList) {
@@ -202,22 +211,79 @@ public class ChartMBean implements AlertableMBean {
 					determineWhichChartsToDisplay(groupedPath);
 				}
 			}
-
+			
+			
 			String currPath = userMBean.getSelectedPath();
 			if (showChart) {
 				avgExecTimeChartTitle = currPath;
 				avgExecCollection.addDataList(execList);
 				totalExecCollection.addDataList(totalList);
+				if (alert != null && alert.isActivated() && alert.getAlertOn() == Alert.ALERT_ON_AVG_EXECTIME) {
+					avgExecCollection.addDataList(buildWarningList(alert, Alert.WARNING));
+					avgExecCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
+				}
+				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_TOTAL_EXECTIME) {
+					totalExecCollection.addDataList(buildWarningList(alert, Alert.WARNING));
+					totalExecCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
+				}
 			}
 			if (showValueChart) {
 				valueChartTitle = currPath;
 				valueCollection.addDataList(valueList);
+				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_VALUE) {
+					valueCollection.addDataList(buildWarningList(alert, Alert.WARNING));
+					valueCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
+				}
 			}
 			if (showCallsPerIntervalChart) {
 				callsPerIntervalChartTitle = currPath;
 				callsPerIntervalCollection.addDataList(callsList);
+				valueCollection.addDataList(valueList);
+				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_CALLS) {
+					callsPerIntervalCollection.addDataList(buildWarningList(alert, Alert.WARNING));
+					callsPerIntervalCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
+				}
 			}
 		}
+	}
+	
+	private XYDataList buildWarningList(Alert alert, int warningType) {
+		XYDataList errorList = new XYDataList();
+		errorList.setLabel("Warning Value");
+		if (warningType == Alert.CRITICAL ) {
+			errorList.setLabel("Error Value");
+		}		
+		
+		if (alert != null) {
+			Double warningValue = alert.getWarningValue();
+			Double errorValue = alert.getErrorValue();
+			XYDataPoint startPoint = new XYDataPoint();
+			startPoint.setX(getMinXAxis());
+			
+			XYDataPoint endPoint = new XYDataPoint();
+			endPoint.setX(getMaxXAxis());
+			if (warningType == Alert.CRITICAL) {
+				startPoint.setY(errorValue);
+				endPoint.setY(errorValue);
+			} else {
+				startPoint.setY(warningValue);
+				endPoint.setY(warningValue);
+			}
+			
+			errorList.setColor("#eeff00");
+			if (warningType == Alert.CRITICAL) {
+				errorList.setColor("#ff0000");
+			}
+			
+			errorList.addDataPoint(startPoint);
+			errorList.addDataPoint(endPoint);
+			
+			errorList.setShowDataPoints(false);
+			errorList.setShowLines(true);
+			errorList.setFillLines(false);
+		}
+		
+		return errorList;
 	}
 	
 	private void determineWhichChartsToDisplay(String guiPath) {
@@ -257,18 +323,20 @@ public class ChartMBean implements AlertableMBean {
 					if (gsPath.length() > path.length() + 1) {
 						seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
 					}
-					generateDataset(liveList, seriesLabel);
+					generateDataset(liveList, seriesLabel, null);
 				}
 			} else {
 				clearLiveList();
 				liveList = treeMenuService.getLiveStatistics(path, fromPeriod, toPeriod);
 				Collections.sort(liveList);
 				
+				Alert alert = treeMenuService.getAlert(path);
+				
 				String seriesLabel = path;
 				if (seriesLabel.contains(":")) {
 					seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
 				}
-				generateDataset(liveList, seriesLabel);
+				generateDataset(liveList, seriesLabel, alert);
 			}
 		}
 	}
