@@ -131,16 +131,18 @@ public class Main {
 	    	} else if (line.startsWith("GroupInstrumentation;")) {
 	    		line = line.substring("GroupInstrumentation;".length());
 	    		statElemList.addAll(parser.processGroupInstumentation(line));
-	    	} else if (line.startsWith("ThreadType;")) {
-	    		line = line.substring("ThreadType;".length());
-	    		statElemList.addAll(parser.processThreadType(line));
 	    	} else if (line.startsWith("GCTime;")) {
 	    		line = line.substring("GCTime;".length());
 	    		statElemList.addAll(parser.processGCTime(line));
-	    	} else if (line.startsWith("ValueInstrumentation;")) {
-	    		line = line.substring("ValueInstrumentation;".length());
-	    		statElemList.addAll(parser.processValueInstumentation(line));
-	    	} /*else if (line.startsWith("LogTracer;")) {
+	    	}
+	    	
+	    	
+	    	
+	    	
+	    	//[ThreadsReturnedByType;JSFlotAgent;java.lang.Thread;5;1272278445000]
+	    	//[ThreadsStartedByType;JSFlotAgent;java.util.TimerThread;1;1272278445000]
+
+	    	/*else if (line.startsWith("LogTracer;")) {
 	    		line = line.substring("LogTracer;".length());
 	    		statElemList.addAll(parser.processLogTrace(line));
 	    	}*/

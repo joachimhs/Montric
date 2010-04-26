@@ -310,45 +310,6 @@ public class StatisticsParser {
 		return statList;
 	}
 	
-	public List<StoreIncomingStatisticsElement> processValueInstumentation(String line) {
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		
-		//EurekaAgent Jetty:HttpSession 1 1237296234403
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String path;
-		String value;
-		
-		if (params.length == 4) {
-			agentName = params[0];
-			path = params[1];
-			value = params[2];
-			String timestampStr = params[3];
-			Long timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000)); //Data is stored in 15-second intervals
-			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
-			}
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(agentName).
-			append(":").
-			append(path);
-			
-			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(sb.toString());
-			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval("1");
-			commitedElem.setValue(value);
-			statList.add(commitedElem);
-		}
-		
-		return statList;
-	}
-	
 	public void processLogTrace(String trace) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		
@@ -481,20 +442,20 @@ public class StatisticsParser {
 		return statList;
 	}
 	
-	public List<StoreIncomingStatisticsElement> processThreadType(String line) {
+	public List<StoreIncomingStatisticsElement> processThreadsLiveByType(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		
-		String params[] = line.split(DELIMETER);
-		////"ThreadType: " + key + " " + val + " " + millis
+		//JSFlotAgent;java.lang.Thread;0;1272306420000
+		String[] params = line.split(DELIMETER);
 		String agentName;
-		String key;
-		String val;
+		String threadname;
+		String threadCount;
 		String timestampStr;
 		
 		if (params.length == 4) {
 			agentName = params[0];
-			key = params[1];
-			val = params[2];
+			threadname = params[1];
+			threadCount = params[2];
 			timestampStr = params[3];
 			Long timeperiod = 0l;
 			try {
@@ -503,16 +464,18 @@ public class StatisticsParser {
 			} catch (NumberFormatException nfe) {
 				System.err.println("Unable to read in timestamp");
 			}
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(agentName).append(":Threads:").append(threadname).append(":ThreadCount");
 			
-			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(agentName + ":Threads:" + key);
-			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
-			commitedElem.setValue(val);
-			statList.add(commitedElem);
+			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
+			maxElem.setGuiPath(sb.toString());
+			maxElem.setTimeperiod(timeperiod);
+			maxElem.setExecTime(null);
+			maxElem.setCallsPerInterval(null);
+			maxElem.setValue(threadCount);
+			statList.add(maxElem);
 		}
-		
 		return statList;
 	}
 	

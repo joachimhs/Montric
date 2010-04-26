@@ -6,8 +6,7 @@ import com.sun.btrace.aggregation.*;
 import static com.sun.btrace.BTraceUtils.*;
 
 @BTrace public class ThreadCounter {
-	private static Aggregation threadsStartedCount = newAggregation(AggregationFunction.COUNT);
-	private static Aggregation threadsReturnedCount = newAggregation(AggregationFunction.COUNT);
+	private static Aggregation threadsLiveCount = newAggregation(AggregationFunction.COUNT);
 	
 	@OnMethod(
         clazz="+java.lang.Thread",
@@ -17,7 +16,7 @@ import static com.sun.btrace.BTraceUtils.*;
     public static void threadEntry(@ProbeMethodName String probeMethod, @ProbeClassName String probeClass) { // all calls to the info methods with signature "(String)"
 		AggregationKey key = newAggregationKey(probeClass);
 		
-		addToAggregation(threadsStartedCount, key, 1);
+		addToAggregation(threadsLiveCount, key, 1);
     }
 
 	@OnMethod(
@@ -28,19 +27,15 @@ import static com.sun.btrace.BTraceUtils.*;
     public static void threadReturn(@ProbeMethodName String probeMethod, @ProbeClassName String probeClass) { // all calls to the info methods with signature "(String)"
 		AggregationKey key = newAggregationKey(probeClass);
 		
-		
-		addToAggregation(threadsReturnedCount, key, 1);
+		addToAggregation(threadsLiveCount, key, -1);
     }
 
 	@OnTimer(7500)
     public static void printAverage() {
-		//TotalExecTime: agentname package.Class method timeperiod exectime classType
-		//CallsPerInterval: agentname package.Class method timeperiod callsWithinTimeperiod classType
+		Long timePeriod = ((long)(timeNanos() / 15000000000l)*15000);
+		String timePeriodStr = strcat(str(timePeriod), "]");		
 		
-		String startedThreadFormat = strcat("[ThreadsStartedByType;", property("btrace.agentname"));
-		printAggregation("", threadsStartedCount,  strcat(startedThreadFormat, ";%1$s;%2$s]"));
-		println("");
-		String returnedThreadFormat = strcat("[ThreadsReturnedByType;", property("btrace.agentname"));
-		printAggregation("", threadsReturnedCount,  strcat(returnedThreadFormat, ";%1$s;%2$s]"));
+		String liveThreadFormat = strcat("[ValueInstrumentation;", property("btrace.agentname"));
+		printAggregation("", threadsLiveCount,  strcat(strcat(liveThreadFormat, ";Threads;%1$s:ThreadCount;%2$s;"), timePeriodStr));
     }
 } 
