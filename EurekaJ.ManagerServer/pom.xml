@@ -45,7 +45,7 @@
 					<plugin>
 						<artifactId>appassembler-maven-plugin</artifactId>
 						<groupId>org.codehaus.mojo</groupId>
-						<version>1.0-alpha-2</version>
+						<version>1.0</version>
 						<executions>
 							<execution>
 								<goals>
