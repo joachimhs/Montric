@@ -90,6 +90,17 @@
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>administrationMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaJ.manager.managed.AdministrationMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>administrationService</property-name>
+			<property-class>org.eurekaJ.manager.service.AdministrationService</property-class>
+			<value>#{administrationService}</value>
+		</managed-property>
+	</managed-bean>
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>

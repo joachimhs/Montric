@@ -492,11 +492,6 @@ public class StatisticsParser {
 		String timestampStr;
 
 		if (params.length == 7) {
-			
-			//"MemoryPool: " + memPool.getName() + " " + memPool.getUsage().getMax() + " "
-			//+ memPool.getUsage().getUsed() + " " + memPool.getUsage().getCommitted() + " " + memPool.getUsage().getInit() + " "
-			//+ (Calendar.getInstance().getTimeInMillis() - 5));
-
 			agentName = params[0];
 			name = params[1].replaceAll("_", " ");
 			maxMem = params[2];

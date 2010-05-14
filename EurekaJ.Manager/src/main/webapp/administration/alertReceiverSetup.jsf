@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+
+	<a4j:outputPanel id="alertReceiverSetupPanel">
+		<h:panelGrid columns="2" style="border: 1px dashed #999;" columnClasses="alignTop">
+			<h:graphicImage value="/images/Information_32x32.png"></h:graphicImage>
+			<h:outputText>
+				EurekaJ Manager allows the configuration of multiple alert receivers. A receiver can either be a set of email addresses or an SNMP Trap destination.<br /> 
+				To enable email receivers at least one email server needs to be configured in the "Email Servers" tab. Likewise, an SNMP Trap destination needs to be configures in the "SNMP Destinations" tab to enable SNMP Traps. <br />
+				Once atleast one receiver is set up, alert receivers can be specifies for each active alert. Alertpoints can be configured under the "Instrumentation" Tab for each available node.  
+			</h:outputText>
+		</h:panelGrid>
+		
+		<h:panelGrid columns="2" style="border: 1px dashed #999;" columnClasses="alignTop">
+		<rich:panel id="newEmailSenderPanel">
+			<f:facet name="header">
+				New Email Sender Configuration
+			</f:facet>
+	        <h:panelGrid columns="2">
+	        	<h:outputText value="Receiver name: " />
+	        	<h:inputText value="#{administrationMBean.newEmailSender.emailSenderName}" />
+	        	
+	        	<h:outputText value="Email Server: " />
+	        	<rich:comboBox value="#{administrationMBean.newEmailSender.emailServer}">
+	        		<f:selectItems value="#{administrationMBean.emailServerItems}"/>
+	        	</rich:comboBox>
+	        </h:panelGrid>
+	        <a4j:commandButton id="newEmailSenderButton" value="Add Email Sender" 
+	        	actionListener="#{administrationMBean.persistNewEmailSender}" reRender="newEmailSenderPanel"/>
+        </rich:panel>
+		
+		<h:outputText value=" " />
+		
+		<rich:dataTable id="emailSendersDataTable" value="#{administrationMBean.emailSenders}" var="emailSender">
+			<rich:column>
+				<f:facet name="header">Email Sender Name</f:facet>
+				<h:outputText value="#{emailSender.emailSenderName}"></h:outputText>
+			</rich:column>
+			
+			<rich:column>
+				<f:facet name="header">Commands</f:facet>
+				<a4j:commandButton value="Add email addresses" actionListener="#{administrationMBean.addEmailAddresses}" 
+					reRender="alertReceiverSetupPanel"/>
+			</rich:column>
+		</rich:dataTable>
+		
+		<h:panelGroup id="editSendersPanelGroup" rendered="#{administrationMBean.editEmailSenderSelected}">
+			<h:outputText value="New Email Address: " />
+			<h:inputText value="#{administrationMBean.newEmailAddress}" />
+			<a4j:commandButton value="Add" actionListener="#{administrationMBean.saveNewEmailAddress}" reRender="editSendersPanelGroup" />
+			<br />
+			<rich:dataTable id="editEmailSenderDataTable" rendered="#{administrationMBean.editEmailSenderSelected}" 
+				value="#{administrationMBean.editEmailSender.emailReceivers}"
+				var="receiver">
+				<rich:column>
+					<f:facet name="header">Email Address</f:facet>
+					<h:outputText value="#{receiver}"></h:outputText>
+				</rich:column>
+			</rich:dataTable>
+		</h:panelGroup>
+		
+		</h:panelGrid>
+    
+	</a4j:outputPanel>
+</ui:composition>

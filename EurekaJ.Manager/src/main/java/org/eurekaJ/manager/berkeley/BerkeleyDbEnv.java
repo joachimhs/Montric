@@ -19,6 +19,8 @@ public class BerkeleyDbEnv {
 	private EntityStore liveStatisticsStore;
 	private EntityStore groupedStatisticsStore;
 	private EntityStore alertStore;
+	private EntityStore smtpServerStore;
+	private EntityStore emailSenderStore;
 	private EntityStore logStore;
 	
 	public BerkeleyDbEnv() {
@@ -51,6 +53,8 @@ public class BerkeleyDbEnv {
 		liveStatisticsStore = new EntityStore(environment, "LiveStatisticsStore", storeConfig);
 		groupedStatisticsStore = new EntityStore(environment, "GroupedStatisticsStore", storeConfig);
 		alertStore = new EntityStore(environment, "AlertStore", storeConfig);
+		smtpServerStore = new EntityStore(environment, "SmtpServerStore", storeConfig);
+		emailSenderStore = new EntityStore(environment, "EmailSenderStore", storeConfig);
 		logStore = new EntityStore(environment, "logStore", storeConfig);
 	}
 	
@@ -68,6 +72,14 @@ public class BerkeleyDbEnv {
 	
 	public EntityStore getAlertStore() {
 		return alertStore;
+	}
+	
+	public EntityStore getSmtpServerStore() {
+		return smtpServerStore;
+	}
+	
+	public EntityStore getEmailSenderStore() {
+		return emailSenderStore;
 	}
 	
 	public EntityStore getGroupedStatisticsStore() {
@@ -111,6 +123,24 @@ public class BerkeleyDbEnv {
 				alertStore.close();
 			} catch (DatabaseException dbe) {
 				System.err.println("Error closing alertStore" + dbe.toString());
+                dbe.printStackTrace();
+			}
+		}
+		
+		if (smtpServerStore != null) {
+			try {
+				smtpServerStore.close();
+			} catch (DatabaseException dbe) {
+				System.err.println("Error closing smtpServerStore" + dbe.toString());
+                dbe.printStackTrace();
+			}
+		}
+		
+		if (emailSenderStore != null) {
+			try {
+				emailSenderStore.close();
+			} catch (DatabaseException dbe) {
+				System.err.println("Error closing emailSenderStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}

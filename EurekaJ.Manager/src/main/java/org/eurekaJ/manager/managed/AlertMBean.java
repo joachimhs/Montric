@@ -10,7 +10,7 @@ import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaJ.manager.perst.alert.Alert;
 import org.eurekaJ.manager.service.TreeMenuService;
 
-public class AlertMBean  implements AlertableMBean {
+public class AlertMBean implements AlertableMBean {
 	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
 	private TreeMenuNode selectedTreeMenuNode;

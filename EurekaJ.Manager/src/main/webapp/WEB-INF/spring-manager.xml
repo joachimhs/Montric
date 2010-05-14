@@ -26,6 +26,18 @@
 			<ref bean="treeMenuDao" />
 		</property>
 	</bean>
+	
+	<bean id="administrationDao" class="org.eurekaJ.manager.dao.berkeley.AdministrationDaoImpl">
+		<property name="dbEnvironment">
+			<ref bean="berkeleyDbEnv" />
+		</property>
+	</bean>
+	
+	<bean id="administrationService" class="org.eurekaJ.manager.service.AdministrationServiceImpl">
+		<property name="administrationDao">
+			<ref bean="administrationDao" />
+		</property>
+	</bean>
 
 	<!--
 		bean id="logDao" class="org.eurekaJ.manager.dao.berkeley.LogDaoImpl">

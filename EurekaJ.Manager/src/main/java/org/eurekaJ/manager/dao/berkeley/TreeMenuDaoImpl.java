@@ -14,7 +14,6 @@ import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.PrimaryIndex;
 
 public class TreeMenuDaoImpl implements TreeMenuDao {
-
 	private BerkeleyDbEnv dbEnvironment;
 	private PrimaryIndex<String, TreeMenuNode> treeMenuPrimaryIdx;
 	//statIndex = db.<LiveStatistics>createMultidimensionalIndex(LiveStatistics.class, new String[] {"guiPath", "timeperiod"}, true);

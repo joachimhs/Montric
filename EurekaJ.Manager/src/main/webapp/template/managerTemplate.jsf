@@ -34,7 +34,7 @@
 			Logview
 		</rich:tab>
 		<rich:tab id="administrationTab" label="Administration">
-			Administration
+			<ui:include src="/administration/administrationPanel.jsf"></ui:include>
 		</rich:tab>
 
 	</rich:tabPanel>

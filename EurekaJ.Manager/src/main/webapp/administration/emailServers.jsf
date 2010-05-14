@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
+
+	<a4j:outputPanel id="emailReceiverSetupPanel">
+		<h:panelGrid columns="1" columnClasses="alignTop">
+
+			<h:panelGrid columns="2" style="border: 1px dashed #999;"
+				columnClasses="alignTop">
+				<h:graphicImage value="/images/Information_32x32.png"></h:graphicImage>
+				<h:outputText>
+					- To change an already configures SMTP Server, select it from the table to the left. This will load its contents into the form to the right.<br />
+					- To create a new SMTP Server, fill in the "New SMTP Server Form" to the right and click the "Create / Edit new SMTP Server".<br />
+				</h:outputText>
+			</h:panelGrid>
+
+			<br />
+			<h:panelGrid columns="2" style="border: 1px dashed #999;" columnClasses="alignTop">
+				<rich:dataTable id="emailServerDataTable"
+					value="#{administrationMBean.emailServers}" var="emailServer">
+
+					<rich:column width="250">
+						<f:facet name="header">
+							<h:outputText value="Servername" />
+						</f:facet>
+						<h:outputText value="#{emailServer.smtpServer}"></h:outputText>
+					</rich:column>
+
+					<rich:column width="100">
+						<f:facet name="header">
+							<h:outputText value="Username" />
+						</f:facet>
+						<h:outputText value="#{emailServer.username}"></h:outputText>
+					</rich:column>
+					
+					<rich:column width="50">
+						<f:facet name="header">
+							<h:outputText value="SSL" />
+						</f:facet>
+						<h:outputText value="#{emailServer.useSSL}" />
+					</rich:column>
+					
+					<rich:column width="50">
+						<f:facet name="header">
+							<h:outputText value="Port" />
+						</f:facet>
+						<h:outputText value="#{emailServer.port}" />
+					</rich:column>
+
+					<rich:column width="100">
+						<f:facet name="header">
+							<h:outputText value="Controls" />
+						</f:facet>
+						<a4j:commandButton
+							actionListener="#{administrationMBean.editEmailServer}"
+							value="Edit SMTP Server &gt;&gt;" reRender="newEmailServerPanelGrid" />
+					</rich:column>
+				</rich:dataTable>
+
+				<rich:panel id="newServerPanel" styleClass="alignTop" bodyClass="alignTop">
+					<f:facet name="header">New / Edit SMTP Server</f:facet>
+					<h:panelGrid id="newEmailServerPanelGrid" columns="2" styleClass="alignTop" columnClasses="alignTop">
+						<h:outputText value="SMTP Server: "></h:outputText>
+						<h:inputText
+							value="#{administrationMBean.newEmailServer.smtpServer}"></h:inputText>
+
+						<h:outputText value="Username: "></h:outputText>
+						<h:inputText
+							value="#{administrationMBean.newEmailServer.username}"></h:inputText>
+
+						<h:outputText value="Password: "></h:outputText>
+						<h:inputSecret
+							value="#{administrationMBean.newEmailServer.password}"></h:inputSecret>
+							
+						<h:outputText value="Use SSL: "></h:outputText>
+						<h:selectBooleanCheckbox value="#{administrationMBean.newEmailServer.useSSL}"></h:selectBooleanCheckbox>
+						
+						<h:outputText value="Port: "></h:outputText>
+						<h:inputText
+							value="#{administrationMBean.newEmailServer.port}"></h:inputText>
+					</h:panelGrid>
+					<a4j:commandButton value="Create/Edit new SMTP Server"
+							actionListener="#{administrationMBean.persistNewEmailServer}"
+							reRender="emailReceiverSetupPanel" />
+					<a4j:commandButton value="Reset form"
+						actionListener="#{administrationMBean.resetNewEmailForm}"
+						reRender="newEmailServerPanelGrid" />
+				</rich:panel>
+			</h:panelGrid>
+		</h:panelGrid>
+	</a4j:outputPanel>
+</ui:composition>
