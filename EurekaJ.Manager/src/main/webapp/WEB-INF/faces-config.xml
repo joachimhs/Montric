@@ -85,6 +85,11 @@
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
+			<property-name>administrationService</property-name>
+			<property-class>org.eurekaj.manager.service.AdministrationService</property-class>
+			<value>#{administrationService}</value>
+		</managed-property>
+		<managed-property>
 			<property-name>userMBean</property-name>
 			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
@@ -99,6 +104,22 @@
 			<property-name>administrationService</property-name>
 			<property-class>org.eurekaj.manager.service.AdministrationService</property-class>
 			<value>#{administrationService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>dashboardMBean</managed-bean-name>
+		<managed-bean-class>org.eurekaj.manager.managed.DashboardMBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>dashboardService</property-name>
+			<property-class>org.eurekaj.manager.service.DashboardService</property-class>
+			<value>#{dashboardService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>treeMenuService</property-name>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
+			<value>#{treeMenuService}</value>
 		</managed-property>
 	</managed-bean>
 
