@@ -38,6 +38,19 @@
 			<ref bean="administrationDao" />
 		</property>
 	</bean>
+	
+	
+	<bean id="dashboardDao" class="org.eurekaj.manager.dao.berkeley.BerkeleyDashboardDao">
+		<property name="dbEnvironment">
+			<ref bean="berkeleyDbEnv" />
+		</property>
+	</bean>
+	
+	<bean id="dashboardService" class="org.eurekaj.manager.service.BerkeleyDashboardService">
+		<property name="dashboardDao">
+			<ref bean="dashboardDao" />
+		</property>
+	</bean>
 
 	<!--
 		bean id="logDao" class="org.eurekaj.manager.dao.berkeley.LogDaoImpl">
@@ -53,10 +66,23 @@
 		</property>
 	</bean>
 
+	<!-- Executors -->
+	<bean id="sendEmailExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="15" />
+	</bean>
+	<!-- //Executors -->
+	
 	<!-- Timers -->
 	<bean id="alertValidatorTask" class="org.eurekaj.manager.alert.AlertValidatorTask">
 		<property name="treeMenuService">
 			<ref bean="treeMenuService" />
+		</property>
+		<property name="administrationService">
+			<ref bean="administrationService" />
+		</property>
+		<property name="sendEmailExecutor">
+			<ref bean="sendEmailExecutor" />
 		</property>
 	</bean>
 
