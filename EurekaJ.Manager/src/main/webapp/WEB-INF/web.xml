@@ -78,12 +78,6 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- ProcessStatisticsServlet -->
-	<servlet>
-		<servlet-name>ProcessStatisticsServlet</servlet-name>
-		<servlet-class>org.eurekaJ.manager.servlets.ProcessStatisticsServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
 	
 	<!-- CXF Webservice Servlet -->
 	<servlet>
@@ -94,13 +88,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!-- //CXF Webservice Servlet -->
-
-	<!-- extension mapping -->
-	<servlet-mapping>
-		<servlet-name>ProcessStatisticsServlet</servlet-name>
-		<url-pattern>/ProcessStatisticsServlet</url-pattern>
-	</servlet-mapping>
-	
 	
 
 	<!-- Faces Servlet -->

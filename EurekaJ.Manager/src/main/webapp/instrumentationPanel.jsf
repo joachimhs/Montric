@@ -8,65 +8,82 @@
 	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
 
 	<rich:panel id="timePeriodPanel" style="width: 100%">
-		<f:facet name="header">TimePeriod</f:facet>
-		<h:panelGrid columns="4" width="100%">
-			<h:panelGroup>From: <rich:calendar locale="NO" popup="true" showApplyButton="true"
-				cellWidth="24px" cellHeight="22px" style="width:200px"
-				disabled="#{chartMBean.showLiveData}" required="true"
-				value="#{chartMBean.showChartFrom}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
-			
-			<h:panelGroup>To: <rich:calendar locale="NO" popup="true" showApplyButton="true"
-				cellWidth="24px" cellHeight="22px" style="width:200px"
-				disabled="#{chartMBean.showLiveData}" required="true"
-				value="#{chartMBean.showChartTo}" datePattern="dd/MM/yy HH:mm"></rich:calendar></h:panelGroup>
+		<f:facet name="header">Time Period</f:facet>
+		<rich:tabPanel id="timePeriodTimePanel"  width="600">
+			<rich:tab id="liveTab" label="Live Data" actionListener="#{chartMBean.selectLiveDataTab}">
+				<h:panelGroup>Chart Timespan: <h:selectOneListbox label="Chart Timespan" id="liveDataChartTimespanListbox"
+					value="#{chartMBean.chartTimespan}" size="1">
+					<f:selectItem itemLabel="10 minutes" itemValue="10" />
+					<f:selectItem itemLabel="20 minutes" itemValue="20" />
+					<f:selectItem itemLabel="30 minutes" itemValue="30" />
+					<f:selectItem itemLabel="60 minutes" itemValue="60" />
+					<f:selectItem itemLabel="2 hours" itemValue="120" />
+					<f:selectItem itemLabel="6 hours" itemValue="360" />
+					<f:selectItem itemLabel="12 hours" itemValue="720" />
+					<f:selectItem itemLabel="24 hours" itemValue="1440" />
+					<a4j:support event="onchange" ajaxSingle="true"
+						reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+				</h:selectOneListbox></h:panelGroup>
 				
-			<h:selectBooleanCheckbox title="Show Live Data (Last 10 minutes)"
-				value="#{chartMBean.showLiveData}"
-				label="Show Live Data (Last 10 minutes)">
-				<h:outputText value="Show Live Data" />
-				<a4j:support event="onchange"
-					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
-			</h:selectBooleanCheckbox>
-			
-			<h:outputText id="instrPanelDummyText"></h:outputText>
-			
-			<h:panelGroup>Chart Timespan: <h:selectOneListbox label="Chart Timespan" id="chartTimespanListbox"
-				value="#{chartMBean.chartTimespan}" size="1">
-				<f:selectItem itemLabel="10 minutes" itemValue="10" />
-				<f:selectItem itemLabel="20 minutes" itemValue="20" />
-				<f:selectItem itemLabel="30 minutes" itemValue="30" />
-				<f:selectItem itemLabel="60 minutes" itemValue="60" />
-				<f:selectItem itemLabel="2 hours" itemValue="120" />
-				<f:selectItem itemLabel="6 hours" itemValue="360" />
-				<f:selectItem itemLabel="12 hours" itemValue="720" />
-				<f:selectItem itemLabel="24 hours" itemValue="1440" />
-				<a4j:support event="onchange" ajaxSingle="true"
-					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
-			</h:selectOneListbox></h:panelGroup>
-			
-			<h:panelGroup>Chart Resolution: <h:selectOneListbox label="Chart Resolution"
-				id="chartResolutionListbox" value="#{chartMBean.chartResolution}"
-				size="1">
-				<f:selectItem itemLabel="15 seconds" itemValue="15" />
-				<f:selectItem itemLabel="30 seconds" itemValue="30" />
-				<f:selectItem itemLabel="45 seconds" itemValue="45" />
-				<f:selectItem itemLabel="60 seconds" itemValue="60" />
-				<f:selectItem itemLabel="3 minutes" itemValue="180" />
-				<f:selectItem itemLabel="10 minutes" itemValue="600" />
-				<f:selectItem itemLabel="20 minutes" itemValue="1200" />
-				<f:selectItem itemLabel="40 minutes" itemValue="2400" />
-				<a4j:support event="onchange" ajaxSingle="true"
-					reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
-			</h:selectOneListbox></h:panelGroup>
-			
-			<h:outputText id="instrPanelDummyText2"></h:outputText>
-			
-			<a4j:commandButton value="Update Chart"
-				actionListener="#{chartMBean.updateChart}"
-				reRender="chartOutputPanel"></a4j:commandButton>
+				<h:panelGroup>Chart Resolution: <h:selectOneListbox label="Chart Resolution"
+					id="liveDataChartResolutionListbox" value="#{chartMBean.chartResolution}"
+					size="1">
+					<f:selectItem itemLabel="15 seconds" itemValue="15" />
+					<f:selectItem itemLabel="30 seconds" itemValue="30" />
+					<f:selectItem itemLabel="45 seconds" itemValue="45" />
+					<f:selectItem itemLabel="60 seconds" itemValue="60" />
+					<f:selectItem itemLabel="3 minutes" itemValue="180" />
+					<f:selectItem itemLabel="10 minutes" itemValue="600" />
+					<f:selectItem itemLabel="20 minutes" itemValue="1200" />
+					<f:selectItem itemLabel="40 minutes" itemValue="2400" />
+					<a4j:support event="onchange" ajaxSingle="true"
+						reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+				</h:selectOneListbox></h:panelGroup>
 				
-				
-		</h:panelGrid>
+				<a4j:commandButton value="Update Chart"
+						actionListener="#{chartMBean.updateChart}"
+						reRender="chartOutputPanel"></a4j:commandButton>
+			</rich:tab>
+			<rich:tab id="customTimeTab" label="Custom Time Period" actionListener="#{chartMBean.selectCustomDataTab}" >
+				<h:panelGrid columns="5" width="550" style="width: 550px;">
+					<h:outputText id="customTimeFromLabel" value="From: " />
+					<h:panelGroup><rich:calendar locale="NO" popup="true" showApplyButton="true"
+						cellWidth="24px" cellHeight="22px" style="width:200px"
+						disabled="#{chartMBean.showLiveData}" required="true"
+						value="#{chartMBean.showChartFrom}" datePattern="dd/MM/yy HH:mm" /></h:panelGroup>
+					<h:outputText id="dummyOutput1" value="" />
+					<h:outputText id="dummyOutput2" value="" />
+					<h:outputText id="dummyOutput3" value="" />
+					
+					<h:outputText id="customTimeToLabel" value="To: " />
+					<rich:calendar locale="NO" popup="true" showApplyButton="true"
+						cellWidth="24px" cellHeight="22px" style="width:200px"
+						disabled="#{chartMBean.showLiveData}" required="true"
+						value="#{chartMBean.showChartTo}" datePattern="dd/MM/yy HH:mm" />
+					
+					<h:outputText id="customTimeChartResolutionLabel" value="Chart Resolution: " />
+					<h:selectOneListbox label="Chart Resolution"
+						id="customTimeChartResolutionListbox" value="#{chartMBean.chartResolution}"
+						size="1">
+						<f:selectItem itemLabel="15 seconds" itemValue="15" />
+						<f:selectItem itemLabel="30 seconds" itemValue="30" />
+						<f:selectItem itemLabel="45 seconds" itemValue="45" />
+						<f:selectItem itemLabel="60 seconds" itemValue="60" />
+						<f:selectItem itemLabel="3 minutes" itemValue="180" />
+						<f:selectItem itemLabel="10 minutes" itemValue="600" />
+						<f:selectItem itemLabel="20 minutes" itemValue="1200" />
+						<f:selectItem itemLabel="40 minutes" itemValue="2400" />
+						<a4j:support event="onchange" ajaxSingle="true"
+							reRender="timePeriodPanel, chartOutputPanel"></a4j:support>
+					</h:selectOneListbox>
+					
+					<a4j:commandButton value="Update Chart"
+						actionListener="#{chartMBean.updateChart}"
+						reRender="chartOutputPanel"></a4j:commandButton>
+						
+				</h:panelGrid>
+			</rich:tab>
+		</rich:tabPanel>
 	</rich:panel>
 
 </ui:composition>

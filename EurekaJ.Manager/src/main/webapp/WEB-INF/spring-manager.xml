@@ -11,50 +11,50 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	
-	<bean id="berkeleyDbEnv" class="org.eurekaJ.manager.berkeley.BerkeleyDbEnv">
+	<bean id="berkeleyDbEnv" class="org.eurekaj.manager.berkeley.BerkeleyDbEnv">
 
 	</bean>
 
-	<bean id="treeMenuDao" class="org.eurekaJ.manager.dao.berkeley.TreeMenuDaoImpl">
+	<bean id="treeMenuDao" class="org.eurekaj.manager.dao.berkeley.TreeMenuDaoImpl">
 		<property name="dbEnvironment">
 			<ref bean="berkeleyDbEnv" />
 		</property>
 	</bean>
 
-	<bean id="treeMenuService" class="org.eurekaJ.manager.service.TreeMenuServiceImpl">
+	<bean id="treeMenuService" class="org.eurekaj.manager.service.TreeMenuServiceImpl">
 		<property name="treeMenuDao">
 			<ref bean="treeMenuDao" />
 		</property>
 	</bean>
 	
-	<bean id="administrationDao" class="org.eurekaJ.manager.dao.berkeley.AdministrationDaoImpl">
+	<bean id="administrationDao" class="org.eurekaj.manager.dao.berkeley.AdministrationDaoImpl">
 		<property name="dbEnvironment">
 			<ref bean="berkeleyDbEnv" />
 		</property>
 	</bean>
 	
-	<bean id="administrationService" class="org.eurekaJ.manager.service.AdministrationServiceImpl">
+	<bean id="administrationService" class="org.eurekaj.manager.service.AdministrationServiceImpl">
 		<property name="administrationDao">
 			<ref bean="administrationDao" />
 		</property>
 	</bean>
 
 	<!--
-		bean id="logDao" class="org.eurekaJ.manager.dao.berkeley.LogDaoImpl">
+		bean id="logDao" class="org.eurekaj.manager.dao.berkeley.LogDaoImpl">
 		<property name="dbEnvironment"> <ref bean="berkeleyDbEnv" />
 		</property> </bean> <bean id="logService"
-		class="org.eurekaJ.manager.service.LogServiceImpl"> <property
+		class="org.eurekaj.manager.service.LogServiceImpl"> <property
 		name="logDao"> <ref bean="logDao" /> </property> </bean
 	-->
 
-	<bean id="statisticsParser" class="org.eurekaJ.manager.service.StatisticsParser">
+	<bean id="statisticsParser" class="org.eurekaj.manager.service.StatisticsParser">
 		<property name="treeMenuService">
 			<ref bean="treeMenuService" />
 		</property>
 	</bean>
 
 	<!-- Timers -->
-	<bean id="alertValidatorTask" class="org.eurekaJ.manager.alert.AlertValidatorTask">
+	<bean id="alertValidatorTask" class="org.eurekaj.manager.alert.AlertValidatorTask">
 		<property name="treeMenuService">
 			<ref bean="treeMenuService" />
 		</property>
@@ -85,7 +85,7 @@
 	<!-- //Timers -->
 	
 	<!-- Webservices -->
-	<bean id="eurekaJWebservice" class="org.eurekaJ.ws.eurekaJService.EurekaJWebserviceImpl">
+	<bean id="eurekaJWebservice" class="org.eurekaj.ws.eurekaJService.EurekaJWebserviceImpl">
 		<property name="treeMenuService">
 			<ref bean="treeMenuService" />
 		</property>

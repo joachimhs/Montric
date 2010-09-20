@@ -10,7 +10,7 @@
 	<a4j:outputPanel id="selectedGroupOutput">
 		<h:outputText id="selectedGroupText"
 			value="Selected group: #{userMBean.selectedPath}"></h:outputText><br />
-		<rich:spacer height="5"></rich:spacer>h
+		<rich:spacer height="5"></rich:spacer>
 		
 		<h:panelGrid columns="2" style="border: 1px dashed #999;" columnClasses="alignTop">
 			<h:graphicImage value="/images/Information_32x32.png"></h:graphicImage>

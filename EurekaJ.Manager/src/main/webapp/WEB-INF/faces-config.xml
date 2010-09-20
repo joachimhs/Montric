@@ -7,97 +7,97 @@
 		
 	<managed-bean>
 		<managed-bean-name>userMBean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.UserMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.UserMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>treeMenuMBean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.TreeMenuMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.TreeMenuMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeMenuService</property-name>
-			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>userMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>chartMBean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.ChartMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.ChartMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeMenuService</property-name>
-			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>userMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>navigationMbean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.NavigationMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.NavigationMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeMenuService</property-name>
-			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>userMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>groupInstrumentationMbean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.GroupInstrumentationMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.GroupInstrumentationMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeMenuService</property-name>
-			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>userMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>alertMBean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.AlertMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.AlertMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>treeMenuService</property-name>
-			<property-class>org.eurekaJ.manager.service.TreeMenuService</property-class>
+			<property-class>org.eurekaj.manager.service.TreeMenuService</property-class>
 			<value>#{treeMenuService}</value>
 		</managed-property>
 		<managed-property>
 			<property-name>userMBean</property-name>
-			<property-class>org.eurekaJ.manager.managed.UserMBean</property-class>
+			<property-class>org.eurekaj.manager.managed.UserMBean</property-class>
 			<value>#{userMBean}</value>
 		</managed-property>
 	</managed-bean>
 	
 	<managed-bean>
 		<managed-bean-name>administrationMBean</managed-bean-name>
-		<managed-bean-class>org.eurekaJ.manager.managed.AdministrationMBean</managed-bean-class>
+		<managed-bean-class>org.eurekaj.manager.managed.AdministrationMBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<property-name>administrationService</property-name>
-			<property-class>org.eurekaJ.manager.service.AdministrationService</property-class>
+			<property-class>org.eurekaj.manager.service.AdministrationService</property-class>
 			<value>#{administrationService}</value>
 		</managed-property>
 	</managed-bean>

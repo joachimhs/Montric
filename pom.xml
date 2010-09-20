@@ -14,9 +14,9 @@
 		<module>EurekaJ.ManagerServer</module>
 		<module>EurekaJ.Proxy</module>
 	</modules>
-	
+
 	<build>
-		<!-- directory>/Volumes/ramdisk/testtarget</directory-->
+		<!-- directory>/Volumes/ramdisk/testtarget</directory -->
 	</build>
 
 	<dependencies>
@@ -59,7 +59,7 @@
 			<dependency>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>7.0.1.v20091125</version>
+				<version>7.1.6.v20100715</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-dbcp</groupId>
@@ -130,12 +130,12 @@
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-server</artifactId>
-				<version>7.0.1.v20091125</version>
+				<version>7.1.6.v20100715</version>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-jmx</artifactId>
-				<version>7.0.1.v20091125</version>
+				<version>7.1.6.v20100715</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
@@ -194,16 +194,16 @@
 		</repository>
 		<repository>
 			<id>eurekaj repo</id>
-                        <name>CodeHaus EurekaJ Repo</name>
-                        <url>https://dav.codehaus.org/repository/eurekaj</url>
-                        <layout>default</layout>
+			<name>CodeHaus EurekaJ Repo</name>
+			<url>https://dav.codehaus.org/repository/eurekaj</url>
+			<layout>default</layout>
 		</repository>
 		<repository>
-                        <id>Oracle Repo</id>
-                        <name>Oracle Repo</name>
-                        <url>http://download.oracle.com/</url>
-                        <layout>default</layout>
-                </repository>
+			<id>Oracle Repo</id>
+			<name>Oracle Repo</name>
+			<url>http://download.oracle.com/</url>
+			<layout>default</layout>
+		</repository>
 		<!-- JBoss RichFaces Repository -->
 		<repository>
 			<releases>

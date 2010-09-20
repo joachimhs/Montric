@@ -28,7 +28,7 @@
 			</a4j:outputPanel>
 		</rich:tab>
 		<rich:tab id="dashboardTab" label="Dashboards">
-			Dashboard
+			<ui:include src="/administration/dashboardPanel.jsf"></ui:include>
 		</rich:tab>
 		<rich:tab id="logviewTab" label="Logview">
 			Logview

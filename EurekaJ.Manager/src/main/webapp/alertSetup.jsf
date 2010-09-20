@@ -32,9 +32,19 @@
 			Error Value: <h:inputText id="errorValue" size="15" value="#{alertMBean.alert.errorValue}" /> Warning Value: <h:inputText size="15" value="#{alertMBean.alert.warningValue}"/>
 			Alert Type: <h:selectOneListbox size="1" value="#{alertMBean.alert.selectedAlertType}"><f:selectItems value="#{alertMBean.alertTypes}" /></h:selectOneListbox> Alert Delay: <rich:inputNumberSpinner value="#{alertMBean.alert.alertDelay}" />
 			Alert On: <h:selectOneListbox size="1" value="#{alertMBean.alert.alertOn}"><f:selectItems value="#{alertMBean.alertOnTypes}" /></h:selectOneListbox> <h:outputText /> <h:outputText />
-			<a4j:commandButton value="Save Alert" actionListener="#{alertMBean.saveAlert}" reRender="alertSetupPanel" />
 		</h:panelGrid>
 		
+		<h:panelGrid columns="1" rendered="#{alertMBean.nodeAlertable}">
+			<h:outputText value="Select an Email Sender that will be alerted when either the Warning or Critical Threadholds have been breached. " />
+			<rich:pickList
+				sourceListWidth="300" targetListWidth="300"  
+				value="#{alertMBean.selectedEmailSenderList}">
+				<f:selectItems value="#{alertMBean.availableEmailSenderList}" />
+				<a4j:support ajaxSingle="true" event="onlistchanged"
+					reRender="result" />
+			</rich:pickList>
+			<a4j:commandButton value="Save Alert" actionListener="#{alertMBean.saveAlert}" reRender="alertSetupPanel" />
+		</h:panelGrid>
 		
 	</a4j:outputPanel>
 </ui:composition>

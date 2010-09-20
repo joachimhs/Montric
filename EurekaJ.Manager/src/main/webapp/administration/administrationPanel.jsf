@@ -10,14 +10,8 @@
 	<a4j:outputPanel id="administrationSetupPanel">
 		<rich:tabPanel switchType="ajax" style="width: 100%;"
 			contentStyle="width: 100%;">
-			<rich:tab id="alertSetupTab" label="Alert Receivers">
-				<ui:include src="/administration/alertReceiverSetup.jsf"></ui:include>
-			</rich:tab>
-			<rich:tab id="emailServerTab" label="Email Servers">
-				<ui:include src="/administration/emailServers.jsf"></ui:include>
-			</rich:tab>
-			<rich:tab id="snmpDestinationTab" label="SNMP Destinations">
-				<ui:include src="/administration/snmpDestinations.jsf"></ui:include>
+			<rich:tab id="emailGroupsTab" label="Email Recipient Groups">
+				<ui:include src="/administration/emailRecipientsGroups.jsf"></ui:include>
 			</rich:tab>
 		</rich:tabPanel>
 
