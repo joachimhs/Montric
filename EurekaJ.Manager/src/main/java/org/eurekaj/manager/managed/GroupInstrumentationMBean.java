@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,9 +7,9 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.service.TreeMenuService;
 
 public class GroupInstrumentationMBean  implements AlertableMBean {
 	private UserMBean userMBean;

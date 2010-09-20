@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.berkeley.statistics;
+package org.eurekaj.manager.berkeley.statistics;
 
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;

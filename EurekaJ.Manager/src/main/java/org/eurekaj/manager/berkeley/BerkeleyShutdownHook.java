@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.berkeley;
+package org.eurekaj.manager.berkeley;
 
 public class BerkeleyShutdownHook extends Thread {
 	private BerkeleyDbEnv dbEnv;

@@ -1,9 +1,9 @@
-package org.eurekaJ.manager.service;
+package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.logentry.LogEntry;
-import org.eurekaJ.manager.dao.berkeley.LogDao;
+import org.eurekaj.manager.berkeley.logentry.LogEntry;
+import org.eurekaj.manager.dao.berkeley.LogDao;
 
 
 public class LogServiceImpl implements LogService {

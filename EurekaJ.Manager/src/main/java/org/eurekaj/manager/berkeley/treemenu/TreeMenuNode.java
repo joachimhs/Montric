@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.berkeley.treemenu;
+package org.eurekaj.manager.berkeley.treemenu;
 
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;

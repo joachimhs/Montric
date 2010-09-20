@@ -1,8 +1,8 @@
-package org.eurekaJ.manager.service;
+package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.logentry.LogEntry;
+import org.eurekaj.manager.berkeley.logentry.LogEntry;
 
 public interface LogService {
 

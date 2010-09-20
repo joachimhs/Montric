@@ -1,9 +1,12 @@
-package org.eurekaJ.manager.perst.alert;
+package org.eurekaj.manager.perst.alert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
-@Entity
+@Entity(version=1)
 public class Alert implements Comparable<Alert>{
 	public static final int IDLE = 0;
 	public static final int NORMAL = 1;
@@ -29,6 +32,7 @@ public class Alert implements Comparable<Alert>{
 	private int selectedAlertType = GREATER_THAN;
 	private long alertDelay = 0;
 	private int status = NORMAL;
+	private List<String> selectedEmailSenderList = new ArrayList<String>();
 	
 	public Alert() {
 		super();
@@ -159,7 +163,19 @@ public class Alert implements Comparable<Alert>{
 		this.alertOn = alertOn;
 	}
 	
+	public List<String> getSelectedEmailSenderList() {
+		return selectedEmailSenderList;
+	}
+	
+	public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
+		this.selectedEmailSenderList = selectedEmailSenderList;
+	}
+	
 	public String getStatusString() {
+		return getStatusString(status);
+	}
+	
+	public static String getStatusString(int status) {
 		if (status == 0) {
 			return "IDLE";
 		} else if (status == 1) {

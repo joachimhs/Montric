@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.model.calltrace;
+package org.eurekaj.manager.model.calltrace;
 
 public class CallTraceRow {
 	private Long headid;

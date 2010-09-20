@@ -1,14 +1,14 @@
-package org.eurekaJ.manager.dao.berkeley;
+package org.eurekaj.manager.dao.berkeley;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.BerkeleyDbEnv;
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.berkeley.statistics.LiveStatisticsPk;
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.berkeley.BerkeleyDbEnv;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkeley.statistics.LiveStatisticsPk;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 
 import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.PrimaryIndex;

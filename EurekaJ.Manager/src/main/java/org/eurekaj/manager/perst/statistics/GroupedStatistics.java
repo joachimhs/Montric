@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.perst.statistics;
+package org.eurekaj.manager.perst.statistics;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,21 +1,16 @@
-package org.eurekaJ.manager.dao.berkeley;
+package org.eurekaj.manager.dao.berkeley;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkley.administration.EmailSender;
-import org.eurekaJ.manager.berkley.administration.EmailServer;
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 
 public interface AdministrationDao {
 
-	public List<EmailServer> getEmailServers();
+	public List<EmailRecipientGroup> getEmailRecipientGroups();
 	
-	public EmailServer getEmailServer(String servername);
+	public EmailRecipientGroup getEmailRecipientGroup(String groupName);
 	
-	public void persistEmailServer(EmailServer emailServer);
+	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 	
-	public List<EmailSender> getEmailSenders();
-	
-	public EmailSender getEmailSender(String senderName);
-	
-	public void persistEmailSender(EmailSender emailSender);
+	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 }

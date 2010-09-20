@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 public interface AlertableMBean {
 	public void processPathChange();

@@ -1,7 +1,8 @@
 package org.eurekaJ.manager.alert;
 
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.perst.alert.Alert;
+import org.eurekaj.manager.alert.AlertValidatorTask;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.perst.alert.Alert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

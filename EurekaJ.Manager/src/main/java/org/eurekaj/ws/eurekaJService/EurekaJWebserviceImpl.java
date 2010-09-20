@@ -1,14 +1,14 @@
-package org.eurekaJ.ws.eurekaJService;
+package org.eurekaj.ws.eurekaJService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.ws.Holder;
 
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.webservice.AlertOnType;
 import org.eurekaj.webservice.AlertStatusType;
 import org.eurekaj.webservice.AlertType;
@@ -35,7 +35,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 	public List<LiveStatisticsResponseElement> getLiveStatistics(String guiPath, Long resolutionMs, long minTimeperiod, long maxTimeperiod) {
 		List<LiveStatistics> lsList = treeMenuService.getLiveStatistics(guiPath, minTimeperiod, maxTimeperiod);
 		List<LiveStatisticsResponseElement> retList = new ArrayList<LiveStatisticsResponseElement>();
-		for (org.eurekaJ.manager.berkeley.statistics.LiveStatistics ls : lsList) {
+		for (LiveStatistics ls : lsList) {
 			LiveStatisticsResponseElement stat = new LiveStatisticsResponseElement();
 			stat.setGuiPath(ls.getPk().getGuiPath());
 			stat.setTimePeriod(ls.getPk().getTimeperiod());

@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.berkeley.logentry;
+package org.eurekaj.manager.berkeley.logentry;
 
 import com.sleepycat.persist.model.KeyField;
 import com.sleepycat.persist.model.Persistent;

@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,22 @@ import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.service.AdministrationService;
+import org.eurekaj.manager.service.TreeMenuService;
 
 public class AlertMBean implements AlertableMBean {
 	private UserMBean userMBean;
 	private TreeMenuService treeMenuService;
+	private AdministrationService administrationService;
 	private TreeMenuNode selectedTreeMenuNode;
 	private List<SelectItem> alertTypes;
 	private List<SelectItem> alertOnTypes;
 	private Alert alert;
+	private List<SelectItem> availableEmailSenderList;
+	private List<String> selectedEmailSenderList;
 	
 	public AlertMBean() {
 		alertTypes = new ArrayList<SelectItem>();
@@ -25,6 +30,8 @@ public class AlertMBean implements AlertableMBean {
 		alertTypes.add(new SelectItem(Alert.EQUALS, "Equals"));
 		
 		alertOnTypes = new ArrayList<SelectItem>();
+		
+		availableEmailSenderList = new ArrayList<SelectItem>();
 	}
 	
 	public UserMBean getUserMBean() {
@@ -42,6 +49,15 @@ public class AlertMBean implements AlertableMBean {
 	
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
 		this.treeMenuService = treeMenuService;
+	}
+	
+	public AdministrationService getAdministrationService() {
+		return administrationService;
+	}
+	
+	public void setAdministrationService(
+			AdministrationService administrationService) {
+		this.administrationService = administrationService;
 	}
 		
 	public TreeMenuNode getSelectedTreeMenuNode() {
@@ -73,6 +89,13 @@ public class AlertMBean implements AlertableMBean {
 	} 
 	
 	public void saveAlert(ActionEvent event) {
+		List<String> emails = new ArrayList<String>();
+		
+		for (String email : selectedEmailSenderList) {
+			emails.add(email);
+		}
+		
+		this.alert.setSelectedEmailSenderList(emails);
 		treeMenuService.persistAlert(this.alert);
 	}
 	
@@ -80,8 +103,25 @@ public class AlertMBean implements AlertableMBean {
 		return selectedTreeMenuNode != null;
 	}
 	
+	public List<SelectItem> getAvailableEmailSenderList() {
+		return availableEmailSenderList;
+	}
+	
+	public void setAvailableEmailSenderList(
+			List<SelectItem> availableEmailSenderList) {
+		this.availableEmailSenderList = availableEmailSenderList;
+	}
+	
 	public void navigateToTab(ActionEvent event) {
 		updateModelAfterPathChange();
+	}
+	
+	public List<String> getSelectedEmailSenderList() {
+		return selectedEmailSenderList;
+	}
+	
+	public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
+		this.selectedEmailSenderList = selectedEmailSenderList;
 	}
 	
 	private void updateModelAfterPathChange() {
@@ -110,6 +150,16 @@ public class AlertMBean implements AlertableMBean {
 				this.alert.setGuiPath(selectedPath);
 			}
 		}
+		
+		availableEmailSenderList = new ArrayList<SelectItem>();
+		selectedEmailSenderList = new ArrayList<String>();
+		selectedEmailSenderList.addAll(this.alert.getSelectedEmailSenderList());
+		List<EmailRecipientGroup> emailRecipientGroupList = administrationService.getEmailRecipientGroups();
+		for (EmailRecipientGroup emailRecipientGroup : emailRecipientGroupList) {
+			availableEmailSenderList.add(new SelectItem(emailRecipientGroup.getEmailRecipientGroupName(), emailRecipientGroup.getEmailRecipientGroupName()));
+		}
+		
+		availableEmailSenderList.removeAll(selectedEmailSenderList);
 	}
 	
 	@Override

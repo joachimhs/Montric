@@ -1,39 +1,30 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.service.TreeMenuService;
+import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.components.FlotChartClickedEvent;
 import org.jsflot.components.FlotChartDraggedEvent;
 import org.jsflot.xydata.XYDataList;
-import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
 
 public class ChartMBean implements AlertableMBean {
 	private UserMBean userMBean;
 	private TreeMenuService treeMenuService; 
 	private static Logger log = Logger.getLogger(ChartMBean.class);
-	
-	/* Chart Data. Consider moving to a seperate ChartMBean */
-	private boolean showChart = false;
-	private boolean showValueChart = false;
-	private boolean showCallsPerIntervalChart = false;
-	private XYDataSetCollection avgExecCollection;
+
 	private XYDataSetCollection valueCollection;
-	private XYDataSetCollection callsPerIntervalCollection;
-	private XYDataSetCollection totalExecCollection;
 	private List<LiveStatistics> liveList;
 	private String valueChartTitle = "";
 	private String callsPerIntervalChartTitle = "";
@@ -56,10 +47,7 @@ public class ChartMBean implements AlertableMBean {
 		setShowChartTo(toCal.getTime());
 		setShowChartFrom(fromCal.getTime());
 		showLiveData = true;
-		avgExecCollection = new XYDataSetCollection();
-		totalExecCollection = new XYDataSetCollection();
 		valueCollection = new XYDataSetCollection();
-		callsPerIntervalCollection = new XYDataSetCollection();
 	}
 	
 	public UserMBean getUserMBean() {
@@ -80,219 +68,11 @@ public class ChartMBean implements AlertableMBean {
 	}
 	
 	public Long getMinXAxis() {
-		Long retVal = showChartFrom.getTime();
-		if (retVal != null) {
-			int offsetMiutes = showChartFrom.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-			retVal -= (offsetMiutes * 60 * 1000);
-		}
-		
-		return retVal;
+		return ChartUtil.getMinXAxis(showChartFrom);
 	}
 	
 	public Long getMaxXAxis() {
-		Long retVal = showChartTo.getTime();
-		if (retVal != null) {
-			int offsetMiutes = showChartTo.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-			retVal -= (offsetMiutes * 60 * 1000) + 15000;
-		}
-		
-		return retVal;
-	}
-	
-	private void generateDataset(List<LiveStatistics> liveList, String seriesLabel, Alert alert) {
-		XYDataList execList = new XYDataList();
-		execList.setLabel(seriesLabel);
-		execList.setFillLines(true);
-		execList.setShowDataPoints(true);
-		XYDataList totalList = new XYDataList();
-		totalList.setLabel(seriesLabel);
-		totalList.setFillLines(true);
-		totalList.setShowDataPoints(true);
-		XYDataList callsList = new XYDataList();
-		callsList.setLabel(seriesLabel);
-		callsList.setFillLines(true);
-		callsList.setShowDataPoints(true);
-		XYDataList valueList = new XYDataList();
-		valueList.setLabel(seriesLabel);
-		valueList.setFillLines(true);
-		valueList.setShowDataPoints(true);
-		
-		Hashtable<Long, LiveStatistics> liveHash = new Hashtable<Long, LiveStatistics>();
-		for (LiveStatistics l : liveList) {
-			liveHash.put(l.getPk().getTimeperiod() * 15000, l);
-			// System.out.println("putting livestat in hash: " +
-			// l.getTimestamp().getTime() + " : " + l.toString());
-		}
-
-		if (isShowLiveData()) {
-			//View for the last MINUTES minutes
-			Calendar nowCal = Calendar.getInstance();
-			setShowChartTo(nowCal.getTime());
-			Calendar thenCal = Calendar.getInstance();
-			thenCal.add(Calendar.MINUTE, MINUTES * -1);
-			setShowChartFrom(thenCal.getTime());
-		} 
-		
-		int offsetMiutes = showChartTo.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-		
-		//Get milliseconds from 1/1/1970 GMT+0
-		Long millisNow = showChartTo.getTime();
-		Long millisThen = showChartFrom.getTime();
-		log.debug("generating chart from: " + showChartFrom + " (" + showChartFrom.getTime() + ")  to: " + showChartTo + " (" + showChartTo.getTime() + ")");
-
-		//Round down to nearest 15 seconds timeperiod
-		millisNow = millisNow - 15000 - (millisNow % 15000);
-		millisThen = millisThen - (millisThen % 15000) + 15000;
-
-		LiveStatistics currStat = null;
-		long numStatsPerChartTick = (RESOLUTION * 1000) / 15000;
-		long numStatsInCurrTick = -0;
-		//Loop over all stats for each 15 second period
-		for (Long i = millisThen; i <= millisNow; i += 15000) {
-			++numStatsInCurrTick;
-			LiveStatistics l = liveHash.get(i);
-			if (l != null) {
-				if (currStat == null) {
-					//First iteration, or new chart tick
-					currStat = new LiveStatistics();
-					currStat.setCallsPerInterval(l.getCallsPerInterval());
-					currStat.setValue(l.getValue());
-					currStat.setTotalExecutionTime(l.getTotalExecutionTime());
-				} else  {
-					currStat.addCallsPerInterval(l.getCallsPerInterval());
-					currStat.addTotalExecutionTime(l.getTotalExecutionTime());
-					
-					if (l.getValue() != null) {
-						Long totalValue = currStat.getValue() * (numStatsInCurrTick - 1);
-						totalValue += l.getValue();
-						currStat.setValue(totalValue / numStatsInCurrTick);
-					}
-				}
-				
-				if (numStatsInCurrTick >= numStatsPerChartTick) {
-					//place currStat in chart, set currStat to null
-					long gmtMillis = i - (offsetMiutes * 60 * 1000);
-					if (currStat.getAvgExecutionTime() != null) {
-						execList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getAvgExecutionTime()));
-					} else {
-						execList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-					}
-					if (currStat.getTotalExecutionTime() != null) {
-						totalList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getTotalExecutionTimeMillis()));
-					} else {
-						totalList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-					}
-					if (currStat.getCallsPerInterval() != null) {
-						callsList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getCallsPerInterval()));
-					} else {
-						callsList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-					}
-					if (currStat.getValue() != null) {
-						valueList.addDataPoint(new XYDataPoint(gmtMillis, currStat.getValue()));
-					} else {
-						valueList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
-					}
-					
-					currStat = null;
-					numStatsInCurrTick = -0;
-				}
-			}
-			
-		}
-
-		if (liveList != null && liveList.size() > 0) {
-			LiveStatistics ls = liveList.get(0);
-			
-			determineWhichChartsToDisplay(userMBean.getSelectedPath());
-			//If this node has grouped statistics, show them
-			GroupedStatistics gs = treeMenuService.getGroupedStatistics(userMBean.getSelectedPath());
-			if (gs != null) {
-				for (String groupedPath : gs.getGroupedPathList()) {
-					determineWhichChartsToDisplay(groupedPath);
-				}
-			}
-			
-			
-			String currPath = userMBean.getSelectedPath();
-			if (showChart) {
-				avgExecTimeChartTitle = currPath;
-				avgExecCollection.addDataList(execList);
-				totalExecCollection.addDataList(totalList);
-				if (alert != null && alert.isActivated() && alert.getAlertOn() == Alert.ALERT_ON_AVG_EXECTIME) {
-					avgExecCollection.addDataList(buildWarningList(alert, Alert.WARNING));
-					avgExecCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
-				}
-				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_TOTAL_EXECTIME) {
-					totalExecCollection.addDataList(buildWarningList(alert, Alert.WARNING));
-					totalExecCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
-				}
-			}
-			if (showValueChart) {
-				valueChartTitle = currPath;
-				valueCollection.addDataList(valueList);
-				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_VALUE) {
-					valueCollection.addDataList(buildWarningList(alert, Alert.WARNING));
-					valueCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
-				}
-			}
-			if (showCallsPerIntervalChart) {
-				callsPerIntervalChartTitle = currPath;
-				callsPerIntervalCollection.addDataList(callsList);
-				valueCollection.addDataList(valueList);
-				if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_CALLS) {
-					callsPerIntervalCollection.addDataList(buildWarningList(alert, Alert.WARNING));
-					callsPerIntervalCollection.addDataList(buildWarningList(alert, Alert.CRITICAL));
-				}
-			}
-		}
-	}
-	
-	private XYDataList buildWarningList(Alert alert, int warningType) {
-		XYDataList errorList = new XYDataList();
-		errorList.setLabel("Warning Value");
-		if (warningType == Alert.CRITICAL ) {
-			errorList.setLabel("Error Value");
-		}		
-		
-		if (alert != null) {
-			Double warningValue = alert.getWarningValue();
-			Double errorValue = alert.getErrorValue();
-			XYDataPoint startPoint = new XYDataPoint();
-			startPoint.setX(getMinXAxis());
-			
-			XYDataPoint endPoint = new XYDataPoint();
-			endPoint.setX(getMaxXAxis());
-			if (warningType == Alert.CRITICAL) {
-				startPoint.setY(errorValue);
-				endPoint.setY(errorValue);
-			} else {
-				startPoint.setY(warningValue);
-				endPoint.setY(warningValue);
-			}
-			
-			errorList.setColor("#eeff00");
-			if (warningType == Alert.CRITICAL) {
-				errorList.setColor("#ff0000");
-			}
-			
-			errorList.addDataPoint(startPoint);
-			errorList.addDataPoint(endPoint);
-			
-			errorList.setShowDataPoints(false);
-			errorList.setShowLines(true);
-			errorList.setFillLines(false);
-		}
-		
-		return errorList;
-	}
-	
-	private void determineWhichChartsToDisplay(String guiPath) {
-		TreeMenuNode currNode = treeMenuService.getTreeMenu(guiPath);
-		if (currNode != null) {
-			showChart = currNode.isHasExecTimeInformation();
-			showCallsPerIntervalChart = currNode.isHasCallsPerIntervalInformation();
-			showValueChart = currNode.isHasValueInformation();
-		}
+		return ChartUtil.getMaxXAxis(showChartTo);
 	}
 	
 	private void clearLiveList() {
@@ -302,15 +82,24 @@ public class ChartMBean implements AlertableMBean {
 		}
 	}
 	public void updateDataset() {
+		
+		if (isShowLiveData()) {
+			//View for the last MINUTES minutes
+			Calendar nowCal = Calendar.getInstance();
+			setShowChartTo(nowCal.getTime());
+			Calendar thenCal = Calendar.getInstance();
+			thenCal.add(Calendar.MINUTE, MINUTES * -1);
+			setShowChartFrom(thenCal.getTime());
+		} 
+		
+		
 		String path = userMBean.getSelectedPath();
+		valueChartTitle = path;
 		if (path != null) {
 			Long fromPeriod = showChartFrom.getTime() / 15000;
 			Long toPeriod = showChartTo.getTime() / 15000;
 			
-			avgExecCollection.clearDataCollection();
-			totalExecCollection.clearDataCollection();
 			valueCollection.clearDataCollection();
-			callsPerIntervalCollection.clearDataCollection();
 			
 			GroupedStatistics gs = treeMenuService.getGroupedStatistics(path);
 			if (gs != null) {
@@ -323,7 +112,9 @@ public class ChartMBean implements AlertableMBean {
 					if (gsPath.length() > path.length() + 1) {
 						seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
 					}
-					generateDataset(liveList, seriesLabel, null);
+					for (XYDataList dataList : ChartUtil.generateDataset(liveList, seriesLabel, null, showChartFrom, showChartTo, RESOLUTION).getDataList()) {
+						valueCollection.addDataList(dataList);
+					}
 				}
 			} else {
 				clearLiveList();
@@ -336,56 +127,16 @@ public class ChartMBean implements AlertableMBean {
 				if (seriesLabel.contains(":")) {
 					seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
 				}
-				generateDataset(liveList, seriesLabel, alert);
+				valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, showChartFrom, showChartTo, RESOLUTION);
 			}
 		}
 	}
 
-	public boolean isShowChart() {
-		return showChart;
-	}
-
-	public void setShowChart(boolean showChart) {
-		this.showChart = showChart;
-	}
-
-	public boolean isShowValueChart() {
-		return showValueChart;
-	}
-
-	public void setShowValueChart(boolean showValueChart) {
-		this.showValueChart = showValueChart;
-	}
-
-	public boolean isShowCallsPerIntervalChart() {
-		return showCallsPerIntervalChart;
-	}
-
-	public void setShowCallsPerIntervalChart(boolean showCallsPerIntervalChart) {
-		this.showCallsPerIntervalChart = showCallsPerIntervalChart;
-	}
-
-	public XYDataSetCollection getAvgExecXYData() {
-		updateDataset();
-		return avgExecCollection;
-	}
-	
-	public XYDataSetCollection getTotalExecXYData() {
-		updateDataset();
-		return totalExecCollection;
-	}
-	
-	
 	public XYDataSetCollection getValueLineData() {
 		updateDataset();
 		return valueCollection;
 	}
 	
-	public XYDataSetCollection getCallsPerIntervalData() {
-		updateDataset();
-		return callsPerIntervalCollection;
-	}
-
 	public String getValueChartTitle() {
 		return valueChartTitle;
 	}
@@ -499,6 +250,14 @@ public class ChartMBean implements AlertableMBean {
 		updateDataset();
 	}
 	
+	public void selectLiveDataTab(ActionEvent event) {
+		this.setShowLiveData(true);
+	}
+	
+	public void selectCustomDataTab(ActionEvent event) {
+		this.setShowLiveData(false);
+	}
+	
 	@Deprecated //Pre JSFLot 0.3.0
 	public void chartDraggedListener(ValueChangeEvent event) {
 		log.info("chartDraggedListener called");
@@ -549,10 +308,8 @@ public class ChartMBean implements AlertableMBean {
 	
 	@Override
 	public void processPathChange() {
-		showChart = false;
-		showValueChart = false;
-		showCallsPerIntervalChart = false;
 		updateDataset();
+		this.setShowLiveData(true);
 	}
 
 }

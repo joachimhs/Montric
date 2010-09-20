@@ -1,8 +1,8 @@
-package org.eurekaJ.manager.dao.berkeley;
+package org.eurekaj.manager.dao.berkeley;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.logentry.LogEntry;
+import org.eurekaj.manager.berkeley.logentry.LogEntry;
 
 public interface LogDao {
 

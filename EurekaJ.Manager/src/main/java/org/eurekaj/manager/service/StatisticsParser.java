@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.service;
+package org.eurekaj.manager.service;
 
 import org.apache.log4j.Logger;
 

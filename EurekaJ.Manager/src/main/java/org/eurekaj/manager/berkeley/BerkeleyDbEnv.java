@@ -1,10 +1,7 @@
-package org.eurekaJ.manager.berkeley;
+package org.eurekaj.manager.berkeley;
 
 import java.io.File;
 
-import com.sleepycat.bind.serial.StoredClassCatalog;
-import com.sleepycat.je.Database;
-import com.sleepycat.je.DatabaseConfig;
 import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
@@ -20,7 +17,7 @@ public class BerkeleyDbEnv {
 	private EntityStore groupedStatisticsStore;
 	private EntityStore alertStore;
 	private EntityStore smtpServerStore;
-	private EntityStore emailSenderStore;
+	private EntityStore dashboardStore;
 	private EntityStore logStore;
 	
 	public BerkeleyDbEnv() {
@@ -54,7 +51,7 @@ public class BerkeleyDbEnv {
 		groupedStatisticsStore = new EntityStore(environment, "GroupedStatisticsStore", storeConfig);
 		alertStore = new EntityStore(environment, "AlertStore", storeConfig);
 		smtpServerStore = new EntityStore(environment, "SmtpServerStore", storeConfig);
-		emailSenderStore = new EntityStore(environment, "EmailSenderStore", storeConfig);
+		dashboardStore = new EntityStore(environment, "DashboardStore", storeConfig);
 		logStore = new EntityStore(environment, "logStore", storeConfig);
 	}
 	
@@ -78,8 +75,8 @@ public class BerkeleyDbEnv {
 		return smtpServerStore;
 	}
 	
-	public EntityStore getEmailSenderStore() {
-		return emailSenderStore;
+	public EntityStore getDashboardStore() {
+		return dashboardStore;
 	}
 	
 	public EntityStore getGroupedStatisticsStore() {
@@ -136,11 +133,11 @@ public class BerkeleyDbEnv {
 			}
 		}
 		
-		if (emailSenderStore != null) {
+		if (dashboardStore != null) {
 			try {
-				emailSenderStore.close();
+				dashboardStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing emailSenderStore" + dbe.toString());
+				System.err.println("Error closing dashboardStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}

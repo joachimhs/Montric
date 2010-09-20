@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -10,11 +10,11 @@ import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.model.frontend.TreeMenuNodeData;
-import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.model.frontend.TreeMenuNodeData;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.service.TreeMenuService;
 import org.jsflot.components.FlotChartClickedEvent;
 import org.jsflot.components.FlotChartDraggedEvent;
 import org.jsflot.xydata.XYDataList;

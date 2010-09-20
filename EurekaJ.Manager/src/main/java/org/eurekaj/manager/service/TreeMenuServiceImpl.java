@@ -1,12 +1,12 @@
-package org.eurekaJ.manager.service;
+package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaJ.manager.dao.berkeley.TreeMenuDao;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.dao.berkeley.TreeMenuDao;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 
 public class TreeMenuServiceImpl implements TreeMenuService {
 	private TreeMenuDao treeMenuDao;

@@ -1,6 +1,6 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.service.TreeMenuService;
 
 public class NavigationMBean  implements AlertableMBean {
 	private UserMBean userMBean;

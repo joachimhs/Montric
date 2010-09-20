@@ -1,11 +1,11 @@
-package org.eurekaJ.manager.dao.berkeley;
+package org.eurekaj.manager.dao.berkeley;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.BerkeleyDbEnv;
-import org.eurekaJ.manager.berkeley.logentry.LogEntry;
-import org.eurekaJ.manager.berkeley.logentry.LogEntryPk;
+import org.eurekaj.manager.berkeley.BerkeleyDbEnv;
+import org.eurekaj.manager.berkeley.logentry.LogEntry;
+import org.eurekaj.manager.berkeley.logentry.LogEntryPk;
 
 import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.PrimaryIndex;

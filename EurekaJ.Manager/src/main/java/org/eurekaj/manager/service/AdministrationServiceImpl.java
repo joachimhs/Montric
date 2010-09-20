@@ -1,50 +1,38 @@
-package org.eurekaJ.manager.service;
+package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaJ.manager.berkley.administration.EmailSender;
-import org.eurekaJ.manager.berkley.administration.EmailServer;
-import org.eurekaJ.manager.dao.berkeley.AdministrationDao;
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
+import org.eurekaj.manager.dao.berkeley.AdministrationDao;
 
 public class AdministrationServiceImpl implements AdministrationService {
 	private AdministrationDao administrationDao;
-	
-	
+
 	public AdministrationDao getAdministrationDao() {
 		return administrationDao;
 	}
-	
+
 	public void setAdministrationDao(AdministrationDao administrationDao) {
 		this.administrationDao = administrationDao;
 	}
-	
+
 	@Override
-	public List<EmailServer> getEmailServers() {
-		return administrationDao.getEmailServers();
+	public List<EmailRecipientGroup> getEmailRecipientGroups() {
+		return administrationDao.getEmailRecipientGroups();
 	}
-	
+
 	@Override
-	public EmailServer getEmailServer(String servername) {
-		return administrationDao.getEmailServer(servername);
+	public EmailRecipientGroup getEmailRecipientGroup(String groupName) {
+		return administrationDao.getEmailRecipientGroup(groupName);
 	}
-	
+
 	@Override
-	public void persistEmailServer(EmailServer emailServer) {
-		administrationDao.persistEmailServer(emailServer);		
+	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
+		administrationDao.persistEmailRecipientGroup(emailRecipientGroup);
 	}
-	
+
 	@Override
-	public List<EmailSender> getEmailSenders() {
-		return administrationDao.getEmailSenders();
-	}
-	
-	@Override
-	public EmailSender getEmailSender(String senderName) {
-		return administrationDao.getEmailSender(senderName);
-	}
-	
-	@Override
-	public void persistEmailSender(EmailSender emailSender) {
-		administrationDao.persistEmailSender(emailSender);
+	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
+		administrationDao.deleteEmailRecipientGroup(emailRecipientGroup);		
 	}
 }

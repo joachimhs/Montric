@@ -1,14 +1,26 @@
-package org.eurekaJ.manager.alert;
+package org.eurekaj.manager.alert;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import org.eurekaJ.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaJ.manager.perst.alert.Alert;
-import org.eurekaJ.manager.service.TreeMenuService;
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
+import org.eurekaj.manager.email.SendEmailTask;
+import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.service.AdministrationService;
+import org.eurekaj.manager.service.TreeMenuService;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 public class AlertValidatorTask {
 	private TreeMenuService treeMenuService;
+	private AdministrationService administrationService;
+	private ThreadPoolTaskExecutor sendEmailExecutor;
+	private SimpleDateFormat dateFormat;
+	
+	public AlertValidatorTask() {
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
+	}
 	
 	public TreeMenuService getTreeMenuService() {
 		return treeMenuService;
@@ -16,6 +28,23 @@ public class AlertValidatorTask {
 	
 	public void setTreeMenuService(TreeMenuService treeMenuService) {
 		this.treeMenuService = treeMenuService;
+	}
+	
+	public ThreadPoolTaskExecutor getSendEmailExecutor() {
+		return sendEmailExecutor;
+	}
+	
+	public void setSendEmailExecutor(ThreadPoolTaskExecutor sendEmailExecutor) {
+		this.sendEmailExecutor = sendEmailExecutor;
+	}
+	
+	public AdministrationService getAdministrationService() {
+		return administrationService;
+	}
+	
+	public void setAdministrationService(
+			AdministrationService administrationService) {
+		this.administrationService = administrationService;
 	}
 	
 	public void evaluateAlerts() {
@@ -30,7 +59,15 @@ public class AlertValidatorTask {
 				//Get statistics and evaluate alert condition
 				alert.setStatus(evaluateStatistics(alert, statList));
 				if (oldStatus != alert.getStatus()) {
-					System.out.println("\t\tAlert: " + alert.getGuiPath() + " Has changed status to: " + alert.getStatusString());
+					Calendar cal = Calendar.getInstance();
+					for (String emailGroup : alert.getSelectedEmailSenderList()) {
+						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup);
+						if (emailRecipientGroup != null) {
+							SendEmailTask sendEmailTask = new SendEmailTask(emailRecipientGroup, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
+							sendEmailExecutor.execute(sendEmailTask);
+						}
+					}
+					
 					treeMenuService.persistAlert(alert);
 				} else {
 					System.out.println("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatusString());

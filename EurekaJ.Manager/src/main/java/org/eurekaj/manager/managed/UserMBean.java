@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.managed;
+package org.eurekaj.manager.managed;
 
 import java.util.ArrayList;
 import java.util.List;

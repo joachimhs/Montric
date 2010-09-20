@@ -1,4 +1,4 @@
-package org.eurekaJ.manager.model.frontend;
+package org.eurekaj.manager.model.frontend;
 
 public class TreeMenuNodeData {
 	private String key;
