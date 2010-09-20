@@ -110,7 +110,7 @@
 			<dependency>
 				<groupId>org.jsflot</groupId>
 				<artifactId>jsflot</artifactId>
-				<version>0.6.0</version>
+				<version>0.7.0</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
