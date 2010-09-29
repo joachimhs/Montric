@@ -45,9 +45,9 @@
 						<a4j:commandButton id="editDashbaordButton" value="Add Gadget" actionListener="#{dashboardMBean.addGadgetAction}" reRender="dashboardOutputPanel"/>
 					</h:panelGroup>
 					<rich:separator height="2" lineType="dashed"/><br />
-					<h:panelGrid columns="1">
-						<a4j:outputPanel id="gadgetOutputPanel" ajaxRendered="true" >
-							<a4j:repeat id="gadgetTable" value="#{dashboardMBean.gadgets}" var="gadget" rowKeyVar="rownum">
+					<a4j:outputPanel id="gadgetOutputPanel" ajaxRendered="true" >
+						<h:panelGrid columns="2">
+							<a4j:repeat id="gadgetTable"  value="#{dashboardMBean.gadgets}" var="gadget"  rowKeyVar="rownum">
 								<rich:panel>
 									<h:panelGroup rendered="#{!gadget.editMode}">
 										<jsflot:flotChart id="gadgetChart"
@@ -78,8 +78,7 @@
 											showYaxisLabels="true" 
 											xaxisLabelRotation="10"
 											chartType="Series" 
-											crosshair="xy" 
-											redrawInterval="15"/>
+											crosshair="xy"/>
 										<h:outputText value="#{gadget.gadget.description}" style="width: 400px;" />
 										
 										<h:panelGroup style="float: right;" >
@@ -105,9 +104,15 @@
 							       		 <a4j:commandButton id="saveGadgetChangesButton" value="Save Changes" actionListener="#{dashboardMBean.saveGadgetChangesAction}" reRender="gadgetOutputPanel" /> 	
 							        </h:panelGrid>
 								</rich:panel>
-						</a4j:repeat>
-					</a4j:outputPanel>
-				</h:panelGrid>
+							</a4j:repeat>
+					</h:panelGrid>
+					
+					<a4j:region>
+						<a4j:poll enabled="#{!dashboardMBean.atleastOneGadgetInEditMode}" interval="#{15000}"
+							reRender="gadgetOutputPanel">
+						</a4j:poll>
+					</a4j:region>
+				</a4j:outputPanel>
 				</h:panelGrid>
 			</rich:panel>
 			

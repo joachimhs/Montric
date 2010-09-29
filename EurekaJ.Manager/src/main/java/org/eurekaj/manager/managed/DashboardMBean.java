@@ -110,6 +110,19 @@ public class DashboardMBean implements AlertableMBean {
 		return ChartUtil.getMaxXAxis(showChartTo);
 	}
 	
+	public boolean isAtleastOneGadgetInEditMode() {
+		boolean edit = false;
+		List<GadgetGuiWrapper> gadgetList = (List<GadgetGuiWrapper>)gadgetDataModel.getWrappedData();
+		for (GadgetGuiWrapper gadget : gadgetList) {
+			if (gadget.isEditMode()) {
+				edit = true;
+				break;
+			}
+		}
+		
+		return edit;
+	}
+	
 	public DataModel getDashboards() {
 		List<Dashboard> dashboardList = dashboardService.getDashboards();
 		dashboardDataModel.setWrappedData(dashboardList);

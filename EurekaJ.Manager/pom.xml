@@ -67,6 +67,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.simplericity.jettyconsole</groupId>
+				<artifactId>jetty-console-maven-plugin</artifactId>
+				<version>1.35</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>createconsole</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -75,10 +87,25 @@
 	</profiles>
 
 	<dependencies>
+		<!-- Jetty -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jmx</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
 			<artifactId>jetty-maven-plugin</artifactId>
 		</dependency>
+		<!-- //Jetty -->
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
@@ -87,6 +114,8 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
+
+		<!-- JSF -->
 		<dependency>
 			<groupId>org.richfaces.ui</groupId>
 			<artifactId>richfaces-ui</artifactId>
@@ -103,14 +132,23 @@
 			<groupId>com.sun.facelets</groupId>
 			<artifactId>jsf-facelets</artifactId>
 		</dependency>
+		<!-- //JSF -->
+
+		<!-- DB -->
 		<dependency>
 			<groupId>com.sleepycat</groupId>
 			<artifactId>je</artifactId>
 			<version>4.0.71</version>
 		</dependency>
+		<!-- //DB -->
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 		<!-- JSF Flot -->
 		<dependency>
@@ -118,6 +156,8 @@
 			<artifactId>jsflot</artifactId>
 		</dependency>
 		<!-- //JSF Flot -->
+
+		<!-- WebServices -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -126,5 +166,6 @@
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
 		</dependency>
+		<!-- //WebServices -->
 	</dependencies>
 </project>

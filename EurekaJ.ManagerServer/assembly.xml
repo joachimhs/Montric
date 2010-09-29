@@ -1,11 +1,6 @@
 <assembly>
-	<formats>
-		<format>zip</format>
-	</formats>
-	<fileSets>
-		<fileSet>
-			<directory>target/appassembler</directory>
-			<outputDirectory>/</outputDirectory>
-		</fileSet>
-	</fileSets>
+    <!--id>${artifactId}</id-->
+  <formats>
+    <format>war</format>
+  </formats>
 </assembly>

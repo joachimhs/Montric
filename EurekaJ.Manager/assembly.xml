@@ -1,0 +1,24 @@
+<assembly>
+    <!--id>${artifactId}</id-->
+  <formats>
+    <format>war</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <dependencySets>
+    <dependencySet>
+      <unpack>true</unpack>
+      <scope>runtime</scope>
+      <outputDirectory>/</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+  <fileSets>
+    <fileSet>
+      <directory>jar/target/classes</directory>
+      <outputDirectory/>
+    </fileSet>
+    <fileSet>
+        <directory>target/${artifactId}-war-${version}</directory>
+        <outputDirectory />
+    </fileSet>
+  </fileSets>
+</assembly>

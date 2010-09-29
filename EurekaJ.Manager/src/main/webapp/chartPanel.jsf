@@ -11,18 +11,39 @@
 		<jsflot:flotChart id="valueTimeChart"
 			value="#{chartMBean.valueLineData}"
 			actionListener="#{chartMBean.chartListener}"
-			chartDraggable="#{!chartMBean.showLiveData}" ajaxSingle="true"
-			reRender="timePeriodPanel" width="800" height="250" showLines="true"
-			legendColumns="2" fillLines="false" legendColor="#ffffcc"
-			showDataPoints="false" legendPosition="nw" showTooltip="true"
-			tooltipPosition="sw" tooltipFollowMouse="true" mode="Time"
-			timeFormat="%d/%m/%y %h:%M:%S" title="Value"
-			subtitle="#{chartMBean.valueChartTitle}" showXaxisLabels="true"
-			xaxisMinValue="#{chartMBean.minXAxis}" xaxisMaxValue="#{chartMBean.maxXAxis}"
+			chartDraggable="#{!chartMBean.showLiveData}" 
+			ajaxSingle="true"
+			reRender="timePeriodPanel" 
+			width="800" 
+			height="250" 
+			showLines="true"
+			legendColumns="2" 
+			fillLines="false" 
+			legendColor="#ffffcc"
+			showDataPoints="false" 
+			legendPosition="nw" 
+			showTooltip="true"
+			tooltipPosition="sw" 
+			tooltipFollowMouse="true" 
+			mode="Time"
+			timeFormat="%d/%m/%y %h:%M:%S" 
+			title="Value"
+			subtitle="#{chartMBean.valueChartTitle}" 
+			showXaxisLabels="true"
+			xaxisMinValue="#{chartMBean.minXAxis}" 
+			xaxisMaxValue="#{chartMBean.maxXAxis}"
 			yaxisMinValue="0"
-			xaxisTitle="Time" showYaxisLabels="true" xaxisLabelRotation="10"
-			chartType="Series" crosshair="xy" redrawInterval="#{chartMBean.chartResolution}"/>
+			xaxisTitle="Time" 
+			showYaxisLabels="true" 
+			xaxisLabelRotation="10"
+			chartType="Series"
+			crosshair="xy" 
+			/>
 
-		
+		<a4j:region>
+			<a4j:poll enabled="#{chartMBean.showLiveData}" interval="#{chartMBean.chartResolution * 1000}"
+				reRender="chartOutputPanel">
+			</a4j:poll>
+		</a4j:region>
 	</a4j:outputPanel>
 </ui:composition>
