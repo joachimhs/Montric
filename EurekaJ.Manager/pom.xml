@@ -67,7 +67,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			<!--plugin>
 				<groupId>org.simplericity.jettyconsole</groupId>
 				<artifactId>jetty-console-maven-plugin</artifactId>
 				<version>1.35</version>
@@ -78,7 +78,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 		</plugins>
 	</build>
 

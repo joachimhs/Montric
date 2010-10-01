@@ -45,7 +45,7 @@
 					<plugin>
 						<artifactId>appassembler-maven-plugin</artifactId>
 						<groupId>org.codehaus.mojo</groupId>
-						<version>1.0</version>
+						<version>1.0-alpha-2</version>
 						<executions>
 							<execution>
 								<goals>
@@ -91,7 +91,6 @@
 			<groupId>org.eurekaJ</groupId>
 			<artifactId>eurekaJ.Manager</artifactId>
 			<version>${project.version}</version>
-			<scope>runtime</scope>
 			<type>war</type>
 		</dependency>
 		<dependency>
