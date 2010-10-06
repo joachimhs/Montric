@@ -7,7 +7,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:jsflot="http://www.jsflot.org/taglib/jsflot">
 
-	<a4j:outputPanel id="chartOutputPanel" ajaxRendered="true">
+	<a4j:outputPanel id="chartOutputPanel" ajaxRendered="true"  rendered="#{chartMBean.valueChartTitle != null}">
 		<jsflot:flotChart id="valueTimeChart"
 			value="#{chartMBean.valueLineData}"
 			actionListener="#{chartMBean.chartListener}"
