@@ -104,12 +104,25 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<servlet>
+        <servlet-name>springFrontController</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+    </servlet>
 
 	<!--
 		*** Java server faces configuration *** > <servlet-mapping>
 		<servlet-name>jsp</servlet-name> <url-pattern>*.jsf</url-pattern>
 		</servlet-mapping
 	-->
+	
+	<servlet>
+		<servlet-name>JSONServlet</servlet-name>
+		<servlet-class>org.eurekaj.cappuccino.JSONServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -120,6 +133,16 @@
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/webservices/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>JSONServlet</servlet-name>
+		<url-pattern>/JSONServlet</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+        <servlet-name>springFrontController</servlet-name>
+        <url-pattern>*.capp</url-pattern>
+    </servlet-mapping>
 	
 	<welcome-file-list>
 		<welcome-file>index.jsf</welcome-file>

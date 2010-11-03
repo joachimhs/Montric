@@ -103,18 +103,9 @@ public class Main {
 	    		continue;
 	    	}
 	    	
-	    	if (line.startsWith("ClassInstrumentation;")) {
-	    		//Remove padding from line
-	    		line = line.substring("ClassInstrumentation;".length());
-	    		statElemList.addAll(parser.processClassInstrumentation(line));
-	    	} else if (line.startsWith("TotalExecTime;")) {
-	    		line = line.substring("TotalExecTime;".length());
-	    		statElemList.addAll(parser.processExecTime(line));
-	    	} else if (line.startsWith("CallsPerInterval;")) {
-	    		line = line.substring("CallsPerInterval;".length());
-	    		statElemList.addAll(parser.processCallsPerInterval(line));
-	    	} else if (line.startsWith("ValueInstrumentation;")) {
-	    		line = line.substring("ValueInstrumentation;".length());
+			
+			if (line.startsWith("Value;")) {
+	    		line = line.substring("Value;".length());
 	    		statElemList.addAll(parser.processValueInstrumentation(line));
 	    	} else if (line.startsWith("HeapMemory;" )) {
 	    		line = line.substring("HeapMemory;".length());
@@ -128,16 +119,13 @@ public class Main {
 	    	} else if(line.startsWith("Threads;")) {
 	    		line = line.substring("Threads;".length());
 	    		statElemList.addAll(parser.processThreads(line));
-	    	} else if (line.startsWith("GroupInstrumentation;")) {
-	    		line = line.substring("GroupInstrumentation;".length());
-	    		statElemList.addAll(parser.processGroupInstumentation(line));
 	    	} else if (line.startsWith("GCTime;")) {
 	    		line = line.substring("GCTime;".length());
 	    		statElemList.addAll(parser.processGCTime(line));
-	    	}
-	    	
-	    	
-	    	
+	    	} else if (line.startsWith("ProfilingV1;")) {
+	    		line = line.substring("ProfilingV1;".length());
+	    		statElemList.addAll(parser.processProfiling(line));
+	    	} 
 	    	
 	    	//[ThreadsReturnedByType;JSFlotAgent;java.lang.Thread;5;1272278445000]
 	    	//[ThreadsStartedByType;JSFlotAgent;java.util.TimerThread;1;1272278445000]

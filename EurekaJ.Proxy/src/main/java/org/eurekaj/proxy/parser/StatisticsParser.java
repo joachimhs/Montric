@@ -11,7 +11,7 @@ public class StatisticsParser {
 	private static Logger log = Logger.getLogger(StatisticsParser.class);
 	private static String DELIMETER = ";";
 
-	public List<StoreIncomingStatisticsElement> processExecTime(String line) {
+	/*public List<StoreIncomingStatisticsElement> processExecTime(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		//agentname package.Class method timeperiod exectime guiPath
 		String[] params = line.split(DELIMETER);
@@ -61,23 +61,31 @@ public class StatisticsParser {
 		}
 		
 		return statList;
-	}
+	}*/
 	
-	public List<StoreIncomingStatisticsElement> processCallsPerInterval(String line) {
+	public List<StoreIncomingStatisticsElement> processProfiling(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		//agentname package.Class method timeperiod exectime
+		//agentname package.Class method timeperiod exectime guiPath
 		String[] params = line.split(DELIMETER);
 		String agentName;
 		String className;
 		String methodName;
 		Long timeperiod;
-		String callsPerInterval;
+		String invocations;
+		String totalSelftime;
+		String avgSelftime;
+		String minSelftime;
+		String maxSelftime;
+		String totalWalltime;
+		String avgWalltime;
+		String minWalltime;
+		String maxWalltime;
 		String guiPath = null;
-		if (params.length == 5) {
+		if (params.length == 13) {
 			guiPath = "Custom";
 		}
-		if (params.length == 6) {
-			guiPath = params[5];
+		if (params.length == 14) {
+			guiPath = params[13];
 		}
 		
 		if (guiPath != null && guiPath.length() > 0) {
@@ -92,7 +100,16 @@ public class StatisticsParser {
 			} catch (NumberFormatException nfe) {
 				System.err.println("Unable to read in timestamp");
 			}
-			callsPerInterval = params[4];
+			
+			invocations = params[4];
+			totalSelftime = params[5];
+			avgSelftime = params[6];
+			minSelftime = params[7];
+			maxSelftime = params[8];
+			totalWalltime = params[9];
+			avgWalltime = params[10];
+			minWalltime = params[11];
+			maxWalltime = params[12];
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append(agentName).
@@ -104,12 +121,76 @@ public class StatisticsParser {
 			append(methodName);
 			
 			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
-			statElem.setGuiPath(sb.toString());
+			statElem.setGuiPath(sb.toString() + ":Calls Per Interval");
 			statElem.setTimeperiod(timeperiod);
 			statElem.setExecTime(null);
-			statElem.setCallsPerInterval(callsPerInterval);
-			statElem.setValue(null);
+			statElem.setCallsPerInterval(null);
+			statElem.setValue(invocations);
 			statList.add(statElem);
+			
+			StoreIncomingStatisticsElement statElem2 = new StoreIncomingStatisticsElement();
+			statElem2.setGuiPath(sb.toString() + ":Total Selftime");
+			statElem2.setTimeperiod(timeperiod);
+			statElem2.setExecTime(null);
+			statElem2.setCallsPerInterval(null);
+			statElem2.setValue(totalSelftime);
+			statList.add(statElem2);
+			
+			StoreIncomingStatisticsElement statElem3 = new StoreIncomingStatisticsElement();
+			statElem3.setGuiPath(sb.toString() + ":Average Selftime");
+			statElem3.setTimeperiod(timeperiod);
+			statElem3.setExecTime(null);
+			statElem3.setCallsPerInterval(null);
+			statElem3.setValue(avgSelftime);
+			statList.add(statElem3);
+			
+			StoreIncomingStatisticsElement statElem4 = new StoreIncomingStatisticsElement();
+			statElem4.setGuiPath(sb.toString() + ":Max Selftime");
+			statElem4.setTimeperiod(timeperiod);
+			statElem4.setExecTime(null);
+			statElem4.setCallsPerInterval(null);
+			statElem4.setValue(maxSelftime);
+			statList.add(statElem4);
+			
+			StoreIncomingStatisticsElement statElem5 = new StoreIncomingStatisticsElement();
+			statElem5.setGuiPath(sb.toString() + ":Min Selftime");
+			statElem5.setTimeperiod(timeperiod);
+			statElem5.setExecTime(null);
+			statElem5.setCallsPerInterval(null);
+			statElem5.setValue(minSelftime);
+			statList.add(statElem5);
+			
+			StoreIncomingStatisticsElement statElem6 = new StoreIncomingStatisticsElement();
+			statElem6.setGuiPath(sb.toString() + ":Total Walltime");
+			statElem6.setTimeperiod(timeperiod);
+			statElem6.setExecTime(null);
+			statElem6.setCallsPerInterval(null);
+			statElem6.setValue(totalWalltime);
+			statList.add(statElem6);
+			
+			StoreIncomingStatisticsElement statElem7 = new StoreIncomingStatisticsElement();
+			statElem7.setGuiPath(sb.toString() + ":Avgerage Walltime");
+			statElem7.setTimeperiod(timeperiod);
+			statElem7.setExecTime(null);
+			statElem7.setCallsPerInterval(null);
+			statElem7.setValue(avgWalltime);
+			statList.add(statElem7);
+			
+			StoreIncomingStatisticsElement statElem8 = new StoreIncomingStatisticsElement();
+			statElem8.setGuiPath(sb.toString() + ":Max Walltime");
+			statElem8.setTimeperiod(timeperiod);
+			statElem8.setExecTime(null);
+			statElem8.setCallsPerInterval(null);
+			statElem8.setValue(maxWalltime);
+			statList.add(statElem8);
+			
+			StoreIncomingStatisticsElement statElem9 = new StoreIncomingStatisticsElement();
+			statElem9.setGuiPath(sb.toString() + ":Min Walltime");
+			statElem9.setTimeperiod(timeperiod);
+			statElem9.setExecTime(null);
+			statElem9.setCallsPerInterval(null);
+			statElem9.setValue(minWalltime);
+			statList.add(statElem9);
 		}
 		
 		return statList;
@@ -140,7 +221,7 @@ public class StatisticsParser {
 				.append(":")
 				.append(guiPath)
 				.append(":")
-				.append(path);
+			.append(path);
 			
 			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
 			statElem.setGuiPath(sb.toString());
@@ -150,102 +231,6 @@ public class StatisticsParser {
 			statElem.setValue(value);
 			statList.add(statElem);
 		}
-		return statList;
-	}
-	
-	public List<StoreIncomingStatisticsElement> processClassInstrumentation(String line) {
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		log.getAppender("");
-		//DefaultAgent org.ajax4jsf.javascript.ImageCacheScript getJavaScript 1236768698235 0 6 Frontends Ajax4JSF
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String className;
-		String methodName;
-		String executionTime;
-		String callsPerInterval;
-		String guiPath;
-		String path;
-		if (params.length == 8) {
-			//AgentName package.name.ClassName method timestamp execTime callsPerInterval Path
-			agentName = params[0];
-			className = params[1];
-			methodName = params[2];
-			String timestampStr = params[3];
-			Long timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000));
-			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
-			}
-			executionTime = params[4];
-			callsPerInterval = params[5];
-			guiPath = params[6];
-			path = params[7];
-			if (path == null || path.equals("null") || path.equals("")) {
-				path = "Custom";
-			}
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(agentName).
-			append(":").
-			append(guiPath).
-			append(":").
-			append(path).
-			append(":").
-			append(className).
-			append(":").
-			append(methodName);
-			
-			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
-			statElem.setGuiPath(sb.toString());
-			statElem.setTimeperiod(timeperiod);
-			statElem.setExecTime(executionTime);
-			statElem.setCallsPerInterval(callsPerInterval);
-			statElem.setValue(null);
-			statList.add(statElem);		
-			
-			//System.out.println("Class: " +  className + ", Method: " + methodName + ", Timestamp: " + timestamp + ", ExecTime: " + executionTime);
-		}
-		
-		return statList;
-	}
-	
-	public List<StoreIncomingStatisticsElement> processGroupInstumentation(String line) {
-		
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String groupName;
-		Long timeperiod;
-		String execTime;
-		String callsPerInterval;
-		String guiPath;
-		
-		if (params.length == 6) {
-			agentName = params[0];
-			groupName = params[1];
-			String timestampStr = params[2];
-			timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
-			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
-			}
-			execTime = params[3];
-			callsPerInterval = params[4];
-			guiPath = params[5];
-			
-			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
-			statElem.setGuiPath(agentName + ":" + groupName);
-			statElem.setTimeperiod(timeperiod);
-			statElem.setExecTime(execTime);
-			statElem.setCallsPerInterval(callsPerInterval);
-			statElem.setValue(null);
-			statList.add(statElem);
-		} 
-		
 		return statList;
 	}
 	
