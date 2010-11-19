@@ -1,0 +1,9 @@
+# ===========================================================================
+# Project:   EurekaJView
+# Copyright: ©2010 My Company, Inc.
+# ===========================================================================
+
+# Add initial buildfile information here
+config :all, :required => :sproutcore
+
+proxy '/jsonController.capp', :to => 'localhost:8081'
