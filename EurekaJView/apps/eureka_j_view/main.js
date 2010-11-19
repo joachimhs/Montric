@@ -35,6 +35,14 @@ EurekaJView.main = function main() {
 	
 	EurekaJView.instrumentationTypeController.populate();
 	EurekaJView.instrumentationTreeController.populate();
+	
+	/*var timer = SC.Timer.schedule({
+	target: EurekaJView.chartController,
+	action: 'addRandomData',
+	interval: 1500,
+	repeats: YES,
+	until: Time.now() + 15000
+	}) ;*/
 
 };
 

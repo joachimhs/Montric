@@ -36,7 +36,7 @@ EurekaJView.mainPage = SC.Page.design({
 	middleView: SC.View.design({
 		childViews: 'selectedInstrumentationTypeLabelView testFlotChart'.w(),
 		hasHorizontalScroller: NO,
-		layout: { top: 39, bottom: 39, left: 300, right: 0},
+		layout: { top: 39, bottom: 39, left: 306, right: 0},
 		backgroundColor: 'white',
 		
 		selectedInstrumentationTypeLabelView: SC.LabelView.design({
@@ -48,13 +48,12 @@ EurekaJView.mainPage = SC.Page.design({
 		}).classNames('blacklabel'),
 
 		testFlotChart: Flot.GraphView.design({
-            layout: { top: 100, right: 40, bottom: 100, left: 40 },
+            layout: { top: 60, right: 20, bottom: 20, left: 20 },
 			//data: [SC.Object.create({label: 'set1', data:[[0,0]]})],
             dataBinding: 'EurekaJView.chartController.arrangedObjects',
             //optionsBinding: 'EurekaJView.chartController.options',
             debugInConsole: NO,
-        }),
-		  
+        }),		  
 		
 	}),
 	
@@ -62,7 +61,7 @@ EurekaJView.mainPage = SC.Page.design({
 		childViews: 'instrumentationTypeLabelView'.w(),
 		layout: {top: 41, bottom: 391, left: 0, width: 306 },
 		anchorLocation: SC.ANCHOR_TOP,
-		backgroundColor: "#4D4D4D",
+		backgroundColor: "#000000",
 		
 		instrumentationTypeLabelView: SC.LabelView.design({
 			layout: {centerY: 0, height: 30, top: 5, left: 10 },
@@ -92,7 +91,7 @@ EurekaJView.mainPage = SC.Page.design({
 		layout: {height: 350, bottom: 41, left: 0, width: 306 },
 		childViews: 'chartGroupLabelView chartGroupScrollView'.w(),
 		anchorLocation: SC.ANCHOR_TOP,
-		backgroundColor: "#4D4D4D",
+		backgroundColor: "#000000",
 		
 		chartGroupLabelView: SC.LabelView.design({
 			llayout: {centerY: 0, height: 30, top: 5, left: 10 },
