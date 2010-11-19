@@ -26,24 +26,36 @@ EurekaJView.mainPage = SC.Page.design({
 		}),
 		
 		loadTreeView: SC.ButtonView.design({
-			layout: { centerY: 0, height: 30, right: 10, width: 100},
-			title: "Load Tree"
+			layout: { centerY: 0, height: 30, right: 10, width: 150},
+			title: "Load Chart Data",
+			action: 'addRandomData',
+            target: 'EurekaJView.chartController'
 		})
 	}),
 	
-	middleView: SC.ScrollView.design({
-		childViews: 'selectedInstrumentationPathView'.w(),
+	middleView: SC.View.design({
+		childViews: 'selectedInstrumentationTypeLabelView testFlotChart'.w(),
 		hasHorizontalScroller: NO,
 		layout: { top: 39, bottom: 39, left: 300, right: 0},
 		backgroundColor: 'white',
 		
-		contentView: SC.LabelView.design({
-			layout: {centerY: 0, height: 60, top: 5, left: 10 },
+		selectedInstrumentationTypeLabelView: SC.LabelView.design({
+			layout: {centerY: 0, height: 30, top: 5, left: 10 },
 			controlSize: SC.LARGE_CONTROL_SIZE,
 			fontWeight: SC.BOLD_WEIGHT,
 			fontColor: 'black',
 			valueBinding: 'EurekaJView.instrumentationTypeController.selectedInstrumentationTypePath'
-		}).classNames('blacklabel')
+		}).classNames('blacklabel'),
+
+		testFlotChart: Flot.GraphView.design({
+            layout: { top: 100, right: 40, bottom: 100, left: 40 },
+			//data: [SC.Object.create({label: 'set1', data:[[0,0]]})],
+            dataBinding: 'EurekaJView.chartController.arrangedObjects',
+            //optionsBinding: 'EurekaJView.chartController.options',
+            debugInConsole: NO,
+        }),
+		  
+		
 	}),
 	
 	instrumentationTypeView: SC.View.design({
@@ -53,7 +65,7 @@ EurekaJView.mainPage = SC.Page.design({
 		backgroundColor: "#4D4D4D",
 		
 		instrumentationTypeLabelView: SC.LabelView.design({
-			llayout: {centerY: 0, height: 30, top: 5, left: 10 },
+			layout: {centerY: 0, height: 30, top: 5, left: 10 },
 			controlSize: SC.LARGE_CONTROL_SIZE,
 			fontWeight: SC.REGULAR_WEIGHT,
 			textAlign: SC.ALIGN_CENTER,

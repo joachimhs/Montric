@@ -36,6 +36,6 @@ EurekaJView.main = function main() {
 	EurekaJView.instrumentationTypeController.populate();
 	EurekaJView.instrumentationTreeController.populate();
 
-} ;
+};
 
 function main() { EurekaJView.main(); }

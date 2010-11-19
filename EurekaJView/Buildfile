@@ -4,6 +4,6 @@
 # ===========================================================================
 
 # Add initial buildfile information here
-config :all, :required => :sproutcore
+config :all, :required => [:sproutcore, 'flot']
 
 proxy '/jsonController.capp', :to => 'localhost:8081'
