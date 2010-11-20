@@ -23,7 +23,8 @@ EurekaJView = SC.Application.create(
   //store: SC.Store.create().from(SC.Record.fixtures)
   instrumentationTypeStore: SC.Store.create({commitRecordsAutomatically: YES}).from('EurekaJView.instrumentationTypeDataSource'),
   instrumentationTreeStore: SC.Store.create({commitRecordsAutomatically: YES}).from('EurekaJView.InstrumentationTreeSource'),
-  instrumentationLeafStore: SC.Store.create({commitRecordsAutomatically: YES}).from('EurekaJView.InstrumentationLeafDataSource')
+  instrumentationLeafStore: SC.Store.create({commitRecordsAutomatically: YES}).from('EurekaJView.InstrumentationLeafDataSource'),
+  instrumentationChartDataStore: SC.Store.create({commitRecordsAutomatically: YES}).from('EurekaJView.InstrumentationChartDataSource')
 
   // TODO: Add global constants or singleton objects needed by your app here.
 

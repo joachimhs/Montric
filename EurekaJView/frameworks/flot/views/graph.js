@@ -17,7 +17,7 @@ Flot.GraphView = SC.View.extend(
 /** @scope Flot.GraphView.prototype */ {
 	series: null,
 	data: null ,
-	options: null ,
+	options: null,
 	debugInConsole: false ,
 	render: function(context, firstTime) {
 		sc_super();
@@ -30,10 +30,12 @@ Flot.GraphView = SC.View.extend(
 
 		var data = this.get('data'),
 		series = this.get('series');
+		var options = {"xaxis": {"mode": "time"}, "yaxis": {"min": 0}, "series": {"lines": { "show": true }, "points": { "show": true }}, "grid": { "hoverable": true, "clickable": true }, "crosshair": { "mode": "x" },};
+		
 		if (!SC.empty(data)) {
 		if (this.debugInConsole) console.log(this.get('layer'));
 			Flot.plot(this.get('layer'), data.toArray(),
-				this.get('options'));
+				options);
 			if (this.debugInConsole) console.log('render data');
 		} else if (!SC.empty(series)) {
 			Flot.plot(this.get('layer'), series.toArray(),

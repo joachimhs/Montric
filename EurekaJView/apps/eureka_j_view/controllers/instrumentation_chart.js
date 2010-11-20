@@ -21,12 +21,12 @@ EurekaJView.instrumentationChartController = SC.ArrayController.create(
 	            this.set('selectedInstrumentationTypePath', this.getPath('selection.firstObject.guiPath'));
 				//alert('instrumentationTypeController observesSelection: ' + this.get('selectedInstrumentationTypePath'));
 				//var nodes = EurekaJView.instrumentationTreeStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);//.refresh();
-				SC.Logger.log('instrumentationTypeController observesSelection');
+				SC.Logger.log('instrumentationChartController observesSelection');
 				SC.Logger.log(this.get('selectedInstrumentationTypePath'));
-				//var nodes = EurekaJView.instrumentationLeafStore.find(EurekaJView.INSTRUMENTATION_LEAFS_QUERY);//.refresh();
-				//SC.Logger.log(nodes);
-				//nodes.refresh();
-				//EurekaJView.instrumentationChartController.set('content', nodes);
+				var nodes = EurekaJView.instrumentationChartDataStore.find(EurekaJView.INSTRUMENTATION_CHART_DATA_QUERY);//.refresh();
+				nodes.refresh();
+				//EurekaJView.chartController.set('chartSeries', nodes);
+				SC.Logger.log('Chart content set');
 	        }
 	    }.observes('selection')
 

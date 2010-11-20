@@ -1,9 +1,14 @@
 package org.eurekaj.manager.json;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.jsflot.xydata.XYDataList;
+import org.jsflot.xydata.XYDataPoint;
+import org.jsflot.xydata.XYDataSetCollection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,5 +80,52 @@ public class BuildJsonObjectsUtil {
 		parentObject.put(nodeListId, nodeArray);
 		
 		return parentObject;
+	}
+	
+	public static String generateChartData(String chartId, String label, XYDataSetCollection xyCollection) throws JSONException {
+		//content: [ {label: 'set1', data:[[0,0]]}, {label: 'set2', data:[[0,0]]} ],
+		
+		StringBuilder dataArraySB = new StringBuilder();
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+		nf.setMaximumFractionDigits(3);
+		nf.setGroupingUsed(false);
+		dataArraySB.append("{\"");
+		
+		//[{"label":"set1", "data":[[1,1],[2,2],[3,3]]} ]
+		
+		dataArraySB.append(chartId).append("\": [ ");
+		int collectionIndex = 0;
+		for (XYDataList list : xyCollection.getDataList()) {
+			dataArraySB.append("{\"guid\": \"").append(list.getLabel()).append("\",\"label\": \"").append(list.getLabel()).append("\", \"data\": [");
+			for (int i = 0; i < list.size() - 1; i++) {
+				XYDataPoint p = list.get(i);
+				String pointLabel = "";
+				if (p.getPointLabel() != null) {
+					pointLabel = ", '" + p.getPointLabel() + "'";
+				}
+				
+				dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(nf.format(p.getY())).append("").append(pointLabel).append("]").append(", ");
+			}
+			
+			// Last Row
+			if (list.size() > 0) {
+				XYDataPoint p = list.get(list.size() - 1);
+				String pointLabel = "";
+				if (p.getPointLabel() != null) {
+					pointLabel = ", '" + p.getPointLabel() + "'";
+				}
+				dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(nf.format(p.getY())).append(pointLabel).append("]");
+			}
+			
+			collectionIndex++;
+			dataArraySB.append("]}");
+			if (collectionIndex < xyCollection.getDataList().size()) {
+				dataArraySB.append(",");
+			}
+		}
+		
+		dataArraySB.append("]}");
+		
+		return dataArraySB.toString();
 	}
 }

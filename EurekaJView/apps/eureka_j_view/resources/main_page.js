@@ -14,7 +14,7 @@ EurekaJView.mainPage = SC.Page.design({
     childViews: 'middleView topView bottomView instrumentationTypeView instrumentationTypeScrollView chartGroupView'.w(),
     
 	topView: SC.ToolbarView.design({
-		childViews: 'logoView loadTreeView'.w(),
+		childViews: 'logoView'.w(),
 		layout: {top: 0, left: 0, right: 0, height: 40 },
 		anchorLocation: SC.ANCHOR_TOP,
 		
@@ -50,16 +50,17 @@ EurekaJView.mainPage = SC.Page.design({
 		testFlotChart: Flot.GraphView.design({
             layout: { top: 60, right: 20, bottom: 20, left: 20 },
 			//data: [SC.Object.create({label: 'set1', data:[[0,0]]})],
-            dataBinding: 'EurekaJView.chartController.arrangedObjects',
-            //optionsBinding: 'EurekaJView.chartController.options',
-            debugInConsole: NO,
+            dataBinding: 'EurekaJView.chartController.chartSeries',
+//            optionsBinding: 'EurekaJView.chartController.options',
+//			options: SC.Object.create({}),
+            debugInConsole: YES,
         }),		  
 		
 	}),
 	
 	instrumentationTypeView: SC.View.design({
 		childViews: 'instrumentationTypeLabelView'.w(),
-		layout: {top: 41, bottom: 391, left: 0, width: 306 },
+		layout: {top: 41, bottom: 241, left: 0, width: 306 },
 		anchorLocation: SC.ANCHOR_TOP,
 		backgroundColor: "#000000",
 		
@@ -73,7 +74,7 @@ EurekaJView.mainPage = SC.Page.design({
 	}),
 	
 	instrumentationTypeScrollView: SC.ScrollView.design({
-		layout: {top: 71, bottom: 393, left: 2, width: 299 },
+		layout: {top: 71, bottom: 243, left: 2, width: 299 },
 		hasHorizontalScroller: YES,
 		hasVerticalScroller: YES,
 
@@ -88,7 +89,7 @@ EurekaJView.mainPage = SC.Page.design({
 	}),
 	
 	chartGroupView: SC.View.design({
-		layout: {height: 350, bottom: 41, left: 0, width: 306 },
+		layout: {height: 200, bottom: 41, left: 0, width: 306 },
 		childViews: 'chartGroupLabelView chartGroupScrollView'.w(),
 		anchorLocation: SC.ANCHOR_TOP,
 		backgroundColor: "#000000",
@@ -102,7 +103,7 @@ EurekaJView.mainPage = SC.Page.design({
 		}),
 		
 		chartGroupScrollView: SC.ScrollView.design({
-			layout: {height: 318, bottom: 2, left: 2, width: 299 },
+			layout: {height: 166, bottom: 2, left: 2, width: 299 },
 			hasHorizontalScroller: YES,
 			hasVerticalScroller: YES,
 

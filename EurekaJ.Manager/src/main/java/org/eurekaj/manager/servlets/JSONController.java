@@ -1,4 +1,4 @@
-package org.eurekaj.cappuccino;
+package org.eurekaj.manager.servlets;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,14 +6,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
+import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.service.TreeMenuService;
+import org.eurekaj.manager.util.ChartUtil;
+import org.jsflot.xydata.XYDataSetCollection;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -34,16 +40,16 @@ public class JSONController {
 
 	@RequestMapping(value = "/jsonController.capp", method = RequestMethod.POST)
 	public void getJsonData(HttpServletRequest request, HttpServletResponse response) throws IOException, JSONException {
-		JSONObject jsonResponse = new JSONObject();
+		String jsonResponse = "";
 
 		JSONObject jsonObject;
 		jsonObject = extractRequestJSONContents(request);
 		System.out.println("Accepted JSON: \n" + jsonObject);
 		if (jsonObject.has("getInstrumentationMenu")) {
 			String menuId = jsonObject.getString("getInstrumentationMenu");
-			jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, berkeleyTreeMenuService.getTreeMenu(), 0, 15);
+			jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, berkeleyTreeMenuService.getTreeMenu(), 0, 15).toString();
 			//jsonResponse = BuildJsonObjectsUtil.buildTreeMenuJsonObject(berkeleyTreeMenuService.getTreeMenu());
-			System.out.println("Got Tree Type Menu:\n" + jsonResponse.toString(3));
+			System.out.println("Got Tree Type Menu:\n" + jsonResponse);
 		}
 		
 		if (jsonObject.has("getInstrumentationTree")) {
@@ -57,9 +63,9 @@ public class JSONController {
 					menuList.add(new TreeMenuNode(node.getGuiPath().substring(path.length()+1), node.getNodeLive()));
 				}
 			}
-			jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, menuList, 0, 15);
+			jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, menuList, 0, 15).toString();
 			//jsonResponse = BuildJsonObjectsUtil.buildTreeMenuJsonObject(berkeleyTreeMenuService.getTreeMenu());
-			System.out.println("Got Tree Menu:\n" + jsonResponse.toString(3));
+			System.out.println("Got Tree Menu:\n" + jsonResponse);
 		}
 		
 		if (jsonObject.has("getInstrumentationChartList")) {
@@ -74,11 +80,36 @@ public class JSONController {
 				}
 			}
 			
-			jsonResponse = BuildJsonObjectsUtil.buildLeafNodeList(listId, path, leafList);
-			System.out.println("Got Chart List:\n" + jsonResponse.toString(3));
+			jsonResponse = BuildJsonObjectsUtil.buildLeafNodeList(listId, path, leafList).toString();
+			System.out.println("Got Chart List:\n" + jsonResponse);
 			
 		}
 		
+		if (jsonObject.has("getInstrumentationChartData")) {
+			JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartData");
+			String chartId = keyObject.getString("id");
+			String path = keyObject.getString("path");
+			
+			Calendar nowCal = Calendar.getInstance();
+			Calendar thenCal = Calendar.getInstance();
+			thenCal.add(Calendar.MINUTE, 15 * -1);
+			Long fromPeriod = thenCal.getTime().getTime() / 15000;
+			Long toPeriod = nowCal.getTime().getTime() / 15000;
+			
+			List<LiveStatistics> liveList = berkeleyTreeMenuService.getLiveStatistics(path, fromPeriod, toPeriod);
+			Collections.sort(liveList);
+			
+			Alert alert = berkeleyTreeMenuService.getAlert(path);
+			
+			String seriesLabel = path;
+			if (seriesLabel.contains(":")) {
+				seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
+			}
+			XYDataSetCollection valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), 15);
+			
+			jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, path, valueCollection);
+			System.out.println("Got Chart Data:\n" + jsonResponse);
+		}
 		PrintWriter writer = response.getWriter();
 		writer.write(jsonResponse.toString());
 		response.flushBuffer();
