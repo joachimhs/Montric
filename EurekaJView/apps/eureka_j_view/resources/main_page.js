@@ -34,11 +34,26 @@ EurekaJView.mainPage = SC.Page.design({
 	}),
 	
 	middleView: SC.View.design({
-		childViews: 'selectedInstrumentationTypeLabelView testFlotChart'.w(),
+		childViews: 'middleToolbarView testFlotChart'.w(),
 		hasHorizontalScroller: NO,
 		layout: { top: 39, bottom: 39, left: 306, right: 0},
 		backgroundColor: 'white',
 		
+		middleToolbarView: SC.ToolbarView.design({
+			childViews: 'alertButtonView'.w(),
+			layout: {top: 0, left: 0, right: 0, height: 40 },
+			anchorLocation: SC.ANCHOR_TOP,
+			
+			alertButtonView: SC.ButtonView.design({
+				layout: { centerY: 0, height: 30, left: 10, width: 150},
+				title: "Alerts",
+//				theme: "capsule",
+				action: 'showPanelPane',
+	            target: 'EurekaJView.alertController'
+			})
+		}),
+			
+			
 		selectedInstrumentationTypeLabelView: SC.LabelView.design({
 			layout: {centerY: 0, height: 30, top: 5, left: 10 },
 			controlSize: SC.LARGE_CONTROL_SIZE,
