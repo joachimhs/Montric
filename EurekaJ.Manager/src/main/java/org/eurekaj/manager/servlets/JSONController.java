@@ -17,8 +17,10 @@ import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.manager.util.ChartUtil;
+import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataSetCollection;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,8 +49,7 @@ public class JSONController {
 		System.out.println("Accepted JSON: \n" + jsonObject);
 		if (jsonObject.has("getInstrumentationMenu")) {
 			String menuId = jsonObject.getString("getInstrumentationMenu");
-			jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, berkeleyTreeMenuService.getTreeMenu(), 0, 15).toString();
-			//jsonResponse = BuildJsonObjectsUtil.buildTreeMenuJsonObject(berkeleyTreeMenuService.getTreeMenu());
+			jsonResponse = buildInstrumentationMenu(menuId);
 			System.out.println("Got Tree Type Menu:\n" + jsonResponse);
 		}
 		
@@ -98,14 +99,31 @@ public class JSONController {
 			
 			List<LiveStatistics> liveList = berkeleyTreeMenuService.getLiveStatistics(path, fromPeriod, toPeriod);
 			Collections.sort(liveList);
+			GroupedStatistics groupedStatistics = berkeleyTreeMenuService.getGroupedStatistics(path);
+			XYDataSetCollection valueCollection = new XYDataSetCollection();
 			
-			Alert alert = berkeleyTreeMenuService.getAlert(path);
-			
-			String seriesLabel = path;
-			if (seriesLabel.contains(":")) {
-				seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
+			if (groupedStatistics != null) {
+				//There are grouped statistics, all must be added to the chart
+				for (String gsPath : groupedStatistics.getGroupedPathList()) {
+					liveList = berkeleyTreeMenuService.getLiveStatistics(gsPath, fromPeriod, toPeriod);
+					Collections.sort(liveList);
+					String seriesLabel = gsPath;
+					if (gsPath.length() > path.length() + 1) {
+						seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
+					}
+					for (XYDataList dataList : ChartUtil.generateDataset(liveList, seriesLabel, null, thenCal.getTime(), nowCal.getTime(), 15).getDataList()) {
+						valueCollection.addDataList(dataList);
+					}
+				}
+			} else {
+				Alert alert = berkeleyTreeMenuService.getAlert(path);
+				
+				String seriesLabel = path;
+				if (seriesLabel.contains(":")) {
+					seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
+				}
+				valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), 15);
 			}
-			XYDataSetCollection valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), 15);
 			
 			jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, path, valueCollection);
 			System.out.println("Got Chart Data:\n" + jsonResponse);
@@ -135,6 +153,10 @@ public class JSONController {
 		}
 
 		return jsonRequestObject;
+	}
+	
+	private String buildInstrumentationMenu(String menuId) throws JSONException {
+		return BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, berkeleyTreeMenuService.getTreeMenu(), 0, 15).toString();
 	}
 
 }

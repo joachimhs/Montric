@@ -40,16 +40,23 @@ EurekaJView.mainPage = SC.Page.design({
 		backgroundColor: 'white',
 		
 		middleToolbarView: SC.ToolbarView.design({
-			childViews: 'alertButtonView'.w(),
+			childViews: 'alertButtonView groupButtonView'.w(),
 			layout: {top: 0, left: 0, right: 0, height: 40 },
 			anchorLocation: SC.ANCHOR_TOP,
 			
 			alertButtonView: SC.ButtonView.design({
 				layout: { centerY: 0, height: 30, left: 10, width: 150},
 				title: "Alerts",
-//				theme: "capsule",
 				action: 'showPanelPane',
 	            target: 'EurekaJView.alertController'
+			}),
+			
+			groupButtonView: SC.ButtonView.design({
+				layout: { centerY: 0, height: 30, left: 165, width: 180},
+				title: "Instrumentation Groups",
+//				theme: "capsule",
+				action: 'showPanelPane',
+	            target: 'EurekaJView.instrumentationGroupController'
 			})
 		}),
 			
