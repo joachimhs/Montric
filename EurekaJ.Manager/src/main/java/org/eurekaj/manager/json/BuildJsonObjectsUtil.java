@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -64,7 +65,7 @@ public class BuildJsonObjectsUtil {
 		return treeJson;
 	}
 	
-	public static JSONObject buildLeafNodeList(String nodeListId, String parentNodePath, List<TreeMenuNode> nodeList) throws JSONException {
+	public static JSONObject buildLeafNodeList(String nodeListId, String parentNodePath, List<TreeMenuNode> nodeList, GroupedStatistics groupedStatistics) throws JSONException {
 		JSONObject parentObject = new JSONObject();
 		
 		JSONArray nodeArray = new JSONArray();
@@ -75,6 +76,10 @@ public class BuildJsonObjectsUtil {
 			if (guiPathAfterParent.split(":").length == 1) {
 				nodeArray.put(buildTreeNode((++guid), node.getGuiPath()));
 			}
+		}
+		
+		if (groupedStatistics != null) {
+			nodeArray.put(buildTreeNode((++guid), groupedStatistics.getSourceGuiPath()));
 		}
 		
 		parentObject.put(nodeListId, nodeArray);

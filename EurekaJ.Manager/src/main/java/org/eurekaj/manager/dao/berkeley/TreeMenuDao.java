@@ -22,7 +22,7 @@ public interface TreeMenuDao {
 
 	public void persistGroupInstrumentation(GroupedStatistics groupedStatistics);
 
-	public GroupedStatistics getGroupedStatistics(String guiPath);
+	public GroupedStatistics getGroupedStatistics(String name);
 
 	public List<GroupedStatistics> getGroupedStatistics();
 

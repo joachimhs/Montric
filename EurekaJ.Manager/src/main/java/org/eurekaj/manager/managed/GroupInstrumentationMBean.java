@@ -80,7 +80,7 @@ public class GroupInstrumentationMBean  implements AlertableMBean {
 		
 		List<GroupedStatistics> storedGroups = getStoredGroupedStatistics();
 		for (GroupedStatistics storedGroup : storedGroups) {
-			if (selectedPath.equals(storedGroup.getGuiPath())) {
+			if (selectedPath.equals(storedGroup.getSourceGuiPath())) {
 				//Transfer stored groups to the picked list
 				selectedGroupList.addAll(storedGroup.getGroupedPathList());
 				groupList.removeAll(storedGroup.getGroupedPathList());
@@ -124,7 +124,7 @@ public class GroupInstrumentationMBean  implements AlertableMBean {
 	
 	public void persistGroupInstrumentation(ActionEvent event) {
 		GroupedStatistics gs = new GroupedStatistics();
-		gs.setGuiPath(userMBean.getSelectedPath());
+		gs.setSourceGuiPath(userMBean.getSelectedPath());
 		for (String selectPath : selectedGroupList) {
 			gs.getGroupedPathList().add(selectPath);
 		}

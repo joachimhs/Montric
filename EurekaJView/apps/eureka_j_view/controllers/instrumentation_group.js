@@ -38,10 +38,10 @@ EurekaJView.instrumentationGroupController = SC.ObjectController.create(
 					anchorLocation: SC.ANCHOR_TOP,
 					
 					labelView: SC.LabelView.extend({
-	                    layout: {centerY: 0, height: 40, top: 10, left: 10, width: 400 },
-						controlSize: SC.REGULAR_CONTROL_SIZE,
+	                    layout: {centerY: 0, centerX:0, centerY: 0, height: 40, top: 10, width: 400 },
+						controlSize: SC.LARGE_CONTROL_SIZE,
 						fontWeight: SC.BOLD_WEIGHT,
-	                    valueBinding: 'EurekaJView.instrumentationChartController.selectedInstrumentationTypePath'
+	                    value: 'Instrumentation Groups'
 	                }).classNames('whitelabel'),
 				}),
 				
@@ -50,22 +50,30 @@ EurekaJView.instrumentationGroupController = SC.ObjectController.create(
 					layout: {top: 40, bottom: 0, right: 0, left: 0},
 					
 					instrumentationGroupLeft: SC.View.design({
-						childViews: 'instrumentationGroupLabelView'.w(),
+						childViews: 'newInstrumentationView'.w(),
 						layout: {top: 0, bottom: 43, left: 0, width: 306 },
 						anchorLocation: SC.ANCHOR_TOP,
 						backgroundColor: "#000000",
-
-						instrumentationGroupLabelView: SC.LabelView.design({
-							layout: {centerY: 0, height: 30, top: 8, left: 0 },
-							controlSize: SC.LARGE_CONTROL_SIZE,
-							fontWeight: SC.REGULAR_WEIGHT,
-							textAlign: SC.ALIGN_CENTER,
-							value: 'Instrumentation Groups'
-						}).classNames('whitelabel'),
+						
+						newInstrumentationView : SC.View.design({
+							childViews: 'newGroupNameTextFieldView newGroupButtonView'.w(),
+							layout: {top: 3, height: 28, left: 3, width: 300 },
+							backgroundColor: "#F0F8FF",
+							
+							newGroupNameTextFieldView : SC.TextFieldView.design({
+								layout: {top: 2, height: 24, centerY:0, right: 82, left: 2 },
+							}),
+							
+							newGroupButtonView: SC.ButtonView.extend({
+								layout: {left: 220, right: 2, height: 24, centerY: 0, top: 2, centerY: 0},
+								title: "Add",
+							}),
+						}),
+						
 					}),
 					
 					instrumentationGroupLeftScrollView: SC.ScrollView.design({
-						layout: {top: 40, bottom: 45, left: 2, width: 300 },
+						layout: {top: 30, bottom: 45, left: 2, width: 300 },
 						hasHorizontalScroller: YES,
 						hasVerticalScroller: YES,
 						

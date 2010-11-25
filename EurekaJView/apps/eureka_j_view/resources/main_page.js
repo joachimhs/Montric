@@ -76,6 +76,7 @@ EurekaJView.mainPage = SC.Page.design({
 //            optionsBinding: 'EurekaJView.chartController.options',
 //			options: SC.Object.create({}),
             debugInConsole: YES,
+			showTooltip: YES,
         }),		  
 		
 	}),

@@ -48,8 +48,8 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		return retList;
 	}
 
-	public GroupedStatistics getGroupedStatistics(String guiPath) {
-		return groupedStatPrimaryIdx.get(guiPath);
+	public GroupedStatistics getGroupedStatistics(String name) {
+		return groupedStatPrimaryIdx.get(name);
 	}
 
 	public List<GroupedStatistics> getGroupedStatistics() {

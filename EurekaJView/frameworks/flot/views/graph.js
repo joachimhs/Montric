@@ -19,6 +19,9 @@ Flot.GraphView = SC.View.extend(
 	data: null ,
 	options: null,
 	debugInConsole: false ,
+	previousPoint: null,
+	showTooltip: false,
+	
 	render: function(context, firstTime) {
 		sc_super();
 		if( !this.get('layer') || ! this.get('isVisibleInWindow')) return;
@@ -43,6 +46,38 @@ Flot.GraphView = SC.View.extend(
 			if (this.debugInConsole) console.log('render series');
 		} else {
 			if (this.debugInConsole) console.warn('data was empty');
+		}
+		if (this.showTooltip) {
+		    $("#sc482").bind("plothover", function (event, pos, item) {
+		        $("#x").text(pos.x.toFixed(2));
+		        $("#y").text(pos.y.toFixed(2));
+
+		            if (item) {
+		                if (previousPoint != item.datapoint) {
+		                    previousPoint = item.datapoint;
+
+		                    $("#tooltip").remove();
+		                    var x = item.datapoint[0].toFixed(2),
+		                        y = item.datapoint[1].toFixed(2);
+							var contents = item.series.label + " = " + y;
+							
+		                    	 $('<div id="tooltip">' + contents + '</div>').css( {
+							            position: 'absolute',
+							            display: 'none',
+							            top: item.pageY + 5,
+							            left: item.pageX + 5,
+							            border: '1px solid #fdd',
+							            padding: '2px',
+							            'background-color': '#fee',
+							            opacity: 0.80
+							        }).appendTo("body").fadeIn(200);
+		                }
+		            }
+		            else {
+		                $("#tooltip").remove();
+		                previousPoint = null;            
+		            }
+		    });
 		}
 	},
 	

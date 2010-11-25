@@ -6,27 +6,37 @@ import java.util.List;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
-@Entity
+@Entity(version=2)
 public class GroupedStatistics implements Comparable<GroupedStatistics> {
-	@PrimaryKey String guiPath;
-	List<String> groupedPathList;
+	@PrimaryKey String name;
+	private String sourceGuiPath;
+	private List<String> groupedPathList;
 	
 	public GroupedStatistics() {
 		groupedPathList = new ArrayList<String>();
 	}
 	
-	public GroupedStatistics(String guiPath, List<String> groupedPathList) {
+	public GroupedStatistics(String name, String sourceGuiPath, List<String> groupedPathList) {
 		super();
-		this.guiPath = guiPath;
+		this.name = name;
+		this.sourceGuiPath = sourceGuiPath;
 		this.groupedPathList = groupedPathList;
 	}
 
-	public String getGuiPath() {
-		return guiPath;
+	public String getName() {
+		return name;
 	}
-
-	public void setGuiPath(String guiPath) {
-		this.guiPath = guiPath;
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getSourceGuiPath() {
+		return sourceGuiPath;
+	}
+	
+	public void setSourceGuiPath(String sourceGuiPath) {
+		this.sourceGuiPath = sourceGuiPath;
 	}
 
 	public List<String> getGroupedPathList() {
@@ -40,18 +50,18 @@ public class GroupedStatistics implements Comparable<GroupedStatistics> {
 	@Override
 	public String toString() {
 		return "GroupedStatistics [groupedPathList=" + groupedPathList
-				+ ", guiPath=" + guiPath + "]";
+				+ ", sourceGuiPath=" + sourceGuiPath + "]";
 	}
 	
 	public int compareTo(GroupedStatistics other) {
-		if (other == null || other.getGuiPath() == null) {
+		if (other == null || other.getName() == null) {
 			return 1;
 		}
 		
-		if (this.getGuiPath() == null) {
+		if (this.getName() == null) {
 			return -1;
 		}
 		
-		return this.getGuiPath().compareTo(other.getGuiPath());
+		return this.getName().compareTo(other.getName());
 	}
 }

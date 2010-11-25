@@ -81,7 +81,9 @@ public class JSONController {
 				}
 			}
 			
-			jsonResponse = BuildJsonObjectsUtil.buildLeafNodeList(listId, path, leafList).toString();
+			GroupedStatistics groupedStatistics = berkeleyTreeMenuService.getGroupedStatistics(path);
+			
+			jsonResponse = BuildJsonObjectsUtil.buildLeafNodeList(listId, path, leafList, groupedStatistics).toString();
 			System.out.println("Got Chart List:\n" + jsonResponse);
 			
 		}

@@ -42,8 +42,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		treeMenuDao.persistGroupInstrumentation(groupedStatistics);		
 	}
 	
-	public GroupedStatistics getGroupedStatistics(String guiPath) {
-		return treeMenuDao.getGroupedStatistics(guiPath);
+	public GroupedStatistics getGroupedStatistics(String name) {
+		return treeMenuDao.getGroupedStatistics(name);
 	}
 	
 	public List<GroupedStatistics> getGroupedStatistics() {
