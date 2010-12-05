@@ -27,10 +27,11 @@ EurekaJView.instrumentationTypeTree = SC.Record.extend(
 		var query = SC.Query.local(EurekaJView.instrumentationTypeTree, 'parentPath = {parentPath}', {parentPath : this.get('guiPath')})
 		var nodes = EurekaJView.instrumentationTypeStore.find(query);
 		if (nodes.toArray().length === 0) {
-			this.set('hasChildren', NO);
+			SC.Logger.log('Node ' + this.get('guiPath') + ' has no children');
+//			this.set('hasChildren', NO);
 			return null;
 		} else {
-			this.set('hasChildren', YES);
+//			this.set('hasChildren', YES);
 			return nodes;
 		}
 	}.property(),//'guid').cacheable()

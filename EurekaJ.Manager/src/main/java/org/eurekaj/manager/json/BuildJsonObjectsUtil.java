@@ -17,7 +17,7 @@ import org.json.JSONObject;
 public class BuildJsonObjectsUtil {
 
 	public static JSONObject buildTreeTypeMenuJsonObject(String treeId, List<TreeMenuNode> nodeList, int startLevel, int stopLevel) throws JSONException {
-		HashMap<String, String> nodesBuilt = new HashMap<String, String>();
+		HashMap<String, JSONObject> nodesBuilt = new HashMap<String, JSONObject>();
 		
 		JSONObject parentObject = new JSONObject();
 		
@@ -32,13 +32,16 @@ public class BuildJsonObjectsUtil {
 			do {
 				 currPath += splitNodePathArray[splitArrayIndex];
 				if (nodesBuilt.get(currPath) == null && splitArrayIndex >= startLevel) {
-					JSONObject jsonNode = buildTreeNode((++guid), currPath);
-					treeArray.put(jsonNode);
-					nodesBuilt.put(currPath, currPath);
+					JSONObject jsonNode = buildTreeNode((++guid), currPath, nodesBuilt);
+					nodesBuilt.put(currPath, jsonNode);
 				}
 				currPath += ":";
 				splitArrayIndex++;
 			} while(splitArrayIndex < splitNodePathArray.length-1 && splitArrayIndex < stopLevel);
+		}
+		
+		for (JSONObject node : nodesBuilt.values()) {
+			treeArray.put(node);
 		}
 		
 		parentObject.put(treeId, treeArray);
@@ -46,7 +49,7 @@ public class BuildJsonObjectsUtil {
 		return parentObject;
 	}
 	
-	private static JSONObject buildTreeNode(int guid, String guiPath) throws JSONException {
+	private static JSONObject buildTreeNode(int guid, String guiPath, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
 		JSONObject treeJson = new JSONObject();
 		treeJson.put("guid", guiPath);
 		treeJson.put("isSelected", false);
@@ -54,12 +57,20 @@ public class BuildJsonObjectsUtil {
 		treeJson.put("treeItemIsExpanded", false);
 		treeJson.put("name", guiPath);
 		treeJson.put("parentPath", JSONObject.NULL);
+		treeJson.put("hasChildren", false);
 		
 		if (guiPath.contains(":")) {
 			//Split GUI Path into name and parent
 			int lastColonIndex = guiPath.lastIndexOf(":");
 			treeJson.put("name", guiPath.substring((lastColonIndex+1),guiPath.length()));
-			treeJson.put("parentPath", guiPath.substring(0, lastColonIndex));	
+			String parentPath = guiPath.substring(0, lastColonIndex);
+			treeJson.put("parentPath", parentPath);
+			
+			//Mark parent objects as having children nodes
+			if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
+				JSONObject parentNode = nodesBuilt.get(parentPath);
+				parentNode.put("hasChildren", true);
+			}
 		}
 		
 		return treeJson;
@@ -74,12 +85,12 @@ public class BuildJsonObjectsUtil {
 		for (TreeMenuNode node : nodeList) {
 			String guiPathAfterParent = node.getGuiPath().substring(parentNodePath.length()+1);
 			if (guiPathAfterParent.split(":").length == 1) {
-				nodeArray.put(buildTreeNode((++guid), node.getGuiPath()));
+				nodeArray.put(buildTreeNode((++guid), node.getGuiPath(), null));
 			}
 		}
 		
 		if (groupedStatistics != null) {
-			nodeArray.put(buildTreeNode((++guid), groupedStatistics.getSourceGuiPath()));
+			nodeArray.put(buildTreeNode((++guid), groupedStatistics.getSourceGuiPath(), null));
 		}
 		
 		parentObject.put(nodeListId, nodeArray);
