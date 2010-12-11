@@ -69,6 +69,13 @@ public class JSONController {
 			System.out.println("Got Tree Menu:\n" + jsonResponse);
 		}
 		
+		if (jsonObject.has("getInstrumentationMenuNode")) {
+			String nodeId = jsonObject.getString("getInstrumentationMenuNode");
+			TreeMenuNode node = berkeleyTreeMenuService.getTreeMenu(nodeId);
+			jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
+			System.out.println("Got Node: \n" + jsonResponse);
+		}
+		
 		if (jsonObject.has("getInstrumentationChartList")) {
 			JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartList");
 			String listId = keyObject.getString("id");
@@ -93,9 +100,20 @@ public class JSONController {
 			String chartId = keyObject.getString("id");
 			String path = keyObject.getString("path");
 			
+			int chartTimespan = 10;
+			if (keyObject.has("chartTimespan")) {
+				chartTimespan = keyObject.getInt("chartTimespan");
+			}
+			
+			int chartResolution = 15;
+			if (keyObject.has("chartResolution")) {
+				chartResolution = keyObject.getInt("chartResolution");
+			}
+			
 			Calendar nowCal = Calendar.getInstance();
 			Calendar thenCal = Calendar.getInstance();
-			thenCal.add(Calendar.MINUTE, 15 * -1);
+			thenCal.add(Calendar.MINUTE, chartTimespan * -1);
+			
 			Long fromPeriod = thenCal.getTime().getTime() / 15000;
 			Long toPeriod = nowCal.getTime().getTime() / 15000;
 			
@@ -113,7 +131,7 @@ public class JSONController {
 					if (gsPath.length() > path.length() + 1) {
 						seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
 					}
-					for (XYDataList dataList : ChartUtil.generateDataset(liveList, seriesLabel, null, thenCal.getTime(), nowCal.getTime(), 15).getDataList()) {
+					for (XYDataList dataList : ChartUtil.generateDataset(liveList, seriesLabel, null, thenCal.getTime(), nowCal.getTime(), chartResolution).getDataList()) {
 						valueCollection.addDataList(dataList);
 					}
 				}
@@ -124,7 +142,7 @@ public class JSONController {
 				if (seriesLabel.contains(":")) {
 					seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
 				}
-				valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), 15);
+				valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), chartResolution);
 			}
 			
 			jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, path, valueCollection);

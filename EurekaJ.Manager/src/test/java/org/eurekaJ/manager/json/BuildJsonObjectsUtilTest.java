@@ -31,7 +31,7 @@ public class BuildJsonObjectsUtilTest {
 		nodeList.add(new TreeMenuNode("A", "Y"));
 		
 		JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, 0, 20);
-		assertEquals("{\"treeMenuID\":[{\"guid\":\"A\",\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}]}", jsonObject.toString());
+		assertEquals("{\"treeMenuID\":[{\"guid\":\"A\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}]}", jsonObject.toString());
 	}
 	
 	@Test
@@ -42,9 +42,9 @@ public class BuildJsonObjectsUtilTest {
 		
 		StringBuilder expected = new StringBuilder();
 		expected.append("{\"treeMenuID\":[");
-		expected.append("{\"guid\":\"A\",\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"A\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
 		expected.append(",");
-		expected.append("{\"guid\":\"B\",\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"B\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
 		expected.append("]}");
 		
 		JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, 0, 20);
@@ -60,9 +60,9 @@ public class BuildJsonObjectsUtilTest {
 		
 		StringBuilder expected = new StringBuilder();
 		expected.append("{\"treeMenuID\":[");
-		expected.append("{\"guid\":\"A\",\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"A\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
 		expected.append(",");
-		expected.append("{\"guid\":\"B\",\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"B\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
 		//expected.append(",");
 		//expected.append("{\"guid\":\"A:C\",\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
 		expected.append("]}");
@@ -81,11 +81,11 @@ public class BuildJsonObjectsUtilTest {
 		
 		StringBuilder expected = new StringBuilder();
 		expected.append("{\"treeMenuID\":[");
-		expected.append("{\"guid\":\"A\",\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"A\",\"hasChildren\":true,\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
 		expected.append(",");
-		expected.append("{\"guid\":\"B\",\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"A:C\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
 		expected.append(",");
-		expected.append("{\"guid\":\"A:C\",\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
+		expected.append("{\"guid\":\"B\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
 		//expected.append(",");
 		//expected.append("{\"guid\":4,\"isSelected\":false,\"name\":\"D\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C:D\",\"parentPath\":\"A:C\"}");
 		expected.append("]}");
@@ -101,9 +101,9 @@ public class BuildJsonObjectsUtilTest {
 		
 		StringBuilder expected = new StringBuilder();
 		expected.append("{\"treeMenuID\":[");
-		expected.append("{\"guid\":\"A\",\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"A\",\"hasChildren\":true,\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
 		expected.append(",");
-		expected.append("{\"guid\":\"A:B\",\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B\",\"parentPath\":\"A\"}");
+		expected.append("{\"guid\":\"A:B\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B\",\"parentPath\":\"A\"}");
 		//expected.append(",");
 		//expected.append("{\"guid\":3,\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B:C\",\"parentPath\":\"A:B\"}");
 		expected.append("]}");
@@ -119,13 +119,13 @@ public class BuildJsonObjectsUtilTest {
 		
 		StringBuilder expected = new StringBuilder();
 		expected.append("{\"treeMenuID\":[");
-		expected.append("{\"guid\":\"JSFlotJAgent\",\"isSelected\":false,\"name\":\"JSFlotJAgent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent\",\"parentPath\":null}");
+		expected.append("{\"guid\":\"JSFlotJAgent\",\"hasChildren\":true,\"isSelected\":false,\"name\":\"JSFlotJAgent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent\",\"parentPath\":null}");
 		expected.append(",");
-		expected.append("{\"guid\":\"JSFlotJAgent:Custom\",\"isSelected\":false,\"name\":\"Custom\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom\",\"parentPath\":\"JSFlotJAgent\"}");
+		expected.append("{\"guid\":\"JSFlotJAgent:Custom\",\"hasChildren\":true,\"isSelected\":false,\"name\":\"Custom\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom\",\"parentPath\":\"JSFlotJAgent\"}");
 		expected.append(",");
-		expected.append("{\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"isSelected\":false,\"name\":\"org.jsflot.components.BubbleDataPointComponent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"parentPath\":\"JSFlotJAgent:Custom\"}");
+		expected.append("{\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"hasChildren\":true,\"isSelected\":false,\"name\":\"org.jsflot.components.BubbleDataPointComponent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"parentPath\":\"JSFlotJAgent:Custom\"}");
 		expected.append(",");
-		expected.append("{\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"isSelected\":false,\"name\":\"<init>\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"}");
+		expected.append("{\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"hasChildren\":false,\"isSelected\":false,\"name\":\"<init>\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"}");
 		//expected.append(",");
 		//expected.append("{\"guid\":\"\",\"isSelected\":false,\"name\":\"Max Selftime\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"}");
 		expected.append("]}");
@@ -146,7 +146,7 @@ public class BuildJsonObjectsUtilTest {
 		xyCollection.addDataList(xyList);
 		
 		StringBuilder expected = new StringBuilder();
-		expected.append("{\"chartId\": {\"content\": [{\"label\": \"Set1\", \"data\": [[1,1], [2,2], [3,3], [5,5]]},]}}");
+		expected.append("{\"chartId\": [ {\"guid\": \"Set1\",\"label\": \"Set1\", \"data\": [[1,1], [2,2], [3,3], [5,5]]}]}");
 		String jsonString = BuildJsonObjectsUtil.generateChartData("chartId", "something", xyCollection);
 		assertEquals(expected.toString(), jsonString);
 	}

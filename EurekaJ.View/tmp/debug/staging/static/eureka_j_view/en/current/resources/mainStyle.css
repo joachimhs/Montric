@@ -1,0 +1,16 @@
+.blacklabel {
+	color: black;
+}
+
+.whitelabel {
+	color: white;
+}
+
+.thickBlackBorderTopAndBottom {
+	border-top: 4px solid #000;
+	border-bottom: 4px solid #000;
+}
+
+.blackRightborder {
+	border-right: 2px solid #000;
+}

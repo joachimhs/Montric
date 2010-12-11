@@ -1,6 +1,8 @@
 package org.eurekaj.manager.json;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,10 +40,28 @@ public class BuildJsonObjectsUtil {
 				currPath += ":";
 				splitArrayIndex++;
 			} while(splitArrayIndex < splitNodePathArray.length-1 && splitArrayIndex < stopLevel);
+			
+			//Add the last node to the "availableCharts" property
+			if (splitNodePathArray.length >= 2) {
+				String chartPath = currPath + splitNodePathArray[splitNodePathArray.length-1];
+				String parentPath = currPath.substring(0, currPath.length() -1);
+				
+				JSONObject parentJson = nodesBuilt.get(parentPath);
+				JSONArray chartArray = parentJson.getJSONArray("availableCharts");
+				if (chartArray == null) {
+					chartArray = new JSONArray();
+					parentJson.put("availableCharts", chartArray);
+				}
+				chartArray.put(chartPath);
+			}
+			
 		}
 		
-		for (JSONObject node : nodesBuilt.values()) {
-			treeArray.put(node);
+		List<String> sortedObjects = new ArrayList<String>(nodesBuilt.keySet());
+		Collections.sort(sortedObjects);
+		
+		for (String key: sortedObjects) {
+			treeArray.put(nodesBuilt.get(key));
 		}
 		
 		parentObject.put(treeId, treeArray);
@@ -58,12 +78,12 @@ public class BuildJsonObjectsUtil {
 		treeJson.put("name", guiPath);
 		treeJson.put("parentPath", JSONObject.NULL);
 		treeJson.put("hasChildren", false);
+		treeJson.put("availableCharts", new JSONArray());
 		
 		if (guiPath.contains(":")) {
 			//Split GUI Path into name and parent
-			int lastColonIndex = guiPath.lastIndexOf(":");
-			treeJson.put("name", guiPath.substring((lastColonIndex+1),guiPath.length()));
-			String parentPath = guiPath.substring(0, lastColonIndex);
+			treeJson.put("name", getTreeNodeName(guiPath));
+			String parentPath = getParentPath(guiPath);
 			treeJson.put("parentPath", parentPath);
 			
 			//Mark parent objects as having children nodes
@@ -74,6 +94,43 @@ public class BuildJsonObjectsUtil {
 		}
 		
 		return treeJson;
+	}
+	
+	private static String getParentPath(String guiPath) {
+		String parentPath = null;
+		
+		if (guiPath.contains(":")) {
+			int lastColonIndex = guiPath.lastIndexOf(":");
+			parentPath = guiPath.substring(0, lastColonIndex);
+		}
+		
+		return parentPath;
+	}
+	
+	private static String getTreeNodeName(String guiPath) {
+		String nodeName = null;
+		
+		if (guiPath.contains(":")) {
+			int lastColonIndex = guiPath.lastIndexOf(":");
+			nodeName = guiPath.substring((lastColonIndex+1),guiPath.length());
+		}
+		
+		return nodeName;
+	}
+	
+	public static JSONObject buildInstrumentationNode(TreeMenuNode node) throws JSONException {
+		JSONObject treeNodeJSONObject = new JSONObject();
+		
+		if (node != null) {
+			treeNodeJSONObject.put("guid", node.getGuiPath());
+			treeNodeJSONObject.put("guiPath", node.getGuiPath());
+			treeNodeJSONObject.put("name", getTreeNodeName(node.getGuiPath()));
+			treeNodeJSONObject.put("parentPath", getParentPath(node.getGuiPath()));
+			treeNodeJSONObject.put("isSelected", false);
+			treeNodeJSONObject.put("chartGrid", node.getGuiPath());
+		}
+		
+		return treeNodeJSONObject;
 	}
 	
 	public static JSONObject buildLeafNodeList(String nodeListId, String parentNodePath, List<TreeMenuNode> nodeList, GroupedStatistics groupedStatistics) throws JSONException {
@@ -105,14 +162,14 @@ public class BuildJsonObjectsUtil {
 		NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
 		nf.setMaximumFractionDigits(3);
 		nf.setGroupingUsed(false);
-		dataArraySB.append("{\"");
+		//dataArraySB.append("{\"");
 		
 		//[{"label":"set1", "data":[[1,1],[2,2],[3,3]]} ]
 		
-		dataArraySB.append(chartId).append("\": [ ");
+		//dataArraySB.append(chartId).append("\": [ ");
 		int collectionIndex = 0;
 		for (XYDataList list : xyCollection.getDataList()) {
-			dataArraySB.append("{\"guid\": \"").append(list.getLabel()).append("\",\"label\": \"").append(list.getLabel()).append("\", \"data\": [");
+			dataArraySB.append("{\"label\": \"").append(list.getLabel()).append("\", \"data\": [");
 			for (int i = 0; i < list.size() - 1; i++) {
 				XYDataPoint p = list.get(i);
 				String pointLabel = "";
@@ -140,7 +197,7 @@ public class BuildJsonObjectsUtil {
 			}
 		}
 		
-		dataArraySB.append("]}");
+		//dataArraySB.append("]}");
 		
 		return dataArraySB.toString();
 	}
