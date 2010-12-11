@@ -65,20 +65,16 @@ Flot.GraphView = SC.View.extend(
 
         if (!SC.empty(dataObject) && (dataObject.get('status') & SC.Record.READY)) {
 			data = dataObject.get('data');
-			SC.Logger.log('getting data: ' + dataObject);
             if (this.debugInConsole) console.log(this.get('layer'));
             Flot.plot(this.get('layer'), dataObject, options);
             if (this.debugInConsole) console.log('render data');
         } else if (!SC.empty(seriesObject) && (seriesObject.get('status') & SC.Record.READY)) {
-			SC.Logger.log('Graph Series: ' + seriesObject);
 			var jsonObject = {};
 			jsonObject.label = seriesObject.get('label');
 			jsonObject.data = seriesObject.get('data');
-			
-			SC.Logger.log('jsonObject: ' + jsonObject);
+
 			var seriesArray = [];
 			seriesArray.push(jsonObject);
-			SC.Logger.log('options: ' + this.get('options'));
             Flot.plot(this.get('layer'), seriesArray, options);
             if (this.debugInConsole) console.log('render series');
         } else {
