@@ -26,7 +26,7 @@ EurekaJView.main = function main() {
   // ex: EurekaJView.contactsController.set('content',EurekaJView.contacts);
 	EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);
 	EurekaJView.InstrumentationTreeController.populate();
-
+    EurekaJView.InstrumentationTreeController.triggerTimer();
 } ;
 
 function main() { EurekaJView.main(); }

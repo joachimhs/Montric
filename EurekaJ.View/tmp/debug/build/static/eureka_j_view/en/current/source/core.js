@@ -21,7 +21,7 @@ EurekaJView = SC.Application.create(
   // connect to a backend server.  The default setup below connects the store
   // to any fixtures you define.
   //store: SC.Store.create().from(SC.Record.fixtures)
-  EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource'),
+  EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource')
   // TODO: Add global constants or singleton objects needed by your app here.
 
 }) ;

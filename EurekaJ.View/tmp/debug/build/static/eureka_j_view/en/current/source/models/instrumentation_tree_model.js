@@ -22,18 +22,16 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
     guiPath: SC.Record.attr(String),
     hasChildren: SC.Record.attr(Boolean),
     treeItemIsExpanded: NO,
+
+    childrenNodes: SC.Record.toMany('EurekaJView.InstrumentationTreeModel'),
 	availableCharts: SC.Record.toMany('EurekaJView.ChartSelectorModel', { inverse: 'parentTreeNode', isMaster: YES }),
 	
     treeItemChildren: function() {
-        var query = SC.Query.local(EurekaJView.InstrumentationTreeModel, 'parentPath = {parentPath}', {
-            parentPath: this.get('guiPath')
-        })
-        var nodes = EurekaJView.EurekaJStore.find(query);
-        if (nodes.toArray().length === 0) {
+        if (this.get('childrenNodes').toArray().length === 0) {
             return null;
         } else {
-            return nodes;
+            return this.get('childrenNodes');
         }
-    }.property(),
+    }.property()
 });
 ; if ((typeof SC !== 'undefined') && SC && SC.scriptDidLoad) SC.scriptDidLoad('eureka_j_view');

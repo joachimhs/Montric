@@ -123,7 +123,7 @@ EurekaJView.mainPage = SC.Page.design({
                 contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
                 selectionBinding: 'EurekaJView.InstrumentationTreeController.selection'
 
-            }),
+            })
         }),
 
         chartSelectorView: SC.View.design({
@@ -164,7 +164,7 @@ EurekaJView.mainPage = SC.Page.design({
                     backgroundColor: '#F0F8FF',
                     contentValueKey: "name",
                     contentBinding: 'EurekaJView.chartSelectorController.arrangedObjects',
-                    selectionBinding: 'EurekaJView.chartSelectorController.selection',
+                    selectionBinding: 'EurekaJView.chartSelectorController.selection'
                     //				contentCheckboxKey: "isSelected",
                 })
             })

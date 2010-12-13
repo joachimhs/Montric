@@ -24,7 +24,7 @@ Flot.GraphView = SC.View.extend(
     showTooltip: false,
 
     render: function(context, firstTime) {
-        arguments.callee.base.apply(this,arguments);
+        sc_super();
         if (!this.get('layer') || !this.get('isVisibleInWindow')) return;
 
         if ((this.get('frame').width <= 0) || (this.get('frame').height <= 0)) return;
@@ -152,13 +152,13 @@ Flot.GraphView = SC.View.extend(
     }.observes('layer'),
 
     layoutDidChange: function() {
-        arguments.callee.base.apply(this,arguments);
+        sc_super();
         if (this.debugInConsole) console.log('layout changed');
         this.setLayerNeedsUpdate();
     },
 
     updateLayerLocationIfNeeded: function() {
-        var ret = arguments.callee.base.apply(this,arguments);
+        var ret = sc_super();
         if (this.debugInConsole) console.log('layer location update');
         this.setLayerNeedsUpdate();
         return ret;
@@ -172,13 +172,13 @@ Flot.GraphView = SC.View.extend(
     },
 
     viewDidResize: function() {
-        arguments.callee.base.apply(this,arguments);
+        sc_super();
         this.setLayerNeedsUpdate();
         if (this.debugInConsole) console.log('view did resize');
     }.observes('layout'),
 
     parentViewDidResize: function() {
-        arguments.callee.base.apply(this,arguments);
+        sc_super();
         this.setLayerNeedsUpdate();
         if (this.debugInConsole) console.log('parent did resize');
     },
@@ -205,4 +205,3 @@ Flot.GraphView = SC.View.extend(
     }
 
 });
-; if ((typeof SC !== 'undefined') && SC && SC.scriptDidLoad) SC.scriptDidLoad('flot');

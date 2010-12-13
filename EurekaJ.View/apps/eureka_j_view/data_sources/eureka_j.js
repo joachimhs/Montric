@@ -37,6 +37,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             }).json().notify(this, 'performFetchInstrumentationTreeMenu', store, query).send(requestStringJson);
 
             return YES;
+        }else {
+            SC.Logger.log('attempting query: ' + query.get('conditions'));
         }
 
         return NO; // return YES if you handled the query
@@ -62,7 +64,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (recordType === EurekaJView.ChartSelectorModel) {
             SC.Logger.log("Getting the individual chartSelector");
             var requestStringJson = {
-                'getInstrumentationMenuNode': SC.Store.idFor(storeKey),
+                'getInstrumentationMenuNode': SC.Store.idFor(storeKey)
             };
 
             SC.Request.postUrl('/jsonController.capp').header({

@@ -48,6 +48,6 @@ EurekaJView.InstrumentationGroupPanelView = SC.View.extend(
             title: "Close",
             action: "remove",
             target: "EurekaJView.chartGridController.instrumentationGroupPanel"
-        }),
+        })
     })
 });

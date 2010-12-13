@@ -2,6 +2,8 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js" line="60" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js" line="25" mnemonic="8" />
+    <bookmark url="file://$PROJECT_DIR$/frameworks/flot/views/graph.js" line="102" mnemonic="7" />
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="03f5f7d6-376e-4ca6-a6a0-cbf396dbc541" name="Default" comment="" />
@@ -27,28 +29,82 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="chart_options.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_options.js">
+      <file leaf-file-name="instrumentation_tree.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="74" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0">
+            <state line="57" column="27" selection-start="2283" selection-end="2283" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="instrumentation_group_panel.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="instrumentation_tree_model.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="36" selection-start="363" selection-end="387" vertical-scroll-proportion="0.14634146">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="graph.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frameworks/flot/views/graph.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="185" column="38" selection-start="6499" selection-end="6499" vertical-scroll-proportion="-17.038462">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.flot.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frameworks/flot/jquery.flot.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="553" column="22" selection-start="24657" selection-end="24657" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chart_view.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="24" column="22" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="eureka_j.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="40" column="70" selection-start="1503" selection-end="1503" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/core.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="103" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="61" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="instrumentation_group_panel.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="41" selection-start="517" selection-end="517" vertical-scroll-proportion="0.20437956">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chart_grid.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="38" selection-start="2994" selection-end="2994" vertical-scroll-proportion="0.0">
+            <state line="50" column="10" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -57,7 +113,7 @@
       <file leaf-file-name="main_page.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="60" selection-start="1435" selection-end="1460" vertical-scroll-proportion="-16.076923">
+            <state line="166" column="85" selection-start="5977" selection-end="5977" vertical-scroll-proportion="-19.076923">
               <folding />
             </state>
           </provider>
@@ -77,12 +133,18 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js" />
-        <option value="$PROJECT_DIR$/frameworks/flot/views/graph.js" />
         <option value="$PROJECT_DIR$/tmp/debug/build/static/flot/en/current/source/views/graph.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js" />
         <option value="$PROJECT_DIR$/apps/eureka_j_view/views/chart_options.js" />
         <option value="$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js" />
+        <option value="$PROJECT_DIR$/frameworks/flot/views/graph.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/main.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/core.js" />
+        <option value="$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js" />
       </list>
     </option>
   </component>
@@ -135,77 +197,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="frameworks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="flot" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="en" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="current" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -217,95 +215,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="frameworks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="flot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="en" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="current" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="debug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="en" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="current" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="source" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tmp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -501,15 +419,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="2505" height="1400" extended-state="0" />
+    <frame x="476" y="22" width="1614" height="1418" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296875" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32511556" sideWeight="0.99748427" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24989924" sideWeight="0.66484374" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3899371" sideWeight="0.6694915" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -573,37 +491,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frameworks/flot/views/graph.js">
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="55" selection-start="2131" selection-end="2131" vertical-scroll-proportion="0.34793186">
+        <state line="41" column="6" selection-start="589" selection-end="1243" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_options.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="74" selection-start="232" selection-end="232" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="60" selection-start="1435" selection-end="1460" vertical-scroll-proportion="-16.076923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="38" selection-start="2994" selection-end="2994" vertical-scroll-proportion="0.0">
+        <state line="215" column="49" selection-start="6577" selection-end="6577" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="41" selection-start="517" selection-end="517" vertical-scroll-proportion="0.20437956">
+        <state line="50" column="10" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="85" selection-start="5977" selection-end="5977" vertical-scroll-proportion="-19.076923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp/debug/staging/static/sproutcore/datastore/en/current/system/query.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="157" column="0" selection-start="4384" selection-end="4384" vertical-scroll-proportion="-0.7079646">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="70" selection-start="1503" selection-end="1503" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="27" selection-start="2283" selection-end="2283" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frameworks/flot/jquery.flot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="553" column="22" selection-start="24657" selection-end="24657" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frameworks/flot/views/graph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="38" selection-start="6499" selection-end="6499" vertical-scroll-proportion="-17.038462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="61" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="103" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="22" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="36" selection-start="363" selection-end="387" vertical-scroll-proportion="0.14634146">
           <folding />
         </state>
       </provider>

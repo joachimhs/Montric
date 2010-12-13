@@ -22,7 +22,7 @@ EurekaJView.ChartView = SC.View.extend(
 			left: 5,
 			top: 5,
 			right: 5,
-			height: 30,
+			height: 30
         },
         controlSize: SC.LARGE_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
@@ -35,7 +35,7 @@ EurekaJView.ChartView = SC.View.extend(
 		seriesBinding: '.parentView.content',
 		//data: [SC.Object.create({label: 'set1', data:[[1,1], [2,2]]})],
 		debugInConsole: YES,
-		showTooltip: YES,
-	}),
+		showTooltip: YES
+	})
 
 });

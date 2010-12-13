@@ -1,7 +1,7 @@
 // ==========================================================================
 // Project:   EurekaJView.ChartOptionsView
 // Copyright: ©2010 My Company, Inc.
-// ==========================================================================
+// =======================================================================99===
 /*globals EurekaJView */
 
 /** @class
@@ -52,7 +52,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
                 bottom: 35,
                 right: 2
             },
-            title: "Alerts",
+            title: "Alerts"
             //action: 'showPanelPane',
             //target: 'EurekaJView.alertController'
         }),
@@ -99,7 +99,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
                 bottom: 35,
                 height: 30,
                 left: 110,
-                width: 200,
+                width: 200
             },
             disableSort: YES,
 
@@ -144,7 +144,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
                 return this.get('isEnabled');
             }.property('isEnabled'),
 
-            valueBinding: 'EurekaJView.chartGridController.selectedChartTimespan',
+            valueBinding: 'EurekaJView.chartGridController.selectedChartTimespan'
         }),
 
         chartResolutionLabelView: SC.LabelView.design({
@@ -165,7 +165,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
                 bottom: 5,
                 height: 30,
                 left: 110,
-                width: 200,
+                width: 200
             },
             disableSort: YES,
 
@@ -210,10 +210,10 @@ EurekaJView.ChartOptionsView = SC.View.extend(
                 return this.get('isEnabled');
             }.property('isEnabled'),
 
-            valueBinding: 'EurekaJView.chartGridController.selectedChartResolution',
-        }),
+            valueBinding: 'EurekaJView.chartGridController.selectedChartResolution'
+        })
 
-    }).classNames('thickBlackBorderTopAndBottom'),
+    }).classNames('thickBlackBorderTopAndBottom')
 
 });
 ; if ((typeof SC !== 'undefined') && SC && SC.scriptDidLoad) SC.scriptDidLoad('eureka_j_view');

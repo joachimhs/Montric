@@ -78,6 +78,7 @@ public class BuildJsonObjectsUtil {
 		treeJson.put("name", guiPath);
 		treeJson.put("parentPath", JSONObject.NULL);
 		treeJson.put("hasChildren", false);
+		treeJson.put("childrenNodes", new JSONArray());
 		treeJson.put("availableCharts", new JSONArray());
 		
 		if (guiPath.contains(":")) {
@@ -90,6 +91,8 @@ public class BuildJsonObjectsUtil {
 			if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
 				JSONObject parentNode = nodesBuilt.get(parentPath);
 				parentNode.put("hasChildren", true);
+				JSONArray childrenArray = parentNode.getJSONArray("childrenNodes");
+				childrenArray.put(guiPath);
 			}
 		}
 		

@@ -14,6 +14,7 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
 /** @scope EurekaJView.instrumentationTreeController.prototype */
 {
 
+    timer: null,
     selectedInstrumentationTypePath: null,
     treeItemIsGrouped: YES,
     allowsMultipleSelection: NO,
@@ -38,5 +39,26 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
 			SC.Logger.log('Availble Charts: ' + this.getPath('selection.firstObject.availableCharts'));
 			EurekaJView.chartSelectorController.set('content', this.getPath('selection.firstObject.availableCharts'));
         }
-    }.observes('selection')
+    }.observes('selection'),
+
+    refreshData: function() {
+        SC.Logger.log('Refreshing Instrumentation Menu');
+        EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY).refresh();
+    },
+
+    triggerTimer: function() {
+        SC.Logger.log('Triggering timer');
+        if (this.get('timer')) {
+            SC.Logger.log('Timer already started');
+        } else {
+            SC.Logger.log('Starting Timer');
+            var timer = SC.Timer.schedule({
+                target: EurekaJView.InstrumentationTreeController,
+                action: 'refreshData',
+                interval: 10000,
+                repeats: YES
+            });
+            this.set('timer', timer)
+        }
+    }
 });
