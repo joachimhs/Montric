@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   EurekaJView.ChartOptionsView
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ï¿½2010 My Company, Inc.
 // =======================================================================99===
 /*globals EurekaJView */
 
@@ -13,69 +13,19 @@
 EurekaJView.ChartOptionsView = SC.View.extend(
     /** @scope EurekaJView.ChartOptionsView.prototype */
 {
-    childViews: 'chartOptionsView timePeriodView'.w(),
+    childViews: 'timePeriodView'.w(),
     layout: {
         top: 0,
         bottom: 0,
         left: 0,
         right: 0
     },
-    chartOptionsView: SC.View.design({
-        layout: {
-            top: 0,
-            height: 94,
-            left: 0,
-            width: 198
-        },
-        childViews: 'chartOptionsLabelView alertButtonView groupButtonView'.w(),
-        backgroundColor: '#F0F8FF',
-
-        chartOptionsLabelView: SC.LabelView.design({
-            layout: {
-                centerX: 0,
-                height: 30,
-                left: 2,
-                top: 5,
-                right: 2
-            },
-            controlSize: SC.LARGE_CONTROL_SIZE,
-            fontWeight: SC.BOLD_WEIGHT,
-            textAlign: SC.ALIGN_CENTER,
-            value: 'Chart Options'
-        }).classNames('blacklabel'),
-
-        alertButtonView: SC.ButtonView.design({
-            layout: {
-                centerX: 0,
-                height: 30,
-                left: 2,
-                bottom: 35,
-                right: 2
-            },
-            title: "Alerts"
-            //action: 'showPanelPane',
-            //target: 'EurekaJView.alertController'
-        }),
-
-        groupButtonView: SC.ButtonView.design({
-            layout: {
-                centerX: 0,
-                height: 30,
-                left: 2,
-                bottom: 5,
-                right: 2
-            },
-            title: "Instrumentation Groups",
-            action: 'showInstrumentationGroupsPanel',
-            target: 'EurekaJView.chartGridController'
-        })
-    }).classNames('thickBlackBorderTopAndBottom blackRightborder'),
 
     timePeriodView: SC.View.design({
         layout: {
             top: 0,
             height: 94,
-            left: 200,
+            left: 0,
             right: 0
         },
         childViews: 'chartOptionsLabelView chartTimespanFieldView chartResolutionLabelView chartResolutionFieldView'.w(),

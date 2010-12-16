@@ -55,7 +55,7 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
             var timer = SC.Timer.schedule({
                 target: EurekaJView.InstrumentationTreeController,
                 action: 'refreshData',
-                interval: 10000,
+                interval: 60000,
                 repeats: YES
             });
             this.set('timer', timer)

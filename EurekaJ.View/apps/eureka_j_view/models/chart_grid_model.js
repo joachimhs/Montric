@@ -15,6 +15,6 @@ EurekaJView.ChartGridModel = SC.Record.extend(
 /** @scope EurekaJView.ChartGridModel.prototype */ {
 	primaryKey: 'label',
   	label: SC.Record.attr(String),
-	data: SC.Record.attr(Array),
+	data: SC.Record.attr(Array)
 
 }) ;

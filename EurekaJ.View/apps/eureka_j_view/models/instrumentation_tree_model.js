@@ -25,7 +25,13 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
 
     childrenNodes: SC.Record.toMany('EurekaJView.InstrumentationTreeModel'),
 	availableCharts: SC.Record.toMany('EurekaJView.ChartSelectorModel', { inverse: 'parentTreeNode', isMaster: YES }),
-	
+
+    guiSafeGuiPath: function() {
+        var guiSafePath = this.get('guiPath').replace("<", "&lt;");
+        guiSafePath = guiSafePath.replace('>', '&gt;');
+        return guiSafePath;
+    }.property(),
+
     treeItemChildren: function() {
         if (this.get('childrenNodes').toArray().length === 0) {
             return null;
@@ -33,4 +39,6 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
             return this.get('childrenNodes');
         }
     }.property()
+
+
 });

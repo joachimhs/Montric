@@ -21,5 +21,5 @@ EurekaJView.ChartSelectorModel = SC.Record.extend(
 	guiPath: SC.Record.attr(String),
 	
 	parentTreeNode: SC.Record.toOne('EurekaJView.InstrumentationTreeModel', {inverse: 'availableCharts', isMaster: NO }),
-	chartGrid: SC.Record.toOne('EurekaJView.ChartGridModel', {isMaster: YES }),
+	chartGrid: SC.Record.toOne('EurekaJView.ChartGridModel', {isMaster: YES })
 });

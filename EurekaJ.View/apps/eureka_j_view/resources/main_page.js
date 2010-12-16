@@ -14,7 +14,7 @@ EurekaJView.mainPage = SC.Page.design({
         childViews: 'chartOptionsContainerView flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView chartSelectorView'.w(),
 
         topView: SC.ToolbarView.design({
-            childViews: 'logoView'.w(),
+            childViews: 'logoView administrationButtonView'.w(),
             layout: {
                 top: 0,
                 left: 0,
@@ -34,6 +34,18 @@ EurekaJView.mainPage = SC.Page.design({
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 fontWeight: SC.BOLD_WEIGHT,
                 value: 'EurekaJ Profiler'
+            }),
+
+            administrationButtonView: SC.ButtonView.design({
+                layout: {
+                    right: 15,
+                    width: 150,
+                    height: 30,
+                    centerY: 0
+                },
+                title: 'Administration',
+                action: 'showAdministrationPane',
+                target: 'EurekaJView.administrationPaneController'
             })
         }),
 
