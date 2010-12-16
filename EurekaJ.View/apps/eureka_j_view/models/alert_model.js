@@ -18,6 +18,7 @@ EurekaJView.AlertModel = SC.Record.extend(
     alertName: SC.Record.attr(String),
     alertActivated: SC.Record.attr(Boolean),
     alertInstrumentationNode: SC.Record.attr(String),
+    alertChartName: SC.Record.attr(String),
     alertWarningValue: SC.Record.attr(Number),
     alertErrorValue: SC.Record.attr(Number),
     alertType: SC.Record.attr(String),
