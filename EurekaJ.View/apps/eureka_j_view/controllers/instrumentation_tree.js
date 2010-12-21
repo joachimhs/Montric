@@ -17,7 +17,7 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
     timer: null,
     selectedInstrumentationTypePath: null,
     treeItemIsGrouped: YES,
-    allowsMultipleSelection: NO,
+    allowsMultipleSelection: YES,
 
     populate: function() {
         var rootNode = SC.Object.create({
@@ -38,6 +38,7 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
             SC.Logger.log('InstrumentationTreeController observesSelection: ' + this.getPath('selection.firstObject.guiPath'));
 			SC.Logger.log('Availble Charts: ' + this.getPath('selection.firstObject.availableCharts'));
 			EurekaJView.chartSelectorController.set('content', this.getPath('selection.firstObject.availableCharts'));
+            EurekaJView.chartGridController.set('content', this.getPath('selection').getEach('chartGrid'));
         }
     }.observes('selection'),
 

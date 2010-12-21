@@ -30,8 +30,8 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		alertPrimaryIdx = this.dbEnvironment.getTreeMenuStore().getPrimaryIndex(String.class, Alert.class);
 	}
 	
-	public Alert getAlert(String guiPath) {
-		return alertPrimaryIdx.get(guiPath);
+	public Alert getAlert(String alertName) {
+		return alertPrimaryIdx.get(alertName);
 	}
 
 	public List<Alert> getAlerts() {

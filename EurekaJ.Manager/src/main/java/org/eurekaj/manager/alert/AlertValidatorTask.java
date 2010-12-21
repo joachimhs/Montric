@@ -96,21 +96,11 @@ public class AlertValidatorTask {
         boolean thresholdBreached = true;
 		for (LiveStatistics stat : statList) {
 			Double statThreshold = null;
-			if (alertOn == Alert.ALERT_ON_AVG_EXECTIME) {
-				statThreshold = stat.getAvgExecutionTime();
-			} else if (alertOn == Alert.ALERT_ON_TOTAL_EXECTIME) {
-				statThreshold = stat.getTotalExecutionTimeMillis();
-			} else if (alertOn == Alert.ALERT_ON_CALLS) {
-				Long calls = stat.getCallsPerInterval();
-				if (calls != null) {
-					statThreshold = calls.doubleValue();
-				}
-			} else if (alertOn == Alert.ALERT_ON_VALUE) {
-				Long value = stat.getValue();
-				if (value != null) {
-					statThreshold = value.doubleValue();
-				}
-			}
+			Long value = stat.getValue();
+            if (value != null) {
+                statThreshold = value.doubleValue();
+            }
+
 			
 			if (alertType == Alert.GREATER_THAN && statThreshold != null && statThreshold  <= threshold) {
 				thresholdBreached = false;

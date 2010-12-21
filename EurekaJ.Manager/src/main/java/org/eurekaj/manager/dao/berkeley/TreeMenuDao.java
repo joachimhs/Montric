@@ -28,7 +28,7 @@ public interface TreeMenuDao {
 
 	public void persistAlert(Alert alert);
 
-	public Alert getAlert(String guiPath);
+	public Alert getAlert(String alertName);
 
 	public List<Alert> getAlerts();
 }

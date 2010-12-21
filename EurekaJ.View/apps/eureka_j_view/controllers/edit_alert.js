@@ -17,11 +17,19 @@ EurekaJView.editAlertController = SC.ObjectController.create(
 
 
     observesInstrumentationNodeSelection: function() {
-        SC.Logger.log('selectedInstrumentationNode: ' + this.get('content').get('alertInstrumentationNode'));
+        SC.Logger.log('editAlertController observesInstrumentationNodeSelection selectedInstrumentationNode: ' + this.get('content').get('alertInstrumentationNode'));
+    }.observes('*content.alertInstrumentationNode'),
+
+    observeContent: function() {
+        SC.Logger.log('editAlertController contentObserver: ' + this.get('content').get('alertInstrumentationNode'));
         var instrumentationNode = EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationTreeModel, this.getPath('content.alertInstrumentationNode'));
         if (instrumentationNode) {
-            SC.Logger.log('Node: ' + instrumentationNode.get('availableCharts').toArray());
-            EurekaJView.alertChartController.set('content', instrumentationNode.get('availableCharts'));
+            SC.Logger.log('editAlertController contentObserver Setting selection: ' + instrumentationNode.get('guiPath'));
+
+            EurekaJView.alertChartController.set('selection', instrumentationNode.get('guiPath'));
         }
-    }.observes('*content.alertInstrumentationNode')
+    }.observes('content')
+
+
+
 });

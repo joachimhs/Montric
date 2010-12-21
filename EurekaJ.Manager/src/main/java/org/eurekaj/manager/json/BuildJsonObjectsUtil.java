@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import com.google.gson.JsonArray;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
@@ -18,7 +20,7 @@ import org.json.JSONObject;
 
 public class BuildJsonObjectsUtil {
 
-	public static JSONObject buildTreeTypeMenuJsonObject(String treeId, List<TreeMenuNode> nodeList, int startLevel, int stopLevel) throws JSONException {
+	public static JSONObject buildTreeTypeMenuJsonObject(String treeId, List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts) throws JSONException {
 		HashMap<String, JSONObject> nodesBuilt = new HashMap<String, JSONObject>();
 		
 		JSONObject parentObject = new JSONObject();
@@ -30,6 +32,10 @@ public class BuildJsonObjectsUtil {
 		for (TreeMenuNode node : nodeList) {
 			String[] splitNodePathArray = node.getGuiPath().split(":");
 			int splitArrayIndex = 0;
+            int maxSplitArrayIndex = splitNodePathArray.length-1;
+            if (includeCharts) {
+                maxSplitArrayIndex = splitNodePathArray.length;
+            }
 			String currPath = "";
 			do {
 				 currPath += splitNodePathArray[splitArrayIndex];
@@ -38,8 +44,9 @@ public class BuildJsonObjectsUtil {
 					nodesBuilt.put(currPath, jsonNode);
 				}
 				currPath += ":";
+
 				splitArrayIndex++;
-			} while(splitArrayIndex < splitNodePathArray.length-1 && splitArrayIndex < stopLevel);
+			} while(splitArrayIndex <  maxSplitArrayIndex && splitArrayIndex < stopLevel);
 			
 			//Add the last node to the "availableCharts" property
 			if (splitNodePathArray.length >= 2) {
@@ -80,6 +87,7 @@ public class BuildJsonObjectsUtil {
 		treeJson.put("hasChildren", false);
 		treeJson.put("childrenNodes", new JSONArray());
 		treeJson.put("availableCharts", new JSONArray());
+        treeJson.put("chartGrid", guiPath);
 		
 		if (guiPath.contains(":")) {
 			//Split GUI Path into name and parent
@@ -204,4 +212,26 @@ public class BuildJsonObjectsUtil {
 		
 		return dataArraySB.toString();
 	}
+
+    public static String generateAlertsJson(List<Alert> alerts) throws JSONException{
+        JSONObject alertsObject = new JSONObject();
+
+        JSONArray alertArray = new JSONArray();
+        for (Alert alert : alerts) {
+            JSONObject alertObject = new JSONObject();
+            alertObject.put("alertName", alert.getAlertName());
+            alertObject.put("alertWarningValue", alert.getWarningValue());
+            alertObject.put("alertErrorValue", alert.getErrorValue());
+            alertObject.put("alertInstrumentationNode", alert.getGuiPath());
+            alertObject.put("alertDelay", alert.getAlertDelay());
+            alertObject.put("alertType", Alert.getStringValueForEnumtypes(alert.getSelectedAlertType()));
+            alertObject.put("alertActivated", alert.isActivated());
+
+            alertArray.put(alertObject);
+        }
+
+        alertsObject.put("alerts", alertArray);
+
+        return alertsObject.toString();
+    }
 }

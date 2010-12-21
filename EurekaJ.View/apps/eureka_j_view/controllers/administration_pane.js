@@ -15,9 +15,9 @@ EurekaJView.administrationPaneController = SC.ObjectController.create(
 
     administrationPane : null,
     alertTypes: [
-        {'typeName': 'Greater Than', 'alertType': 'gt'},
-        {'typeName': 'Equals', 'alertType': 'eq'},
-        {'typeName': 'Less Than', 'alertType': 'lt'}
+        {'typeName': 'Greater Than', 'alertType': 'greater_than'},
+        {'typeName': 'Equals', 'alertType': 'equals'},
+        {'typeName': 'Less Than', 'alertType': 'less_than'}
     ],
     instrumentationSourceNodes: null,
 
@@ -74,6 +74,7 @@ EurekaJView.administrationPaneController = SC.ObjectController.create(
         })
         pane.append();
         this.set('administrationPane', pane);
-        this.set('instrumentationSourceNodes', EurekaJView.EurekaJStore.find(SC.Query.local(EurekaJView.InstrumentationTreeModel, 'hasChildren = false')));
+        EurekaJView.EurekaJStore.find(EurekaJView.ALERTS_QUERY);
+        EurekaJView.alertAdministrationController.updateAlerts();
     }
 });

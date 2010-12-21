@@ -6,16 +6,23 @@
 
 /** @class
 
-  (Document Your Data Source Here)
+        (Document Your Data Source Here)
 
-  @extends SC.DataSource
-*/
+ @extends SC.DataSource
+ */
 sc_require('models/instrumentation_tree_model.js');
 EurekaJView.INSTRUMENTATION_TREE_QUERY = SC.Query.local(EurekaJView.InstrumentationTreeModel, {
     orderby: 'guiPath'
 });
+EurekaJView.ADMINISTRATION_TREE_QUERY = SC.Query.local(EurekaJView.AdminstrationTreeModel, {
+    orderby: 'guiPath'
+});
+
+EurekaJView.ALERTS_QUERY = SC.Query.local(EurekaJView.AlertModel, {
+    orderby: 'alertName'
+});
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
-/** @scope EurekaJView.EurekaJDataSource.prototype */
+    /** @scope EurekaJView.EurekaJDataSource.prototype */
 {
 
     // ..........................................................
@@ -29,7 +36,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (query === EurekaJView.INSTRUMENTATION_TREE_QUERY) {
             SC.Logger.log('fetching the tree menu...');
             var requestStringJson = {
-                'getInstrumentationMenu': 'instrumentationMenu'
+                'getInstrumentationMenu': 'instrumentationMenu',
+                'includeCharts': true
             };
 
             SC.Request.postUrl('/jsonController.capp').header({
@@ -37,8 +45,33 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             }).json().notify(this, 'performFetchInstrumentationTreeMenu', store, query).send(requestStringJson);
 
             return YES;
-        }else {
-            SC.Logger.log('attempting query: ' + query.get('conditions'));
+        }
+
+        if (query === EurekaJView.ADMINISTRATION_TREE_QUERY) {
+            SC.Logger.log('fetching the alert tree menu...');
+            var requestStringJson = {
+                'getInstrumentationMenu': 'administrationMenu',
+                'includeCharts': true
+            };
+
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchAdminTreeMenu', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
+        if (query === EurekaJView.ALERTS_QUERY) {
+            SC.Logger.log('fetching alerts...');
+            var requestStringJson = {
+                'getAlerts': true
+            };
+
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchAlerts', store, query).send(requestStringJson);
+
+            return YES;
         }
 
         return NO; // return YES if you handled the query
@@ -48,6 +81,26 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (SC.ok(response)) {
             SC.Logger.log('Tree menu fetched');
             store.loadRecords(EurekaJView.InstrumentationTreeModel, response.get('body').instrumentationMenu);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchAdminTreeMenu: function(response, store, query) {
+        if (SC.ok(response)) {
+            SC.Logger.log('Admin tree fetched');
+            store.loadRecords(EurekaJView.AdminstrationTreeModel, response.get('body').administrationMenu);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchAlerts: function(response, store, query) {
+        if (SC.ok(response)) {
+            SC.Logger.log('Alerts Fetched');
+            store.loadRecords(EurekaJView.AlertModel, response.get('body').alerts);
             store.dataSourceDidFetchQuery(query);
         } else {
             store.dataSourceDidErrorQuery(query, response);
@@ -70,9 +123,9 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Request.postUrl('/jsonController.capp').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveChartSelectorRecord, {
-                store: store,
-                storeKey: storeKey
-            }).send(requestStringJson);
+                                                                                store: store,
+                                                                                storeKey: storeKey
+                                                                            }).send(requestStringJson);
 
             return YES;
         }
@@ -91,9 +144,9 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Request.postUrl('/jsonController.capp').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveChartGridRecord, {
-                store: store,
-                storeKey: storeKey
-            }).send(requestStringJson);
+                                                                            store: store,
+                                                                            storeKey: storeKey
+                                                                        }).send(requestStringJson);
 
             return YES;
 
@@ -131,16 +184,46 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
     createRecord: function(store, storeKey) {
         SC.Logger.log('Calling createRecord...');
-        // TODO: Add handlers to submit new records to the data source.
-        // call store.dataSourceDidComplete(storeKey) when done.
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didCreateAlert, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
         return NO; // return YES if you handled the storeKey
+    },
+
+    didCreateAlert: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            store.dataSourceDidComplete(storeKey);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
     },
 
     updateRecord: function(store, storeKey) {
         SC.Logger.log('Calling updateRecord...');
-        // TODO: Add handlers to submit modified record to the data source
-        // call store.dataSourceDidComplete(storeKey) when done.
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didUpdateAlert, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
         return NO; // return YES if you handled the storeKey
+    },
+
+    didUpdateAlert: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            var data = response.get('body');
+            if (data) data = data.content; // if hash is returned; use it.
+            store.dataSourceDidComplete(storeKey, data);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
     },
 
     destroyRecord: function(store, storeKey) {

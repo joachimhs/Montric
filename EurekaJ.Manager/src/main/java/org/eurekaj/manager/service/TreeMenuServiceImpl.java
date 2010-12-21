@@ -50,8 +50,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return treeMenuDao.getGroupedStatistics();
 	}
 
-	public Alert getAlert(String guiPath) {
-		return treeMenuDao.getAlert(guiPath);
+	public Alert getAlert(String alertName) {
+		return treeMenuDao.getAlert(alertName);
 	}
 
 	public void persistAlert(Alert alert) {

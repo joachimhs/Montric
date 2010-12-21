@@ -6,7 +6,7 @@ import java.util.List;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
-@Entity(version=1)
+@Entity(version=2)
 public class Alert implements Comparable<Alert>{
 	public static final int IDLE = 0;
 	public static final int NORMAL = 1;
@@ -25,7 +25,8 @@ public class Alert implements Comparable<Alert>{
 	public static final int UNKNOWN = -1;
 	
 	private int alertOn = ALERT_ON_AVG_EXECTIME;
-	@PrimaryKey private String guiPath;
+	@PrimaryKey private String alertName;
+    private String guiPath;
 	private boolean activated;
 	private Double errorValue;
 	private Double warningValue;
@@ -97,8 +98,16 @@ public class Alert implements Comparable<Alert>{
 		
 		return retVal;
 	}
-	
-	public String getGuiPath() {
+
+    public String getAlertName() {
+        return alertName;
+    }
+
+    public void setAlertName(String alertName) {
+        this.alertName = alertName;
+    }
+
+    public String getGuiPath() {
 		return guiPath;
 	}
 	
