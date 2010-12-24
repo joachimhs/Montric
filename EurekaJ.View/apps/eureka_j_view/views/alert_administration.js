@@ -48,13 +48,13 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
             backgroundColor: '#F0F8FF',
             contentBinding: 'EurekaJView.alertAdministrationController.arrangedObjects',
             selectionBinding: 'EurekaJView.alertAdministrationController.selection',
-            contentValueKey: "alertName"
-            //selectionDelegate: EurekaJView.editAlertController
+            contentValueKey: "alertName",
+            selectionDelegate: EurekaJView.alertSelectionDelegate
         })
     }),
 
     alertContentView: SC.View.extend({
-        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertNotificationLabelView alertNotificationSelectFieldView alertChartSelectFieldView'.w(),
+        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertNotificationLabelView alertNotificationSelectFieldView alertChartSelectFieldView alertChartSelectScrollView'.w(),
         isVisibleBinding: 'EurekaJView.alertAdministrationController.showEditAlertView',
         layout: {top: 20, bottom: 0, right: 0, left: 215},
 
@@ -195,8 +195,8 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         }),
 
 
-        /*alertChartSelectFieldView: SC.ScrollView.design({
-            layout: {left: 10, right: 20, top: 90, height: 150},
+        alertChartSelectScrollView: SC.ScrollView.design({
+            layout: {left: 10, right: 20, top: 120, height: 120},
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
@@ -207,9 +207,10 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
                 contentValueKey: "guiPath",
                 rowHeight: 18,
                 contentBinding: 'EurekaJView.alertChartController.arrangedObjects',
-                selectionBinding: 'EurekaJView.alertChartController.selection'
+                selectionBinding: 'EurekaJView.alertChartController.selection',
+                selectionDelegate: EurekaJView.alertSelectionDelegate
             })
-        }),*/
+        }),
 
         alertNotificationLabelView: SC.LabelView.extend({
             layout: {left: 10, right: 20, top: 250, height: 25},

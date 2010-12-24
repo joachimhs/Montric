@@ -6,9 +6,29 @@
 	color: white;
 }
 
+.greylabel {
+    color: #606060;
+}
+
+.underlined {
+    text-decoration: underline
+}
+
 .thickBlackBorderTopAndBottom {
 	border-top: 4px solid #000;
 	border-bottom: 4px solid #000;
+}
+
+.thickBlackBorderTop {
+	border-top: 4px solid #000;
+}
+
+.thinBlackBorderTop {
+	border-top: 2px solid #000;
+}
+
+.noborder {
+    border: none;
 }
 
 .thinBlackBorder {
@@ -17,4 +37,8 @@
 
 .blackRightborder {
 	border-right: 2px solid #000;
+}
+
+.thinBlackRightborder {
+	border-right: 1px solid #000;
 }

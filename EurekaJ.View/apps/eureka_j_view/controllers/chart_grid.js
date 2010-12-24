@@ -20,8 +20,10 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     instrumentationGroupPanel: null,
 
     refreshData: function() {
-        for (var i = 0; i < this.get('content').length; i++) {
-            this.get('content').objectAt(i).refresh();
+        if (this.get('content')) {
+            for (var i = 0; i < this.get('content').length; i++) {
+                this.get('content').objectAt(i).refresh();
+            }
         }
     },
 

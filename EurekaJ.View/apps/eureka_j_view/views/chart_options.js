@@ -24,12 +24,12 @@ EurekaJView.ChartOptionsView = SC.View.extend(
     timePeriodView: SC.View.design({
         layout: {
             top: 0,
-            height: 94,
+            height: 75,
             left: 0,
             right: 0
         },
         childViews: 'chartOptionsLabelView chartTimespanFieldView chartResolutionLabelView chartResolutionFieldView'.w(),
-        backgroundColor: '#F0F8FF',
+        backgroundColor: '#FFFFFF',
 
         chartOptionsLabelView: SC.LabelView.design({
             layout: {
@@ -163,6 +163,6 @@ EurekaJView.ChartOptionsView = SC.View.extend(
             valueBinding: 'EurekaJView.chartGridController.selectedChartResolution'
         })
 
-    }).classNames('thickBlackBorderTopAndBottom')
+    })
 
 });

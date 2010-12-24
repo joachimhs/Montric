@@ -32,7 +32,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
         // TODO: Add handlers to fetch data for specific queries.  
         // call store.dataSourceDidFetchQuery(query) when done.
-        SC.Logger.log('Calling fetch...');
+        SC.Logger.log('Calling fetch... ' + query.conditions);
         if (query === EurekaJView.INSTRUMENTATION_TREE_QUERY) {
             SC.Logger.log('fetching the tree menu...');
             var requestStringJson = {

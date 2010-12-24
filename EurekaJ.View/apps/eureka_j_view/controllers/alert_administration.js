@@ -10,7 +10,7 @@
 
  @extends SC.Object
  */
-EurekaJView.alertAdministrationController = SC.ArrayController.create(SC.CollectionViewDelegate,
+EurekaJView.alertAdministrationController = SC.ArrayController.create(
     /** @scope EurekaJView.alertAdministrationController.prototype */ {
 
     newAlertName: null,
@@ -32,6 +32,7 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(SC.Collect
         if (this.getPath('selection.firstObject.alertName')  != undefined) {
             this.set('showEditAlertView', YES);
             EurekaJView.alertChartController.populate();
+            //SC.Logger.log('alertAdministrationController Setting selection: ' + this.getPath('selection.firstObject.alertInstrumentationNode'));
        } else {
             this.set('showEditAlertView', NO);
         }
@@ -39,44 +40,5 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(SC.Collect
 
     saveAlert: function() {
         EurekaJView.EurekaJStore.commitRecords();
-    },
-
-    //Delegate methods
-    collectionViewSelectionForProposedSelection: function(view, sel) {
-        SC.Logger.log('alertAdministrationController Delegate: collectionViewSelectionForProposedSelection: ' + sel);
-        //EurekaJView.alertChartController.set('selection', sel);
-      return sel ;
-    },
-
-    collectionViewShouldSelectIndexes: function (view, indexes, extend) {
-        SC.Logger.log('alertAdministrationController Delegate: collectionViewShouldSelectIndexes: ' + indexes);
-      return indexes;
-    },
-
-    collectionViewShouldDeselectIndexes: function (view, indexes) {
-        SC.Logger.log('alertAdministrationController Delegate: collectionViewShouldDeselectIndexes: ' + indexes);
-      return indexes;
-    },
-
-    collectionViewShouldDeleteIndexes: function(view, indexes) {
-        SC.Logger.log('alertAdministrationController Delegate: collectionViewShouldDeleteIndexes: ' + indexes);
-     return indexes;
-   },
-
-    collectionViewDeleteContent: function(view, content, indexes) {
-        SC.Logger.log('alertAdministrationController Delegate: collectionViewDeleteContent: ' + content);
-     if (!content) return NO ;
-
-     if (SC.typeOf(content.destroyAt) === SC.T_FUNCTION) {
-       content.destroyAt(indexes);
-       view.selectPreviousItem(NO, 1) ;
-       return YES ;
-
-     } else if (SC.typeOf(content.removeAt) === SC.T_FUNCTION) {
-       content.removeAt(indexes);
-       view.selectPreviousItem(NO, 1) ;
-       return YES;
-
-     } else return NO ;
-   }
+    }
 });

@@ -11,10 +11,10 @@ EurekaJView.mainPage = SC.Page.design({
     // Add childViews to this pane for views to display immediately on page 
     // load.
     mainPane: SC.MainPane.design({
-        childViews: 'chartOptionsContainerView flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView chartSelectorView'.w(),
+        childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
         topView: SC.ToolbarView.design({
-            childViews: 'logoView administrationButtonView'.w(),
+            childViews: 'logoView timePeriodButtonView administrationButtonView'.w(),
             layout: {
                 top: 0,
                 left: 0,
@@ -36,6 +36,20 @@ EurekaJView.mainPage = SC.Page.design({
                 value: 'EurekaJ Profiler'
             }),
 
+
+            timePeriodButtonView: SC.ButtonView.design({
+                layout: {
+                    right: 170,
+                    width: 150,
+                    height: 30,
+                    centerY: 0
+                },
+                icon: 'sc-icon-options-16',
+                title: 'TimePeriod',
+                action: 'showTimeperiodPane',
+                target: 'EurekaJView.timeperiodPaneController'
+            }),
+
             administrationButtonView: SC.ButtonView.design({
                 layout: {
                     right: 15,
@@ -43,10 +57,13 @@ EurekaJView.mainPage = SC.Page.design({
                     height: 30,
                     centerY: 0
                 },
+                icon: 'sc-icon-tools-24',
                 title: 'Administration',
                 action: 'showAdministrationPane',
                 target: 'EurekaJView.administrationPaneController'
             })
+
+
         }),
 
         chartOptionsContainerView: SC.ContainerView.design({
@@ -61,7 +78,7 @@ EurekaJView.mainPage = SC.Page.design({
 
         flotChartGrid: SC.GridView.extend({
             layout: {
-                top: 140,
+                top: 41,
                 right: 0,
                 bottom: 40,
                 left: 306
@@ -91,18 +108,19 @@ EurekaJView.mainPage = SC.Page.design({
                     width: columnWidth
                 };
             }
-        }),
+        }).classNames('thinBlackBorderTop'),
 
         instrumentationTreeView: SC.View.design({
             childViews: 'instrumentationTreeLabelView'.w(),
             layout: {
                 top: 41,
-                bottom: 241,
+                bottom: 41,
                 left: 0,
                 width: 306
             },
             anchorLocation: SC.ANCHOR_TOP,
-            backgroundColor: "#000000",
+            backgroundColor: "#F0F8FF",
+
 
             instrumentationTreeLabelView: SC.LabelView.design({
                 layout: {
@@ -111,75 +129,34 @@ EurekaJView.mainPage = SC.Page.design({
                     top: 5,
                     left: 10
                 },
-                controlSize: SC.LARGE_CONTROL_SIZE,
-                fontWeight: SC.REGULAR_WEIGHT,
-                textAlign: SC.ALIGN_CENTER,
-                value: 'Instrumentation Menu'
-            })
-        }),
+                controlSize: SC.REGULAR_CONTROL_SIZE,
+                fontWeight: SC.BOLD_WEIGHT,
+                textAlign: SC.ALIGN_LEFT,
+                value: 'INSTRUMENTATION MENU'
+            }).classNames(['greylabel', 'underlined'])
+        }).classNames(['thinBlackBorderTop', 'thinBlackRightborder']),
 
-        instrumentationTreeScrollView: SC.ScrollView.design({
+        instrumentationTreeScrollView: SC.ScrollView.extend({
             layout: {
                 top: 71,
-                bottom: 243,
+                bottom: 41,
                 left: 2,
                 width: 299
             },
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
-            contentView: SC.SourceListView.design({
+            contentView: SC.SourceListView.extend({
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
+                borderStyle: SC.BORDER_NONE,
                 contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
                 selectionBinding: 'EurekaJView.InstrumentationTreeController.selection'
 
-            })
-        }),
-
-        chartSelectorView: SC.View.design({
-            layout: {
-                height: 200,
-                bottom: 41,
-                left: 0,
-                width: 306
-            },
-            childViews: 'chartSelectorLabelView chartSelectorScrollView'.w(),
-            anchorLocation: SC.ANCHOR_TOP,
-            backgroundColor: "#000000",
-
-            chartSelectorLabelView: SC.LabelView.design({
-                layout: {
-                    centerY: 0,
-                    height: 30,
-                    top: 5,
-                    left: 10
-                },
-                controlSize: SC.LARGE_CONTROL_SIZE,
-                fontWeight: SC.REGULAR_WEIGHT,
-                textAlign: SC.ALIGN_CENTER,
-                value: 'Available Charts'
             }),
 
-            chartSelectorScrollView: SC.ScrollView.design({
-                layout: {
-                    height: 166,
-                    bottom: 2,
-                    left: 2,
-                    width: 299
-                },
-                hasHorizontalScroller: YES,
-                hasVerticalScroller: YES,
-
-                contentView: SC.ListView.design({
-                    backgroundColor: '#F0F8FF',
-                    contentValueKey: "name",
-                    contentBinding: 'EurekaJView.chartSelectorController.arrangedObjects',
-                    selectionBinding: 'EurekaJView.chartSelectorController.selection'
-                    //				contentCheckboxKey: "isSelected",
-                })
-            })
+            borderStyle: SC.BORDER_NONE
         }),
 
         bottomView: SC.ToolbarView.design({

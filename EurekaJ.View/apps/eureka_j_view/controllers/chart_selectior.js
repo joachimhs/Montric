@@ -20,6 +20,6 @@ EurekaJView.chartSelectorController = SC.ArrayController.create(
             SC.Logger.log('selected Chart Paths: ' + this.getPath('selection').getEach('guiPath'));
 			EurekaJView.chartGridController.set('content', this.getPath('selection').getEach('chartGrid'));
         }
-    }.observes('selection'),
+    }.observes('selection')
 
 });
