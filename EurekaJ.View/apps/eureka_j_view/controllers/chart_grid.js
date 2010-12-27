@@ -18,6 +18,8 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     selectedChartTimespan: 10,
     selectedChartResolution: 15,
     instrumentationGroupPanel: null,
+    //contentBinding: 'EurekaJView.InstrumentationTreeController.selection',
+    orderBy: 'name',
 
     refreshData: function() {
         if (this.get('content')) {
@@ -42,6 +44,17 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             this.set('timer', timer)
         }
     },
+
+    addAlertToChart: function() {
+                                  //SC.Query.local(EurekaJView.InstrumentationTreeModel, 'hasChildren = {hasChildren}', {hasChildren: false});
+        var query = SC.Query.local(EurekaJView.AlertModel, "alertInstrumentationNode = {alertInstrumentationNode}", {alertInstrumentationNode: "JSFlotJAgent:Memory:Heap:% Used"});
+        var nodes = EurekaJView.EurekaJStore.find(query);
+        SC.Logger.log('Adding alert to chart: ' + nodes.getEach('alertName'));
+    },
+
+    observesContent: function() {
+        SC.Logger.log('chartGridController: observesContent: ' + this.get('content'));
+    }.observes('content'),
 
     observesChartTimespan: function() {
         this.refreshData();

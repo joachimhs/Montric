@@ -47,7 +47,11 @@ public class ParseJsonObjects {
 
     private static Integer parseIntegerFromJson(JSONObject json, String key) {
         Integer intValue = null;
-        intValue = Integer.parseInt(parseStringFromJson(json, key));
+        try {
+            intValue = Integer.parseInt(parseStringFromJson(json, key));
+        } catch (NumberFormatException nfe) {
+            intValue = null;
+        }
 
         return intValue;
     }

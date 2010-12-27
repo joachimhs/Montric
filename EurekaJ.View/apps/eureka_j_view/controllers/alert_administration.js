@@ -20,8 +20,6 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(
     addnewAlert: function() {
         newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: this.get('newAlertName')});
         this.set('newAlertName', '');
-
-
     },
 
     updateAlerts: function() {

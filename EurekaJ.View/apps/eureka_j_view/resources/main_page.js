@@ -151,9 +151,10 @@ EurekaJView.mainPage = SC.Page.design({
                 contentValueKey: "name",
                 rowHeight: 18,
                 borderStyle: SC.BORDER_NONE,
-                contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
-                selectionBinding: 'EurekaJView.InstrumentationTreeController.selection'
 
+                contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
+                selectionBinding: 'EurekaJView.InstrumentationTreeController.selection',
+                selectionDelegate: EurekaJView.treeMenuSelectionDelegate
             }),
 
             borderStyle: SC.BORDER_NONE

@@ -48,7 +48,9 @@ public class BuildJsonObjectsUtil {
 				splitArrayIndex++;
 			} while(splitArrayIndex <  maxSplitArrayIndex && splitArrayIndex < stopLevel);
 			
+			/*
 			//Add the last node to the "availableCharts" property
+
 			if (splitNodePathArray.length >= 2) {
 				String chartPath = currPath + splitNodePathArray[splitNodePathArray.length-1];
 				String parentPath = currPath.substring(0, currPath.length() -1);
@@ -60,7 +62,7 @@ public class BuildJsonObjectsUtil {
 					parentJson.put("availableCharts", chartArray);
 				}
 				chartArray.put(chartPath);
-			}
+			}             */
 			
 		}
 		
@@ -78,7 +80,6 @@ public class BuildJsonObjectsUtil {
 	
 	private static JSONObject buildTreeNode(int guid, String guiPath, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
 		JSONObject treeJson = new JSONObject();
-		treeJson.put("guid", guiPath);
 		treeJson.put("isSelected", false);
 		treeJson.put("guiPath", guiPath);
 		treeJson.put("treeItemIsExpanded", false);
@@ -86,8 +87,9 @@ public class BuildJsonObjectsUtil {
 		treeJson.put("parentPath", JSONObject.NULL);
 		treeJson.put("hasChildren", false);
 		treeJson.put("childrenNodes", new JSONArray());
-		treeJson.put("availableCharts", new JSONArray());
-        treeJson.put("chartGrid", guiPath);
+        JSONArray chartGridArray = new JSONArray();
+        chartGridArray.put(guiPath);
+        treeJson.put("chartGrid", chartGridArray);
 		
 		if (guiPath.contains(":")) {
 			//Split GUI Path into name and parent

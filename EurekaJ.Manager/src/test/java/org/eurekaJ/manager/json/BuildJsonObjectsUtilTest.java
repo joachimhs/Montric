@@ -32,7 +32,7 @@ public class BuildJsonObjectsUtilTest {
         nodeList.add(new TreeMenuNode("A", "Y"));
 
         JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, 0, 20, false);
-        assertEquals("{\"treeMenuID\":[{\"chartGrid\":\"A\",\"guid\":\"A\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"availableCharts\":[],\"parentPath\":null}]}", jsonObject.toString());
+        assertEquals("{\"treeMenuID\":[{\"chartGrid\":[\"A\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}]}", jsonObject.toString());
     }
 
     @Test
@@ -43,9 +43,9 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
-        expected.append("{\"chartGrid\":\"A\",\"guid\":\"A\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"A\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"B\",\"guid\":\"B\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"B\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
         expected.append("]}");
 
         JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, 0, 20, false);
@@ -61,9 +61,9 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
-        expected.append("{\"chartGrid\":\"A\",\"guid\":\"A\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"availableCharts\":[\"A:C\"],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"A\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"B\",\"guid\":\"B\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"B\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
         //expected.append(",");
         //expected.append("{\"guid\":\"A:C\",\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
         expected.append("]}");
@@ -82,11 +82,11 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
-        expected.append("{\"chartGrid\":\"A\",\"guid\":\"A\",\"hasChildren\":true,\"childrenNodes\":[\"A:C\"],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"availableCharts\":[\"A:C\"],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"A\"],\"hasChildren\":true,\"childrenNodes\":[\"A:C\"],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"A:C\",\"guid\":\"A:C\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"availableCharts\":[\"A:C:D\"],\"parentPath\":\"A\"}");
+        expected.append("{\"chartGrid\":[\"A:C\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"B\",\"guid\":\"B\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"B\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"parentPath\":null}");
 
         //expected.append(",");
         //expected.append("{\"guid\":4,\"isSelected\":false,\"name\":\"D\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C:D\",\"parentPath\":\"A:C\"}");
@@ -103,9 +103,9 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
-        expected.append("{\"chartGrid\":\"A\",\"guid\":\"A\",\"hasChildren\":true,\"childrenNodes\":[\"A:B\"],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"A\"],\"hasChildren\":true,\"childrenNodes\":[\"A:B\"],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"parentPath\":null}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"A:B\",\"guid\":\"A:B\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B\",\"availableCharts\":[\"A:B:C\"],\"parentPath\":\"A\"}");
+        expected.append("{\"chartGrid\":[\"A:B\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B\",\"parentPath\":\"A\"}");
         //expected.append(",");
         //expected.append("{\"guid\":3,\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B:C\",\"parentPath\":\"A:B\"}");
         expected.append("]}");
@@ -121,13 +121,13 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
-        expected.append("{\"chartGrid\":\"JSFlotJAgent\",\"guid\":\"JSFlotJAgent\",\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom\"],\"isSelected\":false,\"name\":\"JSFlotJAgent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent\",\"availableCharts\":[],\"parentPath\":null}");
+        expected.append("{\"chartGrid\":[\"JSFlotJAgent\"],\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom\"],\"isSelected\":false,\"name\":\"JSFlotJAgent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent\",\"parentPath\":null}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"JSFlotJAgent:Custom\",\"guid\":\"JSFlotJAgent:Custom\",\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"],\"isSelected\":false,\"name\":\"Custom\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom\",\"availableCharts\":[],\"parentPath\":\"JSFlotJAgent\"}");
+        expected.append("{\"chartGrid\":[\"JSFlotJAgent:Custom\"],\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"],\"isSelected\":false,\"name\":\"Custom\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom\",\"parentPath\":\"JSFlotJAgent\"}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"],\"isSelected\":false,\"name\":\"org.jsflot.components.BubbleDataPointComponent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"availableCharts\":[],\"parentPath\":\"JSFlotJAgent:Custom\"}");
+        expected.append("{\"chartGrid\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"],\"hasChildren\":true,\"childrenNodes\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"],\"isSelected\":false,\"name\":\"org.jsflot.components.BubbleDataPointComponent\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\",\"parentPath\":\"JSFlotJAgent:Custom\"}");
         expected.append(",");
-        expected.append("{\"chartGrid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"guid\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"<init>\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"availableCharts\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime\"],\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"}");
+        expected.append("{\"chartGrid\":[\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"<init>\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent\"}");
         //expected.append(",");
         //expected.append("{\"guid\":\"\",\"isSelected\":false,\"name\":\"Max Selftime\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"}");
         expected.append("]}");

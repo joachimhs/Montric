@@ -29,9 +29,6 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     // QUERY SUPPORT
     // 
     fetch: function(store, query) {
-
-        // TODO: Add handlers to fetch data for specific queries.  
-        // call store.dataSourceDidFetchQuery(query) when done.
         SC.Logger.log('Calling fetch... ' + query.conditions);
         if (query === EurekaJView.INSTRUMENTATION_TREE_QUERY) {
             SC.Logger.log('fetching the tree menu...');
@@ -178,12 +175,13 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             //SC.Logger.log(response.get('body').data);
             EurekaJView.chartGridController.triggerTimer();
             store.dataSourceDidComplete(storeKey, response.get('body'));
+            EurekaJView.chartGridController.addAlertToChart();
             // error: indicate as such...response == error
         } else store.dataSourceDidError(storeKey, response.get('body'));
     },
 
     createRecord: function(store, storeKey) {
-        SC.Logger.log('Calling createRecord...');
+        SC.Logger.log('Calling createRecord... ');
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
             SC.Request.postUrl('/jsonController.capp').header({
                 'Accept': 'application/json'

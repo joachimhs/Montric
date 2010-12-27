@@ -36,8 +36,8 @@ EurekaJView.InstrumentationTreeController = SC.TreeController.create(
         if (this.didChangeFor('selectionDidChange', 'selection') && this.getPath('selection.firstObject.guiPath')) {
             this.set('selectedInstrumentationTypePath', this.getPath('selection.firstObject.guiPath'));
             SC.Logger.log('InstrumentationTreeController observesSelection: ' + this.getPath('selection.firstObject.guiPath'));
-			SC.Logger.log('Availble Charts: ' + this.getPath('selection.firstObject.availableCharts'));
-            EurekaJView.chartGridController.set('content', this.getPath('selection').getEach('chartGrid'));
+			SC.Logger.log('Available Chart grids: ' + this.getPath('selection').getEach('chartGrid'));
+            //EurekaJView.chartGridController.set('content', this.getPath('selection').getEach('chartGrid'));
         }
     }.observes('selection'),
 

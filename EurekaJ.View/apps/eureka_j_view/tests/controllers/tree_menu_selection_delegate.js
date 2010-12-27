@@ -1,12 +1,12 @@
 // ==========================================================================
-// Project:   EurekaJView.AlertAdministrationView Unit Test
+// Project:   EurekaJView.treeMenuSelectionDelegate Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals EurekaJView module test ok equals same stop start */
 
-module("EurekaJView.AlertAdministrationView");
+module("EurekaJView.treeMenuSelectionDelegate");
 
-// TODO: Replace with real unit test for EurekaJView.AlertAdministrationView
+// TODO: Replace with real unit test for EurekaJView.treeMenuSelectionDelegate
 test("test description", function() {
   var expected = "test";
   var result   = "test";
