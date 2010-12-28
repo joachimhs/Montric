@@ -23,9 +23,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
 
     refreshData: function() {
         if (this.get('content')) {
-            for (var i = 0; i < this.get('content').length; i++) {
-                this.get('content').objectAt(i).refresh();
-            }
+            this.get('content').forEach(function(item, index, enumerable) { item.refresh(); });
         }
     },
 
