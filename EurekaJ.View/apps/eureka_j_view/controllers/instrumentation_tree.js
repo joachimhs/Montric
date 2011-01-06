@@ -13,7 +13,6 @@
 EurekaJView.InstrumentationTreeController = SC.TreeController.create(
 /** @scope EurekaJView.instrumentationTreeController.prototype */
 {
-
     timer: null,
     selectedInstrumentationTypePath: null,
     treeItemIsGrouped: YES,

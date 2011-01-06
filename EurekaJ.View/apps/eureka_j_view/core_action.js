@@ -1,0 +1,4 @@
+SC.mixin(EurekaJView, {
+
+
+});

@@ -10,12 +10,19 @@ EurekaJView.mainPage = SC.Page.design({
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page 
     // load.
+
+    instrumentationTreeView: SC.outlet('mainPane.instrumentationTreeView'),
+    instrumentationTreeScrollView: SC.outlet('mainPane.instrumentationTreeScrollView'),
+    topView: SC.outlet('mainPane.topView'),
+    flotChartGrid: SC.outlet('mainPane.flotChartGrid'),
+
     mainPane: SC.MainPane.design({
         defaultResponder: EurekaJView.statechart,
         childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
         topView: SC.ToolbarView.design({
             childViews: 'logoView timePeriodButtonView administrationButtonView'.w(),
+            isVisible: NO,
             layout: {
                 top: 0,
                 left: 0,
@@ -113,6 +120,7 @@ EurekaJView.mainPage = SC.Page.design({
 
         instrumentationTreeView: SC.View.design({
             childViews: 'instrumentationTreeLabelView'.w(),
+            isVisible: NO,
             layout: {
                 top: 41,
                 bottom: 41,
@@ -138,6 +146,7 @@ EurekaJView.mainPage = SC.Page.design({
         }).classNames(['thinBlackBorderTop', 'thinBlackRightborder']),
 
         instrumentationTreeScrollView: SC.ScrollView.extend({
+            isVisible: NO,
             layout: {
                 top: 71,
                 bottom: 41,
