@@ -13,9 +13,6 @@
 EurekaJView.alertChartController = SC.ArrayController.create(
     /** @scope EurekaJView.alertChartController.prototype */ {
 
-    //selectionBinding: 'EurekaJView.editAlertController.alertInstrumentationNode',
-    //contentBinding: 'EurekaJView.editAlertController.populate',
-
     allowsMultipleSelection: NO,
 
 

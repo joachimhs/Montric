@@ -13,25 +13,86 @@
 EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
 /** @scope EurekaJView.InstrumentationGroupsAdministrationView.prototype */ {
 
-  childViews: 'labelView'.w(),
+    childViews: 'newInstrumentationGroupView instrumentationGroupSelectionScrollView instrumentationGroupContentView'.w(),
     layout: {
         top: 0,
-        bottom: 0,
         left: 0,
+        bottom: 0,
         right: 0
     },
 
-    labelView: SC.LabelView.design({
-        layout: {
-            centerY: 0,
-            height: 40,
-            top: 25,
-            left: 10,
-            width: 200
-        },
-        controlSize: SC.LARGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
-        value: 'INSTRUMENTATION GROUPS'
+    newInstrumentationGroupView : SC.View.design({
+        childViews: 'newInstrumentationGroupTextFieldView newInstrumentationGroupButtonView'.w(),
+        layout: {top: 20, height: 30, left: 0, width: 200 },
+        backgroundColor: "#ffffff",
+
+        newInstrumentationGroupTextFieldView : SC.TextFieldView.design({
+            layout: {top: 2, height: 24, centerY:0, width: 120, left: 2 },
+            valueBinding: 'EurekaJView.instrumentationGroupAdminController.newInstrumentationGroupName'
+        }),
+
+        newInstrumentationGroupButtonView: SC.ButtonView.extend({
+            layout: {left: 125, right: 2, height: 24, centerY: 0, top: 2, centerY: 0},
+            title: "Add",
+            action: 'addnewInstrumentationGroup',
+            target: 'EurekaJView.instrumentationGroupAdminController'
+        })
+    }).classNames('thinBlackBorder'),
+
+    instrumentationGroupSelectionScrollView: SC.ScrollView.design({
+        layout: {top: 50, bottom: 0, left: 0, width: 200 },
+        hasHorizontalScroller: YES,
+        hasVerticalScroller: YES,
+
+        contentView: SC.ListView.extend({
+            backgroundColor: '#F0F8FF',
+           contentBinding: 'EurekaJView.instrumentationGroupAdminController.arrangedObjects',
+            selectionBinding: 'EurekaJView.instrumentationGroupAdminController.selection',
+            contentValueKey: "name"
+            //selectionDelegate: EurekaJView.alertSelectionDelegate
+        })
+    }),
+
+    instrumentationGroupContentView: SC.View.extend({
+        childViews: ['instrumentationGroupNameLabelView', 'instrumentationGroupNameValueLabelView', 'instrumentationGroupSourceLabelView', 'instrumentationGroupChartSelectScrollView'],
+        isVisibleBinding: 'EurekaJView.instrumentationGroupAdminController.showEditInstrumentationGroupView',
+
+        layout: {top: 20, bottom: 0, right: 0, left: 215},
+
+        instrumentationGroupNameLabelView: SC.LabelView.extend({
+            layout: {left: 10, width: 80, top: 0, height: 30},
+            controlSize: SC.REGULAR_CONTROL_SIZE,
+            value: 'Name:'
+        }).classNames('blacklabel'),
+
+        instrumentationGroupNameValueLabelView: SC.LabelView.extend({
+            layout: {left: 90, width: 80, top: 0, height: 30},
+            controlSize: SC.REGULAR_CONTROL_SIZE,
+            valueBinding: 'EurekaJView.editInstrumentationGroupController.name'
+        }).classNames('blacklabel'),
+
+        instrumentationGroupSourceLabelView: SC.LabelView.extend({
+            layout: {left: 10, right: 20, top: 25, height: 30},
+            controlSize: SC.REGULAR_CONTROL_SIZE,
+            value: 'Select multiple charts to group:'
+        }).classNames('blacklabel'),
+
+        instrumentationGroupChartSelectScrollView: SC.ScrollView.design({
+            layout: {left: 10, right: 20, top: 50, height: 150},
+            hasHorizontalScroller: YES,
+            hasVerticalScroller: YES,
+
+
+            contentView: SC.SourceListView.extend({
+                allowsMultipleSelection: NO,
+                backgroundColor: '#F0F8FF',
+                contentValueKey: "name",
+                rowHeight: 18,
+                contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects',
+                selectionBinding: 'EurekaJView.instumentationGroupChartController.selection'
+                //selectionDelegate: EurekaJView.alertSelectionDelegate
+            })
+        })
     })
 
 });

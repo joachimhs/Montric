@@ -75,6 +75,9 @@ EurekaJView.administrationPaneController = SC.ObjectController.create(
         pane.append();
         this.set('administrationPane', pane);
         EurekaJView.EurekaJStore.find(EurekaJView.ALERTS_QUERY);
+        EurekaJView.EurekaJStore.find(EurekaJView.ADMINISTRATION_TREE_QUERY);
+
         EurekaJView.alertAdministrationController.updateAlerts();
+        EurekaJView.instrumentationGroupAdminController.updateInstrumentationGroups();
     }
 });

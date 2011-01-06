@@ -11,6 +11,7 @@ EurekaJView.mainPage = SC.Page.design({
     // Add childViews to this pane for views to display immediately on page 
     // load.
     mainPane: SC.MainPane.design({
+        defaultResponder: EurekaJView.statechart,
         childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
         topView: SC.ToolbarView.design({

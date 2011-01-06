@@ -54,55 +54,9 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
     }),
 
     alertContentView: SC.View.extend({
-        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertNotificationLabelView alertNotificationSelectFieldView alertChartSelectFieldView alertChartSelectScrollView'.w(),
+        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertNotificationLabelView alertNotificationSelectFieldView alertChartSelectScrollView'.w(),
         isVisibleBinding: 'EurekaJView.alertAdministrationController.showEditAlertView',
         layout: {top: 20, bottom: 0, right: 0, left: 215},
-
-        /*instrumentationNodeLabelView: SC.LabelView.extend({
-            layout: {left: 10, width: 200, top: 0, height: 30},
-            controlSize: SC.REGULAR_CONTROL_SIZE,
-            value: 'Instrumentation Source for alert:'
-        }).classNames('blacklabel'),
-
-        newAlertLabelView: SC.LabelView.extend({
-            layout: {left: 210, width: 320, top: 0, height: 30},
-            controlSize: SC.REGULAR_CONTROL_SIZE,
-            contentBinding: 'EurekaJView.editAlertController.content',
-            contentValueKey: "alertName"
-        }).classNames('blacklabel'),
-
-        instrumentationNodeSelectFieldView: SC.SelectButtonView.extend({
-            layout: {left: 10, right: 10, top: 20, height: 25},
-            theme: 'square',
-            nameKey: 'guiPath',
-            valueKey: 'guiPath',
-            objectsBinding: 'EurekaJView.administrationPaneController.instrumentationSourceNodes',
-            contentBinding: 'EurekaJView.editAlertController.content',
-            contentValueKey: 'alertInstrumentationNode',
-            acceptsFirstResponder: function() {
-                return this.get('isEnabled');
-            }.property('isEnabled')
-        }),
-
-        alertChartSelectFieldView: SC.ScrollView.design({
-            layout: {left: 10, right: 10, top: 50, height: 90},
-            hasHorizontalScroller: YES,
-            hasVerticalScroller: YES,
-
-
-            contentView: SC.ListView.extend({
-                allowsMultipleSelection: NO,
-                backgroundColor: '#F0F8FF',
-                contentValueKey: "name",
-                contentBinding: 'EurekaJView.alertChartController.arrangedObjects',
-
-                selectionBinding: 'EurekaJView.alertChartController.selection',
-
-                acceptsFirstResponder: function() {
-                    return this.get('isEnabled');
-                }.property('isEnabled')
-            })
-        }),              */
 
         activeLabelView: SC.LabelView.extend({
             layout: {left: 10, width: 80, top: 0, height: 30},
@@ -181,22 +135,8 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         }).classNames('blacklabel'),
 
 
-        alertChartSelectFieldView: SC.SelectButtonView.extend({
-            layout: {left: 10, right: 20, top: 90, height: 30},
-            theme: 'square',
-            nameKey: 'guiPath',
-            valueKey: 'guiPath',
-            objectsBinding: 'EurekaJView.alertChartController.arrangedObjects',
-            contentBinding: 'EurekaJView.editAlertController',
-            contentValueKey: 'alertInstrumentationNode',
-            acceptsFirstResponder: function() {
-                return this.get('isEnabled');
-            }.property('isEnabled')
-        }),
-
-
         alertChartSelectScrollView: SC.ScrollView.design({
-            layout: {left: 10, right: 20, top: 120, height: 120},
+            layout: {left: 10, right: 20, top: 95, height: 150},
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
