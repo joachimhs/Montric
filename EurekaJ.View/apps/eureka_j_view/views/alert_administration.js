@@ -34,8 +34,7 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         newAlertButtonView: SC.ButtonView.extend({
             layout: {left: 125, right: 2, height: 24, centerY: 0, top: 2, centerY: 0},
             title: "Add",
-            action: 'addnewAlert',
-            target: 'EurekaJView.alertAdministrationController'
+            action: 'EurekaJView.addNewAlertAction'
         })
     }).classNames('thinBlackBorder'),
 
@@ -180,8 +179,7 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         saveAlertButtonView: SC.ButtonView.design({
             layout: {right: 10, width: 150, bottom: 10, height: 25},
             title: "Save All Alert Changes",
-            action: "saveAlert",
-            target: "EurekaJView.alertAdministrationController"
+            action: "EurekaJView.saveAlertsAction"
         })
 
     })

@@ -16,7 +16,6 @@ EurekaJView.InstrumentationGroupModel = SC.Record.extend(
 
     primaryKey: 'name',
     name: SC.Record.attr(String),
-    sourceGuiPath: SC.Record.toOne('EurekaJView.InstrumentationTreeModel', {isMaster: YES }),
-    groupedPathList: SC.Record.attr(Array)
+    instrumentationGroupPath: SC.Record.toMany('EurekaJView.AdminstrationTreeModel', {isMaster: YES })
 
 });

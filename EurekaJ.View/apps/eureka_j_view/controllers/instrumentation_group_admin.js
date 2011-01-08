@@ -17,15 +17,6 @@ EurekaJView.instrumentationGroupAdminController = SC.ArrayController.create(
     allowsMultipleSelection: NO,
     showEditInstrumentationGroupView: NO,
 
-    addnewInstrumentationGroup: function() {
-        newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.InstrumentationGroupModel, {name: this.get('newInstrumentationGroupName')});
-        this.set('newInstrumentationGroupName', '');
-    },
-
-    updateInstrumentationGroups: function() {
-        this.set('content', EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationGroupModel));
-    },
-
     observesSelection: function(){
         if (this.getPath('selection.firstObject.name')  != undefined) {
             this.set('showEditInstrumentationGroupView', YES);

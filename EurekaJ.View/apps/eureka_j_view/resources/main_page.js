@@ -54,8 +54,7 @@ EurekaJView.mainPage = SC.Page.design({
                 },
                 icon: 'sc-icon-options-16',
                 title: 'TimePeriod',
-                action: 'showTimeperiodPane',
-                target: 'EurekaJView.timeperiodPaneController'
+                action: 'showTimeperiodPaneAction'
             }),
 
             administrationButtonView: SC.ButtonView.design({
@@ -67,8 +66,7 @@ EurekaJView.mainPage = SC.Page.design({
                 },
                 icon: 'sc-icon-tools-24',
                 title: 'Administration',
-                action: 'showAdministrationPane',
-                target: 'EurekaJView.administrationPaneController'
+                action: 'showAdministrationPaneAction'
             })
 
 
@@ -156,7 +154,7 @@ EurekaJView.mainPage = SC.Page.design({
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
-            contentView: SC.SourceListView.extend({
+            contentView: SC.ListView.extend({
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
@@ -180,6 +178,15 @@ EurekaJView.mainPage = SC.Page.design({
             },
             anchorLocation: SC.ANCHOR_BOTTOM
         })
+
+    }),
+
+    timePeriodView: EurekaJView.TimePeriodPaneView.design({
+        layout: { width: 400, centerX: 0, height: 130 }
+    }),
+
+    adminPanelView: EurekaJView.AdministrationPaneView.design({
+        layout: { width: 700, centerX: 0, height: 500 }
     })
 
 });

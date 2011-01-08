@@ -12,14 +12,15 @@
   @version 0.1
 */
 EurekaJView.AdminstrationTreeModel = SC.Record.extend(
-/** @scope EurekaJView.AdminstrationTreeModel.prototype */ {
+/** @scope EurekaJView.AdminstrationTreeModel.prototype */
+{
 
     primaryKey: 'guiPath',
     guiPath: SC.Record.attr(String),
 
     name: SC.Record.attr(String),
     isSelected: SC.Record.attr(Boolean),
-    parentPath: SC.Record.attr(String),
+    parentPath: SC.Record.toOne('EurekaJView.AdminstrationTreeModel', {isMaster: YES }),
 
     hasChildren: SC.Record.attr(Boolean),
     treeItemIsExpanded: NO,

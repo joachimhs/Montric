@@ -17,15 +17,6 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(
     showEditAlertView: NO,
     allowsMultipleSelection: NO,
 
-    addnewAlert: function() {
-        newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: this.get('newAlertName')});
-        this.set('newAlertName', '');
-    },
-
-    updateAlerts: function() {
-        this.set('content', EurekaJView.EurekaJStore.find(EurekaJView.AlertModel));
-    },
-
     observesSelection: function(){
         if (this.getPath('selection.firstObject.alertName')  != undefined) {
             this.set('showEditAlertView', YES);
@@ -34,9 +25,5 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(
        } else {
             this.set('showEditAlertView', NO);
         }
-    }.observes('selection'),
-
-    saveAlert: function() {
-        EurekaJView.EurekaJStore.commitRecords();
-    }
+    }.observes('selection')
 });

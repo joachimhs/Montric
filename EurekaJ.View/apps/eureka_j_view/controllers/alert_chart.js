@@ -19,11 +19,6 @@ EurekaJView.alertChartController = SC.ArrayController.create(
     populate: function() {
         var query = SC.Query.local(EurekaJView.InstrumentationTreeModel, 'hasChildren = {hasChildren}', {hasChildren: false});
         this.set('content', EurekaJView.EurekaJStore.find(query));
-    },
-
-     observesSelection: function() {
-        SC.Logger.log('alertChartController observesSelection: ' + this.get('selection'));
-        //this.set('selection', EurekaJView.editAlertController.get('alertInstrumentationNode'));
-    }.observes('selection')
+    }
 
 });
