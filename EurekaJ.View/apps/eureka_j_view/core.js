@@ -23,6 +23,6 @@ EurekaJView = SC.Application.create(
     // to any fixtures you define.
     //store: SC.Store.create().from(SC.Record.fixtures)
     EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource'),
-    rootState: Ki.State.create({ initialSubstate: 'mainState', mainState: Ki.State.plugin('EurekaJView.statechart') })
+    rootState: Ki.State.extend({ initialSubstate: 'mainState', mainState: Ki.State.plugin('EurekaJView.statechart') })
 
 });
