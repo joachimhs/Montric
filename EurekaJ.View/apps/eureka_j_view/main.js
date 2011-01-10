@@ -24,7 +24,7 @@ EurekaJView.main = function main() {
 
   // TODO: Set the content property on your primary controller
   // ex: EurekaJView.contactsController.set('content',EurekaJView.contacts);
-    EurekaJView.statechart.initStatechart();
+    EurekaJView.initStatechart();
 
 	EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);
 	EurekaJView.InstrumentationTreeController.populate();

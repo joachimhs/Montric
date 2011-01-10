@@ -1,7 +1,7 @@
 /*globals EurekaJView */
 
-EurekaJView.statechart = Ki.Statechart.create({
-    rootState: Ki.State.design({
+EurekaJView.statechart = Ki.State.design({
+
 
         //initialSubstate: 'showInstrumentationMenu',
         substatesAreConcurrent: YES,
@@ -109,5 +109,4 @@ EurekaJView.statechart = Ki.Statechart.create({
             })
 
         })
-    })
 });
