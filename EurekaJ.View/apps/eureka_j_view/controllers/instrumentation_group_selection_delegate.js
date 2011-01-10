@@ -16,27 +16,25 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
     collectionViewShouldSelectIndexes: function (view, indexes, extend) {
         var getObjectAt = indexes.firstObject();
         var selectedItem = view.get('content').objectAt(getObjectAt);
-        SC.Logger.log('EurekaJView.instrumentationGroupSelectionDelegate collectionViewShouldSelectIndexes selectedItem: ' + selectedItem);
 
+        //Select an Instrumentation Group
         if (selectedItem.instanceOf(EurekaJView.InstrumentationGroupModel)) {
-            SC.Logger.log('Selected item is InstrumentationGroupModel!!');
+            this.closeOpenTreeNodes(view);
+
             var instrumentationNodeForSelect = selectedItem.get('instrumentationGroupPath');
-            SC.Logger.log('InstrumentationGroupNode for select: ' + instrumentationNodeForSelect.getEach('guiPath'));
 
             var selectionSet = SC.SelectionSet.create();
             selectionSet.addObjects(instrumentationNodeForSelect);
             selectionSet.forEach(function(adminTreeNode) {
-                this.markNodeAndParentsAsExpanded(adminTreeNode);
+                this.markNodeAndParentsAsExpanded(adminTreeNode, YES);
             }, this);
-
 
             EurekaJView.instumentationGroupChartController.set('selection', selectionSet);
         }
 
+        //Select one or more tree nodes
         if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
-            SC.Logger.log('selected item is Administration Tree is: ' + selectedItem);
             this.setSelectedChartNodes(view, indexes);
-            SC.Logger.log('instrumentationGroupNode set to: ' + EurekaJView.editInstrumentationGroupController.get('instrumentationGroupPath').getEach('guiPath'));
         }
 
         return indexes;
@@ -46,9 +44,7 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
         var selectionArray = [];
 
             indexes.forEach(function(o) {
-                SC.Logger.log('forEach: ' + o);
                 var selectedItem = view.get('content').objectAt(o);
-                SC.Logger.log('selectedItem: ' + o);
                 if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
                     selectionArray.pushObject(selectedItem);
                 }
@@ -57,18 +53,23 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
         EurekaJView.editInstrumentationGroupController.set('instrumentationGroupPath', selectionArray);
     },
 
-    markNodeAndParentsAsExpanded: function(treeModel) {
-        SC.Logger.log('Expanding treeModel: ' + treeModel.get('guiPath'));
-
-
+    markNodeAndParentsAsExpanded: function(treeModel, setExpanded) {
         parentNode = treeModel.get('parentPath');
-        SC.Logger.log('Attempting to expand parents starting with: ' + treeModel.get('parentPath'));
 
         while (parentNode) {
-            SC.Logger.log('Expanding parent: ' + parentNode.get('guiPath'));
-            parentNode.set('treeItemIsExpanded', YES);
+            parentNode.set('treeItemIsExpanded', setExpanded);
             parentNode = parentNode.get('parentPath');
         }
+    },
+
+    closeOpenTreeNodes: function(view) {
+
+        view.get('content').forEach(function(node) {
+            selectedNodes = node.get('instrumentationGroupPath');
+            selectedNodes.forEach(function(adminTreeNode) {
+                this.markNodeAndParentsAsExpanded(adminTreeNode, NO);
+            }, this);
+        }, this);
     }
 
 

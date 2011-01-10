@@ -45,7 +45,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         if (query === EurekaJView.ADMINISTRATION_TREE_QUERY) {
-            SC.Logger.log('fetching the alert tree menu...');
+            SC.Logger.log('fetching the Administration tree menu...');
             var requestStringJson = {
                 'getInstrumentationMenu': 'administrationMenu',
                 'includeCharts': true
