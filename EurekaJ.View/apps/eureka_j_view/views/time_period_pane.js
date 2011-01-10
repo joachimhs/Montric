@@ -12,7 +12,7 @@
  */
 EurekaJView.TimePeriodPaneView = SC.SheetPane.extend(
     /** @scope EurekaJView.TimePeriodPaneView.prototype */ {
-    defaultResponder: EurekaJView.statechart,
+    defaultResponder: EurekaJView,
 
     contentView: SC.View.design({
         childViews: 'timePeriodContainerView hideTimeperiodPanelButtonView'.w(),

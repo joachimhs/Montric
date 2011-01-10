@@ -17,7 +17,7 @@ EurekaJView.mainPage = SC.Page.design({
     flotChartGrid: SC.outlet('mainPane.flotChartGrid'),
 
     mainPane: SC.MainPane.design({
-        defaultResponder: EurekaJView.statechart,
+        defaultResponder: EurekaJView,
         childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
         topView: SC.ToolbarView.design({

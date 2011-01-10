@@ -12,7 +12,7 @@
  */
 EurekaJView.AdministrationPaneView = SC.SheetPane.extend(
     /** @scope EurekaJView.AdministrationPaneView.prototype */ {
-    defaultResponder: EurekaJView.statechart,
+    defaultResponder: EurekaJView,
 
     contentView: SC.View.extend({
 

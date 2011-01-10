@@ -29,11 +29,11 @@ EurekaJView.statechart = Ki.State.design({
 
             /* ACTIONS */
             showTimeperiodPaneAction: function() {
-                EurekaJView.gotoState('showTimePeriodPanel');
+                this.gotoState('showTimePeriodPanel');
             },
 
             hideTimeperiodPaneAction: function() {
-                EurekaJView.gotoState('hideTimePeriodPanel');
+                this.gotoState('hideTimePeriodPanel');
             },
 
             showAdministrationPaneAction: function() {
@@ -42,12 +42,12 @@ EurekaJView.statechart = Ki.State.design({
 
                 EurekaJView.updateAlertsAction();
                 EurekaJView.updateInstrumentationGroupsAction();
-                EurekaJView.gotoState('showAdminPanel');
+                this.gotoState('showAdminPanel');
 
             },
 
             hideAdministrationPaneAction: function() {
-                EurekaJView.gotoState('hideAdminPanel');
+                this.gotoState('hideAdminPanel');
             },
 
             /* //ACTIONS */
