@@ -14,6 +14,7 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
     /** @scope EurekaJView.alertSelectionDelegate.prototype */ {
 
     collectionViewShouldSelectIndexes: function (view, indexes, extend) {
+        SC.Logger.log('EurekaJView.instrumentationGroupSelectionDelegate collectionViewShouldSelectIndexes');
         var getObjectAt = indexes.firstObject();
         var selectedItem = view.get('content').objectAt(getObjectAt);
 

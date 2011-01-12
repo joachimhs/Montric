@@ -144,9 +144,22 @@ public class JSONController {
             }
         }
 
+        if (jsonObject.has("instrumentaionGroupName")) {
+            GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
+            if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0 && groupedStatistics.getGroupedPathList().size() > 0) {
+                berkeleyTreeMenuService.persistGroupInstrumentation(groupedStatistics);
+            }
+        }
+
         if (jsonObject.has("getAlerts")) {
             jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(berkeleyTreeMenuService.getAlerts());
             System.out.println("Got Alerts:\n" + jsonResponse);
+
+        }
+
+        if (jsonObject.has("getInstrumentationGroups")) {
+            jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(berkeleyTreeMenuService.getGroupedStatistics());
+            System.out.println("Got InstrumentationGroups:\n" + jsonResponse);
 
         }
         PrintWriter writer = response.getWriter();

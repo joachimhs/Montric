@@ -20,7 +20,7 @@ EurekaJView.mixin( {
     },
 
     addnewInstrumentationGroupAction: function() {
-        EurekaJView.EurekaJStore.createRecord(EurekaJView.InstrumentationGroupModel, {name: EurekaJView.instrumentationGroupAdminController.get('newInstrumentationGroupName')});
+        EurekaJView.EurekaJStore.createRecord(EurekaJView.InstrumentationGroupModel, {instrumentaionGroupName: EurekaJView.instrumentationGroupAdminController.get('newInstrumentationGroupName')});
         EurekaJView.instrumentationGroupAdminController.set('newInstrumentationGroupName', '');
     },
 

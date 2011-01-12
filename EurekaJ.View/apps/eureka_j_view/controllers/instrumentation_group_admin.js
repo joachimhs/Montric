@@ -18,7 +18,7 @@ EurekaJView.instrumentationGroupAdminController = SC.ArrayController.create(
     showEditInstrumentationGroupView: NO,
 
     observesSelection: function(){
-        if (this.getPath('selection.firstObject.name')  != undefined) {
+        if (this.getPath('selection.firstObject.instrumentaionGroupName')  != undefined) {
             this.set('showEditInstrumentationGroupView', YES);
             EurekaJView.instumentationGroupChartController.populate();
         } else {

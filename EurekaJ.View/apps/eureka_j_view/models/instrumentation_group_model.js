@@ -14,8 +14,8 @@
 EurekaJView.InstrumentationGroupModel = SC.Record.extend(
     /** @scope EurekaJView.InstrumentationGroupModel.prototype */ {
 
-    primaryKey: 'name',
-    name: SC.Record.attr(String),
+    primaryKey: 'instrumentaionGroupName',
+    instrumentaionGroupName: SC.Record.attr(String),
     instrumentationGroupPath: SC.Record.toMany('EurekaJView.AdminstrationTreeModel', {isMaster: YES })
 
 });

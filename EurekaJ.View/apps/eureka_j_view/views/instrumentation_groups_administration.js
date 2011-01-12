@@ -47,7 +47,7 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
             backgroundColor: '#F0F8FF',
            contentBinding: 'EurekaJView.instrumentationGroupAdminController.arrangedObjects',
             selectionBinding: 'EurekaJView.instrumentationGroupAdminController.selection',
-            contentValueKey: "name",
+            contentValueKey: "instrumentaionGroupName",
             selectionDelegate: EurekaJView.instrumentationGroupSelectionDelegate
         })
     }),

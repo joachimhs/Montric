@@ -21,6 +21,10 @@ EurekaJView.ADMINISTRATION_TREE_QUERY = SC.Query.local(EurekaJView.Adminstration
 EurekaJView.ALERTS_QUERY = SC.Query.local(EurekaJView.AlertModel, {
     orderby: 'alertName'
 });
+
+EurekaJView.INSTRUMENTATION_GROUPS_QUERY = SC.Query.local(EurekaJView.InstrumentationGroupModel, {
+    orderby: 'instrumentaionGroupName'
+});
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     /** @scope EurekaJView.EurekaJDataSource.prototype */
 {
@@ -71,6 +75,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (query === EurekaJView.INSTRUMENTATION_GROUPS_QUERY) {
+            SC.Logger.log('fetching instrumentation groups...');
+            var requestStringJson = {
+                'getInstrumentationGroups': true
+            };
+
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchInstrumentationGroups', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
         return NO; // return YES if you handled the query
     },
 
@@ -98,6 +115,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (SC.ok(response)) {
             SC.Logger.log('Alerts Fetched');
             store.loadRecords(EurekaJView.AlertModel, response.get('body').alerts);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchInstrumentationGroups: function(response, store, query)  {
+        if (SC.ok(response)) {
+            SC.Logger.log('Instrumentation Groups Fetched');
+            store.loadRecords(EurekaJView.InstrumentationGroupModel, response.get('body').instrumentationGroups);
             store.dataSourceDidFetchQuery(query);
         } else {
             store.dataSourceDidErrorQuery(query, response);
@@ -190,10 +217,28 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                     .send(store.readDataHash(storeKey));
             return YES;
         }
+
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.InstrumentationGroupModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didCreateInstrumentationGroup, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
+
         return NO; // return YES if you handled the storeKey
     },
 
     didCreateAlert: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            store.dataSourceDidComplete(storeKey);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
+    },
+
+    didCreateInstrumentationGroup: function(response, store, storeKey) {
         if (SC.$ok(response)) {
             store.dataSourceDidComplete(storeKey);
         } else {
@@ -211,10 +256,29 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                     .send(store.readDataHash(storeKey));
             return YES;
         }
+
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.InstrumentationGroupModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didUpdateInstrumentationGroup, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
         return NO; // return YES if you handled the storeKey
     },
 
     didUpdateAlert: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            var data = response.get('body');
+            if (data) data = data.content; // if hash is returned; use it.
+            store.dataSourceDidComplete(storeKey, data);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
+    },
+
+    didUpdateInstrumentationGroup: function(response, store, storeKey) {
         if (SC.$ok(response)) {
             var data = response.get('body');
             if (data) data = data.content; // if hash is returned; use it.

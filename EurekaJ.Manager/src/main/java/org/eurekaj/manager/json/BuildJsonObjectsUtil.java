@@ -215,7 +215,7 @@ public class BuildJsonObjectsUtil {
 		return dataArraySB.toString();
 	}
 
-    public static String generateAlertsJson(List<Alert> alerts) throws JSONException{
+    public static String generateAlertsJson(List<Alert> alerts) throws JSONException {
         JSONObject alertsObject = new JSONObject();
 
         JSONArray alertArray = new JSONArray();
@@ -235,5 +235,26 @@ public class BuildJsonObjectsUtil {
         alertsObject.put("alerts", alertArray);
 
         return alertsObject.toString();
+    }
+
+    public static String generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
+        JSONObject igObject = new JSONObject();
+
+        JSONArray igArray = new JSONArray();
+        for (GroupedStatistics gs : groupedStatisticsList) {
+            JSONObject ig = new JSONObject();
+            ig.put("instrumentaionGroupName", gs.getName());
+            JSONArray groupsArray = new JSONArray();
+            for (String group : gs.getGroupedPathList()) {
+                groupsArray.put(group);
+            }
+            ig.put("instrumentationGroupPath", groupsArray);
+
+            igArray.put(ig);
+        }
+
+        igObject.put("instrumentationGroups", igArray);
+
+        return igObject.toString();
     }
 }

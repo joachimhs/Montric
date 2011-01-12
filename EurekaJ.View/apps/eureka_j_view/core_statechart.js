@@ -39,8 +39,10 @@ EurekaJView.statechart = Ki.State.design({
             showAdministrationPaneAction: function() {
                 EurekaJView.EurekaJStore.find(EurekaJView.ALERTS_QUERY);
                 EurekaJView.EurekaJStore.find(EurekaJView.ADMINISTRATION_TREE_QUERY);
+                EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_GROUPS_QUERY);
 
                 EurekaJView.updateAlertsAction();
+                EurekaJView.updateInstrumentationGroupsAction();
                 EurekaJView.updateInstrumentationGroupsAction();
                 this.gotoState('showAdminPanel');
 

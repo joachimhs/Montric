@@ -1,9 +1,13 @@
 package org.eurekaj.manager.json;
 
-import com.google.gson.Gson;
 import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,6 +37,18 @@ public class ParseJsonObjects {
         return parsedAlert;
     }
 
+    public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup) {
+        GroupedStatistics groupedStatistics = null;
+
+        if (jsonGroup.has("instrumentaionGroupName") && jsonGroup.has("instrumentationGroupPath")) {
+            groupedStatistics = new GroupedStatistics();
+            groupedStatistics.setName(parseStringFromJson(jsonGroup, "instrumentaionGroupName"));
+            groupedStatistics.setGroupedPathList(getStringArrayFromJson(jsonGroup, "instrumentationGroupPath"));
+        }
+
+        return groupedStatistics;
+    }
+
     private static String parseStringFromJson(JSONObject json, String key) {
         String stringValue = null;
 
@@ -43,6 +59,20 @@ public class ParseJsonObjects {
         }
 
         return stringValue;
+    }
+
+    private static List<String> getStringArrayFromJson(JSONObject json, String key) {
+        List<String> groupList = new ArrayList<String>();
+        try {
+            JSONArray groupJsonArray = json.getJSONArray("instrumentationGroupPath");
+            for (int index = 0; index < groupJsonArray.length(); index++) {
+                groupList.add(groupJsonArray.getString(index));
+            }
+        } catch (JSONException e) {
+            //Nothing really
+        }
+
+        return groupList;
     }
 
     private static Integer parseIntegerFromJson(JSONObject json, String key) {
