@@ -75,7 +75,7 @@ EurekaJView.mainPage = SC.Page.design({
                 action: 'showAdministrationPaneAction'
 
             })
-        }),
+        }).classNames('toolbarGradient'),
 
 
 
