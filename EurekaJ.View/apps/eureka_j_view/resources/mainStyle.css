@@ -42,3 +42,7 @@
 .thinBlackRightborder {
 	border-right: 1px solid #000;
 }
+
+.toolsImage150 {
+    .my-image { background: static_url("images/ej_tools_150.png") }
+}

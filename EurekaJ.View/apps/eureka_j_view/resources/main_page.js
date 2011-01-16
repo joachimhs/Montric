@@ -20,22 +20,21 @@ EurekaJView.mainPage = SC.Page.design({
         defaultResponder: EurekaJView,
         childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
-        topView: SC.ToolbarView.design({
-            childViews: 'logoView timePeriodButtonView administrationButtonView'.w(),
+        topView: SC.View.design({
+            childViews: 'logoView timePeriodButtonView timePeriodLabelView administrationButtonView administrationLabelView'.w(),
             isVisible: NO,
             layout: {
                 top: 0,
                 left: 0,
                 right: 0,
-                height: 40
+                height: 75
             },
             anchorLocation: SC.ANCHOR_TOP,
 
             logoView: SC.LabelView.design({
                 layout: {
-                    centerY: 0,
+                    top: 25,
                     height: 40,
-                    top: 5,
                     left: 10,
                     width: 200
                 },
@@ -45,36 +44,44 @@ EurekaJView.mainPage = SC.Page.design({
             }),
 
 
-            timePeriodButtonView: SC.ButtonView.design({
-                layout: {
-                    right: 170,
-                    width: 150,
-                    height: 30,
-                    centerY: 0
-                },
-                icon: 'sc-icon-options-16',
-                title: 'TimePeriod',
+            timePeriodButtonView: SC.ImageView.design(SCUI.SimpleButton, {
+                layout: {right: 130, width: 49, height: 49, top: 5},
+                value: static_url('images/ej_timeperiod_49.png'),
+                toolTip: 'Time Period Administration',
+                //title: 'Administration',
                 action: 'showTimeperiodPaneAction'
             }),
 
-            administrationButtonView: SC.ButtonView.design({
-                layout: {
-                    right: 15,
-                    width: 150,
-                    height: 30,
-                    centerY: 0
-                },
-                icon: 'sc-icon-tools-24',
-                title: 'Administration',
+            timePeriodLabelView: SC.LabelView.design(SCUI.SimpleButton, {
+                layout: {right: 120, width: 100, height: 25, top: 55},
+                value: 'Time Period',
+                textAlign: SC.ALIGN_RIGHT,
+                action: 'showTimeperiodPaneAction'
+
+            }),
+
+            administrationButtonView: SC.ImageView.design(SCUI.SimpleButton, {
+                layout: {right: 25, width: 49, height: 49, top: 5},
+                value: static_url('images/ej_tools_49.png'),
+                toolTip: 'Administration',
+                //title: 'Administration',
                 action: 'showAdministrationPaneAction'
+            }),
+
+            administrationLabelView: SC.LabelView.design(SCUI.SimpleButton, {
+                layout: {right: 10, width: 100, height: 25, top: 55},
+                value: 'Administration',
+                textAlign: SC.ALIGN_RIGHT,
+                action: 'showAdministrationPaneAction'
+
             })
-
-
         }),
+
+
 
         chartOptionsContainerView: SC.ContainerView.design({
             layout: {
-                top: 39,
+                top: 75,
                 height: 100,
                 left: 306,
                 right: 0
@@ -84,7 +91,7 @@ EurekaJView.mainPage = SC.Page.design({
 
         flotChartGrid: SC.GridView.extend({
             layout: {
-                top: 41,
+                top: 77,
                 right: 0,
                 bottom: 40,
                 left: 306
@@ -120,7 +127,7 @@ EurekaJView.mainPage = SC.Page.design({
             childViews: 'instrumentationTreeLabelView'.w(),
             isVisible: NO,
             layout: {
-                top: 41,
+                top: 77,
                 bottom: 41,
                 left: 0,
                 width: 306
@@ -146,7 +153,7 @@ EurekaJView.mainPage = SC.Page.design({
         instrumentationTreeScrollView: SC.ScrollView.extend({
             isVisible: NO,
             layout: {
-                top: 71,
+                top: 101,
                 bottom: 41,
                 left: 2,
                 width: 299
