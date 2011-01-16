@@ -94,8 +94,8 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
         }),
 
         saveInstrumentationGroupButtonView: SC.ButtonView.design({
-            layout: {right: 10, width: 150, bottom: 10, height: 25},
-            title: "Save All Alert Changes",
+            layout: {right: 10, width: 300, bottom: 10, height: 25},
+            title: "Save All Instrumentation Group Changes",
             action: "EurekaJView.saveInformationGroupsAction"
         })
     })
