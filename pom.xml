@@ -17,6 +17,7 @@
         <module>EurekaJ.Manager</module>
         <module>EurekaJ.ManagerServer</module>
         <module>EurekaJ.Proxy</module>
+		<module>EurekaJ.View</module>
     </modules>
 
     <build>

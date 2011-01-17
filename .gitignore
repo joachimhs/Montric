@@ -1,0 +1,5 @@
+.idea
+target
+*.iml
+EurekaJ.Manager/src/main/webapp/eurekaJView
+EurekaJ.View/build

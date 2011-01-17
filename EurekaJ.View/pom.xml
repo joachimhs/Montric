@@ -24,9 +24,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>sc-build</executable>
-                    <arguments>
-                        <argument>--build=EurekaJView1</argument>
+                    <executable>sh</executable>
+                    <workingDirectory>${basedir}</workingDirectory>
+                    <arguments >
+                        <argument>build_dev.sh</argument>
                     </arguments>
                 </configuration>
             </plugin>
