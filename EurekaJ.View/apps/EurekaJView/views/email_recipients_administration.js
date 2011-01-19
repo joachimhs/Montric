@@ -157,7 +157,9 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
                     backgroundColor: '#F0F8FF',
                     contentBinding: 'EurekaJView.emailRecipientsController.arrangedObjects',
                     selectionBinding: 'EurekaJView.emailRecipientsController.selection',
-                    contentValueKey: 'emailAddress'
+                    contentValueKey: 'emailAddress',
+                    canDeleteContent: YES
+
                     //selectionDelegate: EurekaJView.alertSelectionDelegate
                 })
             })

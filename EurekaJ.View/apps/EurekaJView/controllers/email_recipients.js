@@ -16,4 +16,5 @@ EurekaJView.emailRecipientsController = SC.ArrayController.create(
     newEmailRecipent: null,
 
     contentBinding: 'EurekaJView.editEmailGroupController.emailAddresses'
-});
+})
+;
