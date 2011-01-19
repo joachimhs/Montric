@@ -30,6 +30,22 @@ EurekaJView.mixin( {
 
     saveInformationGroupsAction: function() {
         EurekaJView.EurekaJStore.commitRecords();
+    },
+
+    addNewEmailGroupAction: function() {
+        SC.Logger.log('EurekaJView.mixin Adding new Email Group');
+        newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailGroupModel, {emailGroupName: EurekaJView.emailAdministrationController.get('newEmailGroupName')});
+        EurekaJView.emailAdministrationController.set('newEmailGroupName', '');
+    },
+
+    updateEmailGroupsAction: function() {
+        EurekaJView.emailAdministrationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.EmailGroupModel));
+    },
+
+    addNewEmailRecipientAction: function() {
+        newEmailRecipient = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailRecipientModel, {emailAddress: EurekaJView.emailRecipientsController.get('newEmailRecipent')});
+        EurekaJView.alertAdministrationController.set('newAlertName', '');
+        EurekaJView.editEmailGroupController.get('emailAddresses').addObject(newEmailRecipient);
     }
 
 });
