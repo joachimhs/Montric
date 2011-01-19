@@ -166,8 +166,11 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
                 allowsMultipleSelection: NO,
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
-                //contentBinding: 'EurekaJView.alertChartController.arrangedObjects',
-                //selectionBinding: 'EurekaJView.alertChartController.selection',
+                contentBinding: 'EurekaJView.alertNotificationController.arrangedObjects',
+                selectionBinding: 'EurekaJView.alertNotificationController.selection',
+                contentValueKey: "emailGroupName",
+                selectionDelegate: EurekaJView.alertSelectionDelegate,
+
 
                 acceptsFirstResponder: function() {
                     return this.get('isEnabled');

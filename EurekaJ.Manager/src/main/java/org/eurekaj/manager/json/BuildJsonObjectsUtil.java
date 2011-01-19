@@ -230,6 +230,12 @@ public class BuildJsonObjectsUtil {
             alertObject.put("alertType", Alert.getStringValueForEnumtypes(alert.getSelectedAlertType()));
             alertObject.put("alertActivated", alert.isActivated());
 
+            JSONArray emailGroupArray = new JSONArray();
+            for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
+                emailGroupArray.put(emailRecipientGroup);
+            }
+            alertObject.put("alertNotifications", emailGroupArray);
+
             alertArray.put(alertObject);
         }
 

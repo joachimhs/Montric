@@ -13,6 +13,7 @@ EurekaJView.mixin( {
 
     updateAlertsAction: function() {
         EurekaJView.alertAdministrationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.AlertModel));
+        EurekaJView.alertNotificationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.EmailGroupModel));
     },
 
     saveAlertsAction: function() {

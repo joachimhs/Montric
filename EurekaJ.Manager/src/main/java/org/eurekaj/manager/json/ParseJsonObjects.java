@@ -31,6 +31,7 @@ public class ParseJsonObjects {
             parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
             parsedAlert.setSelectedAlertType(parseStringFromJson(jsonAlert, "alertType"));
+            parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
             if (parsedAlert.getSelectedAlertType() == Alert.UNKNOWN) {
                 parsedAlert.setSelectedAlertType(Alert.GREATER_THAN);
             }

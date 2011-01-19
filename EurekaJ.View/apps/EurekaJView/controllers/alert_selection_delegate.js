@@ -22,10 +22,10 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
             this.closeOpenTreeNodes(view);
 
 
+            //Set selected Instrumentation Node
             SC.Logger.log('Selected item is Alert Model!!');
             var instrumentationNodeForSelect = selectedItem.get('alertInstrumentationNode');
             SC.Logger.log('alertInstrumentationNode for select: ' + instrumentationNodeForSelect);
-
 
             var selectionSet = SC.SelectionSet.create();
             selectionSet.addObject(instrumentationNodeForSelect);
@@ -34,26 +34,52 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
             }, this);
 
             EurekaJView.alertChartController.set('selection', selectionSet);
+
+            //Set selected Email Notifications
+            var emailNotificationsForSelect = selectedItem.get('alertNotifications');
+            SC.Logger.log('emailNotificationsForSelect: ' + emailNotificationsForSelect);
+
+            var emailNotificationSelectionSet = SC.SelectionSet.create();
+            emailNotificationSelectionSet.addObjects(emailNotificationsForSelect);
+
+            EurekaJView.alertNotificationController.set('selection', emailNotificationSelectionSet);
         }
 
-        if (selectedItem.instanceOf(EurekaJView.InstrumentationTreeModel)) {
+        if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
             this.setSelectedChartNodes(view, indexes);
+        }
+
+        if (selectedItem.instanceOf(EurekaJView.EmailGroupModel)) {
+            this.setSelectedEmailNotifications(view, indexes);
         }
 
         return indexes;
     },
 
     setSelectedChartNodes: function(view, indexes) {
+        indexes.forEach(function(o) {
+            SC.Logger.log('setSelectedChartNodes indexes o: '+ 0)
+            var selectedItem = view.get('content').objectAt(o);
+            SC.Logger.log('setSelectedChartNodes selectedItem: '+ selectedItem)
+            if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
+                SC.Logger.log('Seting alertInstrumentationNode');
+                EurekaJView.editAlertController.set('alertInstrumentationNode', selectedItem);
+            }
+        }, this);
+
+    },
+
+    setSelectedEmailNotifications: function(view, indexes){
         var selectionArray = [];
 
         indexes.forEach(function(o) {
             var selectedItem = view.get('content').objectAt(o);
-            if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
+            if (selectedItem.instanceOf(EurekaJView.EmailGroupModel)) {
                 selectionArray.pushObject(selectedItem);
             }
         }, this);
 
-        EurekaJView.editAlertController.set('instrumentationGroupPath', selectionArray);
+        EurekaJView.editAlertController.set('alertNotifications', selectionArray);
     },
 
     markNodeAndParentsAsExpanded: function(treeModel, setExpanded) {
