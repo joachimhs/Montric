@@ -1,5 +1,6 @@
 package org.eurekaj.manager.json;
 
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.json.JSONArray;
@@ -49,6 +50,20 @@ public class ParseJsonObjects {
         return groupedStatistics;
     }
 
+    public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup) {
+        EmailRecipientGroup emailRecipientGroup = new EmailRecipientGroup();
+
+        emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(jsonEmailGroup, "emailGroupName"));
+        emailRecipientGroup.setPort(parseIntegerFromJson(jsonEmailGroup, "smtpPort"));
+        emailRecipientGroup.setUseSSL(parseBooleanFromJson(jsonEmailGroup, "smtpUseSSL"));
+        emailRecipientGroup.setSmtpServerhost(parseStringFromJson(jsonEmailGroup, "smtpHost"));
+        emailRecipientGroup.setSmtpUsername(parseStringFromJson(jsonEmailGroup, "smtpUsername"));
+        emailRecipientGroup.setSmtpPassword(parseStringFromJson(jsonEmailGroup, "smtpPassword"));
+        emailRecipientGroup.setEmailRecipientList(getStringArrayFromJson(jsonEmailGroup, "emailAddresses"));
+
+        return emailRecipientGroup;
+    }
+
     private static String parseStringFromJson(JSONObject json, String key) {
         String stringValue = null;
 
@@ -64,7 +79,7 @@ public class ParseJsonObjects {
     private static List<String> getStringArrayFromJson(JSONObject json, String key) {
         List<String> groupList = new ArrayList<String>();
         try {
-            JSONArray groupJsonArray = json.getJSONArray("instrumentationGroupPath");
+            JSONArray groupJsonArray = json.getJSONArray(key);
             for (int index = 0; index < groupJsonArray.length(); index++) {
                 groupList.add(groupJsonArray.getString(index));
             }

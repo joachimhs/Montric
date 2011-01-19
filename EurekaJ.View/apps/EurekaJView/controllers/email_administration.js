@@ -15,15 +15,13 @@ EurekaJView.emailAdministrationController = SC.ArrayController.create(
 
     newEmailGroupName: null,
     showEditAlertView: NO,
-    allowsMultipleSelection: NO
+    allowsMultipleSelection: NO,
 
-    /*observesSelection: function(){
-        if (this.getPath('selection.firstObject.alertName')  != undefined) {
+    observesSelection: function(){
+        if (this.getPath('selection.firstObject.emailGroupName')  != undefined) {
             this.set('showEditAlertView', YES);
-            EurekaJView.alertChartController.populate();
-            //SC.Logger.log('alertAdministrationController Setting selection: ' + this.getPath('selection.firstObject.alertInstrumentationNode'));
        } else {
             this.set('showEditAlertView', NO);
         }
-    }.observes('selection')*/
+    }.observes('selection')
 });

@@ -15,10 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.xydata.XYDataList;
@@ -39,6 +41,16 @@ public class JSONController {
 
     public void setBerkeleyTreeMenuService(TreeMenuService berkeleyTreeMenuService) {
         this.berkeleyTreeMenuService = berkeleyTreeMenuService;
+    }
+
+    private AdministrationService administrationService;
+
+    public AdministrationService getAdministrationService() {
+        return administrationService;
+    }
+
+    public void setAdministrationService(AdministrationService administrationService) {
+        this.administrationService = administrationService;
     }
 
     @RequestMapping(value = "/jsonController.capp", method = RequestMethod.POST)
@@ -151,6 +163,14 @@ public class JSONController {
             }
         }
 
+        if (jsonObject.has("emailGroupName")) {
+            EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
+            if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
+                administrationService.persistEmailRecipientGroup(emailRecipientGroup);
+            }
+
+        }
+
         if (jsonObject.has("getAlerts")) {
             jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(berkeleyTreeMenuService.getAlerts());
             System.out.println("Got Alerts:\n" + jsonResponse);
@@ -162,6 +182,17 @@ public class JSONController {
             System.out.println("Got InstrumentationGroups:\n" + jsonResponse);
 
         }
+
+        if (jsonObject.has("getEmailGroups")) {
+            jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(administrationService.getEmailRecipientGroups());
+            System.out.println("Got Email Groups:\n" + jsonResponse);
+
+        }
+
+        if ((jsonObject.has("getEmailRecipient"))) {
+            jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
+        }
+
         PrintWriter writer = response.getWriter();
         writer.write(jsonResponse.toString());
         response.flushBuffer();

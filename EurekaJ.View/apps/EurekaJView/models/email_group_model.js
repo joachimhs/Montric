@@ -21,5 +21,5 @@ EurekaJView.EmailGroupModel = SC.Record.extend(
     smtpPassword: SC.Record.attr(String),
     smtpPort: SC.Record.attr(Number),
     smtpUseSSL: SC.Record.attr(Boolean),
-    emailAddresses: SC.Record.toMany('EurekaJView.EmailGroupModel', {isMaster: YES })
+    emailAddresses: SC.Record.toMany('EurekaJView.EmailRecipientModel', {isMaster: YES })
 }) ;

@@ -25,6 +25,10 @@ EurekaJView.ALERTS_QUERY = SC.Query.local(EurekaJView.AlertModel, {
 EurekaJView.INSTRUMENTATION_GROUPS_QUERY = SC.Query.local(EurekaJView.InstrumentationGroupModel, {
     orderby: 'instrumentaionGroupName'
 });
+
+EurekaJView.EMAIL_GROUPS_QUERY = SC.Query.local(EurekaJView.EmailGroupModel, {
+    orderby: 'emailGroupName'
+});
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     /** @scope EurekaJView.EurekaJDataSource.prototype */
 {
@@ -88,6 +92,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (query === EurekaJView.EMAIL_GROUPS_QUERY) {
+            SC.Logger.log('fetching email groups...');
+            var requestStringJson = {
+                'getEmailGroups': true
+            };
+
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchEmailGroups', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
         return NO; // return YES if you handled the query
     },
 
@@ -125,6 +142,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (SC.ok(response)) {
             SC.Logger.log('Instrumentation Groups Fetched');
             store.loadRecords(EurekaJView.InstrumentationGroupModel, response.get('body').instrumentationGroups);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchEmailGroups: function(response, store, query)  {
+        if (SC.ok(response)) {
+            SC.Logger.log('Email Groups Fetched');
+            store.loadRecords(EurekaJView.EmailGroupModel, response.get('body').emailGroups);
             store.dataSourceDidFetchQuery(query);
         } else {
             store.dataSourceDidErrorQuery(query, response);
@@ -176,6 +203,22 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
         }
 
+        if (recordType === EurekaJView.EmailRecipientModel) {
+            SC.Logger.log("Getting Email Recipient Model");
+            var requestStringJson = {
+                'getEmailRecipient': SC.Store.idFor(storeKey)
+            };
+
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json().notify(this, this.performRetrieveEmailRecipientRecord, {
+                                                                            store: store,
+                                                                            storeKey: storeKey
+                                                                        }).send(requestStringJson);
+
+            return YES;
+        }
+
         return NO; // return YES if you handled the storeKey
     },
 
@@ -207,6 +250,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         } else store.dataSourceDidError(storeKey, response.get('body'));
     },
 
+    performRetrieveEmailRecipientRecord: function(response, params) {
+        var store = params.store;
+        var storeKey = params.storeKey;
+
+        // normal: load into store...response == dataHash
+        if (SC.$ok(response)) {
+            SC.Logger.log('Finished loading Email Recipient');
+            store.dataSourceDidComplete(storeKey, response.get('body'));
+
+            // error: indicate as such...response == error
+        } else store.dataSourceDidError(storeKey, response.get('body'));
+    },
+
     createRecord: function(store, storeKey) {
         SC.Logger.log('Calling createRecord... ');
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
@@ -227,6 +283,15 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.EmailGroupModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didCreateEmailGroup, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
+
         return NO; // return YES if you handled the storeKey
     },
 
@@ -239,6 +304,14 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     },
 
     didCreateInstrumentationGroup: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            store.dataSourceDidComplete(storeKey);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
+    },
+
+    didCreateEmailGroup: function(response, store, storeKey) {
         if (SC.$ok(response)) {
             store.dataSourceDidComplete(storeKey);
         } else {
@@ -265,6 +338,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                     .send(store.readDataHash(storeKey));
             return YES;
         }
+
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.EmailGroupModel)) {
+            SC.Request.postUrl('/jsonController.capp').header({
+                'Accept': 'application/json'
+            }).json()
+                    .notify(this, this.didUpdateEmailGroup, store, storeKey)
+                    .send(store.readDataHash(storeKey));
+            return YES;
+        }
+
         return NO; // return YES if you handled the storeKey
     },
 
@@ -279,6 +362,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     },
 
     didUpdateInstrumentationGroup: function(response, store, storeKey) {
+        if (SC.$ok(response)) {
+            var data = response.get('body');
+            if (data) data = data.content; // if hash is returned; use it.
+            store.dataSourceDidComplete(storeKey, data);
+        } else {
+            store.dataSourceDidError(storeKey, response);
+        }
+    },
+
+    didUpdateEmailGroup: function(response, store, storeKey) {
         if (SC.$ok(response)) {
             var data = response.get('body');
             if (data) data = data.content; // if hash is returned; use it.

@@ -53,7 +53,8 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
     }),
 
     emailContentView: SC.View.extend({
-        childViews: 'smtpHostLabelView smtpHostTextfieldView smtpUsernameLabelView smtpUsernameTextfieldView smtpPasswordLabelView smtpPasswordgTextfieldView smtpPortLabelView smtpPortTextfieldView smtpPasswordLabelView smtpPasswordgTextfieldView emailRecipieltsHeadlineLabelView emailRecipientsView'.w(),
+        childViews: 'smtpHostLabelView smtpHostTextfieldView smtpUsernameLabelView smtpUsernameTextfieldView smtpPasswordLabelView smtpPasswordTextfieldView smtpPortLabelView smtpPortTextfieldView smtpSSLLabelView smtpSSLTextfieldView emailRecipieltsHeadlineLabelView emailRecipientsView saveEmailButtonView'.w(),
+        isVisibleBinding: 'EurekaJView.emailAdministrationController.showEditAlertView',
         layout: {top: 20, bottom: 0, right: 0, left: 215},
 
 
@@ -64,7 +65,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
         }).classNames('blacklabel'),
 
         smtpHostTextfieldView: SC.TextFieldView.extend({
-            layout: {left: 110, width: 100, top: 0, height: 20},
+            layout: {left: 110, right: 10, top: 0, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
             contentValueKey: "smtpHost"
         }),
@@ -87,7 +88,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
             value: 'SMTP Password:'
         }).classNames('blacklabel'),
 
-        smtpPasswordgTextfieldView: SC.TextFieldView.extend({
+        smtpPasswordTextfieldView: SC.TextFieldView.extend({
             layout: {left: 350, width: 100, top: 25, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
             contentValueKey: "smtpPassword"
@@ -105,13 +106,13 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
             contentValueKey: "smtpPort"
         }),
 
-        smtpPasswordLabelView: SC.LabelView.extend({
+        smtpSSLLabelView: SC.LabelView.extend({
             layout: {left: 230, width: 100, top: 50, height: 30},
             controlSize: SC.REGULAR_CONTROL_SIZE,
             value: 'SMTP Use SSL ?:'
         }).classNames('blacklabel'),
 
-        smtpPasswordgTextfieldView: SC.TextFieldView.extend({
+        smtpSSLTextfieldView: SC.TextFieldView.extend({
             layout: {left: 350, width: 100, top: 50, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
             contentValueKey: "smtpUseSSL"
@@ -148,7 +149,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
             }).classNames('thinBlackBorder'),
 
             emailRecipientsScrollView: SC.ScrollView.design({
-                layout: {top: 35, bottom: 0, left: 10, right: 10 },
+                layout: {top: 35, bottom: 0, left: 0, right: 0 },
                 hasHorizontalScroller: YES,
                 hasVerticalScroller: YES,
 
@@ -156,10 +157,16 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
                     backgroundColor: '#F0F8FF',
                     contentBinding: 'EurekaJView.emailRecipientsController.arrangedObjects',
                     selectionBinding: 'EurekaJView.emailRecipientsController.selection',
-                    contentValueKey: 'emailAddres'
+                    contentValueKey: 'emailAddress'
                     //selectionDelegate: EurekaJView.alertSelectionDelegate
                 })
             })
+        }),
+
+        saveEmailButtonView: SC.ButtonView.design({
+            layout: {right: 10, width: 300, bottom: 10, height: 25},
+            title: "Save All Email Group Changes",
+            action: "EurekaJView.saveEmailAction"
         })
     })
 
