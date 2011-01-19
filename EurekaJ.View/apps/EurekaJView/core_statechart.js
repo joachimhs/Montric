@@ -43,7 +43,6 @@ EurekaJView.statechart = SC.State.design({
 
                 EurekaJView.updateAlertsAction();
                 EurekaJView.updateInstrumentationGroupsAction();
-                EurekaJView.updateInstrumentationGroupsAction();
                 this.gotoState('showAdminPanel');
 
             },

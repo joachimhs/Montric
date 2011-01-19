@@ -23,6 +23,7 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
             this.closeOpenTreeNodes(view);
 
             var instrumentationNodeForSelect = selectedItem.get('instrumentationGroupPath');
+            SC.Logger.log('instrumentationNodeForSelect: ' + instrumentationNodeForSelect);
 
             var selectionSet = SC.SelectionSet.create();
             selectionSet.addObjects(instrumentationNodeForSelect);

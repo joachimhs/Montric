@@ -2,9 +2,9 @@ var g = require('./garcon/lib/garçon'),
     server, myApp;
     
 // create a server which will listen on port 8000 by default
-server = new g.Server();
+//server = new g.Server();
 
-//server = new g.Server({ port: 8010, proxyHost: 'localhost', proxyPort: 8080});
+server = new g.Server({ port: 8000, proxyHost: 'localhost', proxyPort: 8081});
 
 
 // adding an application named 'myapp' tells the server to respond to
@@ -13,10 +13,10 @@ myApp = server.addApp({
   name: 'EurekaJView',
   theme: 'sc-theme',
   buildLanguage: 'english',
-  combineScripts: true,
-  combineStylesheets: true,
-  minifyScripts: true,
-  minifyStylesheets: true,
+  combineScripts: false,
+  combineStylesheets: false,
+  minifyScripts: false,
+  minifyStylesheets: false,
   buildVersion: 'eurekaJView'
 });
 
@@ -62,5 +62,5 @@ myApp.htmlBody = [
 
 // build the app and, when done, save it to the disk
 myApp.build(function() {
-  myApp.save();
+  server.run();
 });

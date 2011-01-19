@@ -139,11 +139,10 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
-
-            contentView: SC.ListView.extend({
+            contentView: SC.SourceListView.extend({
                 allowsMultipleSelection: NO,
                 backgroundColor: '#F0F8FF',
-                contentValueKey: "guiPath",
+                contentValueKey: "name",
                 rowHeight: 18,
                 contentBinding: 'EurekaJView.alertChartController.arrangedObjects',
                 selectionBinding: 'EurekaJView.alertChartController.selection',

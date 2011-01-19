@@ -10,15 +10,22 @@
 
  @extends SC.Object
  */
-EurekaJView.alertChartController = SC.ArrayController.create(
+EurekaJView.alertChartController = SC.TreeController.create(
     /** @scope EurekaJView.alertChartController.prototype */ {
 
     allowsMultipleSelection: NO,
 
-
     populate: function() {
-        var query = SC.Query.local(EurekaJView.InstrumentationTreeModel, 'hasChildren = {hasChildren}', {hasChildren: false});
-        this.set('content', EurekaJView.EurekaJStore.find(query));
+        var rootNode = SC.Object.create({
+            treeItemIsExpanded: YES,
+            name: "Instrumentations",
+            treeItemChildren: function() {
+                var query = SC.Query.local(EurekaJView.AdminstrationTreeModel, 'parentPath = {parentPath}', {parentPath: null});
+                return EurekaJView.EurekaJStore.find(query);
+            }.property()
+        });
+
+        this.set('content', rootNode)
     }
 
 });
