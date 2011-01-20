@@ -1,5 +1,9 @@
 package org.eurekaj.manager.json;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import com.google.gson.JsonArray;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.perst.alert.Alert;
@@ -19,7 +22,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class BuildJsonObjectsUtil {
+
+    public static JSONObject extractRequestJSONContents(HttpServletRequest request) throws IOException, JSONException {
+        JSONObject jsonRequestObject = new JSONObject();
+
+        InputStream in = request.getInputStream();
+
+        BufferedReader r = new BufferedReader(new InputStreamReader(in));
+
+        int numChars = 0;
+        String contents = "";
+        char[] buffer = new char[25];
+        while ((numChars = r.read(buffer)) > 0) {
+            contents += new String(buffer);
+            buffer = new char[25];
+        }
+
+        if (contents.length() > 2) {
+            jsonRequestObject = new JSONObject(contents);
+        }
+
+        return jsonRequestObject;
+    }
 
     public static JSONObject buildTreeTypeMenuJsonObject(String treeId, List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts) throws JSONException {
         HashMap<String, JSONObject> nodesBuilt = new HashMap<String, JSONObject>();

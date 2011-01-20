@@ -7,9 +7,7 @@ import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.dao.berkeley.TreeMenuDao;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
-import org.springframework.stereotype.Service;
 
-@Service("berkeleyTreeMenuService")
 public class TreeMenuServiceImpl implements TreeMenuService {
 	private TreeMenuDao treeMenuDao;
 	

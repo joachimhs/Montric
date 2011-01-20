@@ -45,7 +45,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'includeCharts': true
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationMenu').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchInstrumentationTreeMenu', store, query).send(requestStringJson);
 
@@ -59,7 +59,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'includeCharts': true
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationMenu').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchAdminTreeMenu', store, query).send(requestStringJson);
 
@@ -72,7 +72,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'getAlerts': true
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/alert').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchAlerts', store, query).send(requestStringJson);
 
@@ -85,7 +85,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'getInstrumentationGroups': true
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationGroup').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchInstrumentationGroups', store, query).send(requestStringJson);
 
@@ -98,7 +98,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'getEmailGroups': true
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/email').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchEmailGroups', store, query).send(requestStringJson);
 
@@ -171,7 +171,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'getInstrumentationMenuNode': SC.Store.idFor(storeKey)
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationMenu').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveChartSelectorRecord, {
                                                                                 store: store,
@@ -192,7 +192,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 }
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/chart').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveChartGridRecord, {
                                                                             store: store,
@@ -209,7 +209,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                 'getEmailRecipient': SC.Store.idFor(storeKey)
             };
 
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/email').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveEmailRecipientRecord, {
                                                                             store: store,
@@ -266,7 +266,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     createRecord: function(store, storeKey) {
         SC.Logger.log('Calling createRecord... ');
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/alert').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didCreateAlert, store, storeKey)
@@ -275,7 +275,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.InstrumentationGroupModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationGroup').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didCreateInstrumentationGroup, store, storeKey)
@@ -284,7 +284,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.EmailGroupModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/email').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didCreateEmailGroup, store, storeKey)
@@ -322,7 +322,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     updateRecord: function(store, storeKey) {
         SC.Logger.log('Calling updateRecord...');
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/alert').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didUpdateAlert, store, storeKey)
@@ -331,7 +331,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.InstrumentationGroupModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/instrumentationGroup').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didUpdateInstrumentationGroup, store, storeKey)
@@ -340,7 +340,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.EmailGroupModel)) {
-            SC.Request.postUrl('/jsonController.capp').header({
+            SC.Request.postUrl('/email').header({
                 'Accept': 'application/json'
             }).json()
                     .notify(this, this.didUpdateEmailGroup, store, storeKey)

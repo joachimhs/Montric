@@ -1,13 +1,11 @@
 package org.eurekaj.manager.util;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.managed.ChartMBean;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;

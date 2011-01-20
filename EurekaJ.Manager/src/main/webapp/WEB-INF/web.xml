@@ -9,70 +9,6 @@
 		<param-value>/WEB-INF/spring-manager.xml</param-value>
 	</context-param>
 
-	<context-param>
-		<param-name>facelets.LIBRARIES</param-name>
-		<param-value>/WEB-INF/chartcreator.taglib.xml</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>org.richfaces.SKIN</param-name>
-		<param-value>ruby</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>server</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>org.ajax4jsf.VIEW_HANDLERS</param-name>
-		<param-value>com.sun.facelets.FaceletViewHandler</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-	<!-- Special Debug Output for Development -->
-	<context-param>
-		<param-name>facelets.DEVELOPMENT</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.jsf</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>javax.faces.application.ViewHandler.DEFAULT_SUFFIX</param-name>
-		<param-value>.jsf</param-value>
-	</context-param>
-	
-	<context-param>
-		<param-name>facelets.REFRESH_PERIOD</param-name>
-		<param-value>0</param-value>
-	</context-param>
-
-	<filter>
-		<display-name>Richfaces Filter</display-name>
-		<filter-name>richfaces</filter-name>
-		<filter-class>org.ajax4jsf.Filter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>richfaces</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-	</filter-mapping>
-
-
-	<listener>
-		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-	</listener>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -88,63 +24,65 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<!-- //CXF Webservice Servlet -->
-	
 
-	<!-- Faces Servlet -->
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<init-param>
-			<param-name>debug_mode</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>errorPage</param-name>
-			<param-value>/errorpage.jsp</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet>
-        <servlet-name>springFrontController</servlet-name>
-        <servlet-class>
-            org.springframework.web.servlet.DispatcherServlet
-        </servlet-class>
+    <servlet>
+        <servlet-name>InstrumentationMenuServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.InstrumentationMenuServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>ChartServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.ChartServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>AlertServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.AlertServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>InstrumentationGroupServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.InstrumentationGroupServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>EmailServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.EmailServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>EurekaJGenericServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
-	<!--
-		*** Java server faces configuration *** > <servlet-mapping>
-		<servlet-name>jsp</servlet-name> <url-pattern>*.jsf</url-pattern>
-		</servlet-mapping
-	-->
-	
-	<servlet>
-		<servlet-name>JSONServlet</servlet-name>
-		<servlet-class>org.eurekaj.cappuccino.JSONServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.jsf</url-pattern>
-	</servlet-mapping>	
-	
 	<servlet-mapping>
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/webservices/*</url-pattern>
 	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>JSONServlet</servlet-name>
-		<url-pattern>/JSONServlet</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-        <servlet-name>springFrontController</servlet-name>
-        <url-pattern>*.capp</url-pattern>
+
+    <servlet-mapping>
+        <servlet-name>InstrumentationMenuServlet</servlet-name>
+        <url-pattern>/instrumentationMenu</url-pattern>
     </servlet-mapping>
-	
-	<welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>ChartServlet</servlet-name>
+        <url-pattern>/chart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AlertServlet</servlet-name>
+        <url-pattern>/alert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InstrumentationGroupServlet</servlet-name>
+        <url-pattern>/instrumentationGroup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailServlet</servlet-name>
+        <url-pattern>/email</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
 		<welcome-file>eurekaJView/EurekaJView.html</welcome-file>
 	</welcome-file-list>
 </web-app>
