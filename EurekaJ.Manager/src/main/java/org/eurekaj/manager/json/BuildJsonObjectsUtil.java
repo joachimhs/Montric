@@ -312,7 +312,10 @@ public class BuildJsonObjectsUtil {
             emailObject.put("emailGroupName", emailGroup.getEmailRecipientGroupName());
             emailObject.put("smtpHost", emailGroup.getSmtpServerhost());
             emailObject.put("smtpUsername", emailGroup.getSmtpUsername());
-            emailObject.put("smtpPassword", emailGroup.getSmtpPassword());
+
+            //For Security reasons the password is never returned to the server after being set
+            //emailObject.put("smtpPassword", emailGroup.getSmtpPassword());
+
             emailObject.put("smtpPort", emailGroup.getPort());
             emailObject.put("smtpUseSSL", emailGroup.isUseSSL());
 

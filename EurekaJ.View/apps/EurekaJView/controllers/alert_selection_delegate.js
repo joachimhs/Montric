@@ -83,11 +83,13 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
     },
 
     markNodeAndParentsAsExpanded: function(treeModel, setExpanded) {
-        parentNode = treeModel.get('parentPath');
+        if (treeModel != null) {
+            parentNode = treeModel.get('parentPath');
 
-        while (parentNode) {
-            parentNode.set('treeItemIsExpanded', setExpanded);
-            parentNode = parentNode.get('parentPath');
+            while (parentNode) {
+                parentNode.set('treeItemIsExpanded', setExpanded);
+                parentNode = parentNode.get('parentPath');
+            }
         }
     },
 

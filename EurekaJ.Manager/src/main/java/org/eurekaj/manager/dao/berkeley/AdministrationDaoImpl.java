@@ -45,6 +45,13 @@ public class AdministrationDaoImpl implements AdministrationDao {
 	
 	@Override
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
+        if (emailRecipientGroup.getSmtpPassword() == null || emailRecipientGroup.getSmtpPassword().length() == 0) {
+            //Do not overwrite password with an empty one, use the password stored in the database (if any)
+            EmailRecipientGroup oldEmailGroup = getEmailRecipientGroup(emailRecipientGroup.getEmailRecipientGroupName());
+            if (oldEmailGroup != null) {
+                emailRecipientGroup.setSmtpPassword(oldEmailGroup.getSmtpPassword());
+            }
+        }
 		emailRecipientGroupPrimaryIdx.put(emailRecipientGroup);
 	}
 	
