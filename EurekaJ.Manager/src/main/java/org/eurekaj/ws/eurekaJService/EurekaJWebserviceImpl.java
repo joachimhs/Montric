@@ -39,8 +39,6 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 			LiveStatisticsResponseElement stat = new LiveStatisticsResponseElement();
 			stat.setGuiPath(ls.getPk().getGuiPath());
 			stat.setTimePeriod(ls.getPk().getTimeperiod());
-			stat.setCallsPerInterval(ls.getCallsPerInterval());
-			stat.setTotalExecutionTime(ls.getTotalExecutionTime());
 			stat.setValue(ls.getValue());
 			retList.add(stat);
 		}
@@ -53,8 +51,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		boolean retValue = true;
 		
 		for (StoreIncomingStatisticsElement sise: storeIncomingStatisticsList) {
-			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getExecTime(), 
-					sise.getCallsPerInterval(), sise.getValue());
+			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getValue(), sise.getValueType());
 		}
 		
 		return retValue;

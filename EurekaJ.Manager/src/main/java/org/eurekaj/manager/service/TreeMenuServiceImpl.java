@@ -19,8 +19,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		this.treeMenuDao = treeMenuDao;
 	}
 	
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String execTime, String callsPerInterval, String value) {
-		treeMenuDao.storeIncomingStatistics(guiPath, timeperiod, execTime, callsPerInterval, value);
+	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, String valueType) {
+		treeMenuDao.storeIncomingStatistics(guiPath, timeperiod, value, valueType);
 	}
 	
 	public List<TreeMenuNode> getTreeMenu() {

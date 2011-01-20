@@ -1,4 +1,4 @@
-package org.eurekaj.manager.email;
+package org.eurekaj.manager.task;
 
 import java.util.Properties;
 

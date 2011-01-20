@@ -9,7 +9,7 @@ import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 
 public interface TreeMenuService {
 
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String execTime, String callsPerInterval, String value);
+	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, String valueType);
 	
 	public List<TreeMenuNode> getTreeMenu();
 	

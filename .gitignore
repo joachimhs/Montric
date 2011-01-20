@@ -4,3 +4,5 @@ target
 EurekaJ.Manager/src/main/webapp/eurekaJView
 EurekaJ.View/build
 tmp
+*.ipr
+*.iws

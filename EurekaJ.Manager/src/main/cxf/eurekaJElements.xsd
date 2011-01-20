@@ -15,9 +15,8 @@
 		<xsd:sequence>
 			<xsd:element name="guiPath" type="xsd:string" nillable="false" />
 			<xsd:element name="timeperiod" type="xsd:long" nillable="false" />
-			<xsd:element name="execTime" type="xsd:string" nillable="true" />
-			<xsd:element name="callsPerInterval" type="xsd:string" nillable="true" />
 			<xsd:element name="value" type="xsd:string" nillable="true" />
+            <xsd:element name="valueType" type="xsd:string" nillable="false" />
 		</xsd:sequence>
 	</xsd:complexType>
 

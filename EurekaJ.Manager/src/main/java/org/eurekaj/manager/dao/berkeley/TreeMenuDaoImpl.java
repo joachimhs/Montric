@@ -118,7 +118,7 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		
 	}
 	
-	private TreeMenuNode updateTreeMenu(String guiPath, boolean hasExecTimeInformation, boolean hasCallsPerIntervalInformation, boolean hasValueInformation) {
+	private TreeMenuNode updateTreeMenu(String guiPath, boolean hasValueInformation) {
 		TreeMenuNode treeMenu = treeMenuPrimaryIdx.get(guiPath);
 		if (treeMenu == null) {
 			//Create new TreeMenu at guiPath
@@ -131,15 +131,7 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		if (treeMenu.getGuiPath() == null) {
 			treeMenu.setGuiPath(guiPath);
 		}
-		
-		if (hasExecTimeInformation) {
-			treeMenu.setHasExecTimeInformation(hasExecTimeInformation);
-		}
-		
-		if (hasCallsPerIntervalInformation) {
-			treeMenu.setHasCallsPerIntervalInformation(hasCallsPerIntervalInformation);
-		}
-		
+
 		if (hasValueInformation) {
 			treeMenu.setHasValueInformation(hasValueInformation);
 		}
@@ -176,12 +168,9 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 	}
 	
 	public void storeIncomingStatistics(String guiPath, Long timeperiod,
-			String execTime, String callsPerInterval,
-			String value) {
+			String value, String valueType) {
 		
-		TreeMenuNode treeMenu = updateTreeMenu( guiPath, execTime != null, callsPerInterval != null, value != null);		
-		Double execTimeDouble = parseDouble(execTime);
-		Long callsPerIntervalLong = parseLong(callsPerInterval);
+		TreeMenuNode treeMenu = updateTreeMenu( guiPath, value != null);
 		Long valueLong = parseLong(value);
 		
 		LiveStatisticsPk searchStat = new LiveStatisticsPk();
@@ -189,19 +178,19 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		searchStat.setTimeperiod(timeperiod);
 		
 		LiveStatistics oldStat = liveStatPrimaryIdx.get(searchStat);
-		storeLiveStatistics(oldStat, execTimeDouble, callsPerIntervalLong, valueLong, guiPath, timeperiod);
+		storeLiveStatistics(oldStat, valueLong, valueType, guiPath, timeperiod);
 	}
 	
-	private void storeLiveStatistics(LiveStatistics oldStat, 
-			Double execTimeDouble, Long callsPerIntervalLong, 
-			Long valueLong, String guiPath, Long timeperiod) {
+	private void storeLiveStatistics(LiveStatistics oldStat,
+			Long valueLong, String valueType, String guiPath, Long timeperiod) {
+
+        Long calculatedValue = calculateValueBasedOnValueType(valueLong, valueType);
+
 		if (oldStat != null) {
 			//We have a hit for a guipath and timeperiod. Update record
 			//If there is a callsPerInterval, calculate new avg Execution time
-			oldStat.addTotalExecutionTime(execTimeDouble);
-			oldStat.addCallsPerInterval(callsPerIntervalLong);
 			//Always set new value
-			oldStat.setValue(valueLong);
+			oldStat.setValue(calculatedValue);
 			liveStatPrimaryIdx.put(oldStat);
 		} else {
 			//No hit, create new LiveStatistics
@@ -211,11 +200,28 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 			pk.setTimeperiod(timeperiod);
 			livestats.setPk(pk);
 			
-			livestats.setTotalExecutionTime(execTimeDouble);
-			livestats.setCallsPerInterval(callsPerIntervalLong);
-			livestats.setValue(valueLong);
+			livestats.setValue(calculatedValue);
 			liveStatPrimaryIdx.put(livestats);
 		}
 	}
+
+    private Long calculateValueBasedOnValueType(Long valueLong, String valueType) {
+        Long valueReturn = null;
+
+        if (valueType.equalsIgnoreCase("ns")) {
+            //From nanoseconds to milliseconds
+            valueReturn = valueLong / 1000000;
+        } else if (valueType.equalsIgnoreCase("ms") || valueType.equalsIgnoreCase("n")) {
+            valueReturn = valueLong;
+        } else if (valueType.equalsIgnoreCase("s")) {
+            //From seconds to milliseconds
+            valueReturn = valueLong * 1000;
+        } else if (valueType.equalsIgnoreCase("m")) {
+            //From minutes to milliseconds
+            valueReturn = valueLong * 60000;
+        }
+
+        return valueReturn;
+    }
 
 }

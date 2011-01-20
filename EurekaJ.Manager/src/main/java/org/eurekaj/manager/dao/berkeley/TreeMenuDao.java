@@ -10,8 +10,7 @@ import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 public interface TreeMenuDao {
 
 	public void storeIncomingStatistics(String guiPath, Long timeperiod,
-			String execTime, String callsPerInterval,
-			String value);
+			String value, String valueType);
 
 	public List<TreeMenuNode> getTreeMenu();
 

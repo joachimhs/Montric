@@ -5,63 +5,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.webservice.StoreIncomingStatisticsElement;
-import org.eurekaj.webservice.StoreIncomingStatisticsList;
 
-public class StatisticsParser {
-	private static Logger log = Logger.getLogger(StatisticsParser.class);
+public class ParseStatistics {
+	private static Logger log = Logger.getLogger(ParseStatistics.class);
 	private static String DELIMETER = ";";
-
-	/*public List<StoreIncomingStatisticsElement> processExecTime(String line) {
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		//agentname package.Class method timeperiod exectime guiPath
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String className;
-		String methodName;
-		Long timeperiod;
-		String executionTime;
-		String guiPath = null;
-		if (params.length == 5) {
-			guiPath = "Custom";
-		}
-		if (params.length == 6) {
-			guiPath = params[5];
-		}
-		
-		if (guiPath != null && guiPath.length() > 0) {
-			agentName = params[0];
-			className = params[1];
-			methodName = params[2];
-			String timestampStr = params[3];
-			timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000));
-			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
-			}
-			executionTime = params[4];
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(agentName).
-			append(":").
-			append(guiPath).
-			append(":").
-			append(className).
-			append(":").
-			append(methodName);
-			
-			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
-			statElem.setGuiPath(sb.toString());
-			statElem.setTimeperiod(timeperiod);
-			statElem.setExecTime(executionTime);
-			statElem.setCallsPerInterval(null);
-			statElem.setValue(null);
-			statList.add(statElem);
-		}
-		
-		return statList;
-	}*/
 	
 	public List<StoreIncomingStatisticsElement> processProfiling(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
@@ -80,7 +27,11 @@ public class StatisticsParser {
 		String avgWalltime;
 		String minWalltime;
 		String maxWalltime;
-		String guiPath = null;
+        String guiPath = null;
+
+        System.out.println("GOT HERE");
+
+
 		if (params.length == 13) {
 			guiPath = "Custom";
 		}
@@ -110,8 +61,9 @@ public class StatisticsParser {
 			avgWalltime = params[10];
 			minWalltime = params[11];
 			maxWalltime = params[12];
-			
-			StringBuilder sb = new StringBuilder();
+
+
+            StringBuilder sb = new StringBuilder();
 			sb.append(agentName).
 			append(":").
 			append(guiPath).
@@ -123,80 +75,84 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
 			statElem.setGuiPath(sb.toString() + ":Calls Per Interval");
 			statElem.setTimeperiod(timeperiod);
-			statElem.setExecTime(null);
-			statElem.setCallsPerInterval(null);
 			statElem.setValue(invocations);
+            statElem.setValueType("n");
 			statList.add(statElem);
 			
 			StoreIncomingStatisticsElement statElem2 = new StoreIncomingStatisticsElement();
 			statElem2.setGuiPath(sb.toString() + ":Total Selftime");
 			statElem2.setTimeperiod(timeperiod);
-			statElem2.setExecTime(null);
-			statElem2.setCallsPerInterval(null);
 			statElem2.setValue(totalSelftime);
+            statElem2.setValueType("ns");
 			statList.add(statElem2);
 			
 			StoreIncomingStatisticsElement statElem3 = new StoreIncomingStatisticsElement();
 			statElem3.setGuiPath(sb.toString() + ":Average Selftime");
 			statElem3.setTimeperiod(timeperiod);
-			statElem3.setExecTime(null);
-			statElem3.setCallsPerInterval(null);
 			statElem3.setValue(avgSelftime);
+            statElem3.setValueType("ns");
 			statList.add(statElem3);
 			
 			StoreIncomingStatisticsElement statElem4 = new StoreIncomingStatisticsElement();
 			statElem4.setGuiPath(sb.toString() + ":Max Selftime");
 			statElem4.setTimeperiod(timeperiod);
-			statElem4.setExecTime(null);
-			statElem4.setCallsPerInterval(null);
 			statElem4.setValue(maxSelftime);
+            statElem4.setValueType("ns");
 			statList.add(statElem4);
 			
 			StoreIncomingStatisticsElement statElem5 = new StoreIncomingStatisticsElement();
 			statElem5.setGuiPath(sb.toString() + ":Min Selftime");
 			statElem5.setTimeperiod(timeperiod);
-			statElem5.setExecTime(null);
-			statElem5.setCallsPerInterval(null);
 			statElem5.setValue(minSelftime);
+            statElem5.setValueType("ns");
 			statList.add(statElem5);
 			
 			StoreIncomingStatisticsElement statElem6 = new StoreIncomingStatisticsElement();
 			statElem6.setGuiPath(sb.toString() + ":Total Walltime");
 			statElem6.setTimeperiod(timeperiod);
-			statElem6.setExecTime(null);
-			statElem6.setCallsPerInterval(null);
 			statElem6.setValue(totalWalltime);
+            statElem6.setValueType("ns");
 			statList.add(statElem6);
 			
 			StoreIncomingStatisticsElement statElem7 = new StoreIncomingStatisticsElement();
 			statElem7.setGuiPath(sb.toString() + ":Avgerage Walltime");
 			statElem7.setTimeperiod(timeperiod);
-			statElem7.setExecTime(null);
-			statElem7.setCallsPerInterval(null);
 			statElem7.setValue(avgWalltime);
+            statElem7.setValueType("ns");
 			statList.add(statElem7);
 			
 			StoreIncomingStatisticsElement statElem8 = new StoreIncomingStatisticsElement();
 			statElem8.setGuiPath(sb.toString() + ":Max Walltime");
 			statElem8.setTimeperiod(timeperiod);
-			statElem8.setExecTime(null);
-			statElem8.setCallsPerInterval(null);
 			statElem8.setValue(maxWalltime);
+            statElem8.setValueType("ns");
 			statList.add(statElem8);
 			
 			StoreIncomingStatisticsElement statElem9 = new StoreIncomingStatisticsElement();
 			statElem9.setGuiPath(sb.toString() + ":Min Walltime");
 			statElem9.setTimeperiod(timeperiod);
-			statElem9.setExecTime(null);
-			statElem9.setCallsPerInterval(null);
 			statElem9.setValue(minWalltime);
+            statElem9.setValueType("ns");
 			statList.add(statElem9);
 		}
 		
 		return statList;
 	}
-	
-	public List<StoreIncomingStatisticsElement> processValueInstrumentation(String line) {
+
+    private String getValueType(String param) {
+        String valueType = "n";
+
+        if (param.equalsIgnoreCase("n")
+                || param.equalsIgnoreCase("ns")
+                || param.equalsIgnoreCase("ms")
+                || param.equalsIgnoreCase("s")) {
+
+            valueType = param;
+        }
+        return valueType;
+    }
+
+    public List<StoreIncomingStatisticsElement> processValueInstrumentation(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		
 		String[] params = line.split(DELIMETER);
@@ -207,7 +163,10 @@ public class StatisticsParser {
 			String path = params[2].replaceAll("_", " ");
 			String value = params[3];
 			Long timeperiod;
-			String timestampStr = params[4];
+            String valueType = valueType = getValueType(params[4]);
+
+
+			String timestampStr = params[5];
 			timeperiod = 0l;
 			try {
 				timeperiod = Long.parseLong(timestampStr);
@@ -226,9 +185,8 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
 			statElem.setGuiPath(sb.toString());
 			statElem.setTimeperiod(timeperiod);
-			statElem.setExecTime(null);
-			statElem.setCallsPerInterval(null);
 			statElem.setValue(value);
+            statElem.setValueType(valueType);
 			statList.add(statElem);
 		}
 		return statList;
@@ -262,33 +220,29 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
 			initElem.setGuiPath(agentName + ":Memory:Heap:Init");
 			initElem.setTimeperiod(timeperiod);
-			initElem.setExecTime(null);
-			initElem.setCallsPerInterval(null);
 			initElem.setValue(initMem);
+            initElem.setValueType("n");
 			statList.add(initElem);
 			
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
 			maxElem.setGuiPath(agentName + ":Memory:Heap:Max");
 			maxElem.setTimeperiod(timeperiod);
-			maxElem.setExecTime(null);
-			maxElem.setCallsPerInterval(null);
 			maxElem.setValue(maxMem);
+            maxElem.setValueType("n");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
 			usedElem.setGuiPath(agentName + ":Memory:Heap:Used");
 			usedElem.setTimeperiod(timeperiod);
-			usedElem.setExecTime(null);
-			usedElem.setCallsPerInterval(null);
 			usedElem.setValue(usedMem);
+            usedElem.setValueType("n");
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Memory:Heap:Committed");
 			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
 			commitedElem.setValue(commitedMem);
+            commitedElem.setValueType("n");
 			statList.add(commitedElem);
 			
 		}
@@ -344,33 +298,29 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
 			initElem.setGuiPath(agentName + ":Memory:NonHeap:Init");
 			initElem.setTimeperiod(timeperiod);
-			initElem.setExecTime(null);
-			initElem.setCallsPerInterval(null);
 			initElem.setValue(initMem);
+            initElem.setValueType("n");
 			statList.add(initElem);
 			
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
 			maxElem.setGuiPath(agentName + ":Memory:NonHeap:Max");
 			maxElem.setTimeperiod(timeperiod);
-			maxElem.setExecTime(null);
-			maxElem.setCallsPerInterval(null);
 			maxElem.setValue(maxMem);
+            maxElem.setValueType("n");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
 			usedElem.setGuiPath(agentName + ":Memory:NonHeap:Used");
 			usedElem.setTimeperiod(timeperiod);
-			usedElem.setExecTime(null);
-			usedElem.setCallsPerInterval(null);
 			usedElem.setValue(usedMem);
+            usedElem.setValueType("n");
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Memory:NonHeap:Committed");
 			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
 			commitedElem.setValue(commitedMem);
+            commitedElem.setValueType("n");
 			statList.add(commitedElem);
 		}
 		return statList;
@@ -403,25 +353,22 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
 			maxElem.setGuiPath(agentName + ":Threads:ThreadCount");
 			maxElem.setTimeperiod(timeperiod);
-			maxElem.setExecTime(null);
-			maxElem.setCallsPerInterval(null);
 			maxElem.setValue(threadCount);
+            maxElem.setValueType("n");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
 			usedElem.setGuiPath(agentName + ":Threads:PeakThreadCount");
 			usedElem.setTimeperiod(timeperiod);
-			usedElem.setExecTime(null);
-			usedElem.setCallsPerInterval(null);
 			usedElem.setValue(peakThreadCount);
+            usedElem.setValueType("n");
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Threads:TotalStartedThreads");
 			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
 			commitedElem.setValue(totatStartedThreads);
+            commitedElem.setValueType("n");
 			statList.add(commitedElem);
 		}
 		return statList;
@@ -456,9 +403,8 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
 			maxElem.setGuiPath(sb.toString());
 			maxElem.setTimeperiod(timeperiod);
-			maxElem.setExecTime(null);
-			maxElem.setCallsPerInterval(null);
 			maxElem.setValue(threadCount);
+            maxElem.setValueType("n");
 			statList.add(maxElem);
 		}
 		return statList;
@@ -495,33 +441,29 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
 			initElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Init");
 			initElem.setTimeperiod(timeperiod);
-			initElem.setExecTime(null);
-			initElem.setCallsPerInterval(null);
 			initElem.setValue(initMem);
+            initElem.setValueType("n");
 			statList.add(initElem);
 			
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
 			maxElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Max");
 			maxElem.setTimeperiod(timeperiod);
-			maxElem.setExecTime(null);
-			maxElem.setCallsPerInterval(null);
 			maxElem.setValue(maxMem);
+            maxElem.setValueType("n");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
 			usedElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Used");
 			usedElem.setTimeperiod(timeperiod);
-			usedElem.setExecTime(null);
-			usedElem.setCallsPerInterval(null);
 			usedElem.setValue(usedMem);
+            usedElem.setValueType("n");
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Committed");
 			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
 			commitedElem.setValue(commitedMem);
+            commitedElem.setValueType("n");
 			statList.add(commitedElem);
 		}
 		return statList;
@@ -554,9 +496,8 @@ public class StatisticsParser {
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Memory:GC:Time Spent In GC(%)");
 			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setExecTime(null);
-			commitedElem.setCallsPerInterval(null);
 			commitedElem.setValue(gcTimeStr);
+            commitedElem.setValueType("n");
 			statList.add(commitedElem);
 		}
 		return statList;

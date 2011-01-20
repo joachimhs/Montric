@@ -50,13 +50,8 @@ public class ChartUtil {
 				if (currStat == null) {
 					//First iteration, or new chart tick
 					currStat = new LiveStatistics();
-					currStat.setCallsPerInterval(l.getCallsPerInterval());
 					currStat.setValue(l.getValue());
-					currStat.setTotalExecutionTime(l.getTotalExecutionTime());
 				} else  {
-					currStat.addCallsPerInterval(l.getCallsPerInterval());
-					currStat.addTotalExecutionTime(l.getTotalExecutionTime());
-					
 					if (l.getValue() != null) {
 						Long totalValue = currStat.getValue() * (numStatsInCurrTick - 1);
 						totalValue += l.getValue();

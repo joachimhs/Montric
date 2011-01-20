@@ -1,4 +1,4 @@
-package org.eurekaj.manager.alert;
+package org.eurekaj.manager.task;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
-import org.eurekaj.manager.email.SendEmailTask;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
