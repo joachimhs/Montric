@@ -10,7 +10,7 @@ public class ParseStatistics {
 	private static Logger log = Logger.getLogger(ParseStatistics.class);
 	private static String DELIMETER = ";";
 	
-	public List<StoreIncomingStatisticsElement> processProfiling(String line) {
+	public List<StoreIncomingStatisticsElement> processBtraceProfiling(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		//agentname package.Class method timeperiod exectime guiPath
 		String[] params = line.split(DELIMETER);
@@ -29,113 +29,111 @@ public class ParseStatistics {
 		String maxWalltime;
         String guiPath = null;
 
-        System.out.println("GOT HERE");
+        if (params.length >= 13 && !line.contains("N/A")) {
+            if (params.length == 13) {
+                guiPath = "Custom";
+            }
+            if (params.length == 14) {
+                guiPath = params[13];
+            }
+
+            if (guiPath != null && guiPath.length() > 0) {
+                agentName = params[0];
+                className = params[1];
+                methodName = params[2];
+                String timestampStr = params[3];
+                timeperiod = 0l;
+                try {
+                    timeperiod = Long.parseLong(timestampStr);
+                    timeperiod = ((long)(timeperiod / 15000));
+                } catch (NumberFormatException nfe) {
+                    System.err.println("Unable to read in timestamp");
+                }
+
+                invocations = params[4];
+                totalSelftime = params[5];
+                avgSelftime = params[6];
+                minSelftime = params[7];
+                maxSelftime = params[8];
+                totalWalltime = params[9];
+                avgWalltime = params[10];
+                minWalltime = params[11];
+                maxWalltime = params[12];
 
 
-		if (params.length == 13) {
-			guiPath = "Custom";
-		}
-		if (params.length == 14) {
-			guiPath = params[13];
-		}
-		
-		if (guiPath != null && guiPath.length() > 0) {
-			agentName = params[0];
-			className = params[1];
-			methodName = params[2];
-			String timestampStr = params[3];
-			timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000));
-			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
-			}
-			
-			invocations = params[4];
-			totalSelftime = params[5];
-			avgSelftime = params[6];
-			minSelftime = params[7];
-			maxSelftime = params[8];
-			totalWalltime = params[9];
-			avgWalltime = params[10];
-			minWalltime = params[11];
-			maxWalltime = params[12];
+                StringBuilder sb = new StringBuilder();
+                sb.append(agentName).
+                append(":").
+                append(guiPath).
+                append(":").
+                append(className).
+                append(":").
+                append(methodName);
 
+                StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
+                statElem.setGuiPath(sb.toString() + ":Calls Per Interval");
+                statElem.setTimeperiod(timeperiod);
+                statElem.setValue(invocations);
+                statElem.setValueType("n");
+                statList.add(statElem);
 
-            StringBuilder sb = new StringBuilder();
-			sb.append(agentName).
-			append(":").
-			append(guiPath).
-			append(":").
-			append(className).
-			append(":").
-			append(methodName);
-			
-			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
-			statElem.setGuiPath(sb.toString() + ":Calls Per Interval");
-			statElem.setTimeperiod(timeperiod);
-			statElem.setValue(invocations);
-            statElem.setValueType("n");
-			statList.add(statElem);
-			
-			StoreIncomingStatisticsElement statElem2 = new StoreIncomingStatisticsElement();
-			statElem2.setGuiPath(sb.toString() + ":Total Selftime");
-			statElem2.setTimeperiod(timeperiod);
-			statElem2.setValue(totalSelftime);
-            statElem2.setValueType("ns");
-			statList.add(statElem2);
-			
-			StoreIncomingStatisticsElement statElem3 = new StoreIncomingStatisticsElement();
-			statElem3.setGuiPath(sb.toString() + ":Average Selftime");
-			statElem3.setTimeperiod(timeperiod);
-			statElem3.setValue(avgSelftime);
-            statElem3.setValueType("ns");
-			statList.add(statElem3);
-			
-			StoreIncomingStatisticsElement statElem4 = new StoreIncomingStatisticsElement();
-			statElem4.setGuiPath(sb.toString() + ":Max Selftime");
-			statElem4.setTimeperiod(timeperiod);
-			statElem4.setValue(maxSelftime);
-            statElem4.setValueType("ns");
-			statList.add(statElem4);
-			
-			StoreIncomingStatisticsElement statElem5 = new StoreIncomingStatisticsElement();
-			statElem5.setGuiPath(sb.toString() + ":Min Selftime");
-			statElem5.setTimeperiod(timeperiod);
-			statElem5.setValue(minSelftime);
-            statElem5.setValueType("ns");
-			statList.add(statElem5);
-			
-			StoreIncomingStatisticsElement statElem6 = new StoreIncomingStatisticsElement();
-			statElem6.setGuiPath(sb.toString() + ":Total Walltime");
-			statElem6.setTimeperiod(timeperiod);
-			statElem6.setValue(totalWalltime);
-            statElem6.setValueType("ns");
-			statList.add(statElem6);
-			
-			StoreIncomingStatisticsElement statElem7 = new StoreIncomingStatisticsElement();
-			statElem7.setGuiPath(sb.toString() + ":Avgerage Walltime");
-			statElem7.setTimeperiod(timeperiod);
-			statElem7.setValue(avgWalltime);
-            statElem7.setValueType("ns");
-			statList.add(statElem7);
-			
-			StoreIncomingStatisticsElement statElem8 = new StoreIncomingStatisticsElement();
-			statElem8.setGuiPath(sb.toString() + ":Max Walltime");
-			statElem8.setTimeperiod(timeperiod);
-			statElem8.setValue(maxWalltime);
-            statElem8.setValueType("ns");
-			statList.add(statElem8);
-			
-			StoreIncomingStatisticsElement statElem9 = new StoreIncomingStatisticsElement();
-			statElem9.setGuiPath(sb.toString() + ":Min Walltime");
-			statElem9.setTimeperiod(timeperiod);
-			statElem9.setValue(minWalltime);
-            statElem9.setValueType("ns");
-			statList.add(statElem9);
-		}
-		
+                StoreIncomingStatisticsElement statElem2 = new StoreIncomingStatisticsElement();
+                statElem2.setGuiPath(sb.toString() + ":Total Selftime");
+                statElem2.setTimeperiod(timeperiod);
+                statElem2.setValue(totalSelftime);
+                statElem2.setValueType("ns");
+                statList.add(statElem2);
+
+                StoreIncomingStatisticsElement statElem3 = new StoreIncomingStatisticsElement();
+                statElem3.setGuiPath(sb.toString() + ":Average Selftime");
+                statElem3.setTimeperiod(timeperiod);
+                statElem3.setValue(avgSelftime);
+                statElem3.setValueType("ns");
+                statList.add(statElem3);
+
+                StoreIncomingStatisticsElement statElem4 = new StoreIncomingStatisticsElement();
+                statElem4.setGuiPath(sb.toString() + ":Max Selftime");
+                statElem4.setTimeperiod(timeperiod);
+                statElem4.setValue(maxSelftime);
+                statElem4.setValueType("ns");
+                statList.add(statElem4);
+
+                StoreIncomingStatisticsElement statElem5 = new StoreIncomingStatisticsElement();
+                statElem5.setGuiPath(sb.toString() + ":Min Selftime");
+                statElem5.setTimeperiod(timeperiod);
+                statElem5.setValue(minSelftime);
+                statElem5.setValueType("ns");
+                statList.add(statElem5);
+
+                StoreIncomingStatisticsElement statElem6 = new StoreIncomingStatisticsElement();
+                statElem6.setGuiPath(sb.toString() + ":Total Walltime");
+                statElem6.setTimeperiod(timeperiod);
+                statElem6.setValue(totalWalltime);
+                statElem6.setValueType("ns");
+                statList.add(statElem6);
+
+                StoreIncomingStatisticsElement statElem7 = new StoreIncomingStatisticsElement();
+                statElem7.setGuiPath(sb.toString() + ":Avgerage Walltime");
+                statElem7.setTimeperiod(timeperiod);
+                statElem7.setValue(avgWalltime);
+                statElem7.setValueType("ns");
+                statList.add(statElem7);
+
+                StoreIncomingStatisticsElement statElem8 = new StoreIncomingStatisticsElement();
+                statElem8.setGuiPath(sb.toString() + ":Max Walltime");
+                statElem8.setTimeperiod(timeperiod);
+                statElem8.setValue(maxWalltime);
+                statElem8.setValueType("ns");
+                statList.add(statElem8);
+
+                StoreIncomingStatisticsElement statElem9 = new StoreIncomingStatisticsElement();
+                statElem9.setGuiPath(sb.toString() + ":Min Walltime");
+                statElem9.setTimeperiod(timeperiod);
+                statElem9.setValue(minWalltime);
+                statElem9.setValueType("ns");
+                statList.add(statElem9);
+            }
+        }
 		return statList;
 	}
 
@@ -156,7 +154,7 @@ public class ParseStatistics {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		
 		String[] params = line.split(DELIMETER);
-		if (params.length == 5) {
+		if (params.length == 6) {
 			
 			String agentName = params[0];
 			String guiPath = params[1];

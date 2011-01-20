@@ -3,71 +3,92 @@ package org.eurekaj.btracers;
 import com.sun.btrace.annotations.*;
 import com.sun.btrace.aggregation.*;
 import static com.sun.btrace.BTraceUtils.*;
+import com.sun.btrace.Profiler;
 import java.util.Deque;
 
 @BTrace public class CustomBtracer {
+	    @Property(name="componentProfiler") private static Profiler componentProfiler = Profiling.newProfiler();
+	    @Property(name="demoProfiler") private static Profiler demoProfiler = Profiling.newProfiler();
 	
-	private static Aggregation TOTAL_EXEC_TIME_C = newAggregation(AggregationFunction.SUM);
-	private static Aggregation CALLS_PER_INTERVAL_C = newAggregation(AggregationFunction.COUNT);
-	@TLS private static Deque<Long> componentQ = newDeque();
-	
-	private static Aggregation TOTAL_EXEC_TIME_D = newAggregation(AggregationFunction.SUM);
-	private static Aggregation CALLS_PER_INTERVAL_D = newAggregation(AggregationFunction.COUNT);
-	@TLS private static Deque<Long> demoQ = newDeque();
-	
-	@OnMethod(clazz="/org\\.jsflot\\.components\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
-	public static void enterComponentMethod() {
-		push(componentQ, box(timeNanos()));
-	}
-	
-	@OnMethod(clazz="/org\\.jsflot\\.components\\..*/", method="/.*/", location=@Location(value=Kind.RETURN))
-	public static void exitComponentMethod(@ProbeMethodName String probeMethod, @ProbeClassName String probeClass) {
-		int execTime = (int)(timeNanos() - unbox(poll(componentQ)));
-		Long timePeriod = ((long)(timeNanos() / 15000000000l)*15000);
-		
-		//Yields fullyQualifiedClassName methodName, 15000 millisecond interval since 1970
-		AggregationKey k = newAggregationKey(probeClass, probeMethod, timePeriod);
+	    @OnMethod(clazz="/org\\.jsflot\\.components\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
+	    public static void componentPaintBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
+			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			
+			Appendable a = Strings.newStringBuilder(true);
+			Strings.append(a, property("btrace.agent"));
+			Strings.append(a, ";");
+			Strings.append(a, pcn);
+			Strings.append(a, ";");
+			Strings.append(a, pmn);
+			Strings.append(a, ";");
+			Strings.append(a, str(timePeriod));
 
-		addToAggregation(TOTAL_EXEC_TIME_C, k, execTime);
-		addToAggregation(CALLS_PER_INTERVAL_C, k, 1);
-	}
-	
-	@OnMethod(clazz="/org\\.jsflot\\.demo\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
-	public static void enterMethod() {
-		push(demoQ, box(timeNanos()));
-	}
-	
-	@OnMethod(clazz="/org\\.jsflot\\.demo\\..*/", method="/.*/", location=@Location(value=Kind.RETURN))
-	public static void exitMethod(@ProbeMethodName String probeMethod, @ProbeClassName String probeClass) {
-		int execTime = (int)(timeNanos() - unbox(poll(demoQ)));
-		Long timePeriod = ((long)(timeNanos() / 15000000000l)*15000);
-		
-		//Yields fullyQualifiedClassName methodName, 150000 millisecond interval since 1970
-		AggregationKey k = newAggregationKey(probeClass, probeMethod, timePeriod);
+	        Profiling.recordEntry(componentProfiler, str(a));
+	    }
 
-		addToAggregation(TOTAL_EXEC_TIME_D, k, execTime);
-		addToAggregation(CALLS_PER_INTERVAL_D, k, 1);
-	}
+	    @OnMethod(
+	        clazz="/org\\.jsflot\\.components\\..*/",
+	        method="/.*/",
+	        location=@Location(Kind.RETURN)
+	    )
+	    public static void componentPaintAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
+			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			
+			Appendable a = Strings.newStringBuilder(true);
+			Strings.append(a, property("btrace.agent"));
+			Strings.append(a, ";");
+			Strings.append(a, pcn);
+			Strings.append(a, ";");
+			Strings.append(a, pmn);
+			Strings.append(a, ";");
+			Strings.append(a, str(timePeriod));
+			
+	        Profiling.recordExit(componentProfiler, str(a), time);
+	    }
 	
-	@OnTimer(7500)
-    public static void printAverage() {
-		//TotalExecTime: agentname package.Class method timeperiod exectime classType
-		//CallsPerInterval: agentname package.Class method timeperiod callsWithinTimeperiod classType
-		String execStringFormat = strcat("[TotalExecTime;", property("btrace.agentname"));
-		String callsStringFormat = strcat("[CallsPerInterval;", property("btrace.agentname"));
-		
-		printAggregation("", TOTAL_EXEC_TIME_C,  strcat(execStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom:Components]"));
-		printAggregation("", CALLS_PER_INTERVAL_C,  strcat(callsStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom:Components]"));
-		
-		printAggregation("", TOTAL_EXEC_TIME_D,  strcat(execStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom:Demo]"));
-		printAggregation("", CALLS_PER_INTERVAL_D,  strcat(callsStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom:Demo]"));
-		
-		truncateAggregation(TOTAL_EXEC_TIME_C, 0);
-		truncateAggregation(CALLS_PER_INTERVAL_C, 0);
-		
-		truncateAggregation(TOTAL_EXEC_TIME_D, 0);
-		truncateAggregation(CALLS_PER_INTERVAL_D, 0);
-		
+	       	@OnMethod(clazz="/org\\.jsflot\\.demo\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
+		    public static void demoPaintBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
+				Long timePeriod = ((timeNanos() / 15000000000l)*15000);
 
-    }
+				Appendable a = Strings.newStringBuilder(true);
+				Strings.append(a, property("btrace.agent"));
+				Strings.append(a, ";");
+				Strings.append(a, pcn);
+				Strings.append(a, ";");
+				Strings.append(a, pmn);
+				Strings.append(a, ";");
+				Strings.append(a, str(timePeriod));
+
+		        Profiling.recordEntry(demoProfiler, str(a));
+		    }
+
+		    @OnMethod(
+		        clazz="/org\\.jsflot\\.demo\\..*/",
+		        method="/.*/",
+		        location=@Location(Kind.RETURN)
+		    )
+		    public static void demoPaintAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
+				Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+
+				Appendable a = Strings.newStringBuilder(true);
+				Strings.append(a, property("btrace.agent"));
+				Strings.append(a, ";");
+				Strings.append(a, pcn);
+				Strings.append(a, ";");
+				Strings.append(a, pmn);
+				Strings.append(a, ";");
+				Strings.append(a, str(timePeriod));
+
+		        Profiling.recordExit(demoProfiler, str(a), time);
+		    }
+	
+		@OnTimer(7500)
+	    public static void printAverage() {			
+			String profilingFormat = strcat("[ProfilingV1;", property("btrace.agent"));
+			Profiling.printSnapshot("", componentProfiler, "[ProfilingV1;%1$s;%2$s;%3$s;%4$s;%5$s;%6$s;%7$s;%8$s;%9$s;%10$s;Custom]");
+			Profiling.reset(componentProfiler);
+			
+			Profiling.printSnapshot("", demoProfiler, "[ProfilingV1;%1$s;%2$s;%3$s;%4$s;%5$s;%6$s;%7$s;%8$s;%9$s;%10$s;Custom]");
+			Profiling.reset(demoProfiler);
+		}
 }

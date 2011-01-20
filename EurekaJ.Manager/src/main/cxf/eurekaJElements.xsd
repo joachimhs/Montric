@@ -16,7 +16,7 @@
 			<xsd:element name="guiPath" type="xsd:string" nillable="false" />
 			<xsd:element name="timeperiod" type="xsd:long" nillable="false" />
 			<xsd:element name="value" type="xsd:string" nillable="true" />
-            <xsd:element name="valueType" type="xsd:string" nillable="false" />
+            <xsd:element name="valueType" type="xsd:string" nillable="true" />
 		</xsd:sequence>
 	</xsd:complexType>
 

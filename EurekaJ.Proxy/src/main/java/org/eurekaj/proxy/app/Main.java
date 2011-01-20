@@ -19,7 +19,7 @@ import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.interceptor.LoggingOutInterceptor;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.eurekaj.proxy.parser.StatisticsParser;
+import org.eurekaj.proxy.parser.ParseStatistics;
 import org.eurekaj.webservice.EurekaJService;
 import org.eurekaj.webservice.StoreIncomingStatisticsElement;
 
@@ -74,8 +74,10 @@ public class Main {
 				}
 			} catch (Fault cxfFault) {
 				System.err.println("Unable to send contents over WebService. Retrying in 5 seconds. " + cxfFault.getMessage());
+                cxfFault.printStackTrace();
 			} catch (SOAPFaultException soapFault) {
 				System.err.println("Unable to send contents over WebService. Retrying in 5 seconds. " + soapFault.getMessage());
+                soapFault.printStackTrace();
 			}
 			
 			try {
@@ -88,7 +90,7 @@ public class Main {
 	}
 	
 	private List<StoreIncomingStatisticsElement> parseBtraceFile(File file) throws IOException {
-		StatisticsParser parser = new StatisticsParser();
+		ParseStatistics parser = new ParseStatistics();
 		List<StoreIncomingStatisticsElement> statElemList = new ArrayList<StoreIncomingStatisticsElement>();
 		
 		BufferedReader inStream = new BufferedReader(new FileReader(file));
@@ -124,7 +126,7 @@ public class Main {
 	    		statElemList.addAll(parser.processGCTime(line));
 	    	} else if (line.startsWith("ProfilingV1;")) {
 	    		line = line.substring("ProfilingV1;".length());
-	    		statElemList.addAll(parser.processProfiling(line));
+	    		statElemList.addAll(parser.processBtraceProfiling(line));
 	    	} 
 	    	
 	    	//[ThreadsReturnedByType;JSFlotAgent;java.lang.Thread;5;1272278445000]
