@@ -218,7 +218,12 @@ public class BuildJsonObjectsUtil {
                     pointLabel = ", '" + p.getPointLabel() + "'";
                 }
 
-                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(nf.format(p.getY())).append("").append(pointLabel).append("]").append(", ");
+                String yVal = null;
+                if (p.getY() != null) {
+                    yVal = nf.format(p.getY());
+                }
+
+                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(yVal).append("").append(pointLabel).append("]").append(", ");
             }
 
             // Last Row
@@ -228,7 +233,13 @@ public class BuildJsonObjectsUtil {
                 if (p.getPointLabel() != null) {
                     pointLabel = ", '" + p.getPointLabel() + "'";
                 }
-                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(nf.format(p.getY())).append(pointLabel).append("]");
+
+                String yVal = null;
+                if (p.getY() != null) {
+                    yVal = nf.format(p.getY());
+                }
+
+                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(yVal).append(pointLabel).append("]");
             }
 
             collectionIndex++;

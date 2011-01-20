@@ -7,8 +7,16 @@ import com.sleepycat.persist.model.PrimaryKey;
 public class LiveStatistics implements Comparable<LiveStatistics>{
 	@PrimaryKey private LiveStatisticsPk pk;
 	private Long value;
-	
-	public LiveStatistics() {
+
+    public LiveStatistics(String guiPath, Long timeperiod, Long value) {
+        LiveStatisticsPk pk = new LiveStatisticsPk();
+        pk.setGuiPath(guiPath);
+        pk.setTimeperiod(timeperiod);
+        this.pk = pk;
+        this.value = value;
+    }
+
+    public LiveStatistics() {
 		super();
 	}
 	

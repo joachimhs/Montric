@@ -73,7 +73,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                         if (gsPath.length() > path.length() + 1) {
                             seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
                         }
-                        for (XYDataList dataList : ChartUtil.generateDataset(liveList, seriesLabel, null, thenCal.getTime(), nowCal.getTime(), chartResolution).getDataList()) {
+                        for (XYDataList dataList : ChartUtil.generateChart(liveList, seriesLabel, thenCal.getTime(), nowCal.getTime(), chartResolution).getDataList()) {
                             valueCollection.addDataList(dataList);
                         }
                     }
@@ -84,7 +84,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                     if (seriesLabel.contains(":")) {
                         seriesLabel = seriesLabel.substring(path.lastIndexOf(":") + 1, path.length());
                     }
-                    valueCollection = ChartUtil.generateDataset(liveList, seriesLabel, alert, thenCal.getTime(), nowCal.getTime(), chartResolution);
+                    valueCollection = ChartUtil.generateChart(liveList, seriesLabel, thenCal.getTime(), nowCal.getTime(), chartResolution);
                 }
 
                 jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, path, valueCollection);

@@ -23,7 +23,7 @@ EurekaJView.mainPage = SC.Page.design({
 
     mainPane: SC.MainPane.design({
         defaultResponder: EurekaJView,
-        childViews: 'flotChartGrid topView bottomView instrumentationTreeView instrumentationTreeScrollView'.w(),
+        childViews: 'flotChartGrid topView instrumentationTreeView instrumentationTreeScrollView'.w(),
 
         topView: SC.View.design({
             childViews: 'logoView timePeriodButtonView timePeriodLabelView administrationButtonView administrationLabelView'.w(),
@@ -98,7 +98,7 @@ EurekaJView.mainPage = SC.Page.design({
             layout: {
                 top: 77,
                 right: 0,
-                bottom: 40,
+                bottom: 0,
                 left: 306
             },
             contentBinding: 'EurekaJView.chartGridController.arrangedObjects',
@@ -133,7 +133,7 @@ EurekaJView.mainPage = SC.Page.design({
             isVisible: NO,
             layout: {
                 top: 77,
-                bottom: 41,
+                bottom: 0,
                 left: 0,
                 width: 306
             },
@@ -159,14 +159,14 @@ EurekaJView.mainPage = SC.Page.design({
             isVisible: NO,
             layout: {
                 top: 101,
-                bottom: 41,
+                bottom: 0,
                 left: 2,
                 width: 299
             },
+            canScrollHorizontally: YES,
             hasHorizontalScroller: YES,
-            hasVerticalScroller: YES,
 
-            contentView: SC.ListView.extend({
+            contentView: SC.SourceListView.extend({
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
@@ -178,17 +178,6 @@ EurekaJView.mainPage = SC.Page.design({
             }),
 
             borderStyle: SC.BORDER_NONE
-        }),
-
-        bottomView: SC.ToolbarView.design({
-            //childViews: 'selectedInstrumentationPathViewT'.w(),
-            layout: {
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 40
-            },
-            anchorLocation: SC.ANCHOR_BOTTOM
         })
 
     }),

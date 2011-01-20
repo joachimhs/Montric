@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.manager.berkeley.statistics.LiveStatisticsPk;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
@@ -13,23 +14,80 @@ import org.jsflot.xydata.XYDataSetCollection;
 
 public class ChartUtil {
 	private static Logger log = Logger.getLogger(ChartUtil.class);
-	
+
+    public static XYDataSetCollection generateChart(List<LiveStatistics> liveList, String seriesLabel, Date fromDate, Date toDate, int resolution) {
+        XYDataSetCollection valueCollection = new XYDataSetCollection();
+        XYDataList valueList = new XYDataList();
+        valueList.setLabel(seriesLabel);
+
+        //Hashtable is used for quick lookup
+        Hashtable<Long, LiveStatistics> liveHash = new Hashtable<Long, LiveStatistics>();
+		for (LiveStatistics l : liveList) {
+			liveHash.put(l.getPk().getTimeperiod() * 15000, l);
+		}
+
+        int numTicksInResolution = resolution / 15;
+
+        //Round down to nearest 15 seconds timeperiod
+        Long millisStart = fromDate.getTime();
+        Long millisEnd = toDate.getTime();
+
+		millisStart = millisStart - 15000 - (millisStart % 15000);
+		millisEnd = millisEnd - (millisEnd % 15000) + 15000;
+
+
+        Long currentMillis = millisStart;
+        int offsetMiutes = fromDate.getTimezoneOffset();
+
+        //Iterate over the time-range given and average ticks based on resolution
+        while (currentMillis <= (millisEnd - (resolution * 1000))) {
+            XYDataPoint currentTick = new XYDataPoint();
+            currentTick.setX(currentMillis);
+            currentTick.setY(null);
+            long aggregatedValue = 0;
+            int numStatsInCurrentTick = 0;
+
+            for (int i = 0; i < numTicksInResolution; i++) {
+                long gmtMillis = currentMillis - (offsetMiutes * 60 * 1000);
+                LiveStatistics currStat = liveHash.get(currentMillis);
+                if (currStat == null) {
+                    //No stat for this timeperiod, skipping
+                } else {
+                    //Add to current
+                    aggregatedValue += currStat.getValue();
+                    numStatsInCurrentTick++;
+                }
+
+                currentMillis += 15000;
+            }
+
+            if (numStatsInCurrentTick > 0) {
+                currentTick.setY(aggregatedValue / numStatsInCurrentTick);
+            }
+
+            valueList.addDataPoint(currentTick);
+        }
+
+        valueCollection.addDataList(valueList);
+        return valueCollection;
+    }
+
 	public static XYDataSetCollection generateDataset(List<LiveStatistics> liveList, String seriesLabel, Alert alert, Date showChartFrom, Date showChartTo, int chartResolution) {
 		XYDataSetCollection valueCollection = new XYDataSetCollection();
 		XYDataList valueList = new XYDataList();
 		valueList.setLabel(seriesLabel);
 		valueList.setFillLines(true);
 		valueList.setShowDataPoints(true);
-		
+
 		Hashtable<Long, LiveStatistics> liveHash = new Hashtable<Long, LiveStatistics>();
 		for (LiveStatistics l : liveList) {
 			liveHash.put(l.getPk().getTimeperiod() * 15000, l);
 			// System.out.println("putting livestat in hash: " +
 			// l.getTimestamp().getTime() + " : " + l.toString());
 		}
-		
+
 		int offsetMiutes = showChartTo.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-		
+
 		//Get milliseconds from 1/1/1970 GMT+0
 		Long millisNow = showChartTo.getTime();
 		Long millisThen = showChartFrom.getTime();
@@ -58,7 +116,7 @@ public class ChartUtil {
 						currStat.setValue(totalValue / numStatsInCurrTick);
 					}
 				}
-				
+
 				if (numStatsInCurrTick >= numStatsPerChartTick) {
 					//place currStat in chart, set currStat to null
 					long gmtMillis = i - (offsetMiutes * 60 * 1000);
@@ -67,24 +125,24 @@ public class ChartUtil {
 					} else {
 						valueList.addDataPoint(new XYDataPoint(gmtMillis, new Double(0)));
 					}
-					
+
 					currStat = null;
 					numStatsInCurrTick = -0;
 				}
 			}
-			
+
 		}
 
 		if (liveList != null && liveList.size() > 0) {
 			LiveStatistics ls = liveList.get(0);
-			
+
 			valueCollection.addDataList(valueList);
 			if (alert != null && alert.isActivated() &&alert.getAlertOn() == Alert.ALERT_ON_VALUE) {
 				valueCollection.addDataList(buildWarningList(alert, Alert.WARNING, getMinXAxis(showChartFrom), getMaxXAxis(showChartTo)));
 				valueCollection.addDataList(buildWarningList(alert, Alert.CRITICAL, getMinXAxis(showChartFrom), getMaxXAxis(showChartTo)));
 			}
 		}
-		
+
 		return valueCollection;
 	}
 	
