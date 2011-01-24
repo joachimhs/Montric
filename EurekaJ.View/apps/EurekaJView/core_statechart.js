@@ -3,37 +3,55 @@
 EurekaJView.statechart = SC.State.design({
 
 
-        //initialSubstate: 'showInstrumentationMenu',
+    initialSubstate: 'loggedIn',
+
+    loggedIn: SC.State.design({
+
+
         substatesAreConcurrent: YES,
 
-        showInstrumentationMenu: SC.State.design({
+        showingLeftMenu: SC.State.design({
             enterState: function() {
                 EurekaJView.mainPage.get('instrumentationTreeView').set('isVisible', YES);
                 EurekaJView.mainPage.get('instrumentationTreeScrollView').set('isVisible', YES);
                 EurekaJView.InstrumentationTreeController.triggerTimer();
-                EurekaJView.InstrumentationTreeController.timer.set('isPaused', NO) ;
+                EurekaJView.InstrumentationTreeController.timer.set('isPaused', NO);
                 SC.Logger.log('entered showInstrumentationMenu');
             },
 
             exitState: function() {
                 EurekaJView.mainPage.get('instrumentationTreeView').set('isVisible', NO);
                 EurekaJView.mainPage.get('instrumentationTreeScrollView').set('isVisible', NO);
-                EurekaJView.InstrumentationTreeController.timer.set('isPaused', YES) ;
+                EurekaJView.InstrumentationTreeController.timer.set('isPaused', YES);
                 SC.Logger.log('exited showInstrumentationMenu');
             }
         }),
 
-        showTopMenu: SC.State.design({
+        showingTopMenu: SC.State.design({
+            enterState: function() {
+                EurekaJView.mainPage.get('topView').set('isVisible', YES);
+                SC.Logger.log('entered showTopMenu');
+            },
 
-            initialSubstate: 'hideTimePeriodPanel',
+            exitState: function() {
+                EurekaJView.mainPage.get('topView').set('isVisible', NO);
+                SC.Logger.log('exited showTopMenu');
+            },
+
+            initialSubstate: 'ready',
+
+
+            ready: SC.State.design({
+
+            }),
 
             /* ACTIONS */
             showTimeperiodPaneAction: function() {
-                this.gotoState('showTimePeriodPanel');
+                this.gotoState('showingTimePeriodPanel');
             },
 
             hideTimeperiodPaneAction: function() {
-                this.gotoState('hideTimePeriodPanel');
+                this.gotoState('ready');
             },
 
             showAdministrationPaneAction: function() {
@@ -46,25 +64,15 @@ EurekaJView.statechart = SC.State.design({
                 EurekaJView.updateInstrumentationGroupsAction();
                 EurekaJView.updateEmailGroupsAction();
 
-                this.gotoState('showAdminPanel');
+                this.gotoState('showingAdminPanel');
 
             },
 
             hideAdministrationPaneAction: function() {
-                this.gotoState('hideAdminPanel');
+                this.gotoState('ready');
             },
 
             /* //ACTIONS */
-
-            enterState: function() {
-                EurekaJView.mainPage.get('topView').set('isVisible', YES);
-                SC.Logger.log('entered showTopMenu');
-            },
-
-            exitState: function() {
-                EurekaJView.mainPage.get('topView').set('isVisible', NO);
-                SC.Logger.log('exited showTopMenu');
-            },
 
             hideTimePeriodPanel: SC.State.design({
                 enterState: function() {
@@ -77,7 +85,7 @@ EurekaJView.statechart = SC.State.design({
                 }
             }),
 
-            showTimePeriodPanel: SC.State.design({
+            showingTimePeriodPanel: SC.State.design({
                 enterState: function() {
                     SC.Logger.log("Entering showTimePeriodPanel State");
                     EurekaJView.mainPage.get('timePeriodView').append();
@@ -89,18 +97,7 @@ EurekaJView.statechart = SC.State.design({
                 }
             }),
 
-            hideAdminPanel: SC.State.design({
-                enterState: function() {
-                    SC.Logger.log("Entering hideAdminPanel State");
-                    EurekaJView.mainPage.get('adminPanelView').remove();
-                },
-
-                exitState: function() {
-                    SC.Logger.log("Exiting hideAdminPanel State");
-                }
-            }),
-
-            showAdminPanel: SC.State.design({
+            showingAdminPanel: SC.State.design({
                 enterState: function() {
                     SC.Logger.log("Entering showAdminPanel State");
                     EurekaJView.mainPage.get('adminPanelView').append();
@@ -113,4 +110,6 @@ EurekaJView.statechart = SC.State.design({
             })
 
         })
+
+    })
 });
