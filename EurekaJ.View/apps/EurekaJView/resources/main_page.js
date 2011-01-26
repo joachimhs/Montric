@@ -9,6 +9,7 @@ sc_require('views/time_period_pane');
 sc_require('views/chart_options');
 sc_require('views/chart_view');
 sc_require('views/administration_pane');
+sc_require('views/instrumentation_tree_list_item');
 
 EurekaJView.mainPage = SC.Page.design({
 
@@ -166,15 +167,19 @@ EurekaJView.mainPage = SC.Page.design({
             canScrollHorizontally: YES,
             hasHorizontalScroller: YES,
 
-            contentView: SC.SourceListView.extend({
+            contentView: SC.ListView.extend({
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
                 borderStyle: SC.BORDER_NONE,
 
                 contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
+
                 selectionBinding: 'EurekaJView.InstrumentationTreeController.selection',
-                selectionDelegate: EurekaJView.treeMenuSelectionDelegate
+                selectionDelegate: EurekaJView.treeMenuSelectionDelegate,
+
+                exampleView: EurekaJView.InstrumentationTreeListItem,
+                recordType: EurekaJView.InstrumentationTreeModel
             }),
 
             borderStyle: SC.BORDER_NONE

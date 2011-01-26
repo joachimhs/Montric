@@ -21,18 +21,29 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
     name: SC.Record.attr(String),
     isSelected: SC.Record.attr(Boolean),
     parentPath: SC.Record.attr(String),
-
     hasChildren: SC.Record.attr(Boolean),
     treeItemIsExpanded: NO,
-
     childrenNodes: SC.Record.toMany('EurekaJView.InstrumentationTreeModel'),
 	chartGrid: SC.Record.toMany('EurekaJView.ChartGridModel'),
+    nodeType: SC.Record.attr(String),
 
     treeItemChildren: function() {
         if (this.get('childrenNodes').toArray().length === 0) {
             return null;
         } else {
             return this.get('childrenNodes');
+        }
+    }.property(),
+
+    itemIcon: function() {
+        SC.Logger.log('nodeType: ' + SC.compare(this.get('nodeType'), "chart"));
+
+        if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "chart") == 0) {
+            return static_url('images/ej_chart_16.png');
+        } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "alert") == 0) {
+            return static_url('images/ej_chart_alert_16.png');
+        } else {
+            return null;
         }
     }.property()
 

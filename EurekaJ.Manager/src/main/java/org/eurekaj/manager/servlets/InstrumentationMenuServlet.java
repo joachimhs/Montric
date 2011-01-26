@@ -36,7 +36,7 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
                 String menuId = jsonObject.getString("getInstrumentationMenu");
                 boolean includeCharts = jsonObject.has("includeCharts") && jsonObject.getBoolean("includeCharts");
 
-                jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, getBerkeleyTreeMenuService().getTreeMenu(), 0, 15, includeCharts).toString();
+                jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId, getBerkeleyTreeMenuService().getTreeMenu(), getBerkeleyTreeMenuService().getAlerts(), 0, 15, includeCharts).toString();
 
                 System.out.println("Got Tree Type Menu:\n" + jsonResponse);
             }

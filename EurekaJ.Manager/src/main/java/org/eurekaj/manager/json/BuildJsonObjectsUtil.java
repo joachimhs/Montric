@@ -48,7 +48,13 @@ public class BuildJsonObjectsUtil {
         return jsonRequestObject;
     }
 
-    public static JSONObject buildTreeTypeMenuJsonObject(String treeId, List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts) throws JSONException {
+    public static JSONObject buildTreeTypeMenuJsonObject(String treeId,
+                                                         List<TreeMenuNode> nodeList,
+                                                         List<Alert> alertList,
+                                                         int startLevel,
+                                                         int stopLevel,
+                                                         boolean includeCharts) throws JSONException {
+
         HashMap<String, JSONObject> nodesBuilt = new HashMap<String, JSONObject>();
 
         JSONObject parentObject = new JSONObject();
@@ -68,30 +74,27 @@ public class BuildJsonObjectsUtil {
             do {
                 currPath += splitNodePathArray[splitArrayIndex];
                 if (nodesBuilt.get(currPath) == null && splitArrayIndex >= startLevel) {
-                    JSONObject jsonNode = buildTreeNode((++guid), currPath, nodesBuilt);
+                    JSONObject jsonNode = buildTreeNode(currPath, nodesBuilt, "chart");
                     nodesBuilt.put(currPath, jsonNode);
                 }
                 currPath += ":";
 
                 splitArrayIndex++;
             } while (splitArrayIndex < maxSplitArrayIndex && splitArrayIndex < stopLevel);
+        }
 
-            /*
-               //Add the last node to the "availableCharts" property
+        for (Alert alert : alertList) {
+            String currPath = alert.getGuiPath();
+            //Strip away last node (the alert chart) and add the alert name instead
+            if (currPath.contains(":")) {
+                currPath = currPath.substring(0, currPath.lastIndexOf(":"));
+            }
+            currPath += ":" + alert.getAlertName();
 
-               if (splitNodePathArray.length >= 2) {
-                   String chartPath = currPath + splitNodePathArray[splitNodePathArray.length-1];
-                   String parentPath = currPath.substring(0, currPath.length() -1);
-
-                   JSONObject parentJson = nodesBuilt.get(parentPath);
-                   JSONArray chartArray = parentJson.getJSONArray("availableCharts");
-                   if (chartArray == null) {
-                       chartArray = new JSONArray();
-                       parentJson.put("availableCharts", chartArray);
-                   }
-                   chartArray.put(chartPath);
-               }             */
-
+            if (nodesBuilt.get(currPath) == null) {
+                JSONObject jsonNode = buildTreeNode(currPath, nodesBuilt, "alert");
+                nodesBuilt.put(currPath, jsonNode);
+            }
         }
 
         List<String> sortedObjects = new ArrayList<String>(nodesBuilt.keySet());
@@ -106,7 +109,7 @@ public class BuildJsonObjectsUtil {
         return parentObject;
     }
 
-    private static JSONObject buildTreeNode(int guid, String guiPath, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
+    private static JSONObject buildTreeNode(String guiPath, HashMap<String, JSONObject> nodesBuilt, String type) throws JSONException {
         JSONObject treeJson = new JSONObject();
         treeJson.put("isSelected", false);
         treeJson.put("guiPath", guiPath);
@@ -114,7 +117,9 @@ public class BuildJsonObjectsUtil {
         treeJson.put("name", guiPath);
         treeJson.put("parentPath", JSONObject.NULL);
         treeJson.put("hasChildren", false);
+        treeJson.put("nodeType", type);
         treeJson.put("childrenNodes", new JSONArray());
+
         JSONArray chartGridArray = new JSONArray();
         chartGridArray.put(guiPath);
         treeJson.put("chartGrid", chartGridArray);
@@ -172,28 +177,6 @@ public class BuildJsonObjectsUtil {
         }
 
         return treeNodeJSONObject;
-    }
-
-    public static JSONObject buildLeafNodeList(String nodeListId, String parentNodePath, List<TreeMenuNode> nodeList, GroupedStatistics groupedStatistics) throws JSONException {
-        JSONObject parentObject = new JSONObject();
-
-        JSONArray nodeArray = new JSONArray();
-
-        int guid = 0;
-        for (TreeMenuNode node : nodeList) {
-            String guiPathAfterParent = node.getGuiPath().substring(parentNodePath.length() + 1);
-            if (guiPathAfterParent.split(":").length == 1) {
-                nodeArray.put(buildTreeNode((++guid), node.getGuiPath(), null));
-            }
-        }
-
-        if (groupedStatistics != null) {
-            nodeArray.put(buildTreeNode((++guid), groupedStatistics.getSourceGuiPath(), null));
-        }
-
-        parentObject.put(nodeListId, nodeArray);
-
-        return parentObject;
     }
 
     public static String generateChartData(String chartId, String label, XYDataSetCollection xyCollection) throws JSONException {
