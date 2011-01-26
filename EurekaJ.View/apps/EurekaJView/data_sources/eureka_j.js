@@ -165,22 +165,6 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         var recordType = SC.Store.recordTypeFor(storeKey);
         SC.Logger.log('Calling retrieveRecord for...' + recordType + ' with storeKey: ' + storeKey);
 
-        if (recordType === EurekaJView.ChartSelectorModel) {
-            SC.Logger.log("Getting the individual chartSelector");
-            var requestStringJson = {
-                'getInstrumentationMenuNode': SC.Store.idFor(storeKey)
-            };
-
-            SC.Request.postUrl('/instrumentationMenu').header({
-                'Accept': 'application/json'
-            }).json().notify(this, this.performRetrieveChartSelectorRecord, {
-                                                                                store: store,
-                                                                                storeKey: storeKey
-                                                                            }).send(requestStringJson);
-
-            return YES;
-        }
-
         if (recordType === EurekaJView.ChartGridModel) {
             SC.Logger.log("Getting Chart Grid Model");
             var requestStringJson = {
@@ -220,19 +204,6 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
 
         return NO; // return YES if you handled the storeKey
-    },
-
-    performRetrieveChartSelectorRecord: function(response, params) {
-        var store = params.store;
-        var storeKey = params.storeKey;
-
-        // normal: load into store...response == dataHash
-        if (SC.$ok(response)) {
-            SC.Logger.log('Finished loading ChartSelectorRecord');
-            store.dataSourceDidComplete(storeKey, response.get('body'));
-
-            // error: indicate as such...response == error
-        } else store.dataSourceDidError(storeKey, response.get('body'));
     },
 
     performRetrieveChartGridRecord: function(response, params) {

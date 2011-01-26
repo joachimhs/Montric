@@ -14,9 +14,9 @@ EurekaJView.ChartView = SC.View.extend(
 /** @scope EurekaJView.ChartViewTwo.prototype */
 {
 	contentDisplayProperties: 'content'.w(),
-    childViews: 'chartLabel chart'.w(),
+    childViews: 'chart'.w(),
 
-    chartLabel: SC.LabelView.design({
+    /*chartLabel: SC.LabelView.design({
         layout: {
 			centerX: 0,
 			left: 5,
@@ -28,7 +28,7 @@ EurekaJView.ChartView = SC.View.extend(
         fontWeight: SC.BOLD_WEIGHT,
 		textAlign: SC.ALIGN_CENTER,
         valueBinding: '.parentView.content.label'
-    }),
+    }),       */
 
 	chart: Flot.GraphView.design({
         layout: { top: 30, right: 5, bottom: 5, left: 5 },

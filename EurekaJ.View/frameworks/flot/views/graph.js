@@ -54,6 +54,9 @@ Flot.GraphView = SC.View.extend(
                     "show": true
                 }
             },
+            /*"lines": {
+                fill: true
+            },*/
             "grid": {
                 "hoverable": true,
                 "clickable": true
@@ -72,14 +75,8 @@ Flot.GraphView = SC.View.extend(
             Flot.plot(this.get('layer'), dataObject, options);
             if (this.debugInConsole) console.log('render data');
         } else if (!SC.empty(seriesObject) && (seriesObject.get('status') & SC.Record.READY)) {
-            var jsonObject = {};
-            jsonObject.label = seriesObject.get('label');
-            jsonObject.data = seriesObject.get('data');
-
-            SC.Logger.log('jsonObject: ' + jsonObject);
-            var seriesArray = [];
-            seriesArray.push(jsonObject);
-            SC.Logger.log('options: ' + this.get('options'));
+            SC.Logger.log('seriesObject.chart: ' + seriesObject.get('chart'));
+            var seriesArray = seriesObject.get('chart');
             Flot.plot(this.get('layer'), seriesArray, options);
             if (this.debugInConsole) console.log('render series');
         } else {

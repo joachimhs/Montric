@@ -121,7 +121,11 @@ public class BuildJsonObjectsUtil {
         treeJson.put("childrenNodes", new JSONArray());
 
         JSONArray chartGridArray = new JSONArray();
-        chartGridArray.put(guiPath);
+        if (type.equalsIgnoreCase("chart")) {
+            chartGridArray.put(guiPath);
+        } else if (type.equalsIgnoreCase("alert")) {
+            chartGridArray.put("_alert_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length()));
+        }
         treeJson.put("chartGrid", chartGridArray);
 
         if (guiPath.contains(":")) {
@@ -190,7 +194,7 @@ public class BuildJsonObjectsUtil {
 
         //[{"label":"set1", "data":[[1,1],[2,2],[3,3]]} ]
 
-        //dataArraySB.append(chartId).append("\": [ ");
+        dataArraySB.append("{\"chart\": [ ");
         int collectionIndex = 0;
         for (XYDataList list : xyCollection.getDataList()) {
             dataArraySB.append("{\"label\": \"").append(list.getLabel()).append("\", \"data\": [");
@@ -231,8 +235,7 @@ public class BuildJsonObjectsUtil {
                 dataArraySB.append(",");
             }
         }
-
-        //dataArraySB.append("]}");
+        dataArraySB.append("]}");
 
         return dataArraySB.toString();
     }

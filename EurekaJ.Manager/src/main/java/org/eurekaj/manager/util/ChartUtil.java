@@ -15,7 +15,7 @@ import org.jsflot.xydata.XYDataSetCollection;
 public class ChartUtil {
 	private static Logger log = Logger.getLogger(ChartUtil.class);
 
-    public static XYDataSetCollection generateChart(List<LiveStatistics> liveList, String seriesLabel, Date fromDate, Date toDate, int resolution) {
+    public static XYDataSetCollection generateChart(List<LiveStatistics> liveList, String seriesLabel, Long millisStart, Long millisEnd, int resolution) {
         XYDataSetCollection valueCollection = new XYDataSetCollection();
         XYDataList valueList = new XYDataList();
         valueList.setLabel(seriesLabel);
@@ -29,15 +29,11 @@ public class ChartUtil {
         int numTicksInResolution = resolution / 15;
 
         //Round down to nearest 15 seconds timeperiod
-        Long millisStart = fromDate.getTime();
-        Long millisEnd = toDate.getTime();
-
-		millisStart = millisStart - 15000 - (millisStart % 15000);
+        millisStart = millisStart - 15000 - (millisStart % 15000);
 		millisEnd = millisEnd - (millisEnd % 15000) + 15000;
 
 
         Long currentMillis = millisStart;
-        int offsetMiutes = fromDate.getTimezoneOffset();
 
         //Iterate over the time-range given and average ticks based on resolution
         while (currentMillis <= (millisEnd - (resolution * 1000))) {
@@ -48,7 +44,6 @@ public class ChartUtil {
             int numStatsInCurrentTick = 0;
 
             for (int i = 0; i < numTicksInResolution; i++) {
-                long gmtMillis = currentMillis - (offsetMiutes * 60 * 1000);
                 LiveStatistics currStat = liveHash.get(currentMillis);
                 if (currStat == null) {
                     //No stat for this timeperiod, skipping
@@ -72,7 +67,7 @@ public class ChartUtil {
         return valueCollection;
     }
 	
-	private static XYDataList buildWarningList(Alert alert, int warningType, long minXaxis, long maxXaxis) {
+	public static XYDataList buildWarningList(Alert alert, int warningType, long minXaxis, long maxXaxis) {
 		XYDataList errorList = new XYDataList();
 		errorList.setLabel("Warning Value");
 		if (warningType == Alert.CRITICAL ) {
@@ -109,25 +104,5 @@ public class ChartUtil {
 		}
 		
 		return errorList;
-	}
-	
-	public static Long getMinXAxis(Date showChartFrom) {
-		Long retVal = showChartFrom.getTime();
-		if (retVal != null) {
-			int offsetMiutes = showChartFrom.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-			retVal -= (offsetMiutes * 60 * 1000);
-		}
-		
-		return retVal;
-	}
-	
-	public static Long getMaxXAxis(Date showChartTo) {
-		Long retVal = showChartTo.getTime();
-		if (retVal != null) {
-			int offsetMiutes = showChartTo.getTimezoneOffset(); //number of minutes offset from GMT// Timstamps for the last 8 minutes
-			retVal -= (offsetMiutes * 60 * 1000) + 15000;
-		}
-		
-		return retVal;
 	}
 }
