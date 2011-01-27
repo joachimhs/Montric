@@ -63,6 +63,10 @@ Flot.GraphView = SC.View.extend(
             },
             "crosshair": {
                 "mode": "x"
+            },
+            "legend" : {
+                "show": true,
+                "position": "sw"
             }
         };
 
