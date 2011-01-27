@@ -121,16 +121,13 @@ public class ChartServlet extends EurekaJGenericServlet {
                 } else {
                     chartPath = pathFromClient;
                     seriesLabel = chartPath;
-                    if (seriesLabel.contains(":")) {
-                        seriesLabel = seriesLabel.substring(chartPath.lastIndexOf(":") + 1, chartPath.length());
-                    }
 
                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
                     Collections.sort(liveList);
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                 }
 
-                jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection);
+                jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection);
                 System.out.println("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {

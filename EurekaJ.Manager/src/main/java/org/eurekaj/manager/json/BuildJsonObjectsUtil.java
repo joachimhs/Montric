@@ -268,7 +268,10 @@ public class BuildJsonObjectsUtil {
                 dataArraySB.append(",");
             }
         }
-        dataArraySB.append("]}");
+        dataArraySB.append("]");
+        dataArraySB.append(",\"instrumentationNode\":\""+ chartId + "\"");
+
+        dataArraySB.append("}");
 
         return dataArraySB.toString();
     }
