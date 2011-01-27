@@ -17,6 +17,7 @@ EurekaJView.AdminstrationTreeModel = SC.Record.extend(
 
     primaryKey: 'guiPath',
     guiPath: SC.Record.attr(String),
+    nodeType: SC.Record.attr(String),
 
     name: SC.Record.attr(String),
     isSelected: SC.Record.attr(Boolean),
@@ -33,6 +34,18 @@ EurekaJView.AdminstrationTreeModel = SC.Record.extend(
             return null;
         } else {
             return this.get('childrenNodes');
+        }
+    }.property(),
+
+    itemIcon: function() {
+        if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "chart") == 0) {
+            return static_url('images/ej_chart_16.png');
+        } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "alert") == 0) {
+            return static_url('images/ej_chart_alert_16.png');
+        } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "groupedStatistics") == 0) {
+            return static_url('images/ej_groupedstats_16.png');
+        } else {
+            return null;
         }
     }.property()
 

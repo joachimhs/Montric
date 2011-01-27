@@ -48,6 +48,10 @@ public class ChartServlet extends EurekaJGenericServlet {
         return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_alert_:");
     }
 
+    private boolean isGroupedStatisticsChart(JSONObject jsonRequest) throws JSONException {
+        return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_gs_:");
+    }
+
     private Long getFromPeriod(int chartTimespan) {
         Calendar thenCal = Calendar.getInstance();
         thenCal.add(Calendar.MINUTE, chartTimespan * -1);
@@ -84,52 +88,47 @@ public class ChartServlet extends EurekaJGenericServlet {
                 List<LiveStatistics> liveList = null;
                 String seriesLabel = null;
                 Alert alert = null;
+                GroupedStatistics groupedStatistics = null;
+                XYDataSetCollection valueCollection = new XYDataSetCollection();
+
+                //TODO: This if-else code block needs refactoring. Its not DRY
                 if (isAlertChart(keyObject)) {
                     String alertName = pathFromClient.substring(8, pathFromClient.length());
-                     alert = getBerkeleyTreeMenuService().getAlert(alertName);
+                    alert = getBerkeleyTreeMenuService().getAlert(alertName);
                     if (alert != null) {
                         chartPath = alert.getGuiPath();
                         seriesLabel = "Alert: " + alert.getAlertName();
+                    }
+
+                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
+                    Collections.sort(liveList);
+                    valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
+                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
+                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.WARNING, fromPeriod * 15000, toPeriod * 15000));
+                } else if (isGroupedStatisticsChart(keyObject)) {
+                    String groupName = pathFromClient.substring(5, pathFromClient.length());
+                    groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName);
+                    if (groupedStatistics != null) {
+                        seriesLabel = "Grouped Statistics: " + groupedStatistics.getName();
+                        for (String gsPath : groupedStatistics.getGroupedPathList()) {
+                            liveList = getBerkeleyTreeMenuService().getLiveStatistics(gsPath, fromPeriod, toPeriod);
+                            Collections.sort(liveList);
+                            for (XYDataList dataList : ChartUtil.generateChart(liveList, gsPath, fromPeriod * 15000, toPeriod * 15000, chartResolution).getDataList()) {
+                                valueCollection.addDataList(dataList);
+                            }
+                        }
                     }
                 } else {
                     chartPath = pathFromClient;
                     seriesLabel = chartPath;
                     if (seriesLabel.contains(":")) {
-                    seriesLabel = seriesLabel.substring(chartPath.lastIndexOf(":") + 1, chartPath.length());
-                }
-                }
-
-                liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
-                Collections.sort(liveList);
-
-                XYDataSetCollection valueCollection = new XYDataSetCollection();
-
-                valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
-
-                if (alert != null) {
-                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
-                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.WARNING, fromPeriod * 15000, toPeriod * 15000));
-                }
-
-                /*GroupedStatistics groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(path);
-                if (groupedStatistics != null) {
-                    //There are grouped statistics, all must be added to the chart
-                    for (String gsPath : groupedStatistics.getGroupedPathList()) {
-                        liveList = getBerkeleyTreeMenuService().getLiveStatistics(gsPath, fromPeriod, toPeriod);
-                        Collections.sort(liveList);
-                        String seriesLabel = gsPath;
-                        if (gsPath.length() > path.length() + 1) {
-                            seriesLabel = gsPath.substring(path.length() + 1, gsPath.length());
-                        }
-                        for (XYDataList dataList : ChartUtil.generateChart(liveList, seriesLabel, thenCal.getTime(), nowCal.getTime(), chartResolution).getDataList()) {
-                            valueCollection.addDataList(dataList);
-                        }
+                        seriesLabel = seriesLabel.substring(chartPath.lastIndexOf(":") + 1, chartPath.length());
                     }
-                } else {
-                    Alert alert = getBerkeleyTreeMenuService().getAlert(path);
 
-
-                }*/
+                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
+                    Collections.sort(liveList);
+                    valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
+                }
 
                 jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection);
                 System.out.println("Got Chart Data:\n" + jsonResponse);

@@ -98,7 +98,7 @@ public class ChartUtilTest {
     @Test
     @Ignore
     public void test_that_chart_generator_generates_correct_data_for_data_with_no_holes_and_15_second_resolution() {
-        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom, dateTo, 15);
+        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom.getTime(), dateTo.getTime(), 15);
         assertNotNull(xyDataSetCollection.getDataList().get(0));
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
@@ -186,7 +186,7 @@ public class ChartUtilTest {
     @Test
     @Ignore
     public void test_that_chart_generator_generates_correct_data_for_data_with_no_holes_and_30_second_resolution() {
-        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom, dateTo, 30);
+        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom.getTime(), dateTo.getTime(), 30);
         assertNotNull(xyDataSetCollection.getDataList().get(0));
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
@@ -245,7 +245,7 @@ public class ChartUtilTest {
     @Test
     @Ignore
     public void test_that_chart_generator_generates_correct_data_for_data_with_no_holes_and_180_second_resolution() {
-        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom, dateTo, 180);
+        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(liveStatisticsList, "name", dateFrom.getTime(), dateTo.getTime(), 180);
         assertNotNull(xyDataSetCollection.getDataList().get(0));
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
@@ -271,7 +271,7 @@ public class ChartUtilTest {
             newStats.add(liveStatisticsList.get(i));
         }
 
-        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(newStats, "name", dateFrom, dateTo, 15);
+        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(newStats, "name", dateFrom.getTime(), dateTo.getTime(), 15);
         assertNotNull(xyDataSetCollection.getDataList().get(0));
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
@@ -364,7 +364,7 @@ public class ChartUtilTest {
             newStats.add(liveStatisticsList.get(i));
         }
 
-        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(newStats, "name", dateFrom, dateTo, 45);
+        XYDataSetCollection xyDataSetCollection = ChartUtil.generateChart(newStats, "name", dateFrom.getTime(), dateTo.getTime(), 45);
         assertNotNull(xyDataSetCollection.getDataList().get(0));
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);

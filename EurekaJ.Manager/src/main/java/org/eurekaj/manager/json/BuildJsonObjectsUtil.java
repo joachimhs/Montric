@@ -51,9 +51,10 @@ public class BuildJsonObjectsUtil {
     public static JSONObject buildTreeTypeMenuJsonObject(String treeId,
                                                          List<TreeMenuNode> nodeList,
                                                          List<Alert> alertList,
+                                                         List<GroupedStatistics> groupedStatisticsList,
                                                          int startLevel,
                                                          int stopLevel,
-                                                         boolean includeCharts) throws JSONException {
+                                                         boolean includeCharts, String includeChartType) throws JSONException {
 
         HashMap<String, JSONObject> nodesBuilt = new HashMap<String, JSONObject>();
 
@@ -61,8 +62,31 @@ public class BuildJsonObjectsUtil {
 
         JSONArray treeArray = new JSONArray();
 
-        int guid = 0;
+        if (includeChartType == null || (includeChartType != null && includeChartType.equals("chart"))) {
+            buildTreeMenuNode(nodeList, startLevel, stopLevel, includeCharts, nodesBuilt);
+        }
 
+        if (includeChartType == null || (includeChartType != null && includeChartType.equals("alert"))) {
+            buildAlertNode(alertList, nodesBuilt);
+        }
+
+        if (includeChartType == null || (includeChartType != null && includeChartType.equals("groupedStatistics"))) {
+            buildGroupedStatisticNodes(groupedStatisticsList, nodesBuilt);
+        }
+
+        List<String> sortedObjects = new ArrayList<String>(nodesBuilt.keySet());
+        Collections.sort(sortedObjects);
+
+        for (String key : sortedObjects) {
+            treeArray.put(nodesBuilt.get(key));
+        }
+
+        parentObject.put(treeId, treeArray);
+
+        return parentObject;
+    }
+
+    private static void buildTreeMenuNode(List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
         for (TreeMenuNode node : nodeList) {
             String[] splitNodePathArray = node.getGuiPath().split(":");
             int splitArrayIndex = 0;
@@ -82,7 +106,9 @@ public class BuildJsonObjectsUtil {
                 splitArrayIndex++;
             } while (splitArrayIndex < maxSplitArrayIndex && splitArrayIndex < stopLevel);
         }
+    }
 
+    private static void buildAlertNode(List<Alert> alertList, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
         for (Alert alert : alertList) {
             String currPath = alert.getGuiPath();
             //Strip away last node (the alert chart) and add the alert name instead
@@ -96,17 +122,17 @@ public class BuildJsonObjectsUtil {
                 nodesBuilt.put(currPath, jsonNode);
             }
         }
+    }
 
-        List<String> sortedObjects = new ArrayList<String>(nodesBuilt.keySet());
-        Collections.sort(sortedObjects);
 
-        for (String key : sortedObjects) {
-            treeArray.put(nodesBuilt.get(key));
+    private static void buildGroupedStatisticNodes(List<GroupedStatistics> groupedStatisticsList, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
+        nodesBuilt.put("Grouped Statistics", buildTreeNode("Grouped Statistics", nodesBuilt, "groupedStatistics"));
+
+        for (GroupedStatistics groupedStatistics : groupedStatisticsList) {
+            String guiPath = "Grouped Statistics:" + groupedStatistics.getName();
+            JSONObject jsonNode = buildTreeNode(guiPath, nodesBuilt, "groupedStatistics");
+            nodesBuilt.put(guiPath, jsonNode);
         }
-
-        parentObject.put(treeId, treeArray);
-
-        return parentObject;
     }
 
     private static JSONObject buildTreeNode(String guiPath, HashMap<String, JSONObject> nodesBuilt, String type) throws JSONException {
@@ -125,7 +151,10 @@ public class BuildJsonObjectsUtil {
             chartGridArray.put(guiPath);
         } else if (type.equalsIgnoreCase("alert")) {
             chartGridArray.put("_alert_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length()));
+        } else if (type.equals("groupedStatistics")) {
+            chartGridArray.put("_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length()));
         }
+
         treeJson.put("chartGrid", chartGridArray);
 
         if (guiPath.contains(":")) {

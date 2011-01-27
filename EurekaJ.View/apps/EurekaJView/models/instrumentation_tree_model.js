@@ -36,12 +36,12 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
     }.property(),
 
     itemIcon: function() {
-        SC.Logger.log('nodeType: ' + SC.compare(this.get('nodeType'), "chart"));
-
         if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "chart") == 0) {
             return static_url('images/ej_chart_16.png');
         } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "alert") == 0) {
             return static_url('images/ej_chart_alert_16.png');
+        } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "groupedStatistics") == 0) {
+            return static_url('images/ej_groupedstats_16.png');
         } else {
             return null;
         }

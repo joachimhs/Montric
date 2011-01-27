@@ -56,7 +56,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Logger.log('fetching the Administration tree menu...');
             var requestStringJson = {
                 'getInstrumentationMenu': 'administrationMenu',
-                'includeCharts': true
+                'includeCharts': true,
+                'nodeType' : 'chart'
             };
 
             SC.Request.postUrl('/instrumentationMenu').header({
