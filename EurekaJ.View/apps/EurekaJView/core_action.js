@@ -56,11 +56,28 @@ EurekaJView.mixin( {
             EurekaJView.editEmailGroupController.set('emailAddresses', [ newEmailRecipient ])
             SC.Logger.log('new email addresses: ' + EurekaJView.editEmailGroupController.get('emailAddresses'));
         }
-
     },
 
     saveEmailAction: function() {
         EurekaJView.EurekaJStore.commitRecords();
+    },
+
+    addSelectedChartsToChartGroup: function() {
+        var query = SC.Query.local(EurekaJView.AdminstrationTreeModel, 'isSelected = {isSelected}', {isSelected: YES});
+        var selectedCharts = EurekaJView.EurekaJStore.find(query);
+        var selectedChartsContentArray = [];
+
+        SC.Logger.log('Adding selected Charts to selected chart group: '  + selectedCharts);
+
+        selectedCharts.forEach(function(chart) {
+            if (chart.instanceOf(EurekaJView.AdminstrationTreeModel) && !EurekaJView.selectedInstrumentationGroupController.get('content').contains(chart)) {
+                SC.Logger.log('Adding chart: ' + chart.get('guiPath'));
+                chart.set('isSelected', NO);
+                EurekaJView.selectedInstrumentationGroupController.get('content').pushObject(chart);
+            }
+        }, this);
+
+        //EurekaJView.selectedInstrumentationGroupController.setSelectedChartNodes();
     }
 
 });
