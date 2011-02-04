@@ -27,6 +27,10 @@
 	border-top: 2px solid #000;
 }
 
+.thinBlackBorderBottom {
+	border-bottom: 1px solid #000;
+}
+
 .noborder {
     border: none;
 }
@@ -41,6 +45,10 @@
 
 .thinBlackRightborder {
 	border-right: 1px solid #000;
+}
+
+.thinBlackLeftborder {
+	border-left: 1px solid #000;
 }
 
 .toolbarGradient {

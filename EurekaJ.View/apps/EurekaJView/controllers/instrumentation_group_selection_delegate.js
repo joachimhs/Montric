@@ -25,7 +25,6 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
             var selectedChartsContentArray = [];
             var instrumentationNodeForSelect = selectedItem.get('instrumentationGroupPath');
             instrumentationNodeForSelect.forEach(function(adminTreeNode) {
-                this.markNodeAndParentsAsExpanded(adminTreeNode, YES);
                 selectedChartsContentArray.pushObject(adminTreeNode);
             }, this);
 

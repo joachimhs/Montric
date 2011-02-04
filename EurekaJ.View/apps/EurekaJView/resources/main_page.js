@@ -24,10 +24,10 @@ EurekaJView.mainPage = SC.Page.design({
 
     mainPane: SC.MainPane.design({
         defaultResponder: EurekaJView,
-        childViews: 'flotChartGrid topView instrumentationTreeView instrumentationTreeScrollView'.w(),
+        childViews: 'flotChartGrid topView instrumentationTreeView informationPanelView instrumentationTreeScrollView'.w(),
 
         topView: SC.View.design({
-            childViews: 'logoView timePeriodButtonView timePeriodLabelView administrationButtonView administrationLabelView'.w(),
+            childViews: 'logoView administrationButtonView administrationLabelView'.w(),
             isVisible: NO,
             layout: {
                 top: 0,
@@ -47,23 +47,6 @@ EurekaJView.mainPage = SC.Page.design({
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 fontWeight: SC.BOLD_WEIGHT,
                 value: 'EurekaJ Profiler'
-            }),
-
-
-            timePeriodButtonView: SC.ImageView.design(SCUI.SimpleButton, {
-                layout: {right: 130, width: 49, height: 49, top: 5},
-                value: static_url('images/ej_timeperiod_49.png'),
-                toolTip: 'Time Period Administration',
-                //title: 'Administration',
-                action: 'showTimeperiodPaneAction'
-            }),
-
-            timePeriodLabelView: SC.LabelView.design(SCUI.SimpleButton, {
-                layout: {right: 120, width: 100, height: 25, top: 55},
-                value: 'Time Period',
-                textAlign: SC.ALIGN_RIGHT,
-                action: 'showTimeperiodPaneAction'
-
             }),
 
             administrationButtonView: SC.ImageView.design(SCUI.SimpleButton, {
@@ -90,7 +73,7 @@ EurekaJView.mainPage = SC.Page.design({
                 top: 75,
                 height: 100,
                 left: 306,
-                right: 0
+                right: 200
             },
             nowShowing: 'EurekaJView.ChartOptionsView'
         }),
@@ -98,7 +81,7 @@ EurekaJView.mainPage = SC.Page.design({
         flotChartGrid: SC.GridView.extend({
             layout: {
                 top: 77,
-                right: 0,
+                right: 200,
                 bottom: 0,
                 left: 306
             },
@@ -128,6 +111,17 @@ EurekaJView.mainPage = SC.Page.design({
                 };
             }
         }).classNames('thinBlackBorderTop'),
+
+        informationPanelView: EurekaJView.TimePeriodPaneView.design({
+            layout: {
+                top: 77,
+                bottom: 0,
+                right: 0,
+                width: 199
+            },
+            anchorLocation: SC.ANCHOR_TOP,
+            backgroundColor: "#F0F8FF"
+        }).classNames(['thinBlackBorderTop', 'thinBlackLeftborder']),
 
         instrumentationTreeView: SC.View.design({
             childViews: 'instrumentationTreeLabelView'.w(),
