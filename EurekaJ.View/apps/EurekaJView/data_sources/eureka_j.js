@@ -217,7 +217,6 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             //SC.Logger.log(response.get('body').data);
             EurekaJView.chartGridController.triggerTimer();
             store.dataSourceDidComplete(storeKey, response.get('body'));
-            EurekaJView.chartGridController.addAlertToChart();
             // error: indicate as such...response == error
         } else store.dataSourceDidError(storeKey, response.get('body'));
     },
