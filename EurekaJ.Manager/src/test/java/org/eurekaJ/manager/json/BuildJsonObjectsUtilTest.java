@@ -150,7 +150,7 @@ public class BuildJsonObjectsUtilTest {
         xyCollection.addDataList(xyList);
 
         StringBuilder expected = new StringBuilder();
-        expected.append("{\"chart\": [ {\"label\": \"Set1\", \"data\": [[1,1], [2,2], [3,3], [5,5]]}]}");
+        expected.append("{\"chart\": [ {\"label\": \"Set1\", \"data\": [[1,1], [2,2], [3,3], [5,5]]}],\"instrumentationNode\":\"chartId\"}");
         String jsonString = BuildJsonObjectsUtil.generateChartData("chartId", "something", xyCollection);
         assertEquals(expected.toString(), jsonString);
     }
