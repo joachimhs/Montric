@@ -22,37 +22,16 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
         if (selectedItem.instanceOf(EurekaJView.InstrumentationGroupModel)) {
             this.closeOpenTreeNodes(view);
 
+            var selectedChartsContentArray = [];
             var instrumentationNodeForSelect = selectedItem.get('instrumentationGroupPath');
-            SC.Logger.log('instrumentationNodeForSelect: ' + instrumentationNodeForSelect);
-
-            var selectionSet = SC.SelectionSet.create();
-            selectionSet.addObjects(instrumentationNodeForSelect);
-            selectionSet.forEach(function(adminTreeNode) {
-                this.markNodeAndParentsAsExpanded(adminTreeNode, YES);
+            instrumentationNodeForSelect.forEach(function(adminTreeNode) {
+                selectedChartsContentArray.pushObject(adminTreeNode);
             }, this);
 
-            EurekaJView.instumentationGroupChartController.set('selection', selectionSet);
-        }
-
-        //Select one or more tree nodes
-        if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
-            this.setSelectedChartNodes(view, indexes);
+            EurekaJView.selectedInstrumentationGroupController.set('content', selectedChartsContentArray);
         }
 
         return indexes;
-    },
-
-    setSelectedChartNodes: function(view, indexes) {
-        var selectionArray = [];
-
-            indexes.forEach(function(o) {
-                var selectedItem = view.get('content').objectAt(o);
-                if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
-                    selectionArray.pushObject(selectedItem);
-                }
-            }, this);
-
-        EurekaJView.editInstrumentationGroupController.set('instrumentationGroupPath', selectionArray);
     },
 
     markNodeAndParentsAsExpanded: function(treeModel, setExpanded) {
@@ -65,10 +44,12 @@ EurekaJView.instrumentationGroupSelectionDelegate = SC.Object.create(SC.Collecti
     },
 
     closeOpenTreeNodes: function(view) {
-
+        //Deselecting all selected nodes and closing parent nodes
         view.get('content').forEach(function(node) {
             selectedNodes = node.get('instrumentationGroupPath');
             selectedNodes.forEach(function(adminTreeNode) {
+                SC.Logger.log('Deselecting: ' + adminTreeNode.get('guiPath'));
+                //adminTreeNode.set('isSelected', NO);
                 this.markNodeAndParentsAsExpanded(adminTreeNode, NO);
             }, this);
         }, this);

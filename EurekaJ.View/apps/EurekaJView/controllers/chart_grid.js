@@ -43,17 +43,6 @@ EurekaJView.chartGridController = SC.ArrayController.create(
         }
     },
 
-    addAlertToChart: function() {
-                                  //SC.Query.local(EurekaJView.InstrumentationTreeModel, 'hasChildren = {hasChildren}', {hasChildren: false});
-        var query = SC.Query.local(EurekaJView.AlertModel, "alertInstrumentationNode = {alertInstrumentationNode}", {alertInstrumentationNode: "JSFlotJAgent:Memory:Heap:% Used"});
-        var nodes = EurekaJView.EurekaJStore.find(query);
-        SC.Logger.log('Adding alert to chart: ' + nodes.getEach('alertName'));
-    },
-
-    observesContent: function() {
-        SC.Logger.log('chartGridController: observesContent: ' + this.get('content'));
-    }.observes('content'),
-
     observesChartTimespan: function() {
         this.refreshData();
     }.observes('selectedChartTimespan'),

@@ -53,45 +53,61 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
     }),
 
     instrumentationGroupContentView: SC.View.extend({
-        childViews: ['instrumentationGroupNameLabelView', 'instrumentationGroupNameValueLabelView', 'instrumentationGroupSourceLabelView', 'instrumentationGroupChartSelectScrollView', 'saveInstrumentationGroupButtonView'],
+        childViews: ['instrumentationGroupChartSelectScrollView', 'addSelectedChartsButtonView', 'chartGroupSelectionScrollView', 'saveInstrumentationGroupButtonView'],
         isVisibleBinding: 'EurekaJView.instrumentationGroupAdminController.showEditInstrumentationGroupView',
 
         layout: {top: 20, bottom: 0, right: 0, left: 215},
 
-        instrumentationGroupNameLabelView: SC.LabelView.extend({
-            layout: {left: 10, width: 80, top: 0, height: 30},
-            controlSize: SC.REGULAR_CONTROL_SIZE,
-            value: 'Name:'
-        }).classNames('blacklabel'),
-
-        instrumentationGroupNameValueLabelView: SC.LabelView.extend({
-            layout: {left: 90, width: 80, top: 0, height: 30},
-            controlSize: SC.REGULAR_CONTROL_SIZE,
-            valueBinding: 'EurekaJView.editInstrumentationGroupController.name'
-        }).classNames('blacklabel'),
-
-        instrumentationGroupSourceLabelView: SC.LabelView.extend({
+        /*instrumentationGroupSourceLabelView: SC.LabelView.extend({
             layout: {left: 10, right: 20, top: 25, height: 30},
             controlSize: SC.REGULAR_CONTROL_SIZE,
             value: 'Select multiple charts to group:'
-        }).classNames('blacklabel'),
+        }).classNames('blacklabel'),*/
 
         instrumentationGroupChartSelectScrollView: SC.ScrollView.design({
-            layout: {left: 10, right: 20, top: 50, bottom: 40},
+            layout: {left: 10, right: 20, top: 0, height: 180},
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
 
-            contentView: SC.SourceListView.extend({
+            contentView: SC.ListView.extend({
                 allowsMultipleSelection: NO,
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
+                isSelectable: NO,
+
                 contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects',
-                selectionBinding: 'EurekaJView.instumentationGroupChartController.selection',
-                selectionDelegate: EurekaJView.instrumentationGroupSelectionDelegate
+                //selectionBinding: 'EurekaJView.instumentationGroupChartController.selection'
+                //selectionDelegate: EurekaJView.instrumentationGroupSelectionDelegate
+
+                exampleView: EurekaJView.InstrumentationGroupListItem,
+                recordType: EurekaJView.AdminstrationTreeModel
             })
         }),
+
+        addSelectedChartsButtonView: SC.ButtonView.design({
+            layout: {left: 10, width: 200, top: 190, height: 25},
+            title: "Add selected charts to group",
+            action: "EurekaJView.addSelectedChartsToChartGroup"
+        }),
+
+        chartGroupSelectionScrollView: SC.ScrollView.design({
+           layout: {left: 10, right: 20, top: 220, bottom: 40},
+           hasHorizontalScroller: YES,
+           hasVerticalScroller: YES,
+
+
+           contentView: SC.ListView.extend({
+               allowsMultipleSelection: NO,
+               backgroundColor: '#F0F8FF',
+               contentValueKey: "guiPath",
+               rowHeight: 18,
+               canDeleteContent: YES,
+               contentBinding: 'EurekaJView.selectedInstrumentationGroupController.arrangedObjects',
+               selectionBinding: 'EurekaJView.instumentationGroupChartController.selection'
+           })
+       }),
 
         saveInstrumentationGroupButtonView: SC.ButtonView.design({
             layout: {right: 10, width: 300, bottom: 10, height: 25},
