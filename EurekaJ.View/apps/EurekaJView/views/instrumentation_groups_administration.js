@@ -77,12 +77,7 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
                 rowHeight: 18,
                 isSelectable: NO,
 
-                contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects',
-                //selectionBinding: 'EurekaJView.instumentationGroupChartController.selection'
-                //selectionDelegate: EurekaJView.instrumentationGroupSelectionDelegate
-
-                exampleView: EurekaJView.InstrumentationGroupListItem,
-                recordType: EurekaJView.AdminstrationTreeModel
+                contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects'
             })
         }),
 

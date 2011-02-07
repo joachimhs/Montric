@@ -1,7 +1,7 @@
 // ==========================================================================
-// Project:   EurekaJView.ChartOptionsView
-// Copyright: �2010 My Company, Inc.
-// =======================================================================99===
+// Project:   EurekaJView.TimePeriodPaneView
+// Copyright: ©2011 My Company, Inc.
+// ==========================================================================
 /*globals EurekaJView */
 
 /** @class
@@ -10,30 +10,27 @@
 
  @extends SC.View
  */
-EurekaJView.ChartOptionsView = SC.View.extend(
-    /** @scope EurekaJView.ChartOptionsView.prototype */
-{
+EurekaJView.LiveStatisticsOptionsView = SC.View.extend(
+    /** @scope EurekaJView.TimePeriodPaneView.prototype */ {
+
+    defaultResponder: EurekaJView,
+    childViews: 'timePeriodContainerView'.w(),
+
     childViews: 'chartOptionsHeadlineLabelView chartOptionsLabelView chartTimespanFieldView chartResolutionLabelView chartResolutionFieldView'.w(),
-    layout: {
-        top: 0,
-        height: 75,
-        left: 0,
-        right: 0
-    },
 
     chartOptionsHeadlineLabelView: SC.LabelView.design({
         layout: {
             centerY: 0,
             centerX: 0,
             height: 30,
-            top: 5,
+            top: 15,
             left: 10,
             right: 10
         },
         controlSize: SC.REGULAR_CONTROL_SIZE,
         fontWeight: SC.BOLD_WEIGHT,
         textAlign: SC.ALIGN_CENTER,
-        value: 'CHART OPTIONS'
+        value: 'LIVE CHART'
     }).classNames(['greylabel', 'underlined']),
 
     chartOptionsLabelView: SC.LabelView.design({
@@ -41,7 +38,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
             left: 5,
             height: 17,
             bottom: 35,
-            width: 60
+            width: 65
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
         //				fontWeight: SC.NORMAL_WEIGHT,
@@ -107,7 +104,7 @@ EurekaJView.ChartOptionsView = SC.View.extend(
             left: 5,
             height: 17,
             bottom: 5,
-            width: 60
+            width: 65
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
         //				fontWeight: SC.NORMAL_WEIGHT,

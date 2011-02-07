@@ -1,3 +1,9 @@
 [submodule "EurekaJ.View/frameworks/sproutcore"]
 	path = EurekaJ.View/frameworks/sproutcore
 	url = git://github.com/sproutcore/sproutcore.git
+[submodule "frameworks/calendar"]
+	path = frameworks/calendar
+	url = https://github.com/unicolet/stuff-I-m-proud-of.git
+[submodule "EurekaJ.View/frameworks/calendar"]
+	path = EurekaJ.View/frameworks/calendar
+	url = https://github.com/unicolet/stuff-I-m-proud-of.git

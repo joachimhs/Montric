@@ -5,8 +5,7 @@
 /*globals EurekaJView */
 
 // This page describes the main user interface for your application.
-sc_require('views/time_period_pane');
-sc_require('views/chart_options');
+sc_require('views/information_panel');
 sc_require('views/chart_view');
 sc_require('views/administration_pane');
 sc_require('views/instrumentation_tree_list_item');
@@ -112,7 +111,7 @@ EurekaJView.mainPage = SC.Page.design({
             }
         }).classNames('thinBlackBorderTop'),
 
-        informationPanelView: EurekaJView.TimePeriodPaneView.design({
+        informationPanelView: EurekaJView.InformationPanelView.design({
             layout: {
                 top: 77,
                 bottom: 0,
@@ -176,10 +175,6 @@ EurekaJView.mainPage = SC.Page.design({
             borderStyle: SC.BORDER_NONE
         })
 
-    }),
-
-    timePeriodView: EurekaJView.TimePeriodPaneView.design({
-        layout: { width: 400, centerX: 0, height: 130 }
     }),
 
     adminPanelView: EurekaJView.AdministrationPaneView.design({
