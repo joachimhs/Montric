@@ -28,6 +28,12 @@ EurekaJView.main = function main() {
 
 	EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);
 	EurekaJView.InstrumentationTreeController.populate();
+
+    EurekaJView.chartGridController.init();
+
+    EurekaJView.mainPage.get('informationPanelView').get('informationPanelTabView').addObserver('nowShowing', function(tabView) {
+        EurekaJView.chartGridController.set('nowShowingTab', tabView.get('nowShowing'));
+    });
 } ;
 
 function main() { EurekaJView.main(); }

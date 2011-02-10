@@ -65,7 +65,7 @@ public class ParseJsonObjects {
         return emailRecipientGroup;
     }
 
-    private static String parseStringFromJson(JSONObject json, String key) {
+    public static String parseStringFromJson(JSONObject json, String key) {
         String stringValue = null;
 
         try {
@@ -77,7 +77,7 @@ public class ParseJsonObjects {
         return stringValue;
     }
 
-    private static List<String> getStringArrayFromJson(JSONObject json, String key) {
+    public static List<String> getStringArrayFromJson(JSONObject json, String key) {
         List<String> groupList = new ArrayList<String>();
         try {
             JSONArray groupJsonArray = json.getJSONArray(key);
@@ -91,7 +91,7 @@ public class ParseJsonObjects {
         return groupList;
     }
 
-    private static Integer parseIntegerFromJson(JSONObject json, String key) {
+    public static Integer parseIntegerFromJson(JSONObject json, String key) {
         Integer intValue = null;
         try {
             intValue = Integer.parseInt(parseStringFromJson(json, key));
@@ -102,7 +102,18 @@ public class ParseJsonObjects {
         return intValue;
     }
 
-    private static Boolean parseBooleanFromJson(JSONObject json, String key) {
+    public static Long parseLongFromJson(JSONObject json, String key) {
+        Long longValue = null;
+        try {
+            longValue = Long.parseLong(parseStringFromJson(json, key));
+        } catch (NumberFormatException nfe) {
+            longValue = null;
+        }
+
+        return longValue;
+    }
+
+    public static Boolean parseBooleanFromJson(JSONObject json, String key) {
         Boolean boolValue = null;
 
         try {

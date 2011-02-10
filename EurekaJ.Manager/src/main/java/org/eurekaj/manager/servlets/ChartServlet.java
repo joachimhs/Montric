@@ -2,6 +2,7 @@ package org.eurekaj.manager.servlets;
 
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
+import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.eurekaj.manager.util.ChartUtil;
@@ -37,11 +38,11 @@ public class ChartServlet extends EurekaJGenericServlet {
     }
 
     private int getChartResolution(JSONObject jsonRequest) throws JSONException {
-        int chartTimespan = 15;
+        int chartResolution = 15;
         if (jsonRequest.has("chartResolution")) {
-            chartTimespan = jsonRequest.getInt("chartResolution");
+            chartResolution = jsonRequest.getInt("chartResolution");
         }
-        return chartTimespan;
+        return chartResolution;
     }
 
     private boolean isAlertChart(JSONObject jsonRequest) throws JSONException {
@@ -52,18 +53,33 @@ public class ChartServlet extends EurekaJGenericServlet {
         return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_gs_:");
     }
 
-    private Long getFromPeriod(int chartTimespan) {
-        Calendar thenCal = Calendar.getInstance();
-        thenCal.add(Calendar.MINUTE, chartTimespan * -1);
+    private Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
+        Long chartFromMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartFrom");
+        Long fromPeriod = null;
 
-        Long fromPeriod = thenCal.getTime().getTime() / 15000;
+        if (chartFromMs == null) {
+            Calendar thenCal = Calendar.getInstance();
+            thenCal.add(Calendar.MINUTE, chartTimespan * -1);
+
+            fromPeriod = thenCal.getTime().getTime() / 15000;
+        } else {
+            fromPeriod = chartFromMs / 15000;
+        }
 
         return fromPeriod;
     }
 
-    private Long getToPeriod() {
-        Calendar nowCal = Calendar.getInstance();
-        Long toPeriod = nowCal.getTime().getTime() / 15000;
+    private Long getToPeriod(JSONObject jsonRequest) {
+        Long chartToMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartTo");
+        Long toPeriod = null;
+
+        if (chartToMs == null) {
+            Calendar nowCal = Calendar.getInstance();
+            toPeriod = nowCal.getTime().getTime() / 15000;
+        } else {
+            toPeriod = chartToMs / 15000;
+        }
+
         return toPeriod;
     }
 
@@ -82,8 +98,8 @@ public class ChartServlet extends EurekaJGenericServlet {
 
                 int chartTimespan = getChartTimeSpan(keyObject);
                 int chartResolution = getChartResolution(keyObject);
-                Long fromPeriod = getFromPeriod(chartTimespan);
-                Long toPeriod = getToPeriod();
+                Long fromPeriod = getFromPeriod(chartTimespan, keyObject);
+                Long toPeriod = getToPeriod(keyObject);
 
                 List<LiveStatistics> liveList = null;
                 String seriesLabel = null;

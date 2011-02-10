@@ -71,7 +71,6 @@ EurekaJView.statechart = SC.State.design({
             hideAdministrationPaneAction: function() {
                 this.gotoState('ready');
             },
-
             /* //ACTIONS */
 
             hideTimePeriodPanel: SC.State.design({

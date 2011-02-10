@@ -31,6 +31,10 @@
 	border-bottom: 1px solid #000;
 }
 
+.smallTextfield {
+    font-size: 10px;
+}
+
 .noborder {
     border: none;
 }

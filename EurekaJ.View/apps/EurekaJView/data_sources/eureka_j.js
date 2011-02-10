@@ -30,7 +30,7 @@ EurekaJView.EMAIL_GROUPS_QUERY = SC.Query.local(EurekaJView.EmailGroupModel, {
     orderby: 'emailGroupName'
 });
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
-    /** @scope EurekaJView.EurekaJDataSource.prototype */
+/** @scope EurekaJView.EurekaJDataSource.prototype */
 {
 
     // ..........................................................
@@ -139,7 +139,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
     },
 
-    performFetchInstrumentationGroups: function(response, store, query)  {
+    performFetchInstrumentationGroups: function(response, store, query) {
         if (SC.ok(response)) {
             SC.Logger.log('Instrumentation Groups Fetched');
             store.loadRecords(EurekaJView.InstrumentationGroupModel, response.get('body').instrumentationGroups);
@@ -149,7 +149,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         }
     },
 
-    performFetchEmailGroups: function(response, store, query)  {
+    performFetchEmailGroups: function(response, store, query) {
         if (SC.ok(response)) {
             SC.Logger.log('Email Groups Fetched');
             store.loadRecords(EurekaJView.EmailGroupModel, response.get('body').emailGroups);
@@ -168,14 +168,30 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
         if (recordType === EurekaJView.ChartGridModel) {
             SC.Logger.log("Getting Chart Grid Model");
-            var requestStringJson = {
-                'getInstrumentationChartData': {
-                    'id': storeKey,
-                    'path': SC.Store.idFor(storeKey),
-                    'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
-                    'chartResolution': EurekaJView.chartGridController.selectedChartResolution
-                }
-            };
+            var requestStringJson = {};
+
+            if (EurekaJView.chartGridController.get('showHistoricalData') === NO) {
+                requestStringJson = {
+                    'getInstrumentationChartData': {
+                        'id': storeKey,
+                        'path': SC.Store.idFor(storeKey),
+                        'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution
+                    }
+                };
+            } else {
+                var fromMs = EurekaJView.chartGridController.selectedChartFrom.get('milliseconds');
+                var toMs = EurekaJView.chartGridController.selectedChartTo.get('milliseconds');
+                requestStringJson = {
+                    'getInstrumentationChartData': {
+                        'id': storeKey,
+                        'path': SC.Store.idFor(storeKey),
+                        'chartFrom': fromMs,
+                        'chartTo': toMs,
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution
+                    }
+                };
+            }
 
             SC.Request.postUrl('/chart').header({
                 'Accept': 'application/json'
@@ -197,9 +213,9 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Request.postUrl('/email').header({
                 'Accept': 'application/json'
             }).json().notify(this, this.performRetrieveEmailRecipientRecord, {
-                                                                            store: store,
-                                                                            storeKey: storeKey
-                                                                        }).send(requestStringJson);
+                                                                                 store: store,
+                                                                                 storeKey: storeKey
+                                                                             }).send(requestStringJson);
 
             return YES;
         }

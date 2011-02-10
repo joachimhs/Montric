@@ -11,19 +11,84 @@
  @extends SC.Object
  */
 EurekaJView.chartGridController = SC.ArrayController.create(
-    /** @scope EurekaJView.chartGridController.prototype */
+/** @scope EurekaJView.chartGridController.prototype */
 {
 
     timer: null,
     selectedChartTimespan: 10,
     selectedChartResolution: 15,
-    instrumentationGroupPanel: null,
-    //contentBinding: 'EurekaJView.InstrumentationTreeController.selection',
+    selectedChartFrom: SC.DateTime.create(),
+    selectedChartTo: SC.DateTime.create(),
+    selectedChartFromString: null,
+    selectedChartToString: null,
+    dateFormat: '%d/%m/%Y %H:%M',
+    showHistoricalData: NO,
+    nowShowingTab: null,
+
+    init: function() {
+        var fromDate = this.get('selectedChartFrom').advance({minute: -10});
+        if (fromDate) {
+            this.set('selectedChartFrom', fromDate);
+        }
+        this.generateChartStrings();
+    },
+
+    nowShowingTabChange: function() {
+        SC.Logger.log('TAB CHANGED TO: ' + this.get('nowShowingTab'));
+        if (this.get('nowShowingTab') === 'EurekaJView.HistoricalStatisticsOptionsView') {
+            this.set('showHistoricalData', YES);
+        } else if (this.get('nowShowingTab') === 'EurekaJView.LiveStatisticsOptionsView') {
+            this.set('showHistoricalData', NO);
+        }
+
+        this.refreshData();
+    }.observes('nowShowingTab'),
+
     orderBy: 'name',
+
+    observeChartFromChange: function() {
+        var parsedDate = SC.DateTime.parse(this.get('selectedChartFromString'), this.get('dateFormat'));
+        SC.Logger.log('From Date parsed to: ' + parsedDate);
+        if (parsedDate) {
+            this.set('selectedChartFrom', parsedDate);
+            this.refreshData();
+        }
+    }.observes('selectedChartFromString'),
+
+    observeChartToChange: function() {
+        var parsedDate =  SC.DateTime.parse(this.get('selectedChartToString'), this.get('dateFormat'));
+        SC.Logger.log('To Date parsed to: ' + parsedDate);
+        if (parsedDate) {
+
+            this.set('selectedChartFrom', parsedDate);
+            this.refreshData();
+        }
+    }.observes('selectedChartToString'),
+
+    generateChartStrings: function() {
+        this.set('selectedChartFromString', this.generateChartString(this.get('selectedChartFrom')));
+        this.set('selectedChartToString', this.generateChartString(this.get('selectedChartTo')));
+    },
+
+    selectedChartFromMsProperty: function() {
+        this.get('selectedChartFrom').get('milliseconds');
+    }.property(),
+
+    selectedChartToMsProperty: function() {
+        this.get('selectedChartTo').get('milliseconds');
+    }.property(),
+
+    generateChartString: function(date) {
+        var fmt = this.get('dateFormat') || '%m/%d/%Y';
+        var dateString = date ? date.toFormattedString(fmt) : "";
+        return dateString;
+    },
 
     refreshData: function() {
         if (this.get('content')) {
-            this.get('content').forEach(function(item, index, enumerable) { item.refresh(); });
+            this.get('content').forEach(function(item, index, enumerable) {
+                item.refresh();
+            });
         }
     },
 
@@ -49,59 +114,5 @@ EurekaJView.chartGridController = SC.ArrayController.create(
 
     observesChartResolution: function() {
         this.refreshData();
-    }.observes('selectedChartResolution'),
-
-    showInstrumentationGroupsPanel: function() {
-        SC.Logger.log('showing InstrumentationGroup Panel');
-        var pane = SC.PanelPane.create({
-            layout: {
-                centerX: 0,
-                width: 870,
-                top: 175,
-                bottom: 175
-            },
-            contentView: SC.View.design({
-                childViews: 'groupToolbarView mainContentView'.w(),
-                layout: {
-                    top: 0,
-                    left: 0,
-                    bottom: 0,
-                    right: 0
-                },
-
-                groupToolbarView: SC.ToolbarView.extend({
-                    childViews: 'labelView'.w(),
-                    layout: {top: 0, left: 0, right: 0, height: 40 },
-                    anchorLocation: SC.ANCHOR_TOP,
-
-                    labelView: SC.LabelView.extend({
-                        layout: {centerY: 0, centerX:0, height: 40, top: 10, width: 250 },
-                        controlSize: SC.LARGE_CONTROL_SIZE,
-                        fontWeight: SC.BOLD_WEIGHT,
-                        value: 'Instrumentation Groups'
-                    }).classNames('whitelabel')
-                }),
-
-                mainContentView: SC.View.extend({
-                    childViews: ['hideInstrumentationGroupButtonView'],
-                    layout: {top: 40, bottom: 0, right: 0, left: 0},
-
-
-                    hideInstrumentationGroupButtonView: SC.ButtonView.extend({
-                        layout: {
-                            width: 80,
-                            bottom: 20,
-                            height: 24,
-                            centerX: 0
-                        },
-                        title: "Close",
-                        action: "remove",
-                        target: "EurekaJView.chartGridController.instrumentationGroupPanel"
-                    })
-                })
-            })
-        });
-        pane.append();
-        this.set('instrumentationGroupPanel', pane);
-    }
+    }.observes('selectedChartResolution')
 });

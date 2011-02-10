@@ -11,12 +11,12 @@
  @extends SC.View
  */
 EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
-    /** @scope EurekaJView.TimePeriodPaneView.prototype */ {
+/** @scope EurekaJView.TimePeriodPaneView.prototype */ {
 
     defaultResponder: EurekaJView,
     childViews: 'historicalPeriodContainerView'.w(),
 
-    childViews: 'chartOptionsHeadlineLabelView chartOptionsLabelView chartResolutionLabelView'.w(),
+    childViews: 'chartOptionsHeadlineLabelView fromLabelView fromTextFieldView selectFromButtonView toLabelView toTextFieldView selectToButtonView chartResolutionLabelView chartResolutionFieldView '.w(),
 
     chartOptionsHeadlineLabelView: SC.LabelView.design({
         layout: {
@@ -33,11 +33,11 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         value: 'HISTORICAL CHART'
     }).classNames(['greylabel', 'underlined']),
 
-    chartOptionsLabelView: SC.LabelView.design({
+    fromLabelView: SC.LabelView.design({
         layout: {
             left: 5,
             height: 17,
-            bottom: 35,
+            bottom: 70,
             width: 40
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
@@ -46,18 +46,109 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         value: 'From: '
     }).classNames('blacklabel'),
 
+    fromTextFieldView : SC.TextFieldView.design({
+        layout: {bottom: 70, height: 17, centerY:0, right: 30, left: 50 },
+        valueBinding: 'EurekaJView.chartGridController.selectedChartFromString'
+    }).classNames('smallTextfield'),
+
+    selectFromButtonView: SC.ImageView.design(SCUI.SimpleButton, {
+        layout: {bottom: 71, height: 16, centerY:0, right: 10, width: 16 },
+        value: static_url('images/ej_select_calenar_icon_16.png'),
+        toolTip: 'Select From Date'
+        //title: 'Administration',
+        //action: 'showAdministrationPaneAction'
+    }),
+
+    toLabelView: SC.LabelView.design({
+        layout: {
+            left: 5,
+            height: 17,
+            bottom: 35,
+            width: 40
+        },
+        controlSize: SC.NORMAL_CONTROL_SIZE,
+        textAlign: SC.ALIGN_LEFT,
+        value: 'To: '
+    }).classNames('blacklabel'),
+
+    toTextFieldView : SC.TextFieldView.design({
+        layout: {bottom: 35, height: 17, centerY:0, right: 30, left: 50 },
+        valueBinding: 'EurekaJView.chartGridController.selectedChartToString'
+    }).classNames('smallTextfield'),
+
+    selectToButtonView: SC.ImageView.design(SCUI.SimpleButton, {
+        layout: {bottom: 35, height: 16, centerY:0, right: 10, width: 16 },
+        value: static_url('images/ej_select_calenar_icon_16.png'),
+        toolTip: 'Select From Date'
+        //title: 'Administration',
+        //action: 'showAdministrationPaneAction'
+    }),
+
     chartResolutionLabelView: SC.LabelView.design({
         layout: {
             left: 5,
             height: 17,
             bottom: 5,
-            width: 40
+            width: 65
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
         //				fontWeight: SC.NORMAL_WEIGHT,
         textAlign: SC.ALIGN_LEFT,
-        value: 'To: '
-    }).classNames('blacklabel')
+        value: 'Resolution: '
+    }).classNames('blacklabel'),
+
+    chartResolutionFieldView: SC.SelectFieldView.design({
+        layout: {
+            bottom: 5,
+            height: 30,
+            left: 70,
+            right: 5
+        },
+        disableSort: YES,
+
+        objects: [
+            {
+                'chartResolutionName': '15 seconds',
+                'chartResolutionValue': 15
+            },
+            {
+                'chartResolutionName': '30 seconds',
+                'chartResolutionValue': 30
+            },
+            {
+                'chartResolutionName': '45 seconds',
+                'chartResolutionValue': 45
+            },
+            {
+                'chartResolutionName': '1 minute',
+                'chartResolutionValue': 60
+            },
+            {
+                'chartResolutionName': '3 minutes',
+                'chartResolutionValue': 180
+            },
+            {
+                'chartResolutionName': '10 minutes',
+                'chartResolutionValue': 600
+            },
+            {
+                'chartResolutionName': '20 minutes',
+                'chartResolutionValue': 1200
+            },
+            {
+                'chartResolutionName': '40 minutes',
+                'chartResolutionValue': 2400
+            }
+        ],
+        nameKey: 'chartResolutionName',
+        valueKey: 'chartResolutionValue',
+
+        acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+        }.property('isEnabled'),
+
+        valueBinding: 'EurekaJView.chartGridController.selectedChartResolution'
+    })
 
 
 

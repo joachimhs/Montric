@@ -20,6 +20,7 @@ EurekaJView.mainPage = SC.Page.design({
     instrumentationTreeScrollView: SC.outlet('mainPane.instrumentationTreeScrollView'),
     topView: SC.outlet('mainPane.topView'),
     flotChartGrid: SC.outlet('mainPane.flotChartGrid'),
+    informationPanelView: SC.outlet('mainPane.informationPanelView'),
 
     mainPane: SC.MainPane.design({
         defaultResponder: EurekaJView,

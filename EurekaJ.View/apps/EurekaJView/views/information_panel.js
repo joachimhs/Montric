@@ -14,32 +14,24 @@ sc_require('views/calendar')
 EurekaJView.InformationPanelView = SC.View.extend(
     /** @scope EurekaJView.AdministrationPaneView.prototype */ {
     defaultResponder: EurekaJView,
-    childViews: 'informationPanelTabView dateSelector timeSelector'.w(),
+    childViews: 'informationPanelTabView'.w(),
 
     informationPanelTabView: SC.TabView.design({
         layout: {
             top: 0,
-            height: 120,
+            height: 150,
             left: 5,
             right: 5
         },
         nowShowing: 'EurekaJView.LiveStatisticsOptionsView',
         itemTitleKey: 'title',
         itemValueKey: 'value',
+       // itemActionKey: 'action',
         items: [
-            {title: 'Live', value: 'EurekaJView.LiveStatisticsOptionsView'},
-            {title: 'Historical', value: 'EurekaJView.HistoricalStatisticsOptionsView'}
+            {action: 'testAction', title: 'Live', value: 'EurekaJView.LiveStatisticsOptionsView'},
+            {action: 'testAction', title: 'Historical', value: 'EurekaJView.HistoricalStatisticsOptionsView'}
         ]
 
-    }),
-
-    timeSelector: SCUI.TimeSelectorFieldView.design({
-        layout: {
-            top: 130,
-            height: 20,
-            left: 100,
-            width: 90
-        }
     }),
 
     dateSelector: EurekaJView.Calendar.design({
