@@ -48,20 +48,23 @@ EurekaJView.chartGridController = SC.ArrayController.create(
 
     observeChartFromChange: function() {
         var parsedDate = SC.DateTime.parse(this.get('selectedChartFromString'), this.get('dateFormat'));
-        SC.Logger.log('From Date parsed to: ' + parsedDate);
-        if (parsedDate) {
+        SC.Logger.log('From Date parsed to: ' + parsedDate.get('milliseconds') + ' alreadyselectedDate: ' + this.get('selectedChartFrom').get('milliseconds'));
+        if (parsedDate && parsedDate.get('milliseconds') <= this.get('selectedChartTo').get('milliseconds')) {
             this.set('selectedChartFrom', parsedDate);
-            this.refreshData();
+            //this.refreshData();
+        } else {
+            this.generateChartStrings();
         }
     }.observes('selectedChartFromString'),
 
     observeChartToChange: function() {
         var parsedDate =  SC.DateTime.parse(this.get('selectedChartToString'), this.get('dateFormat'));
         SC.Logger.log('To Date parsed to: ' + parsedDate);
-        if (parsedDate) {
-
-            this.set('selectedChartFrom', parsedDate);
-            this.refreshData();
+        if (parsedDate && parsedDate.get('milliseconds') >= this.get('selectedChartFrom').get('milliseconds')) {
+            this.set('selectedChartTo', parsedDate);
+            //this.refreshData();
+        } else {
+            this.generateChartStrings();
         }
     }.observes('selectedChartToString'),
 
