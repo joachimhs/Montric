@@ -18,6 +18,7 @@ public class BerkeleyDbEnv {
 	private EntityStore alertStore;
 	private EntityStore smtpServerStore;
 	private EntityStore dashboardStore;
+    private EntityStore triggeredAlertStore;
 	private EntityStore logStore;
 	
 	public BerkeleyDbEnv() {
@@ -53,6 +54,7 @@ public class BerkeleyDbEnv {
 		smtpServerStore = new EntityStore(environment, "SmtpServerStore", storeConfig);
 		dashboardStore = new EntityStore(environment, "DashboardStore", storeConfig);
 		logStore = new EntityStore(environment, "logStore", storeConfig);
+        triggeredAlertStore = new EntityStore(environment, "TriggeredAlertStore", storeConfig);
 	}
 	
 	public Environment getEnvironment() {
@@ -87,7 +89,11 @@ public class BerkeleyDbEnv {
 		return logStore;
 	}
 
-	public void close() {
+    public EntityStore getTriggeredAlertStore() {
+        return triggeredAlertStore;
+    }
+
+    public void close() {
 		if (treeMenuStore != null) {
 			try {
 				treeMenuStore.close();
@@ -147,6 +153,15 @@ public class BerkeleyDbEnv {
 				logStore.close();
 			} catch (DatabaseException dbe) {
 				System.err.println("Error closing logStore" + dbe.toString());
+                dbe.printStackTrace();
+			}
+		}
+
+        if (triggeredAlertStore != null) {
+			try {
+				triggeredAlertStore.close();
+			} catch (DatabaseException dbe) {
+				System.err.println("Error closing triggeredAlertStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}

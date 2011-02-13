@@ -1,9 +1,13 @@
 package org.eurekaj.manager.dao.berkeley;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import com.sleepycat.persist.SecondaryIndex;
 import org.eurekaj.manager.berkeley.BerkeleyDbEnv;
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
+import org.eurekaj.manager.berkeley.alert.TriggeredAlertPk;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.statistics.LiveStatisticsPk;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
@@ -20,7 +24,9 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 	private PrimaryIndex<LiveStatisticsPk, LiveStatistics> liveStatPrimaryIdx;
 	private PrimaryIndex<String, GroupedStatistics> groupedStatPrimaryIdx;
 	private PrimaryIndex<String, Alert> alertPrimaryIdx;
-	
+    private PrimaryIndex<TriggeredAlertPk, TriggeredAlert> triggeredAlertPrimaryIdx;
+    private SecondaryIndex<Long, TriggeredAlertPk, TriggeredAlert> triggeredAlertTimeperiodSecondaryIdx;
+
 	
 	public void setDbEnvironment(BerkeleyDbEnv dbEnvironment) {
 		this.dbEnvironment = dbEnvironment;
@@ -28,6 +34,8 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		liveStatPrimaryIdx = this.dbEnvironment.getLiveStatisticsStore().getPrimaryIndex(LiveStatisticsPk.class, LiveStatistics.class);
 		groupedStatPrimaryIdx = this.dbEnvironment.getTreeMenuStore().getPrimaryIndex(String.class, GroupedStatistics.class);
 		alertPrimaryIdx = this.dbEnvironment.getTreeMenuStore().getPrimaryIndex(String.class, Alert.class);
+        triggeredAlertPrimaryIdx = this.dbEnvironment.getTriggeredAlertStore().getPrimaryIndex(TriggeredAlertPk.class, TriggeredAlert.class);
+        triggeredAlertTimeperiodSecondaryIdx = this.dbEnvironment.getTriggeredAlertStore().getSecondaryIndex(triggeredAlertPrimaryIdx, Long.class, "triggeredTimeperiod");
 	}
 	
 	public Alert getAlert(String alertName) {
@@ -48,7 +56,84 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		return retList;
 	}
 
-	public GroupedStatistics getGroupedStatistics(String name) {
+    @Override
+    public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
+        triggeredAlertPrimaryIdx.put(triggeredAlert);
+    }
+
+    @Override
+    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
+        List<TriggeredAlert> retList = new ArrayList<TriggeredAlert>();
+
+        EntityCursor<TriggeredAlert> si_cursor = triggeredAlertTimeperiodSecondaryIdx.entities(fromTimeperiod, true, toTimeperiod, true);
+
+		try {
+			for (TriggeredAlert triggeredAlert : si_cursor) {
+				retList.add(triggeredAlert);
+			}
+			// Always make sure the cursor is closed when we are done with it.
+		} finally {
+			si_cursor.close();
+		}
+		return retList;
+    }
+
+    @Override
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
+        List<TriggeredAlert> retList = new ArrayList<TriggeredAlert>();
+
+        TriggeredAlertPk fromKey = new TriggeredAlertPk(alertname, fromTimeperiod);
+        TriggeredAlertPk toKey = new TriggeredAlertPk(alertname, toTimeperiod);
+
+        EntityCursor<TriggeredAlert> pi_cursor = triggeredAlertPrimaryIdx.entities(fromKey, true, toKey, true);
+
+		try {
+			for (TriggeredAlert triggeredAlert : pi_cursor) {
+				retList.add(triggeredAlert);
+			}
+			// Always make sure the cursor is closed when we are done with it.
+		} finally {
+			pi_cursor.close();
+		}
+		return retList;
+    }
+
+    @Override
+    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
+        List<TriggeredAlert> retList = new ArrayList<TriggeredAlert>();
+
+        Calendar nowCal = Calendar.getInstance();
+        Long fromTimeperiod = nowCal.getTimeInMillis() / 15000;
+        nowCal.add(Calendar.HOUR, -1 * 24 * 7);
+        Long toTimeperiod = nowCal.getTimeInMillis() / 15000;
+
+        EntityCursor<TriggeredAlert> si_cursor = triggeredAlertTimeperiodSecondaryIdx.entities(fromTimeperiod, true, toTimeperiod, true);
+
+		try {
+            //Ensure that we do not attempt to fetch more alerts than there are in the DB
+            if (numAlerts > si_cursor.count()) {
+                numAlerts = si_cursor.count();
+            }
+
+            //If there are any triggered alerts to fetch
+            if (numAlerts > 0) {
+                //Add the very last triggered alert to the return list
+                TriggeredAlert triggeredAlert = si_cursor.last();
+                retList.add(triggeredAlert);
+                //Add the remaining up to numAlerts - 1 triggered alerts to the return list
+                for (int i = 0; i < (numAlerts-1); i++) {
+                    triggeredAlert = si_cursor.prev();
+                    retList.add(triggeredAlert);
+                }
+            }
+			// Always make sure the cursor is closed when we are done with it.
+		} finally {
+			si_cursor.close();
+		}
+		return retList;
+    }
+
+    public GroupedStatistics getGroupedStatistics(String name) {
 		return groupedStatPrimaryIdx.get(name);
 	}
 

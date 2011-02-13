@@ -75,9 +75,12 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
-                isSelectable: NO,
+                isSelectable: YES,
 
-                contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects'
+                contentBinding: 'EurekaJView.instumentationGroupChartController.arrangedObjects',
+                exampleView: EurekaJView.InstrumentationGroupListItem,
+                recordType: EurekaJView.AdminstrationTreeModel,
+                action: 'EurekaJView.addSelectedChartsToChartGroup'
             })
         }),
 

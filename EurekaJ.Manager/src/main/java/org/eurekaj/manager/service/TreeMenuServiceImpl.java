@@ -2,6 +2,7 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.dao.berkeley.TreeMenuDao;
@@ -59,4 +60,24 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 	public List<Alert> getAlerts() {
 		return treeMenuDao.getAlerts();
 	}
+
+    @Override
+    public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
+        treeMenuDao.persistTriggeredAlert(triggeredAlert);
+    }
+
+    @Override
+    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
+        return treeMenuDao.getTriggeredAlerts(fromTimeperiod, toTimeperiod);
+    }
+
+    @Override
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
+        return treeMenuDao.getTriggeredAlerts(alertname, fromTimeperiod, toTimeperiod);
+    }
+
+    @Override
+    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
+        return treeMenuDao.getRecentTriggeredAlerts(numAlerts);
+    }
 }

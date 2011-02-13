@@ -2,6 +2,7 @@ package org.eurekaj.manager.dao.berkeley;
 
 import java.util.List;
 
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.perst.alert.Alert;
@@ -30,4 +31,12 @@ public interface TreeMenuDao {
 	public Alert getAlert(String alertName);
 
 	public List<Alert> getAlerts();
+
+    public void persistTriggeredAlert(TriggeredAlert triggeredAlert);
+
+    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod);
+
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod);
+
+    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts);
 }
