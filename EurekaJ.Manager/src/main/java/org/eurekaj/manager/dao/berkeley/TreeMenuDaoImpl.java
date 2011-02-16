@@ -256,7 +256,7 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 			String value, String valueType) {
 		
 		TreeMenuNode treeMenu = updateTreeMenu( guiPath, value != null);
-		Long valueLong = parseLong(value);
+		Double valueLong = parseDouble(value);
 		
 		LiveStatisticsPk searchStat = new LiveStatisticsPk();
 		searchStat.setGuiPath(guiPath);
@@ -267,9 +267,9 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 	}
 	
 	private void storeLiveStatistics(LiveStatistics oldStat,
-			Long valueLong, String valueType, String guiPath, Long timeperiod) {
+			Double valueDouble, String valueType, String guiPath, Long timeperiod) {
 
-        Long calculatedValue = calculateValueBasedOnValueType(valueLong, valueType);
+        Double calculatedValue = calculateValueBasedOnValueType(valueDouble, valueType);
 
 		if (oldStat != null) {
 			//We have a hit for a guipath and timeperiod. Update record
@@ -290,20 +290,20 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		}
 	}
 
-    private Long calculateValueBasedOnValueType(Long valueLong, String valueType) {
-        Long valueReturn = null;
+    private Double calculateValueBasedOnValueType(Double valueDouble, String valueType) {
+        Double valueReturn = null;
 
-        if (valueType.equalsIgnoreCase("ns")) {
+        if (valueDouble != null && valueType.equalsIgnoreCase("ns")) {
             //From nanoseconds to milliseconds
-            valueReturn = valueLong / 1000000;
+            valueReturn = valueDouble / 1000000;
         } else if (valueType.equalsIgnoreCase("ms") || valueType.equalsIgnoreCase("n")) {
-            valueReturn = valueLong;
-        } else if (valueType.equalsIgnoreCase("s")) {
+            valueReturn = valueDouble;
+        } else if (valueDouble != null && valueType.equalsIgnoreCase("s")) {
             //From seconds to milliseconds
-            valueReturn = valueLong * 1000;
-        } else if (valueType.equalsIgnoreCase("m")) {
+            valueReturn = valueDouble * 1000;
+        } else if (valueDouble != null && valueType.equalsIgnoreCase("m")) {
             //From minutes to milliseconds
-            valueReturn = valueLong * 60000;
+            valueReturn = valueDouble * 60000;
         }
 
         return valueReturn;

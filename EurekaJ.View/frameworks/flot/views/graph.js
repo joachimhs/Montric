@@ -185,7 +185,7 @@ Flot.GraphView = SC.View.extend(
     },
 
     yaxisConverter: function(yValue) {
-        var retVal = yValue;
+        var retVal = Math.round(yValue*1000)/1000;
         if (yValue >= 1000 && yValue < 1000000) {
             retVal = yValue / 1000;
             retVal = retVal + "k";

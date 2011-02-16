@@ -40,12 +40,12 @@ public class ChartUtil {
             XYDataPoint currentTick = new XYDataPoint();
             currentTick.setX(currentMillis);
             currentTick.setY(null);
-            long aggregatedValue = 0;
+            double aggregatedValue = 0.0d;
             int numStatsInCurrentTick = 0;
 
             for (int i = 0; i < numTicksInResolution; i++) {
                 LiveStatistics currStat = liveHash.get(currentMillis);
-                if (currStat == null) {
+                if (currStat == null || currStat.getValue() == null) {
                     //No stat for this timeperiod, skipping
                 } else {
                     //Add to current

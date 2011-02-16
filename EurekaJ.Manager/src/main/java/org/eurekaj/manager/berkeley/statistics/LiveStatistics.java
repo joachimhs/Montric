@@ -3,12 +3,12 @@ package org.eurekaj.manager.berkeley.statistics;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
-@Entity
+@Entity(version = 1)
 public class LiveStatistics implements Comparable<LiveStatistics>{
 	@PrimaryKey private LiveStatisticsPk pk;
-	private Long value;
+	private Double value;
 
-    public LiveStatistics(String guiPath, Long timeperiod, Long value) {
+    public LiveStatistics(String guiPath, Long timeperiod, Double value) {
         LiveStatisticsPk pk = new LiveStatisticsPk();
         pk.setGuiPath(guiPath);
         pk.setTimeperiod(timeperiod);
@@ -29,11 +29,11 @@ public class LiveStatistics implements Comparable<LiveStatistics>{
 	}
 	
 
-	public Long getValue() {
+	public Double getValue() {
 		return value;
 	}
 
-	public void setValue(Long value) {
+	public void setValue(Double value) {
 		this.value = value;
 	}
 	

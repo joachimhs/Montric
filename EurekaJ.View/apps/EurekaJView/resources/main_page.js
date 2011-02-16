@@ -162,6 +162,9 @@ EurekaJView.mainPage = SC.Page.design({
             hasHorizontalScroller: YES,
 
             contentView: SC.ListView.extend({
+                layout: {
+                    width: 450
+                },
                 backgroundColor: '#F0F8FF',
                 contentValueKey: "name",
                 rowHeight: 18,
