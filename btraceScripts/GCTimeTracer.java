@@ -13,7 +13,7 @@ import java.util.Deque;
 		Long timePeriod = ((timeNanos() / 15000000000l)*15000);
 		
 		if (size(gcTimes) >= 4) {
-			long gcTime = ((peekLast(gcTimes) - peekFirst(gcTimes) * 100)) / (size(gcTimes) * 15000);
+			double gcTime = ((double)(peekLast(gcTimes) - (double)peekFirst(gcTimes))  * 100d) / ((double)size(gcTimes) * 15000d);
 			
 			removeFirst(gcTimes);
 			
