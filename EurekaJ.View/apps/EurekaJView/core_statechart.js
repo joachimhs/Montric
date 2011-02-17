@@ -27,6 +27,24 @@ EurekaJView.statechart = SC.State.design({
             }
         }),
 
+        showingRightMenu: SC.State.design({
+            enterState: function() {
+                EurekaJView.mainPage.get('informationPanelView').set('isVisible', YES);
+                var triggeredAlerts = EurekaJView.EurekaJStore.find(EurekaJView.TRIGGERED_ALERTS_QUERY);
+                EurekaJView.triggeredAlertListController.set('content', triggeredAlerts);
+                EurekaJView.triggeredAlertListController.triggerTimer();
+                EurekaJView.triggeredAlertListController.timer.set('isPaused', NO);
+                SC.Logger.log('entered showRightMenu');
+            },
+
+            exitState: function() {
+                EurekaJView.mainPage.get('informationPanelView').set('isVisible', NO);
+                EurekaJView.triggeredAlertListController.timer.set('isPaused', YES);
+                SC.Logger.log('exited showRightMenu');
+            }
+
+        }),
+
         showingTopMenu: SC.State.design({
             enterState: function() {
                 EurekaJView.mainPage.get('topView').set('isVisible', YES);

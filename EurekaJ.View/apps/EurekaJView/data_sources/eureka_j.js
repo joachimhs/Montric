@@ -29,6 +29,11 @@ EurekaJView.INSTRUMENTATION_GROUPS_QUERY = SC.Query.local(EurekaJView.Instrument
 EurekaJView.EMAIL_GROUPS_QUERY = SC.Query.local(EurekaJView.EmailGroupModel, {
     orderby: 'emailGroupName'
 });
+
+EurekaJView.TRIGGERED_ALERTS_QUERY = SC.Query.local(EurekaJView.TriggeredAlertModel, {
+    orderby: 'triggeredDate'
+});
+
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 /** @scope EurekaJView.EurekaJDataSource.prototype */
 {
@@ -106,6 +111,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (query === EurekaJView.TRIGGERED_ALERTS_QUERY) {
+            SC.Logger.log('fetching triggered alerts...');
+            var requestStringJson = {
+                'getTriggeredAlerts': true
+            };
+
+            SC.Request.postUrl('/alert').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchTriggeredAlerts', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
         return NO; // return YES if you handled the query
     },
 
@@ -153,6 +171,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (SC.ok(response)) {
             SC.Logger.log('Email Groups Fetched');
             store.loadRecords(EurekaJView.EmailGroupModel, response.get('body').emailGroups);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchTriggeredAlerts: function(response, store, query) {
+        if (SC.ok(response)) {
+            SC.Logger.log('Triggered Alerts Fetched');
+            store.loadRecords(EurekaJView.TriggeredAlertModel, response.get('body').triggeredAlerts);
             store.dataSourceDidFetchQuery(query);
         } else {
             store.dataSourceDidErrorQuery(query, response);

@@ -18,10 +18,10 @@ public class SendEmailTask implements Runnable {
 	private EmailRecipientGroup emailRecipientGroup;
 	private Alert alert;
 	private int oldStatus;
-	private long currValue;
+	private double currValue;
 	private String timeString;
 
-	public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, int oldStatus, long currValue, String timeString) {
+	public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, int oldStatus, double currValue, String timeString) {
 		super();
 		this.emailRecipientGroup = emailRecipientGroup;
 		this.alert = alert;

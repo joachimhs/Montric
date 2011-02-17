@@ -1,5 +1,6 @@
 package org.eurekaj.manager.servlets;
 
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.perst.alert.Alert;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,6 +44,14 @@ public class AlertServlet extends EurekaJGenericServlet {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
 
                 }
+            }
+
+            if (jsonObject.has("getTriggeredAlerts")) {
+                Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
+                Long fromTimePeriod = toTimePeriod - (4 * 60);
+                List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);
+                jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
+                System.out.println("Got Triggered Alerts:\n" + jsonResponse);
             }
 
         } catch (JSONException jsonException) {

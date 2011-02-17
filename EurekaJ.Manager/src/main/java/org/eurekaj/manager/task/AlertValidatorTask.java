@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.tools.ant.taskdefs.SendEmail;
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
+import org.eurekaj.manager.berkeley.alert.TriggeredAlertPk;
 import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.perst.alert.Alert;
@@ -58,10 +61,16 @@ public class AlertValidatorTask {
 				//Get statistics and evaluate alert condition
 				alert.setStatus(evaluateStatistics(alert, statList));
 				if (oldStatus != alert.getStatus()) {
+                    //Status have changed, store new triggeredAlert and send email
+                    TriggeredAlertPk triggeredAlertPk = new TriggeredAlertPk(alert.getAlertName(), statList.get(statList.size() -1).getPk().getTimeperiod());
+                    TriggeredAlert triggeredAlert = new TriggeredAlert(triggeredAlertPk, alert.getErrorValue(), alert.getWarningValue(), statList.get(statList.size() - 1).getValue());
+                    treeMenuService.persistTriggeredAlert(triggeredAlert);
+
 					Calendar cal = Calendar.getInstance();
 					for (String emailGroup : alert.getSelectedEmailSenderList()) {
 						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup);
 						if (emailRecipientGroup != null) {
+                            //public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, int oldStatus, long currValue, String timeString) {)
 							SendEmailTask sendEmailTask = new SendEmailTask(emailRecipientGroup, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
 							sendEmailExecutor.execute(sendEmailTask);
 						}
@@ -95,7 +104,7 @@ public class AlertValidatorTask {
         boolean thresholdBreached = true;
 		for (LiveStatistics stat : statList) {
 			Double statThreshold = null;
-			Long value = stat.getValue();
+			Double value = stat.getValue();
             if (value != null) {
                 statThreshold = value.doubleValue();
             }

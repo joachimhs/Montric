@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
+import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.perst.alert.Alert;
@@ -302,6 +299,27 @@ public class BuildJsonObjectsUtil {
         alertsObject.put("alerts", alertArray);
 
         return alertsObject.toString();
+    }
+
+    public static String generateTriggeredAlertsJson(List<TriggeredAlert> triggeredAlertList) throws JSONException {
+        JSONObject triggeredAlertsObject = new JSONObject();
+
+        JSONArray alertArray = new JSONArray();
+        int generatedID = 0;
+        for (TriggeredAlert triggeredAlert : triggeredAlertList) {
+            JSONObject triggeredAlertObject = new JSONObject();
+            triggeredAlertObject.put("generatedID", ++generatedID);
+            triggeredAlertObject.put("alertName", triggeredAlert.getPk().getAlertName());
+            triggeredAlertObject.put("triggeredDate", triggeredAlert.getPk().getTimeperiod() * 15000);
+            triggeredAlertObject.put("errorValue", triggeredAlert.getErrorValue());
+            triggeredAlertObject.put("warningValue", triggeredAlert.getWarningValue());
+            triggeredAlertObject.put("triggeredValue", triggeredAlert.getAlertValue());
+            alertArray.put(triggeredAlertObject);
+        }
+
+        triggeredAlertsObject.put("triggeredAlerts", alertArray);
+
+        return triggeredAlertsObject.toString();
     }
 
     public static String generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
