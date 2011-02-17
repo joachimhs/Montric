@@ -30,6 +30,6 @@ EurekaJView.TriggeredAlertModel = SC.Record.extend(
         } else if (this.get('triggeredValue') >= this.get('warningValue')) {
             alertType = 'WARNING';
         }
-        return  this.get('alertName') + ' ' + alertType + " " + datetime.toFormattedString("%d/%m/%Y %H:%M") + " " + this.get('errorValue') + " " + this.get('warningValue') + " " + this.get('triggeredValue');
+        return  this.get('alertName') + ' ' + alertType + " " + datetime.toFormattedString("%d/%m/%Y %H:%M:%S") + " " + this.get('errorValue') + " " + this.get('warningValue') + " " + this.get('triggeredValue');
     }.property()
 }) ;
