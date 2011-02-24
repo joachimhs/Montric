@@ -49,9 +49,7 @@
 		<xsd:sequence>
 			<xsd:element name="guiPath" type="xsd:string" />
 			<xsd:element name="timePeriod" type="xsd:long" />
-			<xsd:element name="totalExecutionTime" type="xsd:double" nillable="true" />
-			<xsd:element name="callsPerInterval" type="xsd:long" nillable="true" />
-			<xsd:element name="value" type="xsd:long" nillable="true" />
+			<xsd:element name="value" type="xsd:double" nillable="true" />
 		</xsd:sequence>
 	</xsd:complexType>
 	<!-- //Get Live Statistics -->

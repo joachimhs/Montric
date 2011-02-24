@@ -34,7 +34,7 @@ EurekaJView.ChartView = SC.View.extend(
         layout: { top: 30, right: 5, bottom: 5, left: 5 },
 		seriesBinding: '.parentView.content',
 		//data: [SC.Object.create({label: 'set1', data:[[1,1], [2,2]]})],
-		debugInConsole: YES,
+		debugInConsole: NO,
 		showTooltip: YES
 	})
 

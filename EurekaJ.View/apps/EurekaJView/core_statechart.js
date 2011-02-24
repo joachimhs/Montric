@@ -30,8 +30,6 @@ EurekaJView.statechart = SC.State.design({
         showingRightMenu: SC.State.design({
             enterState: function() {
                 EurekaJView.mainPage.get('informationPanelView').set('isVisible', YES);
-                var triggeredAlerts = EurekaJView.EurekaJStore.find(EurekaJView.TRIGGERED_ALERTS_QUERY);
-                EurekaJView.triggeredAlertListController.set('content', triggeredAlerts);
                 EurekaJView.triggeredAlertListController.triggerTimer();
                 EurekaJView.triggeredAlertListController.timer.set('isPaused', NO);
                 SC.Logger.log('entered showRightMenu');

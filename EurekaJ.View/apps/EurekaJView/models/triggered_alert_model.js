@@ -31,5 +31,5 @@ EurekaJView.TriggeredAlertModel = SC.Record.extend(
             alertType = 'WARNING';
         }
         return  this.get('alertName') + ' ' + alertType + " " + datetime.toFormattedString("%d/%m/%Y %H:%M:%S") + " " + this.get('errorValue') + " " + this.get('warningValue') + " " + this.get('triggeredValue');
-    }.property()
+    }.property('generatedID').cacheable()
 }) ;

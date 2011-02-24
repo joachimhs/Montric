@@ -3,7 +3,7 @@ package org.eurekaj.manager.berkeley.statistics;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
-@Entity(version = 1)
+@Entity(version = 2)
 public class LiveStatistics implements Comparable<LiveStatistics>{
 	@PrimaryKey private LiveStatisticsPk pk;
 	private Double value;

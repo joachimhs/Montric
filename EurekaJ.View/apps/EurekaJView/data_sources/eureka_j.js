@@ -11,6 +11,7 @@
  @extends SC.DataSource
  */
 sc_require('models/instrumentation_tree_model.js');
+sc_require('models/triggered_alert_model.js');
 EurekaJView.INSTRUMENTATION_TREE_QUERY = SC.Query.local(EurekaJView.InstrumentationTreeModel, {
     orderby: 'guiPath'
 });
@@ -179,7 +180,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
     performFetchTriggeredAlerts: function(response, store, query) {
         if (SC.ok(response)) {
-            SC.Logger.log('Triggered Alerts Fetched');
+            SC.Logger.log('Triggered Alerts Fetched: '  + response.get('body').triggeredAlerts);
             store.loadRecords(EurekaJView.TriggeredAlertModel, response.get('body').triggeredAlerts);
             store.dataSourceDidFetchQuery(query);
         } else {

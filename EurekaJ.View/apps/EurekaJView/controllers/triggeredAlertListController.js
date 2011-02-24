@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   EurekaJView.instrumentationGroupAdminController
+// Project:   EurekaJView.triggeredAlertListController
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
 /*globals EurekaJView */
@@ -16,7 +16,6 @@ EurekaJView.triggeredAlertListController = SC.ArrayController.create(
     timer: null,
 
     refreshData: function() {
-        SC.Logger.log('Refreshing Instrumentation Menu');
         EurekaJView.EurekaJStore.find(EurekaJView.TRIGGERED_ALERTS_QUERY).refresh();
     },
 
@@ -25,6 +24,7 @@ EurekaJView.triggeredAlertListController = SC.ArrayController.create(
         if (this.get('timer')) {
             SC.Logger.log('Timer already started');
         } else {
+            this.set('content', EurekaJView.EurekaJStore.find(EurekaJView.TRIGGERED_ALERTS_QUERY));
             SC.Logger.log('Starting Timer');
             var timer = SC.Timer.schedule({
                 target: EurekaJView.triggeredAlertListController,
@@ -34,5 +34,13 @@ EurekaJView.triggeredAlertListController = SC.ArrayController.create(
             });
             this.set('timer', timer)
         }
-    }
+    },
+
+    observesContent: function() {
+        SC.Logger.log('triggeredAlertListController observesContent: ' + this.get('content') + 'size: ' + this.get('content').toArray().length)
+
+        this.get('content').forEach(function(triggeredAlert) {
+            SC.Logger.log('triggeredAlert: ' + triggeredAlert);
+        });
+    }//.observes('content')
 });
