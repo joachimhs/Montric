@@ -62,7 +62,7 @@ public class TraceMem {
 		Strings.append(sb, ";Memory;");
 		Strings.append(sb, "Heap:%_Used;");
 		Strings.append(sb, str((used(heapUsage()) * 100) / max(heapUsage())));
-		Strings.append(sb, ";n;");
+		Strings.append(sb, ";n;value;");
 		Strings.append(sb, str(timePeriod));
 		Strings.append(sb, "]");
 		println(str(sb));
@@ -73,7 +73,7 @@ public class TraceMem {
 		Strings.append(sb, ";Memory;");
 		Strings.append(sb, "NonHeap:%_Used;");
 		Strings.append(sb, str((used(nonHeapUsage()) * 100) / max(nonHeapUsage())));
-		Strings.append(sb, ";n;");
+		Strings.append(sb, ";n;value;");
 		Strings.append(sb, str(timePeriod));
 		Strings.append(sb, "]");
 		println(str(sb));

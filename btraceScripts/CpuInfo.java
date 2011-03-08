@@ -19,7 +19,7 @@ public class CpuInfo {
 		Strings.append(sb, ";CPU;");
 		Strings.append(sb, "Number of Processors;");
 		Strings.append(sb, str(Sys.VM.numberOfProcessors()));
-		Strings.append(sb, ";n;");
+		Strings.append(sb, ";n;value;");
 		Strings.append(sb, str(timePeriod));
 		Strings.append(sb, "]");
 		println(str(sb));
@@ -30,7 +30,7 @@ public class CpuInfo {
 		Strings.append(sb, ";CPU;");
 		Strings.append(sb, "System Load Average;");
 		Strings.append(sb, str(Sys.VM.systemLoadAverage()));
-		Strings.append(sb, ";n;");
+		Strings.append(sb, ";n;value;");
 		Strings.append(sb, str(timePeriod));
 		Strings.append(sb, "]");
 		println(str(sb));
@@ -42,7 +42,7 @@ public class CpuInfo {
 		Strings.append(sb, ";CPU;");
 		Strings.append(sb, "Process CPU Time;");
 		Strings.append(sb, str(totalCpuTime));
-		Strings.append(sb, ";ns;");
+		Strings.append(sb, ";ns;value;");
 		Strings.append(sb, str(timePeriod));
 		Strings.append(sb, "]");
 		println(str(sb));
@@ -59,7 +59,7 @@ public class CpuInfo {
 			Strings.append(sb, ";CPU;");
 			Strings.append(sb, "CPU Utilization (%);");
 			Strings.append(sb, str(cpuPercent));
-			Strings.append(sb, ";n;");
+			Strings.append(sb, ";n;value;");
 			Strings.append(sb, str(timePeriod));
 			Strings.append(sb, "]");
 			println(str(sb));
