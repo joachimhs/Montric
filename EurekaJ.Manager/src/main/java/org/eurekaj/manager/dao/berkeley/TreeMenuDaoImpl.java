@@ -16,6 +16,8 @@ import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 
 import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.PrimaryIndex;
+import org.eurekaj.webservice.UnitType;
+import org.eurekaj.webservice.ValueType;
 
 public class TreeMenuDaoImpl implements TreeMenuDao {
 	private BerkeleyDbEnv dbEnvironment;
@@ -253,7 +255,7 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 	}
 	
 	public void storeIncomingStatistics(String guiPath, Long timeperiod,
-			String value, String valueType) {
+			String value, ValueType valueType, UnitType unitType) {
 		
 		TreeMenuNode treeMenu = updateTreeMenu( guiPath, value != null);
 		Double valueLong = parseDouble(value);
@@ -263,19 +265,19 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		searchStat.setTimeperiod(timeperiod);
 		
 		LiveStatistics oldStat = liveStatPrimaryIdx.get(searchStat);
-		storeLiveStatistics(oldStat, valueLong, valueType, guiPath, timeperiod);
+		storeLiveStatistics(oldStat, valueLong, valueType, unitType, guiPath, timeperiod);
 	}
 	
 	private void storeLiveStatistics(LiveStatistics oldStat,
-			Double valueDouble, String valueType, String guiPath, Long timeperiod) {
+			Double valueDouble, ValueType valueType, UnitType unitType, String guiPath, Long timeperiod) {
 
-        Double calculatedValue = calculateValueBasedOnValueType(valueDouble, valueType);
+        Double calculatedValue = calculateValueBasedOnUnitType(valueDouble, unitType);
 
 		if (oldStat != null) {
 			//We have a hit for a guipath and timeperiod. Update record
 			//If there is a callsPerInterval, calculate new avg Execution time
 			//Always set new value
-			oldStat.setValue(calculatedValue);
+			oldStat.setValue(calculateValueBasedOnValueType(oldStat, calculatedValue, valueType));
 			liveStatPrimaryIdx.put(oldStat);
 		} else {
 			//No hit, create new LiveStatistics
@@ -290,20 +292,31 @@ public class TreeMenuDaoImpl implements TreeMenuDao {
 		}
 	}
 
-    private Double calculateValueBasedOnValueType(Double valueDouble, String valueType) {
+    private Double calculateValueBasedOnValueType(LiveStatistics oldStat, Double newValue, ValueType valueType) {
+        Double valueReturn = newValue;
+
+        if (valueType == ValueType.VALUE) {
+            valueReturn = newValue;
+        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AGGREGATE) {
+            valueReturn = oldStat.getValue() + newValue;
+        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AVERAGE) {
+            valueReturn = (oldStat.getValue() + newValue) / 2;
+        }
+
+        return valueReturn;
+    }
+
+    private Double calculateValueBasedOnUnitType(Double valueDouble, UnitType unitType) {
         Double valueReturn = null;
 
-        if (valueDouble != null && valueType.equalsIgnoreCase("ns")) {
+        if (valueDouble != null && unitType == UnitType.NS) {
             //From nanoseconds to milliseconds
             valueReturn = valueDouble / 1000000;
-        } else if (valueType.equalsIgnoreCase("ms") || valueType.equalsIgnoreCase("n")) {
+        } else if (unitType == UnitType.MS || unitType == UnitType.N) {
             valueReturn = valueDouble;
-        } else if (valueDouble != null && valueType.equalsIgnoreCase("s")) {
+        } else if (valueDouble != null && unitType == UnitType.S) {
             //From seconds to milliseconds
             valueReturn = valueDouble * 1000;
-        } else if (valueDouble != null && valueType.equalsIgnoreCase("m")) {
-            //From minutes to milliseconds
-            valueReturn = valueDouble * 60000;
         }
 
         return valueReturn;

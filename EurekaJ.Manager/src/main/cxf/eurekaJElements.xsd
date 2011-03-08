@@ -16,9 +16,28 @@
 			<xsd:element name="guiPath" type="xsd:string" nillable="false" />
 			<xsd:element name="timeperiod" type="xsd:long" nillable="false" />
 			<xsd:element name="value" type="xsd:string" nillable="true" />
-            <xsd:element name="valueType" type="xsd:string" nillable="true" />
+
+            <xsd:element name="valueType" type="tns:valueType" nillable="true" />
+            <xsd:element name="unitType" type="tns:unitType" nillable="true" />
 		</xsd:sequence>
 	</xsd:complexType>
+
+    <xsd:simpleType name="valueType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="aggregate"/>
+            <xsd:enumeration value="value"/>
+            <xsd:enumeration value="average"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="unitType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ns"/>
+            <xsd:enumeration value="ms"/>
+            <xsd:enumeration value="s"/>
+            <xsd:enumeration value="n"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
 	<xsd:element name="storeIncomingStatisticsResponse" type="tns:storeIncomingStatisticsResponse" />
 	<xsd:complexType name="storeIncomingStatisticsResponse">

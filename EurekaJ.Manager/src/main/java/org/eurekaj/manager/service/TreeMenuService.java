@@ -7,10 +7,12 @@ import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.webservice.UnitType;
+import org.eurekaj.webservice.ValueType;
 
 public interface TreeMenuService {
 
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, String valueType);
+	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType);
 	
 	public List<TreeMenuNode> getTreeMenu();
 	

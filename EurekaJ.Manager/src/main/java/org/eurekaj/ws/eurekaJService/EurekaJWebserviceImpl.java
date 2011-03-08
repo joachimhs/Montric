@@ -51,7 +51,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		boolean retValue = true;
 		
 		for (StoreIncomingStatisticsElement sise: storeIncomingStatisticsList) {
-			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getValue(), sise.getValueType());
+			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getValue(), sise.getValueType(), sise.getUnitType());
 		}
 		
 		return retValue;

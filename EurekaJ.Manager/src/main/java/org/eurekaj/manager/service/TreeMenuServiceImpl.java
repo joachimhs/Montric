@@ -8,6 +8,8 @@ import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.dao.berkeley.TreeMenuDao;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.webservice.UnitType;
+import org.eurekaj.webservice.ValueType;
 
 public class TreeMenuServiceImpl implements TreeMenuService {
 	private TreeMenuDao treeMenuDao;
@@ -20,8 +22,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		this.treeMenuDao = treeMenuDao;
 	}
 	
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, String valueType) {
-		treeMenuDao.storeIncomingStatistics(guiPath, timeperiod, value, valueType);
+	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
+		treeMenuDao.storeIncomingStatistics(guiPath, timeperiod, value, valueType, unitType);
 	}
 	
 	public List<TreeMenuNode> getTreeMenu() {
