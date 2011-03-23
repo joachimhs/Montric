@@ -1,5 +1,9 @@
 package org.eurekaj.proxy.parser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +13,59 @@ import org.eurekaj.webservice.UnitType;
 import org.eurekaj.webservice.ValueType;
 
 public class ParseStatistics {
+
+    public static List<StoreIncomingStatisticsElement> parseBtraceFile(File file) throws IOException {
+		ParseStatistics parser = new ParseStatistics();
+		List<StoreIncomingStatisticsElement> statElemList = new ArrayList<StoreIncomingStatisticsElement>();
+
+		BufferedReader inStream = new BufferedReader(new FileReader(file));
+		String line = inStream.readLine();
+		while (line != null) {
+			//Trim away start and end square brackets.
+			if (line.startsWith("[") && line.endsWith("]")) {
+	    		line = line.substring(1, line.length()-1);
+	    	} else {
+	    		//If line does not start and end with square brackets, ignore line
+	    		line = inStream.readLine();
+	    		continue;
+	    	}
+
+
+			if (line.startsWith("Value;")) {
+	    		line = line.substring("Value;".length());
+	    		statElemList.addAll(parser.processValueInstrumentation(line));
+	    	} else if (line.startsWith("HeapMemory;" )) {
+	    		line = line.substring("HeapMemory;".length());
+	    		statElemList.addAll(parser.processHeapMemory(line));
+	    	} else if(line.startsWith("NonHeapMemory;")) {
+	    		line = line.substring("NonHeapMemory;".length());
+	    		statElemList.addAll(parser.processNonHeapMemory(line));
+	    	} else if (line.startsWith("MemoryPool;")) {
+	    		line = line.substring("MemoryPool;".length());
+	    		statElemList.addAll(parser.processMemoryPool(line));
+	    	} else if(line.startsWith("Threads;")) {
+	    		line = line.substring("Threads;".length());
+	    		statElemList.addAll(parser.processThreads(line));
+	    	} else if (line.startsWith("GCTime;")) {
+	    		line = line.substring("GCTime;".length());
+	    		statElemList.addAll(parser.processGCTime(line));
+	    	} else if (line.startsWith("ProfilingV1;")) {
+	    		line = line.substring("ProfilingV1;".length());
+	    		statElemList.addAll(parser.processBtraceProfiling(line));
+	    	}
+
+	    	//[ThreadsReturnedByType;JSFlotAgent;java.lang.Thread;5;1272278445000]
+	    	//[ThreadsStartedByType;JSFlotAgent;java.util.TimerThread;1;1272278445000]
+
+	    	/*else if (line.startsWith("LogTracer;")) {
+	    		line = line.substring("LogTracer;".length());
+	    		statElemList.addAll(parser.processLogTrace(line));
+	    	}*/
+	    	line = inStream.readLine();
+		}
+		return statElemList;
+	}
+
 	private static Logger log = Logger.getLogger(ParseStatistics.class);
 	private static String DELIMETER = ";";
 	
