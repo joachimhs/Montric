@@ -73,6 +73,24 @@ EurekaJView.mixin( {
                 EurekaJView.selectedInstrumentationGroupController.get('content').pushObject(chart);
             }
         }, this);
+    },
+
+    /*
+    Applying changes to historical time ranges.
+     */
+    applyHistoricalChanges: function() {
+        var parsedFromDate = SC.DateTime.parse(EurekaJView.chartGridController.get('selectedChartFromString'), EurekaJView.chartGridController.get('dateFormat'));
+        var parsedToDate = SC.DateTime.parse(EurekaJView.chartGridController.get('selectedChartToString'), EurekaJView.chartGridController.get('dateFormat'));
+
+        //If dates are parseable and the from-date is before or equal to the to-date, then change the dates
+        if (parsedFromDate && parsedToDate && parsedFromDate.get('milliseconds') <= parsedToDate.get('milliseconds')) {
+            EurekaJView.chartGridController.set('selectedChartFrom', parsedFromDate);
+            EurekaJView.chartGridController.set('selectedChartTo', parsedToDate);
+        }
+
+        //Generate new strings for the GUI and refresh the chart
+        EurekaJView.chartGridController.generateChartStrings();
+        EurekaJView.chartGridController.refreshData();
     }
 
 });

@@ -14,9 +14,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
 /** @scope EurekaJView.TimePeriodPaneView.prototype */ {
 
     defaultResponder: EurekaJView,
-    childViews: 'historicalPeriodContainerView'.w(),
-
-    childViews: 'chartOptionsHeadlineLabelView fromLabelView fromTextFieldView selectFromButtonView toLabelView toTextFieldView selectToButtonView chartResolutionLabelView chartResolutionFieldView '.w(),
+    childViews: 'chartOptionsHeadlineLabelView fromLabelView fromTextFieldView selectFromButtonView toLabelView toTextFieldView selectToButtonView chartResolutionLabelView chartResolutionFieldView applyHistoricalChangesButtonView '.w(),
 
     chartOptionsHeadlineLabelView: SC.LabelView.design({
         layout: {
@@ -37,7 +35,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         layout: {
             left: 5,
             height: 17,
-            bottom: 70,
+            bottom: 100,
             width: 40
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
@@ -47,12 +45,12 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
     }).classNames('blacklabel'),
 
     fromTextFieldView : SC.TextFieldView.design({
-        layout: {bottom: 70, height: 17, centerY:0, right: 30, left: 50 },
+        layout: {bottom: 100, height: 17, centerY:0, right: 30, left: 50 },
         valueBinding: 'EurekaJView.chartGridController.selectedChartFromString'
     }).classNames('smallTextfield'),
 
     selectFromButtonView: SC.ImageView.design(SCUI.SimpleButton, {
-        layout: {bottom: 71, height: 16, centerY:0, right: 10, width: 16 },
+        layout: {bottom: 101, height: 16, centerY:0, right: 10, width: 16 },
         value: static_url('images/ej_select_calenar_icon_16.png'),
         toolTip: 'Select From Date'
         //title: 'Administration',
@@ -63,7 +61,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         layout: {
             left: 5,
             height: 17,
-            bottom: 35,
+            bottom: 70,
             width: 40
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
@@ -72,12 +70,12 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
     }).classNames('blacklabel'),
 
     toTextFieldView : SC.TextFieldView.design({
-        layout: {bottom: 35, height: 17, centerY:0, right: 30, left: 50 },
+        layout: {bottom: 70, height: 17, centerY:0, right: 30, left: 50 },
         valueBinding: 'EurekaJView.chartGridController.selectedChartToString'
     }).classNames('smallTextfield'),
 
     selectToButtonView: SC.ImageView.design(SCUI.SimpleButton, {
-        layout: {bottom: 35, height: 16, centerY:0, right: 10, width: 16 },
+        layout: {bottom: 70, height: 16, centerY:0, right: 10, width: 16 },
         value: static_url('images/ej_select_calenar_icon_16.png'),
         toolTip: 'Select From Date'
         //title: 'Administration',
@@ -88,7 +86,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         layout: {
             left: 5,
             height: 17,
-            bottom: 5,
+            bottom: 35,
             width: 65
         },
         controlSize: SC.NORMAL_CONTROL_SIZE,
@@ -99,7 +97,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
 
     chartResolutionFieldView: SC.SelectFieldView.design({
         layout: {
-            bottom: 5,
+            bottom: 35,
             height: 30,
             left: 70,
             right: 5
@@ -148,6 +146,17 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         }.property('isEnabled'),
 
         valueBinding: 'EurekaJView.chartGridController.selectedChartResolution'
+    }),
+
+    applyHistoricalChangesButtonView: SC.ButtonView.extend({
+        layout: {
+            bottom: 5,
+            height: 30,
+            left: 70,
+            right: 5
+        },
+        title: "Apply Changes",
+        action: "EurekaJView.applyHistoricalChanges"
     })
 
 

@@ -24,6 +24,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     dateFormat: '%d/%m/%Y %H:%M',
     showHistoricalData: NO,
     nowShowingTab: null,
+    orderBy: 'name',
 
     init: function() {
         var fromDate = this.get('selectedChartFrom').advance({minute: -10});
@@ -44,9 +45,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
         this.refreshData();
     }.observes('nowShowingTab'),
 
-    orderBy: 'name',
-
-    observeChartFromChange: function() {
+    /*observeChartFromChange: function() {
         var parsedDate = SC.DateTime.parse(this.get('selectedChartFromString'), this.get('dateFormat'));
         SC.Logger.log('From Date parsed to: ' + parsedDate.get('milliseconds') + ' alreadyselectedDate: ' + this.get('selectedChartFrom').get('milliseconds'));
         if (parsedDate && parsedDate.get('milliseconds') <= this.get('selectedChartTo').get('milliseconds')) {
@@ -66,7 +65,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
         } else {
             this.generateChartStrings();
         }
-    }.observes('selectedChartToString'),
+    }.observes('selectedChartToString'), */
 
     generateChartStrings: function() {
         this.set('selectedChartFromString', this.generateChartString(this.get('selectedChartFrom')));
@@ -87,6 +86,12 @@ EurekaJView.chartGridController = SC.ArrayController.create(
         return dateString;
     },
 
+    refreshDataFromTimer: function() {
+        if (this.get('showHistoricalData') === NO) {
+            this.refreshData();
+        }
+    },
+
     refreshData: function() {
         if (this.get('content')) {
             this.get('content').forEach(function(item, index, enumerable) {
@@ -103,7 +108,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             SC.Logger.log('Starting Timer');
             var timer = SC.Timer.schedule({
                 target: EurekaJView.chartGridController,
-                action: 'refreshData',
+                action: 'refreshDataFromTimer',
                 interval: 15000,
                 repeats: YES
             });
@@ -112,10 +117,14 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     },
 
     observesChartTimespan: function() {
-        this.refreshData();
+        if (this.get('showHistoricalData') === NO) {
+            this.refreshData();
+        }
     }.observes('selectedChartTimespan'),
 
     observesChartResolution: function() {
-        this.refreshData();
+        if (this.get('showHistoricalData') === NO) {
+            this.refreshData();
+        }
     }.observes('selectedChartResolution')
 });

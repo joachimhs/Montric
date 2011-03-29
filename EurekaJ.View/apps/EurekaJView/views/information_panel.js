@@ -20,7 +20,7 @@ EurekaJView.InformationPanelView = SC.View.extend(
     informationPanelTabView: SC.TabView.design({
         layout: {
             top: 0,
-            height: 150,
+            height: 200,
             left: 5,
             right: 5
         },
@@ -40,7 +40,7 @@ EurekaJView.InformationPanelView = SC.View.extend(
             centerY: 0,
             centerX: 0,
             height: 30,
-            top: 160,
+            top: 210,
             left: 5,
             right: 5
         },
@@ -52,7 +52,7 @@ EurekaJView.InformationPanelView = SC.View.extend(
 
     triggeredAlertScrollView: SC.ScrollView.design({
         layout: {
-            top: 180,
+            top: 230,
             bottom: 25,
             left: 5,
             right: 5
