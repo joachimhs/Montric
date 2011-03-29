@@ -8,6 +8,7 @@
     <http use-expressions="true">
         <form-login login-page="/index.html" default-target-url="/eurekaJView/EurekaJView.html" authentication-failure-url="/index.html?loginFailed=true" />
         <intercept-url pattern="/index.html" access="permitAll"/>
+        <intercept-url pattern="/webservices/**" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <logout />
     </http>
