@@ -4,11 +4,11 @@ import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,13 +32,13 @@ public class AlertServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("getAlerts")) {
+            if (jsonObject.has("getAlerts") && SecurityManager.isAuthenticatedAsUser()) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
                 System.out.println("Got Alerts:\n" + jsonResponse);
 
             }
 
-            if (jsonObject.has("alertInstrumentationNode")) {
+            if (jsonObject.has("alertInstrumentationNode") && SecurityManager.isAuthenticatedAsAdmin()) {
                 Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
@@ -46,7 +46,7 @@ public class AlertServlet extends EurekaJGenericServlet {
                 }
             }
 
-            if (jsonObject.has("getTriggeredAlerts")) {
+            if (jsonObject.has("getTriggeredAlerts") && SecurityManager.isAuthenticatedAsUser()) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
                 List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);

@@ -2,6 +2,7 @@ package org.eurekaj.manager.servlets;
 
 import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
+import org.eurekaj.manager.security.SecurityManager;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("getInstrumentationMenu")) {
+            if (jsonObject.has("getInstrumentationMenu") && SecurityManager.isAuthenticatedAsUser()) {
                 String menuId = jsonObject.getString("getInstrumentationMenu");
                 boolean includeCharts = jsonObject.has("includeCharts") && jsonObject.getBoolean("includeCharts");
 
@@ -49,7 +50,7 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
                 System.out.println("Got Tree Type Menu:\n" + jsonResponse);
             }
 
-            if (jsonObject.has("getInstrumentationMenuNode")) {
+            if (jsonObject.has("getInstrumentationMenuNode") && SecurityManager.isAuthenticatedAsUser()) {
                 String nodeId = jsonObject.getString("getInstrumentationMenuNode");
                 TreeMenuNode node = getBerkeleyTreeMenuService().getTreeMenu(nodeId);
                 jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();

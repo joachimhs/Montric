@@ -15,6 +15,8 @@
 
 	</bean>
 
+    <bean id="eurekaJUserDetailsService" class="org.eurekaj.manager.security.EurekaJUserDetailsService" />
+
 	<bean id="treeMenuDao" class="org.eurekaj.manager.dao.berkeley.TreeMenuDaoImpl">
 		<property name="dbEnvironment">
 			<ref bean="berkeleyDbEnv" />

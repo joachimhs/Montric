@@ -3,6 +3,7 @@ package org.eurekaj.manager.servlets;
 import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
+import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,7 +29,7 @@ public class EmailServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("emailGroupName")) {
+            if (jsonObject.has("emailGroupName") && SecurityManager.isAuthenticatedAsAdmin()) {
                 EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
                 if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
                     getAdministrationService().persistEmailRecipientGroup(emailRecipientGroup);
@@ -37,13 +38,13 @@ public class EmailServlet extends EurekaJGenericServlet {
             }
 
 
-            if (jsonObject.has("getEmailGroups")) {
+            if (jsonObject.has("getEmailGroups") && SecurityManager.isAuthenticatedAsUser()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
                 System.out.println("Got Email Groups:\n" + jsonResponse);
 
             }
 
-            if ((jsonObject.has("getEmailRecipient"))) {
+            if ((jsonObject.has("getEmailRecipient")) && SecurityManager.isAuthenticatedAsUser()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
             }
         } catch (JSONException jsonException) {

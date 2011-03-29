@@ -5,6 +5,7 @@ import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.manager.security.SecurityManager;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -90,7 +91,7 @@ public class ChartServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("getInstrumentationChartData")) {
+            if (jsonObject.has("getInstrumentationChartData") && SecurityManager.isAuthenticatedAsUser()) {
                 JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartData");
                 String chartId = keyObject.getString("id");
                 String pathFromClient = keyObject.getString("path");
