@@ -3,7 +3,7 @@ layout: master
 title: Home
 ---
 
-<div>
+<div class='home_box' id='home_left'>
 
 <h2>EurekaJ Profiler</h2>
 
@@ -11,24 +11,15 @@ title: Home
 
 <p>As the project started, work on a custom Javaagent was planned and started using Javassist as the bytecode library of choice. I have later started looking at BTrace and I am currently looking into writing an agent based upon BTrace, as BTrace has a large feature set that goes hand in hand with features planned for EurekaJ. Basing the agent on BTrace, I will be able to focus my attention upon the EurekaJ Manager, meaning that the feature set of the Manager application will be completed earlier.</p>
 
-<h2>Mailinglist / Google Group</h2>
-<a href="http://groups.google.com/group/eurekaj-profiler">http://groups.google.com/group/eurekaj-profiler</a>
-
-  <h2>
-    Latest Posts
-  </h2>
-
+</div>
+<div class='home_box' id='home_right'>
+	<h2>Google Group</h2>
+	<a href="http://groups.google.com/group/eurekaj-profiler">http://groups.google.com/group/eurekaj-profiler</a>
+	<br /><br />
+  	<h2>Latest Posts</h2>
 	{% for post in site.posts %}
 	    <div class="post">
 	      <div class="title"><h3>{{ post.date | date: "%B %d, %Y" }}: <a href="{{ post.url }}">{{ post.title }}</a></h3></div>
-	      <div class="extract">{{post.content | strip_html | truncatewords:120}}</div>
-		  <h4><a href="{{ post.url }}">- Read full post</a></h4>
 	    </div>
 	{% endfor %}
 </div>
-<!--div class='home_box' id='home_right'>
-  <h2>Featured Projects</h2>
-  {% include featured.html %}
-  <div id='github-projects'>
-  </div>
-</div-->
