@@ -1,1 +1,24 @@
-The EurekaJ Project page will appear here eventually!
+---
+layout: master
+title: Home
+---
+
+<div class='home_box' id='home_left'>
+  <h2>
+    Latest Posts
+  </h2>
+
+	{% for post in site.posts %}
+	    <div class="post">
+	      <div class="title"><h3>{{ post.date | date: "%B %d, %Y" }}: <a href="{{ post.url }}">{{ post.title }}</a></h3></div>
+	      <div class="extract">{{post.content | strip_html | truncatewords:120}}</div>
+		  <h4><a href="{{ post.url }}">- Read full post</a></h4>
+	    </div>
+	{% endfor %}
+</div>
+<!--div class='home_box' id='home_right'>
+  <h2>Featured Projects</h2>
+  {% include featured.html %}
+  <div id='github-projects'>
+  </div>
+</div-->
