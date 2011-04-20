@@ -14,8 +14,8 @@ title: Home
 	There are a couple of important variables that need to be set, the first one being the path to the btrace-agent.jar file. The "=" after the jar file specifies the list of parameters that will be passed on to the BTrace agent. 
 	
 	{% highlight bash %}
-		JAVA_OPTS="-Dbtrace.agent=EurekaJAgent
-		-javaagent:/path/to/btrace-agent.jar=scriptdir=/path/to/btrace-scripts,stdout=false,fileRollMilliseconds=7500"
+		JAVA_OPTS='-Dbtrace.agent=EurekaJAgent
+		-javaagent:/path/to/btrace-agent.jar=scriptdir=/path/to/btrace-scripts,stdout=false,fileRollMilliseconds=7500'
 	{% endhighlight %}
 	
 	*scriptdir* - Specifies a path to a directory containing pre-compiled BTrace scripts as .class files
