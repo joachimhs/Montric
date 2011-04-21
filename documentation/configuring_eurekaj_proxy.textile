@@ -1,0 +1,16 @@
+---
+layout: master
+title: Configuring EurekaJ Proxy to send tracing information from BTrace to EurekaJ Manager
+---
+
+<h2>Configuring EurekaJ Proxy to send tracing information from BTrace to EurekaJ Manager</h2>
+
+In version 1 of EurekaJ, the BTrace agent will log its tracing-output to a number of logfiles ending with .btrace.xx. EurekaJ Proxy is a small application that will parse these tracing-files and pass the information on to EurekaJ Manager through a SOAP interface. I an later version of EurekaJ, BTrace will be extended so that the user can opt to send tracing information straight from the BTrace agent to EurekaJ Manager. 
+
+EurekaJ Proxy is distributed as a single .jar file. There are two things that needs to be configured to make EurekaJ Proxy do its job, the location of the BTrace trace-log files and the URL of the EurekaJ Manager SOAP interface. These are supplied to EurekaJ Proxy via command-line parameters: 
+
+{% highlight bash %}
+java -jar path/to/jarFile /path/to/trace-scripts http://host:port/context-root/webservices/EurekaJServiceService
+{% endhighlight %}
+
+EurekaJ Proxy should work fine with the standard 64MB of Heap space that the JVM will supply to the application. 
