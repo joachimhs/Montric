@@ -10,7 +10,7 @@ title: Home
 
 * Installation Guide
 ** <a href="/documentation/configuring_btrace.html">Configuring your application for use with BTrace</a>
-** Configuring and setting up EurekaJ Manager
+** <a href="/documentation/setting_up_eurekaj_manager.html">Configuring and setting up EurekaJ Manager</a>
 ** Setting up users, roles and permissions
 ** Configuring EurekaJ Proxy to send tracing information from BTrace to EurekaJ Manager
 * BTrace Instrumentation

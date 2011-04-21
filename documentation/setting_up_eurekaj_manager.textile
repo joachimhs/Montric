@@ -1,0 +1,73 @@
+---
+layout: master
+title: Configuring and setting up EurekaJ Manager
+---
+
+<h2>Configuring and setting up EurekaJ Manager</h2>
+EurekaJ Manager is distrubuted as a single .Zip file that contains everything needed to configure and start the manager application. Start with unzipping the .zip file, then change the settings file according to your environment and requirements. 
+
+h3. config.properties
+
+The config.properties file contains any variables that you require to include at runtime. Each variable will be put into System.properties as early as possible during application launch. There are three variables you have to set for EurekaJ Manager to start up properly:
+
+|_. Property |_. Default value |_. Definition |
+|*jetty.port*|8081|Specifies the port which EurekaJ Manager will be listening to|
+|*context.root*| |Specifies the context root (the part after the / in the URL) that EurekaJ Manager will work with.|
+|*eurekaj.db.absPath*| |Specifies the absolute path where the EurekaJ Manager datafiles will be stored|
+
+h3. jetty.xml
+
+This file specifies the jetty parameters. Any parameter available to Jetty 7 can be specified inside this file. A sample jetty.xml file is included in the .zip with the following contents:
+
+{% highlight xml %}
+
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
+"http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+   <!-- =========================================================== -->
+   <!-- Server Thread Pool                                          -->
+   <!-- =========================================================== -->
+   <Set name="ThreadPool">
+     <New class="org.eclipse.jetty.util.thread.QueuedThreadPool">
+       <!-- initial threads set to 10 -->
+       <Set name="minThreads">50</Set>
+
+       <!-- the thread pool will grow only up to 200 -->
+       <Set name="maxThreads">768</Set>
+     </New>
+   </Set>
+
+   <Call id="MBeanServer"
+       class="java.lang.management.ManagementFactory"
+       name="getPlatformMBeanServer"/>
+
+   <Get id="Container" name="container">
+     <Call name="addEventListener">
+       <Arg>
+         <New class="org.eclipse.jetty.jmx.MBeanContainer">
+           <Arg><Ref id="MBeanServer"/></Arg>
+           <Call name="start" />
+         </New>
+       </Arg>
+     </Call>
+   </Get>
+
+</Configure>
+
+{% endhighlight %}
+
+h3. users.properties
+
+The user.properties file is used to specify which users have access to the running EurekaJ Application, as well as which authentication-level each user uses. EurekaJ Manager uses Spring Security to facilitate its security and the user.properties file has a standard Spring Security format. The sample users.properties file included with the .zip file distribution does contain only two users, one user and one administrator: 
+
+{% highlight bash %}
+user=user,ROLE_USER,enabled
+admin=admin,ROLE_ADMIN,ROLE_USER,enabled
+{% endhighlight %}
+
+h3. run.sh
+
+A sample run.sh file is specified that will work with the bash shell environment. This script may not be complete for you runtime requirements, but it will be sufficient for starting up and running EurekaJ Manager on your local machine. The EurekaJ Manager Demo application is using this file as-is, however Apples launchdeamon is used to make sure that the application is kept alive, etc. The launchdeamon .plist file used for the demo application is also included in the .zip file. 
