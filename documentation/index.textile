@@ -1,12 +1,13 @@
 ---
 layout: master
-title: Home
+title: Documentation
 ---
 
-<div class="home_box">
-	<h2>Documentation Topics:</h2>
-	
-	<p>Documentation is currently under development.</p>
+<div class="panel">
+h2. Documentation Topics:
+
+<p>
+Documentation is currently under development.
 
 * Installation Guide
 ** <a href="/documentation/configuring_btrace.html">Configuring your application for use with BTrace</a>
@@ -24,8 +25,14 @@ title: Home
 ** Specifying the chart time-interval
 ** Specifying the Time-zone used for displaying charts
 * Committer Checklist
+</p></div>
 
-<h2>Complete Arcitecture Overview</h2>
+<div class="panel">
+
+h2. Complete Arcitecture Overview
+
+<p>
 <a href="images/eurekaj_architecture_complete.png"><img src="/images/eurekaj_architecture_complete_thumb.png" width="737" height="274" alt="Eurekaj Architecture Complete Thumb"></a><br /><a href="/images/eurekaj_architecture_complete.png">EurekaJ Architecture</a>.
+</p>
+
 </div>
-	
