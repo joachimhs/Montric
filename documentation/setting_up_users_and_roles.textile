@@ -1,0 +1,17 @@
+---
+layout: master
+title: Setting up Users and Roles
+---
+
+<h2>Setting up Users and Roles</h2>
+	
+EurekaJ Manager uses Spring Security to facilitate its security and the user.properties file has a standard Spring Security format. The sample users.properties file included with the .zip file distribution does contain only two users, one user and one administrator: 
+
+{% highlight bash %}
+user=user,ROLE_USER,enabled
+admin=admin,ROLE_ADMIN,ROLE_USER,enabled
+{% endhighlight %}
+
+Currently EurekaJ Profiler only has two user roles, a 'User' role, which has access to view any statistic, alert or grouped statistic, and one 'Administrator' role which has access to create, edit and delete alert points, grouped statistics and email groups user for sending alerts. 
+
+	
