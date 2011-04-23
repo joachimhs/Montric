@@ -7,3 +7,6 @@
 [submodule "EurekaJ.View/frameworks/calendar"]
 	path = EurekaJ.View/frameworks/calendar
 	url = https://github.com/unicolet/stuff-I-m-proud-of.git
+[submodule "EurekaJ.View/garcon"]
+	path = EurekaJ.View/garcon
+	url = https://github.com/martoche/garcon.git

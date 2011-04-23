@@ -33,9 +33,9 @@ myApp.addFrameworks(
   //{ path:'frameworks/sproutcore/themes/standard_theme', combineScripts: true },
   
    //if you're on Quilmes and use Ace, uncomment the next 2 lines instead
-   	{ path:'frameworks/sproutcore/themes/standard_theme', combineScripts: true },
+   	//{ path:'frameworks/sproutcore/themes/standard_theme', combineScripts: true },
 	{ path:'frameworks/sproutcore/themes/empty_theme', combineScripts: true },
-	 //{ path:'frameworks/sproutcore/themes/ace', combineScripts: true },
+	{ path:'frameworks/sproutcore/themes/ace', combineScripts: true },
 	
 	{ path: 'frameworks/sproutcore/frameworks/statechart', combineScripts: true },
 	{ path: 'frameworks/sproutcore/frameworks/desktop', combineScripts: true },
