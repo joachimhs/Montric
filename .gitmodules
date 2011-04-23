@@ -10,3 +10,6 @@
 [submodule "EurekaJ.View/garcon"]
 	path = EurekaJ.View/garcon
 	url = https://github.com/martoche/garcon.git
+[submodule "EurekaJ.View/frameworks/scui"]
+	path = EurekaJ.View/frameworks/scui
+	url = https://github.com/etgryphon/sproutcore-ui.git
