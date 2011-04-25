@@ -7,9 +7,12 @@
 [submodule "EurekaJ.View/frameworks/calendar"]
 	path = EurekaJ.View/frameworks/calendar
 	url = https://github.com/unicolet/stuff-I-m-proud-of.git
-[submodule "EurekaJ.View/garcon"]
-	path = EurekaJ.View/garcon
-	url = https://github.com/martoche/garcon.git
 [submodule "EurekaJ.View/frameworks/scui"]
 	path = EurekaJ.View/frameworks/scui
 	url = https://github.com/etgryphon/sproutcore-ui.git
+[submodule "EurekaJ.View/frameworks/ki"]
+	path = EurekaJ.View/frameworks/ki
+	url = https://github.com/FrozenCanuck/Ki.git
+[submodule "EurekaJ.View/garcon"]
+	path = EurekaJ.View/garcon
+	url = https://github.com/erichocean/garcon.git
