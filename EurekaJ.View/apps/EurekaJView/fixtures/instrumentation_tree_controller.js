@@ -4,7 +4,7 @@
 // ==========================================================================
 /*globals EurekaJView */
 
-sc_require('models/instrumentation_tree_controller');
+sc_require('models/instrumentation_tree_model');
 
 EurekaJView.InstrumentationTreeController.FIXTURES = [
 

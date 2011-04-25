@@ -4,6 +4,6 @@
 # ===========================================================================
 
 # Add initial buildfile information here
-config :all, :required => [:sproutcore, 'flot', 'ki', 'scui']
+config :all, :required => ['sproutcore', 'sproutcore/statechart', 'flot', 'ki', 'scui'], :theme => "sproutcore/ace", :url_prefix => "optional-context-path/static" 
 
-proxy '/jsonController.capp', :to => 'localhost:8081'
+proxy '/', :to => 'localhost:8081'

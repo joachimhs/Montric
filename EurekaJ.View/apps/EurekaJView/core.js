@@ -11,7 +11,6 @@
  @extends SC.Object
  */
 EurekaJView = SC.Application.create(
-        SC.StatechartManager,
     /** @scope EurekaJView.prototype */ {
 
     NAMESPACE: 'EurekaJView',
@@ -23,6 +22,8 @@ EurekaJView = SC.Application.create(
     // to any fixtures you define.
     //store: SC.Store.create().from(SC.Record.fixtures)
     EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource'),
-    rootState: SC.State.extend({ initialSubstate: 'mainState', mainState: SC.State.plugin('EurekaJView.statechart') })
+	//EurekaJView.statechart: SC.Statechart.create(SC.State.extend({ rootState: SC.State.plugin('EurekaJView.statechartImplementation') })),
+//    rootState: SC.State.extend({ initialSubstate: 'mainState', mainState: SC.State.plugin('EurekaJView.statechart') })
 
 });
+

@@ -11,6 +11,7 @@
 // As you develop your application you will probably want to override this.
 // See comments for some pointers on what to do next.
 //
+
 EurekaJView.main = function main() {
 
     // Step 1: Instantiate Your Views
@@ -24,7 +25,7 @@ EurekaJView.main = function main() {
 
     // TODO: Set the content property on your primary controller
     // ex: EurekaJView.contactsController.set('content',EurekaJView.contacts);
-    EurekaJView.initStatechart();
+    EurekaJView.statechart.initStatechart();
 
     EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);
     EurekaJView.InstrumentationTreeController.populate();

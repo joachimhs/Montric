@@ -5,6 +5,25 @@ EurekaJView.mixin( {
         EurekaJView.statechart.gotoState('showTopMenu.showTimePeriodPanel');
     } */
 
+	/** Statechart actions */
+	showAdministrationPaneAction: function() {
+		EurekaJView.statechart.sendEvent('showAdministrationPaneAction');
+	},
+	
+	hideAdministrationPaneAction: function() {
+        EurekaJView.statechart.sendEvent('hideAdministrationPaneAction');
+    },
+	
+    showTimeperiodPaneAction: function() {
+		EurekaJView.statechart.sendEvent('showTimeperiodPaneAction');
+    },
+
+    hideTimeperiodPaneAction: function() {
+		EurekaJView.statechart.sendEvent('hideTimeperiodPaneAction');
+    },
+	
+	/** //Statechart actions */
+
     addNewAlertAction: function() {
         SC.Logger.log('EurekaJView.mixin Adding new Alert');
         newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: EurekaJView.alertAdministrationController.get('newAlertName')});

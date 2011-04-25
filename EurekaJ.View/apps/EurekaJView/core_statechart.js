@@ -1,13 +1,8 @@
 /*globals EurekaJView */
 
-EurekaJView.statechart = SC.State.design({
+EurekaJView.statechart = SC.Statechart.create({
 
-
-    initialSubstate: 'loggedIn',
-
-    loggedIn: SC.State.design({
-
-
+    rootState: SC.State.design({
         substatesAreConcurrent: YES,
 
         showingLeftMenu: SC.State.design({
@@ -71,6 +66,7 @@ EurekaJView.statechart = SC.State.design({
             },
 
             showAdministrationPaneAction: function() {
+				SC.Logger.log('showAdministrationPaneAction');
                 EurekaJView.EurekaJStore.find(EurekaJView.ALERTS_QUERY);
                 EurekaJView.EurekaJStore.find(EurekaJView.ADMINISTRATION_TREE_QUERY);
                 EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_GROUPS_QUERY);
