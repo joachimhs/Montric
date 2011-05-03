@@ -62,3 +62,7 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#9fadda), to(#3d4774)); /* for webkit browsers */
     background: -moz-linear-gradient(top,  #9fadda,  #3d4774); /* for firefox 3.6+ */
 }
+
+.whiteBackground {
+    background: #fff;
+}

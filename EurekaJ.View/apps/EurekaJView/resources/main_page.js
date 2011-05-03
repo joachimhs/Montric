@@ -110,7 +110,7 @@ EurekaJView.mainPage = SC.Page.design({
                     width: columnWidth
                 };
             }
-        }).classNames('thinBlackBorderTop'),
+        }).classNames(['thinBlackBorderTop', 'whiteBackground']),
 
         informationPanelView: EurekaJView.InformationPanelView.design({
             layout: {

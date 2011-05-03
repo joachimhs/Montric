@@ -110,6 +110,6 @@
     </filter-mapping>
 
     <welcome-file-list>
-        <welcome-file>eurekaJView/EurekaJView.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 </web-app>

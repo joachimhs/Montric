@@ -4,6 +4,6 @@
 # ===========================================================================
 
 # Add initial buildfile information here
-config :all, :required => ['sproutcore', 'sproutcore/statechart', 'flot', 'ki', 'scui'], :theme => "sproutcore/ace", :url_prefix => "optional-context-path/static" 
+config :all, :required => ['sproutcore', 'sproutcore/statechart', 'flot', 'ki', 'scui'], :theme => "sproutcore/ace"
 
 proxy '/', :to => 'localhost:8081'

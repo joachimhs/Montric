@@ -59,7 +59,10 @@ public class AlertServlet extends EurekaJGenericServlet {
         }
 
         PrintWriter writer = response.getWriter();
-        writer.write(jsonResponse.toString());
+        if (jsonResponse.length() <= 2) {
+            jsonResponse = "{}";
+        }
+        writer.write(jsonResponse);
         response.flushBuffer();
     }
 

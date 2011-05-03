@@ -2,6 +2,7 @@
 target
 *.iml
 EurekaJ.Manager/src/main/webapp/eurekaJView
+EurekaJ.Manager/src/main/webapp/static
 EurekaJ.View/build
 tmp
 *.ipr

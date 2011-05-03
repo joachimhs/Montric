@@ -1,3 +1,5 @@
+/*global require */
+
 var g = require('./garcon/lib/garçon'),
     server, myApp;
     
@@ -11,12 +13,12 @@ server = new g.Server();
 // the /myapp url and to create a myapp.html file when saving
 myApp = server.addApp({
   name: 'EurekaJView',
-  theme: 'sc-theme',
+  theme: 'ace',
   buildLanguage: 'english',
   combineScripts: true,
   combineStylesheets: true,
-  minifyScripts: true,
-  minifyStylesheets: true,
+  minifyScripts: false,
+  minifyStylesheets: false, //true
   buildVersion: 'eurekaJView'
 });
 
@@ -33,16 +35,14 @@ myApp.addFrameworks(
   //{ path:'frameworks/sproutcore/themes/standard_theme', combineScripts: true },
   
    //if you're on Quilmes and use Ace, uncomment the next 2 lines instead
-//   { path:'frameworks/sproutcore/themes/empty_theme', combineScripts: true },
+   { path:'frameworks/sproutcore/themes/empty_theme', combineScripts: true },
 //	{ path: 'frameworks/sproutcore/frameworks/statechart', combineScripts: true },
 	{ path:'frameworks/sproutcore/themes/ace', combineScripts: true },
 	{ path: 'frameworks/flot', combineScripts: true },
 	{ path: 'frameworks/scui/frameworks/foundation', combineScripts: true },
-  	{ path: 'frameworks/scui/frameworks/calendar', combineScripts: true },
+	{ path: 'frameworks/scui/frameworks/calendar', combineScripts: true },
 	
 	{ path: 'frameworks/sproutcore/frameworks/statechart', combineScripts: true },
-	{ path: 'frameworks/sproutcore/frameworks/ajax', combineScripts: true },
-	{ path: 'frameworks/sproutcore/frameworks/desktop', combineScripts: true },
 
 
   // finally, the sources for myApp must be added as well
