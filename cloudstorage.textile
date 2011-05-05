@@ -5,7 +5,7 @@ title: Storing your data in the Cloud
 
 <div class="panel" style="width: 100%;">
 
-h1. Storing your data in the Cloud
+h2. Storing your data in the Cloud
 
 I wanted to be able to deploy the EurekaJ Manager application in a cloud environment, while still being able to quickly scale the application out 
 when the time needed. EurekaJ Manager currently only stores its data using an embedded key-value database where the data is stored on the local file
