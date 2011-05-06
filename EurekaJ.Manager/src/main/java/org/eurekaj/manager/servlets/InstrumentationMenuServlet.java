@@ -1,17 +1,12 @@
 package org.eurekaj.manager.servlets;
 
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.api.datatypes.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.security.SecurityManager;
-import org.eurekaj.manager.service.TreeMenuService;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

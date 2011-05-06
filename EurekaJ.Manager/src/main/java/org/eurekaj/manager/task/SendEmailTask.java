@@ -11,17 +11,18 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
-import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
+import org.eurekaj.api.enumtypes.AlertStatus;
 
 public class SendEmailTask implements Runnable {
 	private EmailRecipientGroup emailRecipientGroup;
 	private Alert alert;
-	private int oldStatus;
+	private AlertStatus oldStatus;
 	private double currValue;
 	private String timeString;
 
-	public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, int oldStatus, double currValue, String timeString) {
+	public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
 		super();
 		this.emailRecipientGroup = emailRecipientGroup;
 		this.alert = alert;
@@ -33,11 +34,11 @@ public class SendEmailTask implements Runnable {
 	@Override
 	public void run() {
 		StringBuffer emailMessage = new StringBuffer();
-		emailMessage.append("EurekaJ Alert: ").append(alert.getGuiPath()).append(" Has changed status from ").append(Alert.getStatusString(oldStatus)).append(" to status ")
-				.append(alert.getStatusString()).append(".\n Current Value: ").append(currValue).append(".\n Warning Value: ").append(alert.getWarningValue()).append(".\n Critical Value: ")
+		emailMessage.append("EurekaJ BerkeleyAlert: ").append(alert.getGuiPath()).append(" Has changed status from ").append(oldStatus.getStatusName()).append(" to status ")
+				.append(alert.getStatus().getStatusName()).append(".\n Current Value: ").append(currValue).append(".\n Warning Value: ").append(alert.getWarningValue()).append(".\n Critical Value: ")
 				.append(alert.getErrorValue()).append(".\n Time: ").append(timeString);
 
-		String emailSubject = "EurekaJ Alert: " + alert.getStatusString() + " : " + alert.getGuiPath();
+		String emailSubject = "EurekaJ BerkeleyAlert: " + alert.getStatus().getStatusName() + " : " + alert.getGuiPath();
 
 		System.out.println("\t\tAttempting to send Email through: " + emailRecipientGroup.getSmtpServerhost() + ":" + emailRecipientGroup.getPort() + " using " + emailRecipientGroup.getSmtpUsername()
 				+ " auth with " + emailRecipientGroup.getSmtpPassword() + " via SSL: " + emailRecipientGroup.isUseSSL() + " ::: " + emailSubject);

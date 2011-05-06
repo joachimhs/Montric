@@ -2,7 +2,8 @@ package org.eurekaJ.manager.util;
 
 import static org.junit.Assert.*;
 
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -51,48 +52,48 @@ public class ChartUtilTest {
     public void setUp() {
         liveStatisticsList = new ArrayList<LiveStatistics>();
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540055000l / 15000, 6d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540070000l / 15000, 8d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540085000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540055000l / 15000, 6d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540070000l / 15000, 8d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540085000l / 15000, 7d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540100000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540115000l / 15000, 11d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540130000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540100000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540115000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540130000l / 15000, 7d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540145000l / 15000, 12d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540160000l / 15000, 8d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540175000l / 15000, 10d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540145000l / 15000, 12d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540160000l / 15000, 8d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540175000l / 15000, 10d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540190000l / 15000, 12d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540205000l / 15000, 11d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540220000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540190000l / 15000, 12d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540205000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540220000l / 15000, 7d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540235000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540250000l / 15000, 11d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540265000l / 15000, 10d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540235000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540250000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540265000l / 15000, 10d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540280000l / 15000, 12d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540295000l / 15000, 8d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540310000l / 15000, 10d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540280000l / 15000, 12d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540295000l / 15000, 8d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540310000l / 15000, 10d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540325000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540340000l / 15000, 11d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540355000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540325000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540340000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540355000l / 15000, 7d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540370000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540385000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540400000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540370000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540385000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540400000l / 15000, 11d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540415000l / 15000, 7d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540430000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540445000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540415000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540430000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540445000l / 15000, 9d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540460000l / 15000, 11d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540475000l / 15000, 7d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540490000l / 15000, 10d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540460000l / 15000, 11d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540475000l / 15000, 7d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540490000l / 15000, 10d));
 
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540505000l / 15000, 9d));
-        liveStatisticsList.add(new LiveStatistics("guipath", 1295540520000l / 15000, 10d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540505000l / 15000, 9d));
+        liveStatisticsList.add(new ManagerLiveStatistics("guipath", 1295540520000l / 15000, 10d));
     }
 
     @Test
@@ -103,83 +104,84 @@ public class ChartUtilTest {
 
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
         assertNotNull(xyDataList.getDataPointList());
+        assertEquals(32, xyDataList.size());
 
-        assertEquals(xyDataList.getDataPointList().get(0).getX(), 1295540055000d);
+        assertEquals(xyDataList.getDataPointList().get(0).getX().doubleValue(), new Double(1295540055000d), 0.0d);
         assertEquals(xyDataList.getDataPointList().get(0).getY(), 6d);
-        assertEquals(xyDataList.getDataPointList().get(1).getX(), 1295540070000d);
+        assertEquals(xyDataList.getDataPointList().get(1).getX().doubleValue(), 1295540070000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(1).getY(), 8d);
-        assertEquals(xyDataList.getDataPointList().get(2).getX(), 1295540085000d);
+        assertEquals(xyDataList.getDataPointList().get(2).getX().doubleValue(), 1295540085000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(2).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(3).getX(), 1295540100000d);
+        assertEquals(xyDataList.getDataPointList().get(3).getX().doubleValue(), 1295540100000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(3).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(4).getX(), 1295540115000d);
+        assertEquals(xyDataList.getDataPointList().get(4).getX().doubleValue(), 1295540115000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(4).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(5).getX(), 1295540130000d);
+        assertEquals(xyDataList.getDataPointList().get(5).getX().doubleValue(), 1295540130000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(5).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(6).getX(), 1295540145000d);
+        assertEquals(xyDataList.getDataPointList().get(6).getX().doubleValue(), 1295540145000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(6).getY(), 12d);
-        assertEquals(xyDataList.getDataPointList().get(7).getX(), 1295540160000d);
+        assertEquals(xyDataList.getDataPointList().get(7).getX().doubleValue(), 1295540160000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(7).getY(), 8d);
-        assertEquals(xyDataList.getDataPointList().get(8).getX(), 1295540175000d);
+        assertEquals(xyDataList.getDataPointList().get(8).getX().doubleValue(), 1295540175000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(8).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(9).getX(), 1295540190000d);
+        assertEquals(xyDataList.getDataPointList().get(9).getX().doubleValue(), 1295540190000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(9).getY(), 12d);
-        assertEquals(xyDataList.getDataPointList().get(10).getX(), 1295540205000d);
+        assertEquals(xyDataList.getDataPointList().get(10).getX().doubleValue(), 1295540205000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(10).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(11).getX(), 1295540220000d);
+        assertEquals(xyDataList.getDataPointList().get(11).getX().doubleValue(), 1295540220000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(11).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(12).getX(), 1295540235000d);
+        assertEquals(xyDataList.getDataPointList().get(12).getX().doubleValue(), 1295540235000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(12).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(13).getX(), 1295540250000d);
+        assertEquals(xyDataList.getDataPointList().get(13).getX().doubleValue(), 1295540250000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(13).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(14).getX(), 1295540265000d);
+        assertEquals(xyDataList.getDataPointList().get(14).getX().doubleValue(), 1295540265000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(14).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(15).getX(), 1295540280000d);
+        assertEquals(xyDataList.getDataPointList().get(15).getX().doubleValue(), 1295540280000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(15).getY(), 12d);
-        assertEquals(xyDataList.getDataPointList().get(16).getX(), 1295540295000d);
+        assertEquals(xyDataList.getDataPointList().get(16).getX().doubleValue(), 1295540295000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(16).getY(), 8d);
-        assertEquals(xyDataList.getDataPointList().get(17).getX(), 1295540310000d);
+        assertEquals(xyDataList.getDataPointList().get(17).getX().doubleValue(), 1295540310000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(17).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(18).getX(), 1295540325000d);
+        assertEquals(xyDataList.getDataPointList().get(18).getX().doubleValue(), 1295540325000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(18).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(19).getX(), 1295540340000d);
+        assertEquals(xyDataList.getDataPointList().get(19).getX().doubleValue(), 1295540340000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(19).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(20).getX(), 1295540355000d);
+        assertEquals(xyDataList.getDataPointList().get(20).getX().doubleValue(), 1295540355000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(20).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(21).getX(), 1295540370000d);
+        assertEquals(xyDataList.getDataPointList().get(21).getX().doubleValue(), 1295540370000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(21).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(22).getX(), 1295540385000d);
+        assertEquals(xyDataList.getDataPointList().get(22).getX().doubleValue(), 1295540385000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(22).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(23).getX(), 1295540400000d);
+        assertEquals(xyDataList.getDataPointList().get(23).getX().doubleValue(), 1295540400000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(23).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(24).getX(), 1295540415000d);
+        assertEquals(xyDataList.getDataPointList().get(24).getX().doubleValue(), 1295540415000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(24).getY(), 7d);
-        assertEquals(xyDataList.getDataPointList().get(25).getX(), 1295540430000d);
+        assertEquals(xyDataList.getDataPointList().get(25).getX().doubleValue(), 1295540430000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(25).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(26).getX(), 1295540445000d);
+        assertEquals(xyDataList.getDataPointList().get(26).getX().doubleValue(), 1295540445000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(26).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(27).getX(), 1295540460000d);
+        assertEquals(xyDataList.getDataPointList().get(27).getX().doubleValue(), 1295540460000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(27).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(28).getX(), 1295540475000d);
+        assertEquals(xyDataList.getDataPointList().get(28).getX().doubleValue(), 1295540475000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(28).getY(), 7d);
-        assertEquals(xyDataList.getDataPointList().get(29).getX(), 1295540490000d);
+        assertEquals(xyDataList.getDataPointList().get(29).getX().doubleValue(), 1295540490000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(29).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(30).getX(), 1295540505000d);
+        assertEquals(xyDataList.getDataPointList().get(30).getX().doubleValue(), 1295540505000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(30).getY(), 9d);
 
         //The last tick is not included to account for lag between agent and server
-        //assertEquals(xyDataList.getDataPointList().get(31).getX(), 1295540520000d);
-        //assertEquals(xyDataList.getDataPointList().get(31).getY(), 10d);
+        assertEquals(xyDataList.getDataPointList().get(31).getX().doubleValue(), 1295540520000d, 0.0d);
+        assertEquals(xyDataList.getDataPointList().get(31).getY(), 10d);
 
     }
 
@@ -192,53 +194,53 @@ public class ChartUtilTest {
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
         assertNotNull(xyDataList.getDataPointList());
 
-        assertEquals(xyDataList.getDataPointList().get(0).getX(), 1295540055000d);
+        assertEquals(xyDataList.getDataPointList().get(0).getX().doubleValue(), 1295540055000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(0).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(1).getX(), 1295540085000d);
+        assertEquals(xyDataList.getDataPointList().get(1).getX().doubleValue(), 1295540085000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(1).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(2).getX(), 1295540115000d);
+        assertEquals(xyDataList.getDataPointList().get(2).getX().doubleValue(), 1295540115000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(2).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(3).getX(), 1295540145000d);
+        assertEquals(xyDataList.getDataPointList().get(3).getX().doubleValue(), 1295540145000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(3).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(4).getX(), 1295540175000d);
+        assertEquals(xyDataList.getDataPointList().get(4).getX().doubleValue(), 1295540175000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(4).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(5).getX(), 1295540205000d);
+        assertEquals(xyDataList.getDataPointList().get(5).getX().doubleValue(), 1295540205000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(5).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(6).getX(), 1295540235000d);
+        assertEquals(xyDataList.getDataPointList().get(6).getX().doubleValue(), 1295540235000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(6).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(7).getX(), 1295540265000d);
+        assertEquals(xyDataList.getDataPointList().get(7).getX().doubleValue(), 1295540265000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(7).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(8).getX(), 1295540295000d);
+        assertEquals(xyDataList.getDataPointList().get(8).getX().doubleValue(), 1295540295000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(8).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(9).getX(), 1295540325000d);
+        assertEquals(xyDataList.getDataPointList().get(9).getX().doubleValue(), 1295540325000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(9).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(10).getX(), 1295540355000d);
+        assertEquals(xyDataList.getDataPointList().get(10).getX().doubleValue(), 1295540355000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(10).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(11).getX(), 1295540385000d);
+        assertEquals(xyDataList.getDataPointList().get(11).getX().doubleValue(), 1295540385000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(11).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(12).getX(), 1295540415000d);
+        assertEquals(xyDataList.getDataPointList().get(12).getX().doubleValue(), 1295540415000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(12).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(13).getX(), 1295540445000d);
+        assertEquals(xyDataList.getDataPointList().get(13).getX().doubleValue(), 1295540445000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(13).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(14).getX(), 1295540475000d);
+        assertEquals(xyDataList.getDataPointList().get(14).getX().doubleValue(), 1295540475000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(14).getY(), 8d);
 
         //The last tick is not included to account for lag between agent and server
-        //assertEquals(xyDataList.getDataPointList().get(15).getX(), 1295540505000d);
+        //assertEquals(xyDataList.getDataPointList().get(15).getX().doubleValue(), 1295540505000d, 0.0d);
         //assertEquals(xyDataList.getDataPointList().get(15).getY(), 9d);
     }
 
@@ -252,11 +254,11 @@ public class ChartUtilTest {
         assertNotNull(xyDataList.getDataPointList());
 
         //108 / 12 = 9
-        assertEquals(xyDataList.getDataPointList().get(0).getX(), 1295540055000d);
+        assertEquals(xyDataList.getDataPointList().get(0).getX().doubleValue(), 1295540055000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(0).getY(), 9d);
 
         // 116 / 12 = 9
-        assertEquals(xyDataList.getDataPointList().get(1).getX(), 1295540235000d);
+        assertEquals(xyDataList.getDataPointList().get(1).getX().doubleValue(), 1295540235000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(1).getY(), 9d);
 
         //The last tick is not included to account for lag between agent and server
@@ -277,81 +279,81 @@ public class ChartUtilTest {
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
         assertNotNull(xyDataList.getDataPointList());
 
-        assertEquals(xyDataList.getDataPointList().get(0).getX(), 1295540055000d);
+        assertEquals(xyDataList.getDataPointList().get(0).getX().doubleValue(), 1295540055000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(0).getY(), 6d);
-        assertEquals(xyDataList.getDataPointList().get(1).getX(), 1295540070000d);
+        assertEquals(xyDataList.getDataPointList().get(1).getX().doubleValue(), 1295540070000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(1).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(2).getX(), 1295540085000d);
+        assertEquals(xyDataList.getDataPointList().get(2).getX().doubleValue(), 1295540085000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(2).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(3).getX(), 1295540100000d);
+        assertEquals(xyDataList.getDataPointList().get(3).getX().doubleValue(), 1295540100000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(3).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(4).getX(), 1295540115000d);
+        assertEquals(xyDataList.getDataPointList().get(4).getX().doubleValue(), 1295540115000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(4).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(5).getX(), 1295540130000d);
+        assertEquals(xyDataList.getDataPointList().get(5).getX().doubleValue(), 1295540130000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(5).getY(), null);
 
-        assertEquals(xyDataList.getDataPointList().get(6).getX(), 1295540145000d);
+        assertEquals(xyDataList.getDataPointList().get(6).getX().doubleValue(), 1295540145000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(6).getY(), 12d);
-        assertEquals(xyDataList.getDataPointList().get(7).getX(), 1295540160000d);
+        assertEquals(xyDataList.getDataPointList().get(7).getX().doubleValue(), 1295540160000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(7).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(8).getX(), 1295540175000d);
+        assertEquals(xyDataList.getDataPointList().get(8).getX().doubleValue(), 1295540175000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(8).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(9).getX(), 1295540190000d);
+        assertEquals(xyDataList.getDataPointList().get(9).getX().doubleValue(), 1295540190000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(9).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(10).getX(), 1295540205000d);
+        assertEquals(xyDataList.getDataPointList().get(10).getX().doubleValue(), 1295540205000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(10).getY(), 11d);
-        assertEquals(xyDataList.getDataPointList().get(11).getX(), 1295540220000d);
+        assertEquals(xyDataList.getDataPointList().get(11).getX().doubleValue(), 1295540220000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(11).getY(), null);
 
-        assertEquals(xyDataList.getDataPointList().get(12).getX(), 1295540235000d);
+        assertEquals(xyDataList.getDataPointList().get(12).getX().doubleValue(), 1295540235000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(12).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(13).getX(), 1295540250000d);
+        assertEquals(xyDataList.getDataPointList().get(13).getX().doubleValue(), 1295540250000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(13).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(14).getX(), 1295540265000d);
+        assertEquals(xyDataList.getDataPointList().get(14).getX().doubleValue(), 1295540265000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(14).getY(), 10d);
 
-        assertEquals(xyDataList.getDataPointList().get(15).getX(), 1295540280000d);
+        assertEquals(xyDataList.getDataPointList().get(15).getX().doubleValue(), 1295540280000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(15).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(16).getX(), 1295540295000d);
+        assertEquals(xyDataList.getDataPointList().get(16).getX().doubleValue(), 1295540295000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(16).getY(), 8d);
-        assertEquals(xyDataList.getDataPointList().get(17).getX(), 1295540310000d);
+        assertEquals(xyDataList.getDataPointList().get(17).getX().doubleValue(), 1295540310000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(17).getY(), null);
 
-        assertEquals(xyDataList.getDataPointList().get(18).getX(), 1295540325000d);
+        assertEquals(xyDataList.getDataPointList().get(18).getX().doubleValue(), 1295540325000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(18).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(19).getX(), 1295540340000d);
+        assertEquals(xyDataList.getDataPointList().get(19).getX().doubleValue(), 1295540340000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(19).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(20).getX(), 1295540355000d);
+        assertEquals(xyDataList.getDataPointList().get(20).getX().doubleValue(), 1295540355000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(20).getY(), 7d);
 
-        assertEquals(xyDataList.getDataPointList().get(21).getX(), 1295540370000d);
+        assertEquals(xyDataList.getDataPointList().get(21).getX().doubleValue(), 1295540370000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(21).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(22).getX(), 1295540385000d);
+        assertEquals(xyDataList.getDataPointList().get(22).getX().doubleValue(), 1295540385000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(22).getY(), 9d);
-        assertEquals(xyDataList.getDataPointList().get(23).getX(), 1295540400000d);
+        assertEquals(xyDataList.getDataPointList().get(23).getX().doubleValue(), 1295540400000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(23).getY(), null);
 
-        assertEquals(xyDataList.getDataPointList().get(24).getX(), 1295540415000d);
+        assertEquals(xyDataList.getDataPointList().get(24).getX().doubleValue(), 1295540415000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(24).getY(), 7d);
-        assertEquals(xyDataList.getDataPointList().get(25).getX(), 1295540430000d);
+        assertEquals(xyDataList.getDataPointList().get(25).getX().doubleValue(), 1295540430000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(25).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(26).getX(), 1295540445000d);
+        assertEquals(xyDataList.getDataPointList().get(26).getX().doubleValue(), 1295540445000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(26).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(27).getX(), 1295540460000d);
+        assertEquals(xyDataList.getDataPointList().get(27).getX().doubleValue(), 1295540460000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(27).getY(), null);
-        assertEquals(xyDataList.getDataPointList().get(28).getX(), 1295540475000d);
+        assertEquals(xyDataList.getDataPointList().get(28).getX().doubleValue(), 1295540475000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(28).getY(), 7d);
-        assertEquals(xyDataList.getDataPointList().get(29).getX(), 1295540490000d);
+        assertEquals(xyDataList.getDataPointList().get(29).getX().doubleValue(), 1295540490000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(29).getY(), null);
 
-        assertEquals(xyDataList.getDataPointList().get(30).getX(), 1295540505000d);
+        assertEquals(xyDataList.getDataPointList().get(30).getX().doubleValue(), 1295540505000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(30).getY(), 9d);
 
         //The last tick is not included to account for lag between agent and server
-        //assertEquals(xyDataList.getDataPointList().get(31).getX(), 1295540520000d);
+        //assertEquals(xyDataList.getDataPointList().get(31).getX().doubleValue(), 1295540520000d, 0.0d);
         //assertEquals(xyDataList.getDataPointList().get(31).getY(), 10d);
 
     }
@@ -370,34 +372,34 @@ public class ChartUtilTest {
         XYDataList xyDataList = xyDataSetCollection.getDataList().get(0);
         assertNotNull(xyDataList.getDataPointList());
 
-        assertEquals(xyDataList.getDataPointList().get(0).getX(), 1295540055000d);
+        assertEquals(xyDataList.getDataPointList().get(0).getX().doubleValue(), 1295540055000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(0).getY(), 6d);
 
-        assertEquals(xyDataList.getDataPointList().get(1).getX(), 1295540100000d);
+        assertEquals(xyDataList.getDataPointList().get(1).getX().doubleValue(), 1295540100000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(1).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(2).getX(), 1295540145000d);
+        assertEquals(xyDataList.getDataPointList().get(2).getX().doubleValue(), 1295540145000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(2).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(3).getX(), 1295540190000d);
+        assertEquals(xyDataList.getDataPointList().get(3).getX().doubleValue(), 1295540190000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(3).getY(), 11d);
 
-        assertEquals(xyDataList.getDataPointList().get(4).getX(), 1295540235000d);
+        assertEquals(xyDataList.getDataPointList().get(4).getX().doubleValue(), 1295540235000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(4).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(5).getX(), 1295540280000d);
+        assertEquals(xyDataList.getDataPointList().get(5).getX().doubleValue(), 1295540280000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(5).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(6).getX(), 1295540325000d);
+        assertEquals(xyDataList.getDataPointList().get(6).getX().doubleValue(), 1295540325000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(6).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(7).getX(), 1295540370000d);
+        assertEquals(xyDataList.getDataPointList().get(7).getX().doubleValue(), 1295540370000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(7).getY(), 9d);
 
-        assertEquals(xyDataList.getDataPointList().get(8).getX(), 1295540415000d);
+        assertEquals(xyDataList.getDataPointList().get(8).getX().doubleValue(), 1295540415000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(8).getY(), 8d);
 
-        assertEquals(xyDataList.getDataPointList().get(9).getX(), 1295540460000d);
+        assertEquals(xyDataList.getDataPointList().get(9).getX().doubleValue(), 1295540460000d, 0.0d);
         assertEquals(xyDataList.getDataPointList().get(9).getY(), 7d);
 
         //The last tick is not included to account for lag between agent and server

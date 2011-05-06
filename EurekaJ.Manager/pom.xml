@@ -93,6 +93,11 @@
             <artifactId>eurekaJ.View</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eurekaJ</groupId>
+            <artifactId>eurekaJ.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Jetty -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -126,11 +131,7 @@
         <!-- //JSF Flot -->
 
         <!-- DB -->
-        <dependency>
-            <groupId>com.sleepycat</groupId>
-            <artifactId>je</artifactId>
-            <version>4.0.71</version>
-        </dependency>
+
         <!-- //DB -->
 
         <dependency>

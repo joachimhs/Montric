@@ -2,7 +2,7 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
 
 public interface AdministrationService {
 

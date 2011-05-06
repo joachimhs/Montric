@@ -1,11 +1,12 @@
 package org.eurekaj.manager.util;
 
+import org.eurekaj.api.datatypes.TreeMenuNode;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
 
 public class TreeMenuUtil {
 

@@ -2,13 +2,9 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
-import org.eurekaj.webservice.UnitType;
-import org.eurekaj.webservice.ValueType;
+import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.enumtypes.UnitType;
+import org.eurekaj.api.enumtypes.ValueType;
 
 public interface TreeMenuService {
 

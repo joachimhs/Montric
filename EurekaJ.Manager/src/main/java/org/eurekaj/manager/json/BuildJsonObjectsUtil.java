@@ -7,11 +7,7 @@ import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.*;
 
-import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.api.datatypes.*;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -284,7 +280,7 @@ public class BuildJsonObjectsUtil {
             alertObject.put("alertErrorValue", alert.getErrorValue());
             alertObject.put("alertInstrumentationNode", alert.getGuiPath());
             alertObject.put("alertDelay", alert.getAlertDelay());
-            alertObject.put("alertType", Alert.getStringValueForEnumtypes(alert.getSelectedAlertType()));
+            alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
             alertObject.put("alertActivated", alert.isActivated());
 
             JSONArray emailGroupArray = new JSONArray();
@@ -309,8 +305,8 @@ public class BuildJsonObjectsUtil {
         for (TriggeredAlert triggeredAlert : triggeredAlertList) {
             JSONObject triggeredAlertObject = new JSONObject();
             triggeredAlertObject.put("generatedID", ++generatedID);
-            triggeredAlertObject.put("alertName", triggeredAlert.getPk().getAlertName());
-            triggeredAlertObject.put("triggeredDate", triggeredAlert.getPk().getTimeperiod() * 15000);
+            triggeredAlertObject.put("alertName", triggeredAlert.getAlertName());
+            triggeredAlertObject.put("triggeredDate", triggeredAlert.getTimeperiod() * 15000);
             triggeredAlertObject.put("errorValue", triggeredAlert.getErrorValue());
             triggeredAlertObject.put("warningValue", triggeredAlert.getWarningValue());
             triggeredAlertObject.put("triggeredValue", triggeredAlert.getAlertValue());

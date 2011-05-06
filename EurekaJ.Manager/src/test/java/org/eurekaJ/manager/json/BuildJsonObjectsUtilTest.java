@@ -3,14 +3,14 @@ package org.eurekaJ.manager.json;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.manager.datatypes.ManagerTreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Ignore;
@@ -32,7 +32,7 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_one_node_element_returns_correct_json_object() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("A", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A", "Y"));
 
         JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
         assertEquals("{\"treeMenuID\":[{\"chartGrid\":[\"A\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"nodeType\":\"chart\",\"parentPath\":null}]}", jsonObject.toString());
@@ -41,8 +41,8 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_two_node_element_returns_correct_json_object() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("A", "Y"));
-        nodeList.add(new TreeMenuNode("B", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("B", "Y"));
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
@@ -58,9 +58,9 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_second_level_nodes_generated_correct_json() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("A", "Y"));
-        nodeList.add(new TreeMenuNode("B", "Y"));
-        nodeList.add(new TreeMenuNode("A:C", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("B", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A:C", "Y"));
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
@@ -78,10 +78,10 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_third_level_nodes_generated_correct_json() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("A", "Y"));
-        nodeList.add(new TreeMenuNode("B", "Y"));
-        nodeList.add(new TreeMenuNode("A:C", "Y"));
-        nodeList.add(new TreeMenuNode("A:C:D", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("B", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A:C", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A:C:D", "Y"));
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
@@ -102,7 +102,7 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_third_level_nodes_without_parents_are_generated_correct_json() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("A:B:C", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("A:B:C", "Y"));
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");
@@ -120,7 +120,7 @@ public class BuildJsonObjectsUtilTest {
     @Test
     public void test_that_deep_nodes_without_parents_generates_correct_json() throws JSONException {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
-        nodeList.add(new TreeMenuNode("JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime", "Y"));
+        nodeList.add(new ManagerTreeMenuNode("JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime", "Y"));
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"treeMenuID\":[");

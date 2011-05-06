@@ -122,7 +122,7 @@
 	</xsd:complexType>
 	<!-- //Get Tremenu -->
 	
-	<!-- Get Alert -->
+	<!-- Get BerkeleyAlert -->
 	<xsd:element name="getAlertByGuiPath" type="tns:getAlertByGuiPath" />
 	<xsd:complexType name="getAlertByGuiPath">
 		<xsd:sequence>
@@ -182,9 +182,9 @@
 			<xsd:element name="alertList" type="tns:getAlertByGuiPathResponseElement" minOccurs="0" maxOccurs="unbounded" /> 
 		</xsd:sequence>
 	</xsd:complexType>
-	<!-- //Get Alert -->
+	<!-- //Get BerkeleyAlert -->
 	
-	<!-- Store Alert -->
+	<!-- Store BerkeleyAlert -->
 	<xsd:element name="storeAlert" type="tns:storeAlertList" />
 	<xsd:complexType name="storeAlertList">
 		<xsd:sequence>
@@ -210,5 +210,5 @@
 			<xsd:element name="storedResult" type="xsd:boolean" nillable="false" />
 		</xsd:sequence>
 	</xsd:complexType>
-	<!-- //Store Alert -->
+	<!-- //Store BerkeleyAlert -->
 </xsd:schema>

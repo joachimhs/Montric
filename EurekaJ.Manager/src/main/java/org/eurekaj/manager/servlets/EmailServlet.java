@@ -1,6 +1,6 @@
 package org.eurekaj.manager.servlets;
 
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.security.SecurityManager;
@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

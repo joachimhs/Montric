@@ -2,84 +2,81 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaj.manager.dao.berkeley.TreeMenuDao;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
-import org.eurekaj.webservice.UnitType;
-import org.eurekaj.webservice.ValueType;
+import org.eurekaj.api.dao.AlertDao;
+import org.eurekaj.api.dao.GroupedStatisticsDao;
+import org.eurekaj.api.dao.LiveStatisticsDao;
+import org.eurekaj.api.dao.TreeMenuDao;
+import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.enumtypes.UnitType;
+import org.eurekaj.api.enumtypes.ValueType;
+import org.eurekaj.manager.plugin.ManagerDbPluginService;
+import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class TreeMenuServiceImpl implements TreeMenuService {
-	private TreeMenuDao treeMenuDao;
-	
-	public TreeMenuDao getTreeMenuDao() {
-		return treeMenuDao;
-	}
-	
-	public void setTreeMenuDao(TreeMenuDao treeMenuDao) {
-		this.treeMenuDao = treeMenuDao;
-	}
-	
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
-		treeMenuDao.storeIncomingStatistics(guiPath, timeperiod, value, valueType, unitType);
+    EurekaJDBPluginService dbPlugin;
+
+    public TreeMenuServiceImpl() {
+        dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName("Berkeley");
+    }
+
+    public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
+		dbPlugin.getLiveStatissticsDao().storeIncomingStatistics(guiPath, timeperiod, value, valueType, unitType);
 	}
 	
 	public List<TreeMenuNode> getTreeMenu() {
-		return treeMenuDao.getTreeMenu();
+		return dbPlugin.getTreeMenuDao().getTreeMenu();
 	}
 
 	public TreeMenuNode getTreeMenu(String guiPath) {
-		return treeMenuDao.getTreeMenu(guiPath);
+		return dbPlugin.getTreeMenuDao().getTreeMenu(guiPath);
 	}
 
 	public List<LiveStatistics> getLiveStatistics(String guiPath,
-			Long minTimeperiod, Long maxTimeperiod) {
-		return treeMenuDao.getLiveStatistics(guiPath, minTimeperiod, maxTimeperiod);
+                                                  Long minTimeperiod, Long maxTimeperiod) {
+		return dbPlugin.getLiveStatissticsDao().getLiveStatistics(guiPath, minTimeperiod, maxTimeperiod);
 	}
 
 	public void persistGroupInstrumentation(GroupedStatistics groupedStatistics) {
-		treeMenuDao.persistGroupInstrumentation(groupedStatistics);		
+		dbPlugin.getGroupedStatisticsDao().persistGroupInstrumentation(groupedStatistics);
 	}
 	
 	public GroupedStatistics getGroupedStatistics(String name) {
-		return treeMenuDao.getGroupedStatistics(name);
+		return dbPlugin.getGroupedStatisticsDao().getGroupedStatistics(name);
 	}
 	
 	public List<GroupedStatistics> getGroupedStatistics() {
-		return treeMenuDao.getGroupedStatistics();
+		return dbPlugin.getGroupedStatisticsDao().getGroupedStatistics();
 	}
 
 	public Alert getAlert(String alertName) {
-		return treeMenuDao.getAlert(alertName);
+		return dbPlugin.getAlertDao().getAlert(alertName);
 	}
 
 	public void persistAlert(Alert alert) {
-		treeMenuDao.persistAlert(alert);
+		dbPlugin.getAlertDao().persistAlert(alert);
 	}
 	
 	public List<Alert> getAlerts() {
-		return treeMenuDao.getAlerts();
+		return dbPlugin.getAlertDao().getAlerts();
 	}
 
     @Override
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
-        treeMenuDao.persistTriggeredAlert(triggeredAlert);
+        dbPlugin.getAlertDao().persistTriggeredAlert(triggeredAlert);
     }
 
     @Override
     public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
-        return treeMenuDao.getTriggeredAlerts(fromTimeperiod, toTimeperiod);
+        return dbPlugin.getAlertDao().getTriggeredAlerts(fromTimeperiod, toTimeperiod);
     }
 
     @Override
     public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
-        return treeMenuDao.getTriggeredAlerts(alertname, fromTimeperiod, toTimeperiod);
+        return dbPlugin.getAlertDao().getTriggeredAlerts(alertname, fromTimeperiod, toTimeperiod);
     }
 
     @Override
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
-        return treeMenuDao.getRecentTriggeredAlerts(numAlerts);
+        return dbPlugin.getAlertDao().getRecentTriggeredAlerts(numAlerts);
     }
 }

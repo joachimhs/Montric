@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.tools.ant.taskdefs.SendEmail;
-import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
-import org.eurekaj.manager.berkeley.alert.TriggeredAlertPk;
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
-import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
+import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.datatypes.TriggeredAlert;
+import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.manager.datatypes.ManagerAlert;
+import org.eurekaj.manager.datatypes.ManagerTriggeredAlert;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -56,51 +58,62 @@ public class AlertValidatorTask {
 		//For Each active alert
 		for (Alert alert : alertList) {
 			if (alert.isActivated()) {
-				int oldStatus = alert.getStatus();
+				AlertStatus oldStatus = alert.getStatus();
 				List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay());
 				//Get statistics and evaluate alert condition
-				alert.setStatus(evaluateStatistics(alert, statList));
-				if (oldStatus != alert.getStatus()) {
+				AlertStatus newStatus = evaluateStatistics(alert, statList);
+				if (oldStatus != newStatus) {
                     //Status have changed, store new triggeredAlert and send email
-                    TriggeredAlertPk triggeredAlertPk = new TriggeredAlertPk(alert.getAlertName(), statList.get(statList.size() -1).getPk().getTimeperiod());
-                    TriggeredAlert triggeredAlert = new TriggeredAlert(triggeredAlertPk, alert.getErrorValue(), alert.getWarningValue(), statList.get(statList.size() - 1).getValue());
-                    treeMenuService.persistTriggeredAlert(triggeredAlert);
+
+                    ManagerTriggeredAlert managerTriggeredAlert = new ManagerTriggeredAlert(
+                            alert.getAlertName(),
+                            statList.get(statList.size() -1).getTimeperiod(),
+                            alert.getErrorValue(),
+                            alert.getWarningValue(),
+                            statList.get(statList.size() - 1).getValue(),
+                            statList.get(statList.size() -1).getTimeperiod()
+
+                    );
+
+                    treeMenuService.persistTriggeredAlert(managerTriggeredAlert);
 
 					Calendar cal = Calendar.getInstance();
 					for (String emailGroup : alert.getSelectedEmailSenderList()) {
 						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup);
 						if (emailRecipientGroup != null) {
-                            //public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, int oldStatus, long currValue, String timeString) {)
+                            //public SendEmailTask(BerkeleyEmailRecipientGroup emailRecipientGroup, BerkeleyAlert alert, int oldStatus, long currValue, String timeString) {)
 							SendEmailTask sendEmailTask = new SendEmailTask(emailRecipientGroup, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
 							sendEmailExecutor.execute(sendEmailTask);
 						}
 					}
-					
-					treeMenuService.persistAlert(alert);
+
+                    ManagerAlert newAlert = new ManagerAlert(alert);
+                    newAlert.setStatus(newStatus);
+					treeMenuService.persistAlert(newAlert);
 				} else {
-					System.out.println("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatusString());
+					System.out.println("\t\tBerkeleyAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
 				}
 			}
 		}	
 	}
 	
-	public int evaluateStatistics(Alert alert, List<LiveStatistics> statList) {
+	public AlertStatus evaluateStatistics(Alert alert, List<LiveStatistics> statList) {
 		if (statList == null || statList.size() == 0) {
 			//Statistics is Idle == Not Reporting data to Manager
-			return Alert.IDLE;
-		} else if (thresholdBreached(statList, alert.getAlertOn(), alert.getErrorValue(), alert.getSelectedAlertType())) {
+			return AlertStatus.IDLE;
+		} else if (thresholdBreached(statList, alert.getErrorValue(), alert.getSelectedAlertType())) {
 			//Critical Threshold Breached
-			return Alert.CRITICAL;
-		} else if (thresholdBreached(statList, alert.getAlertOn(), alert.getWarningValue(), alert.getSelectedAlertType())) {
+			return AlertStatus.CRITICAL;
+		} else if (thresholdBreached(statList, alert.getWarningValue(), alert.getSelectedAlertType())) {
 			//Warning Threshold Breached
-			return Alert.WARNING;
+			return AlertStatus.WARNING;
 		} else { 
 			//OK
-			return Alert.NORMAL;
+			return AlertStatus.NORMAL;
 		}
 	}
 	
-	public boolean thresholdBreached(List<LiveStatistics> statList, int alertOn, double threshold, int alertType) {
+	public boolean thresholdBreached(List<LiveStatistics> statList, double threshold, AlertType alertType) {
         boolean thresholdBreached = true;
 		for (LiveStatistics stat : statList) {
 			Double statThreshold = null;
@@ -110,13 +123,13 @@ public class AlertValidatorTask {
             }
 
 			
-			if (alertType == Alert.GREATER_THAN && statThreshold != null && statThreshold  <= threshold) {
+			if (alertType == AlertType.GREATER_THAN && statThreshold != null && statThreshold  <= threshold) {
 				thresholdBreached = false;
 				break;
-			} else if (alertType == Alert.EQUALS && statThreshold != null && statThreshold == threshold) {
+			} else if (alertType == AlertType.EQUALS && statThreshold != null && statThreshold == threshold) {
 				thresholdBreached = false;
 				break;
-			} else if (alertType == Alert.LESS_THAN && statThreshold != null && statThreshold > threshold) {
+			} else if (alertType == AlertType.LESS_THAN && statThreshold != null && statThreshold > threshold) {
 				thresholdBreached = false;
 				break;
 			}

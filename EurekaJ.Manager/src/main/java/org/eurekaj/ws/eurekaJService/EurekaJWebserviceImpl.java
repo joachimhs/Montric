@@ -3,22 +3,15 @@ package org.eurekaj.ws.eurekaJService;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.ws.Holder;
-
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.berkeley.treemenu.TreeMenuNode;
-import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.api.enumtypes.ValueType;
+import org.eurekaj.api.enumtypes.UnitType;
+import org.eurekaj.manager.perst.alert.BerkeleyAlert;
 import org.eurekaj.manager.service.TreeMenuService;
-import org.eurekaj.webservice.AlertOnType;
-import org.eurekaj.webservice.AlertStatusType;
-import org.eurekaj.webservice.AlertType;
-import org.eurekaj.webservice.EurekaJService;
-import org.eurekaj.webservice.GetAlertByGuiPathResponseElement;
-import org.eurekaj.webservice.GetCompleteTreemenuResponseElement;
-import org.eurekaj.webservice.GetTreemenuForGuiPathResponseElement;
-import org.eurekaj.webservice.LiveStatisticsResponseElement;
-import org.eurekaj.webservice.StoreAlertElement;
-import org.eurekaj.webservice.StoreIncomingStatisticsElement;
+import org.eurekaj.webservice.*;
 
 public class EurekaJWebserviceImpl implements EurekaJService{
 	private TreeMenuService treeMenuService;
@@ -37,8 +30,8 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		List<LiveStatisticsResponseElement> retList = new ArrayList<LiveStatisticsResponseElement>();
 		for (LiveStatistics ls : lsList) {
 			LiveStatisticsResponseElement stat = new LiveStatisticsResponseElement();
-			stat.setGuiPath(ls.getPk().getGuiPath());
-			stat.setTimePeriod(ls.getPk().getTimeperiod());
+			stat.setGuiPath(ls.getGuiPath());
+			stat.setTimePeriod(ls.getTimeperiod());
 			stat.setValue(ls.getValue());
 			retList.add(stat);
 		}
@@ -51,7 +44,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		boolean retValue = true;
 		
 		for (StoreIncomingStatisticsElement sise: storeIncomingStatisticsList) {
-			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getValue(), sise.getValueType(), sise.getUnitType());
+			treeMenuService.storeIncomingStatistics(sise.getGuiPath(), sise.getTimeperiod(), sise.getValue(), ValueType.fromValue(sise.getValueType().value()), UnitType.fromValue(sise.getUnitType().value()));
 		}
 		
 		return retValue;
@@ -68,9 +61,6 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 			
 			GetCompleteTreemenuResponseElement element = new GetCompleteTreemenuResponseElement();
 			element.setGuiPath(node.getGuiPath());
-			element.setHasCallsPerIntervalInformation(node.isHasCallsPerIntervalInformation());
-			element.setHasExecTimeInformation(node.isHasExecTimeInformation());
-			element.setHasValueInformation(node.isHasValueInformation());
 			element.setNodeLive(nodeLive);
 			
 			if(nodeLive || (!nodeLive && includeNonliveNodes != null && !includeNonliveNodes.booleanValue())) {	
@@ -97,9 +87,6 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		if (tmn != null) {
 			retElement = new GetTreemenuForGuiPathResponseElement();
 			retElement.setGuiPath(tmn.getGuiPath());
-			retElement.setHasCallsPerIntervalInformation(tmn.isHasCallsPerIntervalInformation());
-			retElement.setHasExecTimeInformation(tmn.isHasExecTimeInformation());
-			retElement.setHasValueInformation(tmn.isHasValueInformation());
 			retElement.setNodeLive(tmn.getNodeLive() != null && tmn.getNodeLive().equalsIgnoreCase("Y"));
 		}
 		
@@ -134,11 +121,10 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 		GetAlertByGuiPathResponseElement retElement = new GetAlertByGuiPathResponseElement();
 		retElement.setActivated(alert.isActivated());
 		retElement.setAlertDelay(alert.getAlertDelay());
-		retElement.setAlertOn(AlertOnType.fromValue(Alert.getStringValueForEnumtypes(alert.getAlertOn())));
 		retElement.setErrorThreshold(alert.getErrorValue());
 		retElement.setGuiPath(alert.getGuiPath());
-		retElement.setSelectedAlertType(AlertType.fromValue(Alert.getStringValueForEnumtypes(alert.getSelectedAlertType())));
-		retElement.setStatus(AlertStatusType.fromValue(Alert.getStringValueForEnumtypes(alert.getStatus())));
+		retElement.setSelectedAlertType(AlertType.fromValue(alert.getSelectedAlertType().getTypeName()));
+		retElement.setStatus(AlertStatusType.fromValue(alert.getStatus().getStatusName()));
 		retElement.setWarningThreshold(alert.getWarningValue());
 		
 		return retElement;
@@ -148,18 +134,19 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 	public boolean storeAlert(List<StoreAlertElement> storeAlertList) {
 		boolean retVal = true;
 		for (StoreAlertElement elem : storeAlertList) {
-			Alert alert = new Alert();
+			BerkeleyAlert alert = new BerkeleyAlert();
 			alert.setActivated(elem.isActivated());
 			alert.setAlertDelay(elem.getAlertDelay());
-			alert.setAlertOn(Alert.getIntValueForStringvalue(elem.getAlertOn().value()));
 			alert.setErrorValue(elem.getErrorThreshold());
 			alert.setGuiPath(elem.getGuiPath());
-			alert.setSelectedAlertType(Alert.getIntValueForStringvalue(elem.getSelectedAlertType().value()));
-			alert.setStatus(Alert.getIntValueForStringvalue(elem.getStatus().value()));
+			alert.setSelectedAlertType(org.eurekaj.api.enumtypes.AlertType.valueOf(elem.getSelectedAlertType().value()));
+			alert.setStatus(AlertStatus.valueOf(elem.getStatus().value()));
 			alert.setWarningValue(elem.getWarningThreshold());
 			treeMenuService.persistAlert(alert);
 		}
 		
 		return retVal;
 	}
+
+
 }

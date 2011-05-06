@@ -1,10 +1,11 @@
 package org.eurekaj.manager.servlets;
 
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
 import org.eurekaj.manager.security.SecurityManager;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.xydata.XYDataList;
@@ -13,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -114,14 +114,14 @@ public class ChartServlet extends EurekaJGenericServlet {
                     alert = getBerkeleyTreeMenuService().getAlert(alertName);
                     if (alert != null) {
                         chartPath = alert.getGuiPath();
-                        seriesLabel = "Alert: " + alert.getAlertName();
+                        seriesLabel = "BerkeleyAlert: " + alert.getAlertName();
                     }
 
                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
                     Collections.sort(liveList);
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
-                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
-                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, Alert.WARNING, fromPeriod * 15000, toPeriod * 15000));
+                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
+                    valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.WARNING, fromPeriod * 15000, toPeriod * 15000));
                 } else if (isGroupedStatisticsChart(keyObject)) {
                     String groupName = pathFromClient.substring(5, pathFromClient.length());
                     groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName);

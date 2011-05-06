@@ -1,8 +1,12 @@
 package org.eurekaj.manager.json;
 
-import org.eurekaj.manager.berkley.administration.EmailRecipientGroup;
-import org.eurekaj.manager.perst.alert.Alert;
-import org.eurekaj.manager.perst.statistics.GroupedStatistics;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
+import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.manager.datatypes.ManagerAlert;
+import org.eurekaj.manager.datatypes.ManagerEmailRecipientGroup;
+import org.eurekaj.manager.datatypes.ManagerGroupedStatistics;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,30 +24,27 @@ import java.util.List;
 public class ParseJsonObjects {
 
     public static Alert parseAlertJson(JSONObject jsonAlert) {
-        Alert parsedAlert = null;
+        ManagerAlert parsedAlert = null;
 
         if (jsonAlert.has("alertName")) {
-            parsedAlert = new Alert();
+            parsedAlert = new ManagerAlert();
             parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "alertName"));
             parsedAlert.setWarningValue(parseIntegerFromJson(jsonAlert, "alertWarningValue").doubleValue());
             parsedAlert.setErrorValue(parseIntegerFromJson(jsonAlert, "alertErrorValue").doubleValue());
             parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertInstrumentationNode"));
             parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
-            parsedAlert.setSelectedAlertType(parseStringFromJson(jsonAlert, "alertType"));
+            parsedAlert.setSelectedAlertType(AlertType.valueOf(parseStringFromJson(jsonAlert, "alertType")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
-            if (parsedAlert.getSelectedAlertType() == Alert.UNKNOWN) {
-                parsedAlert.setSelectedAlertType(Alert.GREATER_THAN);
-            }
         }
         return parsedAlert;
     }
 
     public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup) {
-        GroupedStatistics groupedStatistics = null;
+        ManagerGroupedStatistics groupedStatistics = null;
 
         if (jsonGroup.has("instrumentaionGroupName") && jsonGroup.has("instrumentationGroupPath")) {
-            groupedStatistics = new GroupedStatistics();
+            groupedStatistics = new ManagerGroupedStatistics();
             groupedStatistics.setName(parseStringFromJson(jsonGroup, "instrumentaionGroupName"));
             groupedStatistics.setGroupedPathList(getStringArrayFromJson(jsonGroup, "instrumentationGroupPath"));
         }
@@ -52,7 +53,7 @@ public class ParseJsonObjects {
     }
 
     public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup) {
-        EmailRecipientGroup emailRecipientGroup = new EmailRecipientGroup();
+        ManagerEmailRecipientGroup emailRecipientGroup = new ManagerEmailRecipientGroup();
 
         emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(jsonEmailGroup, "emailGroupName"));
         emailRecipientGroup.setPort(parseIntegerFromJson(jsonEmailGroup, "smtpPort"));

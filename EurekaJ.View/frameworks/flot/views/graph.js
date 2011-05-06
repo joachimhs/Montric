@@ -108,7 +108,7 @@ Flot.GraphView = SC.View.extend(
                                     position: 'absolute',
                                     display: 'none',
                                     top: item.pageY + 5,
-                                    right: item.pageX + 5,
+                                    left: item.pageX + 5,
                                     border: '1px solid #fdd',
                                     padding: '2px',
                                     'background-color': '#fee',

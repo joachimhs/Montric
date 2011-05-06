@@ -1,13 +1,12 @@
 package org.eurekaj.manager.util;
 
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.manager.berkeley.statistics.LiveStatistics;
-import org.eurekaj.manager.berkeley.statistics.LiveStatisticsPk;
-import org.eurekaj.manager.perst.alert.Alert;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.enumtypes.AlertStatus;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -23,13 +22,13 @@ public class ChartUtil {
         //Hashtable is used for quick lookup
         Hashtable<Long, LiveStatistics> liveHash = new Hashtable<Long, LiveStatistics>();
 		for (LiveStatistics l : liveList) {
-			liveHash.put(l.getPk().getTimeperiod() * 15000, l);
+			liveHash.put(l.getTimeperiod() * 15000, l);
 		}
 
         int numTicksInResolution = resolution / 15;
 
         //Round down to nearest 15 seconds timeperiod
-        millisStart = millisStart - 15000 - (millisStart % 15000);
+        millisStart = millisStart - (millisStart % 15000);
 		millisEnd = millisEnd - (millisEnd % 15000) + 15000;
 
 
@@ -67,10 +66,10 @@ public class ChartUtil {
         return valueCollection;
     }
 	
-	public static XYDataList buildWarningList(Alert alert, int warningType, long minXaxis, long maxXaxis) {
+	public static XYDataList buildWarningList(Alert alert, AlertStatus alertStatus, long minXaxis, long maxXaxis) {
 		XYDataList errorList = new XYDataList();
 		errorList.setLabel("Warning Value");
-		if (warningType == Alert.CRITICAL ) {
+		if (alertStatus == AlertStatus.CRITICAL ) {
 			errorList.setLabel("Error Value");
 		}		
 		
@@ -82,7 +81,7 @@ public class ChartUtil {
 			
 			XYDataPoint endPoint = new XYDataPoint();
 			endPoint.setX(maxXaxis);
-			if (warningType == Alert.CRITICAL) {
+			if (alertStatus == AlertStatus.CRITICAL) {
 				startPoint.setY(errorValue);
 				endPoint.setY(errorValue);
 			} else {
@@ -91,7 +90,7 @@ public class ChartUtil {
 			}
 			
 			errorList.setColor("#eeff00");
-			if (warningType == Alert.CRITICAL) {
+			if (alertStatus == AlertStatus.CRITICAL) {
 				errorList.setColor("#ff0000");
 			}
 			

@@ -2,8 +2,8 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaj.manager.berkley.dashboard.Dashboard;
-import org.eurekaj.manager.dao.berkeley.DashboardDao;
+import org.eurekaj.manager.internal.DashboardDao;
+import org.eurekaj.manager.internal.dashboard.Dashboard;
 
 public class BerkeleyDashboardService implements DashboardService {
 	private DashboardDao dashboardDao;

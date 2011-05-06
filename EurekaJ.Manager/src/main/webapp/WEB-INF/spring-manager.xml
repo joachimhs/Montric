@@ -11,54 +11,24 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 	
-	<bean id="berkeleyDbEnv" class="org.eurekaj.manager.berkeley.BerkeleyDbEnv">
-
-	</bean>
 
     <bean id="eurekaJUserDetailsService" class="org.eurekaj.manager.security.EurekaJUserDetailsService" />
 
-	<bean id="treeMenuDao" class="org.eurekaj.manager.dao.berkeley.TreeMenuDaoImpl">
-		<property name="dbEnvironment">
-			<ref bean="berkeleyDbEnv" />
-		</property>
-	</bean>
 
 	<bean id="treeMenuService" class="org.eurekaj.manager.service.TreeMenuServiceImpl">
-		<property name="treeMenuDao">
-			<ref bean="treeMenuDao" />
-		</property>
 	</bean>
-	
-	<bean id="administrationDao" class="org.eurekaj.manager.dao.berkeley.AdministrationDaoImpl">
-		<property name="dbEnvironment">
-			<ref bean="berkeleyDbEnv" />
-		</property>
-	</bean>
-	
+
 	<bean id="administrationService" class="org.eurekaj.manager.service.AdministrationServiceImpl">
-		<property name="administrationDao">
-			<ref bean="administrationDao" />
-		</property>
 	</bean>
-	
-	
-	<bean id="dashboardDao" class="org.eurekaj.manager.dao.berkeley.BerkeleyDashboardDao">
-		<property name="dbEnvironment">
-			<ref bean="berkeleyDbEnv" />
-		</property>
-	</bean>
-	
+
 	<bean id="dashboardService" class="org.eurekaj.manager.service.BerkeleyDashboardService">
-		<property name="dashboardDao">
-			<ref bean="dashboardDao" />
-		</property>
 	</bean>
 
 	<!--
-		bean id="logDao" class="org.eurekaj.manager.dao.berkeley.LogDaoImpl">
+		bean id="logDao" class="org.eurekaj.manager.dao.shutdownhook.LogDaoImpl">
 		<property name="dbEnvironment"> <ref bean="berkeleyDbEnv" />
 		</property> </bean> <bean id="logService"
-		class="org.eurekaj.manager.service.LogServiceImpl"> <property
+		class="org.eurekaj.manager.internal.LogServiceImpl"> <property
 		name="logDao"> <ref bean="logDao" /> </property> </bean
 	-->
 

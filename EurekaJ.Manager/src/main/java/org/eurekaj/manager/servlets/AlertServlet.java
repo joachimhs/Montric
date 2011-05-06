@@ -1,9 +1,9 @@
 package org.eurekaj.manager.servlets;
 
-import org.eurekaj.manager.berkeley.alert.TriggeredAlert;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
-import org.eurekaj.manager.perst.alert.Alert;
 import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
 import org.json.JSONObject;
