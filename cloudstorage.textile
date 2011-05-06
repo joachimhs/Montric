@@ -17,7 +17,7 @@ For this to work I needed to abstract away the data-access layer in EurekaJ Mana
 where and how EurekaJ Manager would persist its data. I would then supply EurekaJ Manager with two .Jar files (One of Berekely DB JE, and one for the
 Cloud storage), and letting the user specify which data-storage they wanted based on a configuration setting. 
 
-h3. Architectural changes
+h4. Architectural changes
 
 Some obvious changes to the EurekaJ source had to be made to enable third-party plugins to implement the data-access interfaces. I started with moving
 all of my *DAO interfaces into a seperate maven module - EurekaJ.API. I also needed to provide interfaces for each datatype that were moving in and 
@@ -36,7 +36,7 @@ sets these properties inside a seperate "database.properties" file that is suppl
 Now that the plugin architecture was complete, and working as intended with the Berkeley DB JE database, things were set to create an additional plugin
 for the cloud-based storage. 
 
-h3. SimpleDB The Cloud-ready key-value database from Amazon AWS
+h4. SimpleDB The Cloud-ready key-value database from Amazon AWS
 
 Amazon has recently added SimpleDB to its line of services offered as part of the AWS (Amazon WebService) offering. SimpleDB is a key-value store 
 and as such, was very compatible with what I wanted to achieve with the data-access extension to EurekaJ. 
