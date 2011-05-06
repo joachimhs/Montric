@@ -1,8 +1,8 @@
 package org.eurekaj.manager.servlets;
 
+import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
-import org.eurekaj.manager.perst.statistics.BerkeleyGroupedStatistics;
 import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ public class InstrumentationGroupServlet extends EurekaJGenericServlet {
             System.out.println("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("instrumentaionGroupName") && SecurityManager.isAuthenticatedAsAdmin()) {
-                BerkeleyGroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
+                GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
                 if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0 && groupedStatistics.getGroupedPathList().size() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }

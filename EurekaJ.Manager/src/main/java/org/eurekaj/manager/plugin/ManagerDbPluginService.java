@@ -18,6 +18,9 @@ public class ManagerDbPluginService {
 
     private ManagerDbPluginService() {
         loader = ServiceLoader.load(EurekaJDBPluginService.class);
+        for (EurekaJDBPluginService pluginService : loader) {
+            pluginService.setup();
+        }
     }
 
     public static synchronized ManagerDbPluginService getInstance() {
@@ -31,17 +34,15 @@ public class ManagerDbPluginService {
     public EurekaJDBPluginService getPluginServiceWithName(String wantedPluginName) {
         EurekaJDBPluginService returnPlugin = null;
 
-        Iterator<EurekaJDBPluginService> pluginIterator = loader.iterator();
-        while (pluginIterator.hasNext()) {
-            EurekaJDBPluginService currPlugin = (EurekaJDBPluginService)pluginIterator.next();
-            if (currPlugin.getPluginName().equalsIgnoreCase(wantedPluginName)) {
-                returnPlugin = currPlugin;
+        for (EurekaJDBPluginService pluginService : loader) {
+            if (pluginService.getPluginName().equalsIgnoreCase(wantedPluginName)) {
+                returnPlugin = pluginService;
                 break;
             }
         }
 
         if (returnPlugin == null) {
-            throw new IllegalArgumentException("There is no plugin named: " + wantedPluginName + " Database storage is unavailable");
+            throw new IllegalArgumentException("There is no plugin named: " + wantedPluginName + ". Database storage is unavailable");
         }
         return returnPlugin;
     }

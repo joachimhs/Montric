@@ -98,6 +98,11 @@
             <artifactId>eurekaJ.api</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eurekaJ</groupId>
+            <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- Jetty -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>

@@ -14,7 +14,7 @@ import org.eurekaj.berkeley.db.dao.BerkeleyGroupedStatisticsDao;
 import org.eurekaj.berkeley.db.dao.BerkeleyTreeMenuDao;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
-public class BerkeleyDbEnv implements EurekaJDBPluginService {
+public class BerkeleyDbEnv extends EurekaJDBPluginService {
 
 	private Environment environment;
 	private File dbFile;
@@ -38,14 +38,6 @@ public class BerkeleyDbEnv implements EurekaJDBPluginService {
 		/*BerkeleyShutdownHook shutdownHook = new BerkeleyShutdownHook();
 		shutdownHook.setDbEnv(this);
 		Runtime.getRuntime().addShutdownHook(shutdownHook);*/
-		
-		String dbAbsPath = System.getProperty("eurekaj.db.absPath");
-		dbFile = new File(dbAbsPath);
-		if (dbFile == null || !dbFile.exists()) {
-			dbFile.mkdir();
-		}
-		
-		setup();
 	}
 
     public String getPluginName() {
@@ -53,6 +45,12 @@ public class BerkeleyDbEnv implements EurekaJDBPluginService {
     }
 	
 	public void setup() {
+        String dbAbsPath = System.getProperty("eurekaj.db.absPath");
+		dbFile = new File(dbAbsPath);
+		if (dbFile == null || !dbFile.exists()) {
+			dbFile.mkdir();
+		}
+
 		EnvironmentConfig environmentconfig = new EnvironmentConfig();
 		StoreConfig storeConfig = new StoreConfig(); 
 		

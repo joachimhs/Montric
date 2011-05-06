@@ -9,7 +9,7 @@ import org.eurekaj.api.datatypes.TreeMenuNode;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.api.enumtypes.UnitType;
-import org.eurekaj.manager.perst.alert.BerkeleyAlert;
+import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.webservice.*;
 
@@ -134,7 +134,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 	public boolean storeAlert(List<StoreAlertElement> storeAlertList) {
 		boolean retVal = true;
 		for (StoreAlertElement elem : storeAlertList) {
-			BerkeleyAlert alert = new BerkeleyAlert();
+			ManagerAlert alert = new ManagerAlert();
 			alert.setActivated(elem.isActivated());
 			alert.setAlertDelay(elem.getAlertDelay());
 			alert.setErrorValue(elem.getErrorThreshold());

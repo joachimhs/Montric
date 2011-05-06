@@ -9,20 +9,20 @@ import org.eurekaj.api.dao.*;
  * Time: 9:32 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface EurekaJDBPluginService {
-    public String getPluginName();
+public abstract class EurekaJDBPluginService {
+    public abstract String getPluginName();
 
-    public void setup();
+    public abstract void setup();
 
-    public void tearDown();
+    public abstract void tearDown();
 
-    public AlertDao getAlertDao();
+    public abstract AlertDao getAlertDao();
 
-    public GroupedStatisticsDao getGroupedStatisticsDao();
+    public abstract GroupedStatisticsDao getGroupedStatisticsDao();
 
-    public LiveStatisticsDao getLiveStatissticsDao();
+    public abstract LiveStatisticsDao getLiveStatissticsDao();
 
-    public SmtpDao getSmtpDao();
+    public abstract SmtpDao getSmtpDao();
 
-    public TreeMenuDao getTreeMenuDao();
+    public abstract TreeMenuDao getTreeMenuDao();
 }

@@ -8,29 +8,37 @@ import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class AdministrationServiceImpl implements AdministrationService {
-    EurekaJDBPluginService dbPlugin;
+    EurekaJDBPluginService dbPlugin = null;
 
     public AdministrationServiceImpl() {
-        dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName("Berkeley");
+
+    }
+
+    private EurekaJDBPluginService getDbPlugin() {
+        if (dbPlugin == null) {
+            dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName("Berkeley");
+        }
+
+        return dbPlugin;
     }
 
     @Override
 	public List<EmailRecipientGroup> getEmailRecipientGroups() {
-		return dbPlugin.getSmtpDao().getEmailRecipientGroups();
+		return getDbPlugin().getSmtpDao().getEmailRecipientGroups();
 	}
 
 	@Override
 	public EmailRecipientGroup getEmailRecipientGroup(String groupName) {
-		return dbPlugin.getSmtpDao().getEmailRecipientGroup(groupName);
+		return getDbPlugin().getSmtpDao().getEmailRecipientGroup(groupName);
 	}
 
 	@Override
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
-		dbPlugin.getSmtpDao().persistEmailRecipientGroup(emailRecipientGroup);
+		getDbPlugin().getSmtpDao().persistEmailRecipientGroup(emailRecipientGroup);
 	}
 
 	@Override
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
-		dbPlugin.getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
+		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
 	}
 }
