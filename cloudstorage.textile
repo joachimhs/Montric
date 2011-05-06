@@ -11,7 +11,7 @@ I wanted to be able to deploy the EurekaJ Manager application in a cloud environ
 
 For this to work I needed to abstract away the data-access layer in EurekaJ Manager and I decided to allow third party plugins to be able to extend where and how EurekaJ Manager would persist its data. I would then supply EurekaJ Manager with two .Jar files (One of Berekely DB JE, and one for the Cloud storage), and letting the user specify which data-storage they wanted based on a configuration setting. 
 
-h4. Architectural changes
+h3. Architectural changes
 
 Some obvious changes to the EurekaJ source had to be made to enable third-party plugins to implement the data-access interfaces. I started with moving all of my *DAO interfaces into a seperate maven module - EurekaJ.API. I also needed to provide interfaces for each datatype that were moving in and out of the database. I decided that these interfaces would only expose getters, and that each side if the interface (both EurekaJ Manager and the plugin) would need to implement actual implementation classes tailored for each specific need. I ended up with having to create data type implementations for only the data types that EurekaJ Manager would create of modify, while in the plugin itself, I needed to create data type implementations for  all of the data types. The downside of this is that there is obviously about two and a half times as many classes involved with the data types, while the upside is a cleaner API on each side of the interface.
 
@@ -19,7 +19,7 @@ The plugin also needs to provide actual implementations of the DAO interfaces so
 
 Now that the plugin architecture was complete, and working as intended with the Berkeley DB JE database, things were set to create an additional plugin for the cloud-based storage. 
 
-h4. SimpleDB The Cloud-ready key-value database from Amazon AWS
+h3. SimpleDB The Cloud-ready key-value database from Amazon AWS
 
 Amazon has recently added SimpleDB to its line of services offered as part of the AWS (Amazon WebService) offering. SimpleDB is a key-value store and as such, was very compatible with what I wanted to achieve with the data-access extension to EurekaJ. 
 
