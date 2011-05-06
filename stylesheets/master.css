@@ -296,13 +296,13 @@ float: left;
 }
 
 #content .panel h3 {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 #content .panel h4 {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
 
 
