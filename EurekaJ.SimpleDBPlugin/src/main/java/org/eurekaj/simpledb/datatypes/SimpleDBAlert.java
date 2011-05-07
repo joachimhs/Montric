@@ -1,11 +1,16 @@
 package org.eurekaj.simpledb.datatypes;
 
+import com.amazonaws.services.simpledb.model.Attribute;
+import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.simpledb.SimpleDBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,6 +45,50 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         this.selectedEmailSenderList = alert.getSelectedEmailSenderList();
     }
 
+    public SimpleDBAlert(List<Attribute> attributeList) {
+        Map<String, String> attributeMap = SimpleDBUtil.getAttributesAStringMap(attributeList);
+
+        setAlertName(attributeMap.get("alertName"));
+        setGuiPath(attributeMap.get("guiPath"));
+        setActivated(attributeMap.get("activated"));
+        setErrorValue(attributeMap.get("errorValue"));
+        setWarningValue(attributeMap.get("warningValue"));
+        setSelectedAlertType(attributeMap.get("selectedAlertType"));
+        setAlertDelay(attributeMap.get("alertDelay"));
+        setStatus(attributeMap.get("status"));
+        setSelectedEmailSenderList(attributeMap.get("selectedEmailSenderList"));
+    }
+
+    public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {
+        List<ReplaceableAttribute> replaceableAttributeList = new ArrayList<ReplaceableAttribute>();
+        replaceableAttributeList.add(new ReplaceableAttribute("alertName", this.getAlertName(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("guiPath", this.getGuiPath(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("activated", new Boolean(this.isActivated()).toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("errorValue", this.getErrorValue().toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("warningValue", this.getWarningValue().toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("selectedAlertType", this.getSelectedAlertType().getTypeName(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("alertDelay", new Long(this.getAlertDelay()).toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("status", this.getStatus().getStatusName(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("selectedEmailSenderList", this.getEmailsAsString(), true));
+
+        return replaceableAttributeList;
+    }
+
+    public String getEmailsAsString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (String email : selectedEmailSenderList) {
+            sb.append(email).append(",");
+        }
+
+        String emailString = sb.toString();
+        if (emailString.endsWith(",")) {
+            emailString = emailString.substring(0, emailString.length() -1);
+        }
+
+        return emailString;
+    }
+
     public String getAlertName() {
         return alertName;
     }
@@ -64,12 +113,28 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         this.activated = activated;
     }
 
+    public void setActivated(String activated) {
+        this.activated = new Boolean(activated);
+    }
+
     public Double getErrorValue() {
         return errorValue;
     }
 
     public void setErrorValue(Double errorValue) {
         this.errorValue = errorValue;
+    }
+
+    public void setErrorValue(String errorValue) {
+        if (errorValue == null) {
+            this.errorValue = null;
+        } else {
+            try {
+                this.errorValue = Double.parseDouble(errorValue);
+            } catch (NumberFormatException nfe) {
+                this.errorValue = null;
+            }
+        }
     }
 
     public Double getWarningValue() {
@@ -80,12 +145,32 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         this.warningValue = warningValue;
     }
 
+    public void setWarningValue(String warningValue) {
+        if (warningValue == null) {
+            this.warningValue = null;
+        } else {
+            try {
+                this.warningValue = Double.parseDouble(warningValue);
+            } catch (NumberFormatException nfe) {
+                this.warningValue = null;
+            }
+        }
+    }
+
     public AlertType getSelectedAlertType() {
         return selectedAlertType;
     }
 
     public void setSelectedAlertType(AlertType selectedAlertType) {
         this.selectedAlertType = selectedAlertType;
+    }
+
+    public void setSelectedAlertType(String selectedAlertType) {
+        if (selectedAlertType == null) {
+            this.selectedAlertType = AlertType.GREATER_THAN;
+        } else {
+            this.selectedAlertType = AlertType.fromValue(selectedAlertType);
+        }
     }
 
     public long getAlertDelay() {
@@ -96,6 +181,18 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         this.alertDelay = alertDelay;
     }
 
+    public void setAlertDelay(String alertDelay) {
+        if (alertDelay == null) {
+            this.alertDelay = 0;
+        } else {
+            try {
+                this.alertDelay = Long.parseLong(alertDelay);
+            } catch (NumberFormatException nfe) {
+                this.alertDelay = 0;
+            }
+        }
+    }
+
     public AlertStatus getStatus() {
         return status;
     }
@@ -104,12 +201,32 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         this.status = status;
     }
 
+    public void setStatus(String status) {
+        if (status == null) {
+            this.status = AlertStatus.IDLE;
+        } else {
+            this.status = AlertStatus.fromValue(status);
+        }
+    }
+
     public List<String> getSelectedEmailSenderList() {
         return selectedEmailSenderList;
     }
 
     public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
         this.selectedEmailSenderList = selectedEmailSenderList;
+    }
+
+    public void setSelectedEmailSenderList(String selectedEmailSenderString) {
+        this.selectedEmailSenderList = new ArrayList<String>();
+        if (selectedEmailSenderString != null && selectedEmailSenderString.contains(",")) {
+            String[] emails = selectedEmailSenderString.split(",");
+            for (String email : emails) {
+                selectedEmailSenderList.add(email);
+            }
+        } else if (selectedEmailSenderString != null && !selectedEmailSenderString.contains(",")) {
+            selectedEmailSenderList.add(selectedEmailSenderString);
+        }
     }
 
     public int compareTo(Alert other) {

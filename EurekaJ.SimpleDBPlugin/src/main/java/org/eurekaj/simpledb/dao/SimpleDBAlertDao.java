@@ -1,10 +1,16 @@
 package org.eurekaj.simpledb.dao;
 
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
+import com.amazonaws.services.simpledb.model.*;
 import org.eurekaj.api.dao.AlertDao;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.TriggeredAlert;
+import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.simpledb.datatypes.SimpleDBAlert;
+import org.eurekaj.simpledb.datatypes.SimpleDBTriggeredAlert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,22 +29,37 @@ public class SimpleDBAlertDao implements AlertDao{
 
     @Override
     public void persistAlert(Alert alert) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        SimpleDBAlert simpleDBAlert = new SimpleDBAlert(alert);
+        amazonSimpleDB.putAttributes(new PutAttributesRequest("EurekaJ_Alert", alert.getAlertName(), simpleDBAlert.getAmazonSimpleDBAttribute()));
     }
 
     @Override
     public Alert getAlert(String alertName) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        GetAttributesResult result = amazonSimpleDB.getAttributes(new GetAttributesRequest("EurekaJ_Alert", alertName));
+        SimpleDBAlert sdbAlert = new SimpleDBAlert(result.getAttributes());
+
+        return sdbAlert;
     }
 
     @Override
     public List<Alert> getAlerts() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<Alert> alertList = new ArrayList<Alert>();
+
+        String sdbQuery = "select * from EurekaJ_Alert";
+
+        SelectRequest selectRequest = new SelectRequest(sdbQuery);
+        for (Item item : amazonSimpleDB.select(selectRequest).getItems()) {
+            alertList.add(new SimpleDBAlert(item.getAttributes()));
+        }
+
+        return alertList;
     }
 
     @Override
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        SimpleDBTriggeredAlert simpleDBTriggeredAlert = new SimpleDBTriggeredAlert(triggeredAlert);
+
+        amazonSimpleDB.putAttributes(new PutAttributesRequest("EurekaJ_TriggeredAlert", triggeredAlert.getAlertName() + "_" + triggeredAlert.getTimeperiod(), simpleDBTriggeredAlert.getAmazonSimpleDBAttribute()));
     }
 
     @Override
