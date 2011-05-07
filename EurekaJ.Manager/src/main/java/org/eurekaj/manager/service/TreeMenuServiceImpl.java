@@ -10,6 +10,7 @@ import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
+import org.eurekaj.manager.util.DatabasePluginUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class TreeMenuServiceImpl implements TreeMenuService {
@@ -20,8 +21,9 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     }
 
     private EurekaJDBPluginService getDbPlugin() {
+
         if (dbPlugin == null) {
-            dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName("Berkeley");
+            dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
         }
 
         return dbPlugin;
@@ -68,22 +70,18 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return getDbPlugin().getAlertDao().getAlerts();
 	}
 
-    @Override
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
         getDbPlugin().getAlertDao().persistTriggeredAlert(triggeredAlert);
     }
 
-    @Override
     public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
         return getDbPlugin().getAlertDao().getTriggeredAlerts(fromTimeperiod, toTimeperiod);
     }
 
-    @Override
     public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
         return getDbPlugin().getAlertDao().getTriggeredAlerts(alertname, fromTimeperiod, toTimeperiod);
     }
 
-    @Override
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
         return getDbPlugin().getAlertDao().getRecentTriggeredAlerts(numAlerts);
     }

@@ -39,6 +39,10 @@
                             <value>8081</value>
                         </systemProperty>
                         <systemProperty>
+                            <name>eurekaj.db.type</name>
+                            <value>Berkeley</value>
+                        </systemProperty>
+                        <systemProperty>
                             <name>eurekaj.db.absPath</name>
                             <value>/srv/EurekaJRunnable/eurekajData</value>
                         </systemProperty>
@@ -101,6 +105,11 @@
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eurekaJ</groupId>
+            <artifactId>eurekaJ.simpleDBPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- Jetty -->

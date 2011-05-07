@@ -5,6 +5,7 @@ import java.util.List;
 import org.eurekaj.api.dao.SmtpDao;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
+import org.eurekaj.manager.util.DatabasePluginUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class AdministrationServiceImpl implements AdministrationService {
@@ -16,28 +17,24 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     private EurekaJDBPluginService getDbPlugin() {
         if (dbPlugin == null) {
-            dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName("Berkeley");
+            dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
         }
 
         return dbPlugin;
     }
 
-    @Override
 	public List<EmailRecipientGroup> getEmailRecipientGroups() {
 		return getDbPlugin().getSmtpDao().getEmailRecipientGroups();
 	}
 
-	@Override
 	public EmailRecipientGroup getEmailRecipientGroup(String groupName) {
 		return getDbPlugin().getSmtpDao().getEmailRecipientGroup(groupName);
 	}
 
-	@Override
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
 		getDbPlugin().getSmtpDao().persistEmailRecipientGroup(emailRecipientGroup);
 	}
 
-	@Override
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
 		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
 	}
