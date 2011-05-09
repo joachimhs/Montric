@@ -1,6 +1,13 @@
 package org.eurekaj.simpledb.datatypes;
 
+import com.amazonaws.services.simpledb.model.Attribute;
+import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.simpledb.SimpleDBUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,6 +28,21 @@ public class SimpleDBTreeMenuNode  implements TreeMenuNode, Comparable<TreeMenuN
         this.nodeLive = nodeLive;
     }
 
+    public SimpleDBTreeMenuNode(List<Attribute> attributeList) {
+        Map<String, String> attributeMap = SimpleDBUtil.getAttributesAStringMap(attributeList);
+
+        setGuiPath(attributeMap.get("guiPath"));
+        setNodeLive(attributeMap.get("nodeLive"));
+    }
+
+    public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {
+        List<ReplaceableAttribute> replaceableAttributeList = new ArrayList<ReplaceableAttribute>();
+        replaceableAttributeList.add(new ReplaceableAttribute("guiPath", this.getGuiPath(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("nodeLive", this.getNodeLive(), true));
+
+        return replaceableAttributeList;
+    }
+
     @Override
     public String getGuiPath() {
         return guiPath;
@@ -29,6 +51,14 @@ public class SimpleDBTreeMenuNode  implements TreeMenuNode, Comparable<TreeMenuN
     @Override
     public String getNodeLive() {
         return nodeLive;
+    }
+
+    public void setGuiPath(String guiPath) {
+        this.guiPath = guiPath;
+    }
+
+    public void setNodeLive(String nodeLive) {
+        this.nodeLive = nodeLive;
     }
 
     @Override

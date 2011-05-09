@@ -5,6 +5,7 @@ import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.simpledb.SimpleDBUtil;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,11 +51,11 @@ public class SimpleDBTriggeredAlert implements TriggeredAlert {
     public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {
         List<ReplaceableAttribute> replaceableAttributeList = new ArrayList<ReplaceableAttribute>();
         replaceableAttributeList.add(new ReplaceableAttribute("alertName", this.getAlertName(), true));
-        replaceableAttributeList.add(new ReplaceableAttribute("timeperiod", this.getTimeperiod().toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("timeperiod", SimpleDBUtil.getSimpleDBTimestamp(this.getTimeperiod()), true));
         replaceableAttributeList.add(new ReplaceableAttribute("errorValue", this.getErrorValue().toString(), true));
         replaceableAttributeList.add(new ReplaceableAttribute("warningValue", this.getWarningValue().toString(), true));
         replaceableAttributeList.add(new ReplaceableAttribute("alertValue", this.getAlertValue().toString(), true));
-        replaceableAttributeList.add(new ReplaceableAttribute("triggeredTimeperiod", this.getTriggeredTimeperiod().toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("triggeredTimeperiod", SimpleDBUtil.getSimpleDBTimestamp(this.getTriggeredTimeperiod()), true));
 
         return replaceableAttributeList;
     }

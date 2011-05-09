@@ -1,9 +1,13 @@
 package org.eurekaj.simpledb.datatypes;
 
+import com.amazonaws.services.simpledb.model.Attribute;
+import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
+import org.eurekaj.simpledb.SimpleDBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,6 +33,32 @@ public class SimpleDBEmailRecipientGroup implements Comparable<EmailRecipientGro
         this.useSSL = emailRecipientGroup.isUseSSL();
         this.port = emailRecipientGroup.getPort();
         this.emailRecipientList = emailRecipientGroup.getEmailRecipientList();
+    }
+
+    public SimpleDBEmailRecipientGroup(List<Attribute> attributeList) {
+        Map<String, String> attributeMap = SimpleDBUtil.getAttributesAStringMap(attributeList);
+
+        setEmailRecipientGroupName(attributeMap.get("emailRecipientGroupName"));
+        setEmailRecipientGroupName(attributeMap.get("smtpServerhost"));
+        setEmailRecipientGroupName(attributeMap.get("smtpUsername"));
+        setEmailRecipientGroupName(attributeMap.get("smtpPassword"));
+        setEmailRecipientGroupName(attributeMap.get("useSSL"));
+        setEmailRecipientGroupName(attributeMap.get("port"));
+
+        setEmailRecipientList(SimpleDBUtil.getCommaseperatedStringAsList(attributeMap.get("emailRecipientList"), ","));
+    }
+
+    public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {
+        List<ReplaceableAttribute> replaceableAttributeList = new ArrayList<ReplaceableAttribute>();
+        replaceableAttributeList.add(new ReplaceableAttribute("emailRecipientGroupName", this.getEmailRecipientGroupName(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("smtpServerhost", this.getSmtpServerhost(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("smtpUsername", this.getSmtpUsername(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("smtpPassword", this.getSmtpPassword(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("useSSL", new Boolean(this.isUseSSL()).toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("port", this.getPort().toString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("emailRecipientList", SimpleDBUtil.getStringListAsString(this.getEmailRecipientList()), true));
+
+        return replaceableAttributeList;
     }
 
     public String getEmailRecipientGroupName() {

@@ -56,7 +56,7 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         setSelectedAlertType(attributeMap.get("selectedAlertType"));
         setAlertDelay(attributeMap.get("alertDelay"));
         setStatus(attributeMap.get("status"));
-        setSelectedEmailSenderList(attributeMap.get("selectedEmailSenderList"));
+        setSelectedEmailSenderList(SimpleDBUtil.getCommaseperatedStringAsList(attributeMap.get("selectedEmailSenderList"), ","));
     }
 
     public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {
@@ -69,25 +69,12 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
         replaceableAttributeList.add(new ReplaceableAttribute("selectedAlertType", this.getSelectedAlertType().getTypeName(), true));
         replaceableAttributeList.add(new ReplaceableAttribute("alertDelay", new Long(this.getAlertDelay()).toString(), true));
         replaceableAttributeList.add(new ReplaceableAttribute("status", this.getStatus().getStatusName(), true));
-        replaceableAttributeList.add(new ReplaceableAttribute("selectedEmailSenderList", this.getEmailsAsString(), true));
+        replaceableAttributeList.add(new ReplaceableAttribute("selectedEmailSenderList", SimpleDBUtil.getStringListAsString(this.selectedEmailSenderList), true));
 
         return replaceableAttributeList;
     }
 
-    public String getEmailsAsString() {
-        StringBuilder sb = new StringBuilder();
 
-        for (String email : selectedEmailSenderList) {
-            sb.append(email).append(",");
-        }
-
-        String emailString = sb.toString();
-        if (emailString.endsWith(",")) {
-            emailString = emailString.substring(0, emailString.length() -1);
-        }
-
-        return emailString;
-    }
 
     public String getAlertName() {
         return alertName;
@@ -215,18 +202,6 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
 
     public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
         this.selectedEmailSenderList = selectedEmailSenderList;
-    }
-
-    public void setSelectedEmailSenderList(String selectedEmailSenderString) {
-        this.selectedEmailSenderList = new ArrayList<String>();
-        if (selectedEmailSenderString != null && selectedEmailSenderString.contains(",")) {
-            String[] emails = selectedEmailSenderString.split(",");
-            for (String email : emails) {
-                selectedEmailSenderList.add(email);
-            }
-        } else if (selectedEmailSenderString != null && !selectedEmailSenderString.contains(",")) {
-            selectedEmailSenderList.add(selectedEmailSenderString);
-        }
     }
 
     public int compareTo(Alert other) {

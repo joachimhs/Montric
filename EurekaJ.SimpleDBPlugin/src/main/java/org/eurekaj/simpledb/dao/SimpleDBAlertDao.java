@@ -9,6 +9,7 @@ import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.simpledb.datatypes.SimpleDBAlert;
 import org.eurekaj.simpledb.datatypes.SimpleDBTriggeredAlert;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,16 +65,51 @@ public class SimpleDBAlertDao implements AlertDao{
 
     @Override
     public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
+
+        String sdbQuery = "select * from EurekaJ_TriggeredAlert where " +
+                " triggeredTimeperiod between \"" + fromTimeperiod + "\" and \"" + toTimeperiod + "\" " +
+                " order  by triggeredTimeperiod desc";
+
+        SelectRequest selectRequest = new SelectRequest(sdbQuery);
+        for (Item item : amazonSimpleDB.select(selectRequest).getItems()) {
+            triggeredAlertList.add(new SimpleDBTriggeredAlert(item.getAttributes()));
+        }
+
+        return triggeredAlertList;
     }
 
     @Override
     public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
+
+        String sdbQuery = "select * from EurekaJ_TriggeredAlert where alertName = \"" + alertname + "\" + " +
+                " triggeredTimeperiod between \"" + fromTimeperiod + "\" and \"" + toTimeperiod + "\" " +
+                " order  by triggeredTimeperiod desc";
+
+        SelectRequest selectRequest = new SelectRequest(sdbQuery);
+        for (Item item : amazonSimpleDB.select(selectRequest).getItems()) {
+            triggeredAlertList.add(new SimpleDBTriggeredAlert(item.getAttributes()));
+        }
+
+        return triggeredAlertList;
     }
 
     @Override
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
+
+        long millis = System.currentTimeMillis();
+        String sdbQuery = "select * from EurekaJ_TriggeredAlert where " +
+                " triggeredTimeperiod >= \"" + (long)(millis/15) + "\" " +
+                " order  by triggeredTimeperiod desc";
+
+
+        SelectRequest selectRequest = new SelectRequest(sdbQuery);
+        for (Item item : amazonSimpleDB.select(selectRequest).getItems()) {
+            triggeredAlertList.add(new SimpleDBTriggeredAlert(item.getAttributes()));
+        }
+
+        return triggeredAlertList;
     }
 }

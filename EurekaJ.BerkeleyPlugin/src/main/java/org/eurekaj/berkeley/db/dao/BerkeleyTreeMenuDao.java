@@ -141,13 +141,12 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 	private void storeLiveStatistics(BerkeleyLiveStatistics oldStat,
 			Double valueDouble, ValueType valueType, UnitType unitType, String guiPath, Long timeperiod) {
 
-        Double calculatedValue = calculateValueBasedOnUnitType(valueDouble, unitType);
+        Double calculatedValue = LiveStatisticsUtil.calculateValueBasedOnUnitType(valueDouble, unitType);
 
 		if (oldStat != null) {
 			//We have a hit for a guipath and timeperiod. Update record
-			//If there is a callsPerInterval, calculate new avg Execution time
 			//Always set new value
-			oldStat.setValue(calculateValueBasedOnValueType(oldStat, calculatedValue, valueType));
+			oldStat.setValue(LiveStatisticsUtil.calculateValueBasedOnValueType(oldStat, calculatedValue, valueType));
 			liveStatPrimaryIdx.put(oldStat);
 		} else {
 			//No hit, create new BerkeleyLiveStatistics
@@ -162,34 +161,8 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 		}
 	}
 
-    private Double calculateValueBasedOnValueType(BerkeleyLiveStatistics oldStat, Double newValue, ValueType valueType) {
-        Double valueReturn = newValue;
 
-        if (valueType == ValueType.VALUE) {
-            valueReturn = newValue;
-        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AGGREGATE) {
-            valueReturn = oldStat.getValue() + newValue;
-        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AVERAGE) {
-            valueReturn = (oldStat.getValue() + newValue) / 2;
-        }
 
-        return valueReturn;
-    }
 
-    private Double calculateValueBasedOnUnitType(Double valueDouble, UnitType unitType) {
-        Double valueReturn = null;
-
-        if (valueDouble != null && unitType == UnitType.NS) {
-            //From nanoseconds to milliseconds
-            valueReturn = valueDouble / 1000000;
-        } else if (unitType == UnitType.MS || unitType == UnitType.N) {
-            valueReturn = valueDouble;
-        } else if (valueDouble != null && unitType == UnitType.S) {
-            //From seconds to milliseconds
-            valueReturn = valueDouble * 1000;
-        }
-
-        return valueReturn;
-    }
 
 }
