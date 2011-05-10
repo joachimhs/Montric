@@ -1,5 +1,6 @@
 package org.eurekaj.simpledb.datatypes;
 
+import org.eurekaj.simpledb.SimpleDBUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class SimpleDBAlertTest {
         emailAddressList.add("lene@haagen.name");
         alert.setSelectedEmailSenderList(emailAddressList);
 
-        String emailAsString = alert.getEmailsAsString();
+        String emailAsString = SimpleDBUtil.getStringListAsString(alert.getSelectedEmailSenderList());
         Assert.assertEquals("joachim@haagen.name,lene@haagen.name", emailAsString);
     }
 
@@ -34,7 +35,7 @@ public class SimpleDBAlertTest {
         emailAddressList.add("joachim@haagen.name");
         alert.setSelectedEmailSenderList(emailAddressList);
 
-        String emailAsString = alert.getEmailsAsString();
+        String emailAsString = SimpleDBUtil.getStringListAsString(alert.getSelectedEmailSenderList());
         Assert.assertEquals("joachim@haagen.name", emailAsString);
     }
 
@@ -44,7 +45,17 @@ public class SimpleDBAlertTest {
         List<String> emailAddressList = new ArrayList<String>();
         alert.setSelectedEmailSenderList(emailAddressList);
 
-        String emailAsString = alert.getEmailsAsString();
+        String emailAsString = SimpleDBUtil.getStringListAsString(alert.getSelectedEmailSenderList());
         Assert.assertEquals("", emailAsString);
+    }
+
+    @Test
+    public void testLiveStat() {
+        SimpleDBLiveStatistics ls = new SimpleDBLiveStatistics();
+        ls.setValue("0.5458984375");
+
+        Assert.assertEquals(new Double(0.5458984375d), ls.getValue());
+
+        System.out.println("value: " + ls.getValue());
     }
 }

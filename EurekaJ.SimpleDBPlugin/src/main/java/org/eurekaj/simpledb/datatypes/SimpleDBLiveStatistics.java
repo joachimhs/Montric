@@ -36,6 +36,7 @@ public class SimpleDBLiveStatistics implements LiveStatistics, Comparable<LiveSt
         setGuiPath(attributeMap.get("guiPath"));
         setTimeperiod(attributeMap.get("timeperiod"));
         setValue(attributeMap.get("value"));
+
     }
 
     public List<ReplaceableAttribute> getAmazonSimpleDBAttribute() {

@@ -24,6 +24,8 @@ public class SimpleDBUtil {
         timeperiodFormat.setMinimumFractionDigits(0);
         timeperiodFormat.setMinimumIntegerDigits(10);
         timeperiodFormat.setMaximumFractionDigits(10);
+        timeperiodFormat.setGroupingSize(10);
+        timeperiodFormat.setDecimalSeparatorAlwaysShown(false);
     }
 
     public static Map<String, String> getAttributesAStringMap(List<Attribute> attributeList) {

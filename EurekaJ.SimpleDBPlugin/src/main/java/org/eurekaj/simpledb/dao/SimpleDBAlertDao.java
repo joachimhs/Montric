@@ -7,6 +7,7 @@ import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.simpledb.SimpleDBUtil;
 import org.eurekaj.simpledb.datatypes.SimpleDBAlert;
 import org.eurekaj.simpledb.datatypes.SimpleDBTriggeredAlert;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
@@ -68,7 +69,8 @@ public class SimpleDBAlertDao implements AlertDao{
         List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
 
         String sdbQuery = "select * from EurekaJ_TriggeredAlert where " +
-                " triggeredTimeperiod between \"" + fromTimeperiod + "\" and \"" + toTimeperiod + "\" " +
+                " triggeredTimeperiod between \"" + SimpleDBUtil.getSimpleDBTimestamp(fromTimeperiod) +
+                " \" and \"" + SimpleDBUtil.getSimpleDBTimestamp(toTimeperiod) + "\" " +
                 " order  by triggeredTimeperiod desc";
 
         SelectRequest selectRequest = new SelectRequest(sdbQuery);
@@ -84,7 +86,8 @@ public class SimpleDBAlertDao implements AlertDao{
         List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
 
         String sdbQuery = "select * from EurekaJ_TriggeredAlert where alertName = \"" + alertname + "\" + " +
-                " triggeredTimeperiod between \"" + fromTimeperiod + "\" and \"" + toTimeperiod + "\" " +
+                " triggeredTimeperiod between \"" + SimpleDBUtil.getSimpleDBTimestamp(fromTimeperiod) +
+                " \" and \"" + SimpleDBUtil.getSimpleDBTimestamp(toTimeperiod) + "\" " +
                 " order  by triggeredTimeperiod desc";
 
         SelectRequest selectRequest = new SelectRequest(sdbQuery);
@@ -99,9 +102,9 @@ public class SimpleDBAlertDao implements AlertDao{
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
         List<TriggeredAlert> triggeredAlertList = new ArrayList<TriggeredAlert>();
 
-        long millis = System.currentTimeMillis();
+        String millis =  SimpleDBUtil.getSimpleDBTimestamp(System.currentTimeMillis() - (15000 * numAlerts));
         String sdbQuery = "select * from EurekaJ_TriggeredAlert where " +
-                " triggeredTimeperiod >= \"" + (long)(millis/15) + "\" " +
+                " triggeredTimeperiod >= \"" + millis + "\" " +
                 " order  by triggeredTimeperiod desc";
 
 

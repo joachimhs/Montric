@@ -28,6 +28,11 @@ public class SimpleDBTreeMenuNode  implements TreeMenuNode, Comparable<TreeMenuN
         this.nodeLive = nodeLive;
     }
 
+    public SimpleDBTreeMenuNode(TreeMenuNode treeMenuNode) {
+        this.guiPath = treeMenuNode.getGuiPath();
+        this.nodeLive = treeMenuNode.getNodeLive();
+    }
+
     public SimpleDBTreeMenuNode(List<Attribute> attributeList) {
         Map<String, String> attributeMap = SimpleDBUtil.getAttributesAStringMap(attributeList);
 
