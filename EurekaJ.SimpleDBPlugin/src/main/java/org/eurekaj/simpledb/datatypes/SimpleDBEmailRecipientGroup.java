@@ -39,11 +39,11 @@ public class SimpleDBEmailRecipientGroup implements Comparable<EmailRecipientGro
         Map<String, String> attributeMap = SimpleDBUtil.getAttributesAStringMap(attributeList);
 
         setEmailRecipientGroupName(attributeMap.get("emailRecipientGroupName"));
-        setEmailRecipientGroupName(attributeMap.get("smtpServerhost"));
-        setEmailRecipientGroupName(attributeMap.get("smtpUsername"));
-        setEmailRecipientGroupName(attributeMap.get("smtpPassword"));
-        setEmailRecipientGroupName(attributeMap.get("useSSL"));
-        setEmailRecipientGroupName(attributeMap.get("port"));
+        setSmtpServerhost(attributeMap.get("smtpServerhost"));
+        setSmtpUsername(attributeMap.get("smtpUsername"));
+        setSmtpPassword(attributeMap.get("smtpPassword"));
+        setUseSSL(attributeMap.get("useSSL"));
+        setPort(attributeMap.get("port"));
 
         setEmailRecipientList(SimpleDBUtil.getCommaseperatedStringAsList(attributeMap.get("emailRecipientList"), ","));
     }
@@ -101,12 +101,28 @@ public class SimpleDBEmailRecipientGroup implements Comparable<EmailRecipientGro
         this.useSSL = useSSL;
     }
 
+    public void setUseSSL(String useSSL) {
+        this.useSSL = new Boolean(useSSL);
+    }
+
     public Integer getPort() {
         return port;
     }
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public void setPort(String port) {
+         if (port == null) {
+            this.port = 25;
+        } else {
+            try {
+                this.port = Integer.parseInt(port);
+            } catch (NumberFormatException nfe) {
+                this.port = 25;
+            }
+        }
     }
 
     public List<String> getEmailRecipientList() {

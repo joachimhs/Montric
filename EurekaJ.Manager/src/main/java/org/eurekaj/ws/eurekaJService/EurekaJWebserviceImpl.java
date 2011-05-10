@@ -139,7 +139,7 @@ public class EurekaJWebserviceImpl implements EurekaJService{
 			alert.setAlertDelay(elem.getAlertDelay());
 			alert.setErrorValue(elem.getErrorThreshold());
 			alert.setGuiPath(elem.getGuiPath());
-			alert.setSelectedAlertType(org.eurekaj.api.enumtypes.AlertType.valueOf(elem.getSelectedAlertType().value()));
+			alert.setSelectedAlertType(org.eurekaj.api.enumtypes.AlertType.fromValue(elem.getSelectedAlertType().value()));
 			alert.setStatus(AlertStatus.valueOf(elem.getStatus().value()));
 			alert.setWarningValue(elem.getWarningThreshold());
 			treeMenuService.persistAlert(alert);

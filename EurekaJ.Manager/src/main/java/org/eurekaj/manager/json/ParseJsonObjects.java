@@ -34,7 +34,7 @@ public class ParseJsonObjects {
             parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertInstrumentationNode"));
             parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
-            parsedAlert.setSelectedAlertType(AlertType.valueOf(parseStringFromJson(jsonAlert, "alertType")));
+            parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(jsonAlert, "alertType")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
         }
         return parsedAlert;
