@@ -26,7 +26,7 @@ color: #6C6E58;
 }
 
 #wrapper {
-  width: 960px;
+  width: 1200px;
   margin: 0 auto;
   padding-top: 0.5em;
   -moz-border-radius: 1.5em;
@@ -276,20 +276,19 @@ margin: 0 0.2em;
 }
 
 #home_left {
-width: 30em;
-margin-bottom: 1.5em;
+width: 760px;
+margin-bottom: 0.5em;
 }
 
 #home_right {
-width: 18em;
-margin-left: 1em;
-margin-bottom: 1.5em;
+width: 360px;
+margin-bottom: 0.5em;
 float:right;
 }
 
 .clearfix {
 clear: both;
-padding-bottom: 1em;
+padding-bottom: 0.5em;
 }
 
 #footer a {
