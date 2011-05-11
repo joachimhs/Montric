@@ -28,7 +28,7 @@ color: #6C6E58;
 #wrapper {
   width: 1200px;
   margin: 0 auto;
-  padding-top: 0.5em;
+  padding-top: 1em;
   -moz-border-radius: 1.5em;
   -webkit-border-radius: 1.5em;
   border-radius: 1.5em;
@@ -38,6 +38,7 @@ color: #6C6E58;
 #headerLinks {
 text-align: left;
 color: black;
+margin-top: 0.5em;
 }
 
 #headerLinks a {
@@ -124,7 +125,7 @@ float: right;
 }
 
 #content {
-padding-top: 2.5em;
+padding-top: 1.5em;
 
 -moz-border-radius-bottomleft: 1em;
 -webkit-border-bottom-left-radius: 1em;
