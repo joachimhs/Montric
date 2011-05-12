@@ -3,6 +3,7 @@ layout: master
 title: Configuring your application for use with BTrace
 ---
 
+<div class='panel'>
 <h2>Configuring your application for use with BTrace</h2>
 	
 Specific documentation relating to EurekaJ Profiler is specified here. Please also refer to the complete BTrace documentation at the <a href="http://kenai.com/projects/btrace/pages/UserGuide">BTrace project site</a>.
@@ -21,5 +22,4 @@ JAVA_OPTS="-Dbtrace.agent=EurekaJAgent -javaagent:/path/to/btrace-agent.jar=scri
 *fileRollMilliseconds* - Specifies the number of milliseconds each .btrace-logfile will last before it is rolled over and started fresh. BTrace will keep a maximum of 100 .btrace.xx files for each BTrace script. 
 	
 Optionally it is possible to specify a -Dbtrace.agent System Property to the monitored application. This variable will serve two purposes. First, it will distinguish between .btrace.xx files by prepending the btrace.agent property. Second, it will make the BTrace agentname reachable from within the BTrace scripts. 
-
-	
+</div>
