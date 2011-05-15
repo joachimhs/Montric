@@ -45,36 +45,39 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
     }
 	
 	public void setup() {
-        String dbAbsPath = System.getProperty("eurekaj.db.absPath");
-		dbFile = new File(dbAbsPath);
-		if (dbFile == null || !dbFile.exists()) {
-			dbFile.mkdir();
-		}
+        if (System.getProperty("eurekaj.db.type") != null && getPluginName().equalsIgnoreCase(System.getProperty("eurekaj.db.type"))) {
 
-		EnvironmentConfig environmentconfig = new EnvironmentConfig();
-		StoreConfig storeConfig = new StoreConfig(); 
-		
-		environmentconfig.setReadOnly(false);
-		storeConfig.setReadOnly(false);
-		
-		environmentconfig.setAllowCreate(true);
-		storeConfig.setAllowCreate(true);
-		environment = new Environment(dbFile, environmentconfig);
-		
-		treeMenuStore = new EntityStore(environment, "TreeMenuStore", storeConfig);
-		liveStatisticsStore = new EntityStore(environment, "LiveStatisticsStore", storeConfig);
-		groupedStatisticsStore = new EntityStore(environment, "GroupedStatisticsStore", storeConfig);
-		alertStore = new EntityStore(environment, "AlertStore", storeConfig);
-		smtpServerStore = new EntityStore(environment, "SmtpServerStore", storeConfig);
-		dashboardStore = new EntityStore(environment, "DashboardStore", storeConfig);
-		logStore = new EntityStore(environment, "logStore", storeConfig);
-        triggeredAlertStore = new EntityStore(environment, "TriggeredAlertStore", storeConfig);
+            String dbAbsPath = System.getProperty("eurekaj.db.absPath", "/EurekaJData");
+            dbFile = new File(dbAbsPath);
+            if (dbFile == null || !dbFile.exists()) {
+                dbFile.mkdir();
+            }
 
-        alertDao = new BerkeleyAlertDao(this);
-        groupedStatisticsDao = new BerkeleyGroupedStatisticsDao(this);
-        liveStatisticsDao = new BerkeleyTreeMenuDao(this);
-        smtpDao = new BerkeleySmtpDaoImpl(this);
-        treeMenuDao = new BerkeleyTreeMenuDao(this);
+            EnvironmentConfig environmentconfig = new EnvironmentConfig();
+            StoreConfig storeConfig = new StoreConfig();
+
+            environmentconfig.setReadOnly(false);
+            storeConfig.setReadOnly(false);
+
+            environmentconfig.setAllowCreate(true);
+            storeConfig.setAllowCreate(true);
+            environment = new Environment(dbFile, environmentconfig);
+
+            treeMenuStore = new EntityStore(environment, "TreeMenuStore", storeConfig);
+            liveStatisticsStore = new EntityStore(environment, "LiveStatisticsStore", storeConfig);
+            groupedStatisticsStore = new EntityStore(environment, "GroupedStatisticsStore", storeConfig);
+            alertStore = new EntityStore(environment, "AlertStore", storeConfig);
+            smtpServerStore = new EntityStore(environment, "SmtpServerStore", storeConfig);
+            dashboardStore = new EntityStore(environment, "DashboardStore", storeConfig);
+            logStore = new EntityStore(environment, "logStore", storeConfig);
+            triggeredAlertStore = new EntityStore(environment, "TriggeredAlertStore", storeConfig);
+
+            alertDao = new BerkeleyAlertDao(this);
+            groupedStatisticsDao = new BerkeleyGroupedStatisticsDao(this);
+            liveStatisticsDao = new BerkeleyTreeMenuDao(this);
+            smtpDao = new BerkeleySmtpDaoImpl(this);
+            treeMenuDao = new BerkeleyTreeMenuDao(this);
+        }
 	}
 
     @Override

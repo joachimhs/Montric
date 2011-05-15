@@ -8,14 +8,10 @@ import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.simpledb.SimpleDBUtil;
-import org.eurekaj.simpledb.datatypes.SimpleDBEmailRecipientGroup;
 import org.eurekaj.simpledb.datatypes.SimpleDBLiveStatistics;
 import org.eurekaj.simpledb.datatypes.SimpleDBTreeMenuNode;
-import org.eurekaj.simpledb.datatypes.SimpleDBTriggeredAlert;
 
-import java.nio.LongBuffer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,15 +22,18 @@ import java.util.List;
  */
 public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
     private AmazonSimpleDB amazonSimpleDB;
-    private List<ReplaceableItem> liveStatisticsList;
+    private List<ReplaceableItem> liveStatisticsToSendList;
     private Long statsSentTimestamp = 0l;
     private Long treeMenuSentTimestamp = 0l;
-    private List<ReplaceableItem> treeMenuList;
+    private List<ReplaceableItem> treeMenuToSendList;
+    private Map<String, SimpleDBTreeMenuNode> treeMenuNodeHash;
+    private Long treeMenuFetchedTimestamp = 0l;
 
     public SimpleDBTreeMenuDao(AmazonSimpleDB amazonSimpleDB) {
         this.amazonSimpleDB = amazonSimpleDB;
-        this.liveStatisticsList = new ArrayList<ReplaceableItem>();
-        this.treeMenuList = new ArrayList<ReplaceableItem>();
+        this.liveStatisticsToSendList = new ArrayList<ReplaceableItem>();
+        this.treeMenuToSendList = new ArrayList<ReplaceableItem>();
+        treeMenuNodeHash = new HashMap<String, SimpleDBTreeMenuNode>();
     }
 
     /**
@@ -46,13 +45,13 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
     private synchronized void addAndSendLiveStatistics(ReplaceableItem liveStatisticsReplacableItem) {
         Long before = System.currentTimeMillis();
 
-        liveStatisticsList.add(liveStatisticsReplacableItem);
+        liveStatisticsToSendList.add(liveStatisticsReplacableItem);
 
         if (System.currentTimeMillis() - statsSentTimestamp > 5000) {
             System.out.println("Sending contents to SimpleDB");
-            amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_LiveStatistics", liveStatisticsList));
+            amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_LiveStatistics", liveStatisticsToSendList));
             System.out.println("Finished sendinging contents to SimpleDB");
-            liveStatisticsList.clear();
+            liveStatisticsToSendList.clear();
             statsSentTimestamp = System.currentTimeMillis();
         }
 
@@ -67,31 +66,42 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
      */
     private synchronized void addAndSendTreeMenu(ReplaceableItem treeMenuReplacableItem) {
         Long before = System.currentTimeMillis();
-        treeMenuList.add(treeMenuReplacableItem);
+        treeMenuToSendList.add(treeMenuReplacableItem);
 
         if (System.currentTimeMillis() - statsSentTimestamp > 5000) {
             System.out.println("Sending treeMenu to SimpleDB");
-            amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_TreeMenuNode", treeMenuList));
+            amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_TreeMenuNode", treeMenuToSendList));
             System.out.println("Finished treeMenu contents to SimpleDB");
-            treeMenuList.clear();
+            treeMenuToSendList.clear();
             treeMenuSentTimestamp = System.currentTimeMillis();
         }
 
         System.out.println("Added/Sent TreeMenu in: " + (System.currentTimeMillis() - before) + " ms..");
     }
 
-
-
-    @Override
-    public List<TreeMenuNode> getTreeMenu() {
-        List<TreeMenuNode> treeMenuNodeList = new ArrayList<TreeMenuNode>();
+    private void fetchTreeMenuAndAddToHash() {
+        treeMenuNodeHash.clear();
 
         String sdbQuery = "select * from EurekaJ_TreeMenuNode";
 
         SelectRequest selectRequest = new SelectRequest(sdbQuery);
         for (Item item : amazonSimpleDB.select(selectRequest).getItems()) {
-            treeMenuNodeList.add(new SimpleDBTreeMenuNode(item.getAttributes()));
+            SimpleDBTreeMenuNode treeMenuNode = new SimpleDBTreeMenuNode(item.getAttributes());
+            treeMenuNodeHash.put(treeMenuNode.getGuiPath(), treeMenuNode);
         }
+    }
+
+    @Override
+    public List<TreeMenuNode> getTreeMenu() {
+
+        //If more than 50 seconds since last TreeMenu Fetch
+        if ((System.currentTimeMillis() - treeMenuFetchedTimestamp) > 50000) {
+            fetchTreeMenuAndAddToHash();
+        }
+
+        List<TreeMenuNode> treeMenuNodeList = new ArrayList<TreeMenuNode>();
+        treeMenuNodeList.addAll(treeMenuNodeHash.values());
+        Collections.sort(treeMenuNodeList, new SimpleDBTreeMenuNode.TreeMenuNodeComparator());
 
         return treeMenuNodeList;
 
@@ -99,8 +109,12 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 
     @Override
     public TreeMenuNode getTreeMenu(String guiPath) {
-        GetAttributesResult result = amazonSimpleDB.getAttributes(new GetAttributesRequest("EurekaJ_TreeMenuNode", guiPath));
-        SimpleDBTreeMenuNode simpleDBTreeMenuNode = new SimpleDBTreeMenuNode(result.getAttributes());
+        SimpleDBTreeMenuNode simpleDBTreeMenuNode = treeMenuNodeHash.get(guiPath);
+
+        if (simpleDBTreeMenuNode == null) {
+            fetchTreeMenuAndAddToHash();
+            simpleDBTreeMenuNode = treeMenuNodeHash.get(guiPath);
+        }
 
         return simpleDBTreeMenuNode;
     }
@@ -161,6 +175,7 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         if (treeMenu == null) {
             //Create new TreeMenu at guiPath
             treeMenu = new SimpleDBTreeMenuNode(guiPath, "Y");
+            treeMenuNodeHash.put(guiPath, (SimpleDBTreeMenuNode) treeMenu);
         }
 
 
@@ -170,6 +185,8 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         if (simpleDBTreeMenuNode.getGuiPath() == null) {
             simpleDBTreeMenuNode.setGuiPath(guiPath);
         }
+
+
 
         ReplaceableItem ri = new ReplaceableItem(
                 simpleDBTreeMenuNode.getGuiPath(),

@@ -41,7 +41,7 @@ public class EurekaJUserDetailsService implements UserDetailsService {
         Properties properties = new Properties();
 
         AmazonS3 amazonS3 = new AmazonS3Client(new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY")));
-        S3Object object = amazonS3.getObject(new GetObjectRequest("EureakaJ", "users.properties"));
+        S3Object object = amazonS3.getObject(new GetObjectRequest("EurekaJ", "users.properties"));
 
         InputStreamReader reader = new InputStreamReader(object.getObjectContent());
 

@@ -47,14 +47,16 @@ public class SimpleDBEnv extends EurekaJDBPluginService {
     @Override
     public void setup() {
         //TODO: Connect to Amazon SimpleDB
-        this.connectToAmazonSimpleDB();
-        this.checkAndInitializeDomains();
+        if (System.getProperty("PARAM2") != null && getPluginName().equalsIgnoreCase(System.getProperty("PARAM2"))) {
+            this.connectToAmazonSimpleDB();
+            this.checkAndInitializeDomains();
 
-        alertDao = new SimpleDBAlertDao(amazonSimpleDB);
-        groupedStatisticsDao = new SimpleDBGroupedStatisticsDao(amazonSimpleDB);
-        liveStatisticsDao = new SimpleDBTreeMenuDao(amazonSimpleDB);
-        smtpDao = new SimpleDBSmtpDao(amazonSimpleDB);
-        treeMenuDao = new SimpleDBTreeMenuDao(amazonSimpleDB);
+            alertDao = new SimpleDBAlertDao(amazonSimpleDB);
+            groupedStatisticsDao = new SimpleDBGroupedStatisticsDao(amazonSimpleDB);
+            liveStatisticsDao = new SimpleDBTreeMenuDao(amazonSimpleDB);
+            smtpDao = new SimpleDBSmtpDao(amazonSimpleDB);
+            treeMenuDao = new SimpleDBTreeMenuDao(amazonSimpleDB);
+        }
     }
 
     private void connectToAmazonSimpleDB() {

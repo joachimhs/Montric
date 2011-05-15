@@ -47,6 +47,8 @@
                             <value>/srv/EurekaJRunnable/eurekajData</value>
                         </systemProperty>
                     </systemProperties>
+                    <stopKey/>
+                    <stopPort/>
                 </configuration>
             </plugin>
             <plugin>
