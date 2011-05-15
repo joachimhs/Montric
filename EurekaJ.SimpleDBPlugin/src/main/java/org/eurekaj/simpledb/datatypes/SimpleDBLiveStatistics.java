@@ -43,7 +43,14 @@ public class SimpleDBLiveStatistics implements LiveStatistics, Comparable<LiveSt
         List<ReplaceableAttribute> replaceableAttributeList = new ArrayList<ReplaceableAttribute>();
         replaceableAttributeList.add(new ReplaceableAttribute("guiPath", this.getGuiPath(), true));
         replaceableAttributeList.add(new ReplaceableAttribute("timeperiod", SimpleDBUtil.getSimpleDBTimestamp(this.getTimeperiod()), true));
-        replaceableAttributeList.add(new ReplaceableAttribute("value", this.getValue().toString(), true));
+        String value = null;
+        if (this.getValue() != null) {
+            value = this.getValue().toString();
+        }
+
+        if (value != null) {
+            replaceableAttributeList.add(new ReplaceableAttribute("value", value, true));
+        }
 
         return replaceableAttributeList;
     }

@@ -1,15 +1,17 @@
 package org.eurekaj.manager.security;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -25,9 +27,39 @@ public class EurekaJUserDetailsService implements UserDetailsService {
     public EurekaJUserDetailsService() {
         configuredUsers = new ArrayList<EurekaJUserDetails>();
 
-        try {
-            Properties properties = new Properties();
+        String param1 = System.getProperty("PARAM1");
+        if (param1 != null && param1.equalsIgnoreCase("AWS")) {
+            loadUsersFromProperties(loadUserPropertiesFromAmazonS3());
+        } else {
+            loadUsersFromProperties(loadUserPropertiesFromFilesystem());
+        }
 
+
+    }
+
+    private Properties loadUserPropertiesFromAmazonS3() {
+        Properties properties = new Properties();
+
+        AmazonS3 amazonS3 = new AmazonS3Client(new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY")));
+        S3Object object = amazonS3.getObject(new GetObjectRequest("EureakaJ", "users.properties"));
+
+        InputStreamReader reader = new InputStreamReader(object.getObjectContent());
+
+        try {
+            properties.load(reader);
+        } catch (IOException e) {
+            e.printStackTrace();
+            String message = "Unable to find users file in Amazon S3. Unable to start.";
+            throw new RuntimeException(message);
+        }
+
+        return properties;
+    }
+
+    private Properties loadUserPropertiesFromFilesystem() {
+        Properties properties = new Properties();
+
+        try {
             File configFile = new File("users.properties");
             if (!configFile.exists()) {
                 configFile = new File("../users.properties");
@@ -44,12 +76,14 @@ public class EurekaJUserDetailsService implements UserDetailsService {
                 throw new FileNotFoundException(message);
             }
 
-            loadUsersFromProperties(properties);
+
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e.getMessage(), e);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+
+        return properties;
     }
 
     private void loadUsersFromProperties(Properties userProperties) {

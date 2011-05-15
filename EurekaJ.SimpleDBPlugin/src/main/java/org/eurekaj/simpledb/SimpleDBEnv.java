@@ -41,7 +41,7 @@ public class SimpleDBEnv extends EurekaJDBPluginService {
 
     @Override
     public String getPluginName() {
-        return "Amazon SimpleDB";
+        return "SimpleDB";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SimpleDBEnv extends EurekaJDBPluginService {
     }
 
     private void connectToAmazonSimpleDB() {
-        amazonSimpleDB = new AmazonSimpleDBClient(new BasicAWSCredentials("AKIAITQ7EBJPKHONOTEQ", "UKM3SfWg/2DJveNc1UlD3g01ISHiEcKISe1Nlh6D"));
+        amazonSimpleDB = new AmazonSimpleDBClient(new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY")));
     }
 
     private void checkAndInitializeDomains() {

@@ -1,9 +1,6 @@
 package org.eurekaj.proxy;
 
-import com.sun.btrace.api.BTraceService;
-import com.sun.btrace.spi.BTraceProcessProvider;
 import org.eurekaj.proxy.parser.ParseStatistics;
-import org.eurekaj.webservice.StoreIncomingStatisticsElement;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +14,8 @@ import java.util.List;
  * Time: 3:22 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RemoteJsonPlugin implements BTraceProcessProvider {
-    private BTraceService bTraceService;
+public class RemoteJsonPlugin {//implements BTraceProcessProvider {
+    /*private BTraceService bTraceService;
 
     @Override
     public String getPluginName() {
@@ -46,5 +43,5 @@ public class RemoteJsonPlugin implements BTraceProcessProvider {
     @Override
     public void setBtraceService(BTraceService bTraceService) {
         this.bTraceService = bTraceService;
-    }
+    }    */
 }
