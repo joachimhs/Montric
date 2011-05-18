@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.*;
 
+import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
 import org.eurekaj.api.datatypes.*;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
@@ -14,6 +15,7 @@ import org.jsflot.xydata.XYDataSetCollection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,18 +27,7 @@ public class BuildJsonObjectsUtil {
         InputStream in = request.getInputStream();
 
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
-
-        int numChars = 0;
-        String contents = "";
-        char[] buffer = new char[25];
-        while ((numChars = r.read(buffer)) > 0) {
-            contents += new String(buffer);
-            buffer = new char[25];
-        }
-
-        if (contents.length() > 2) {
-            jsonRequestObject = new JSONObject(contents);
-        }
+        jsonRequestObject = new JSONObject(new JSONTokener(r));
 
         return jsonRequestObject;
     }

@@ -3,10 +3,12 @@ package org.eurekaj.manager.json;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.datatypes.ManagerEmailRecipientGroup;
 import org.eurekaj.manager.datatypes.ManagerGroupedStatistics;
+import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +52,21 @@ public class ParseJsonObjects {
         }
 
         return groupedStatistics;
+    }
+
+    public static ManagerLiveStatistics parseLiveStatistics(JSONObject jsonLiveStatistics) {
+        ManagerLiveStatistics liveStatistics = null;
+
+        if (jsonLiveStatistics.has("guiPath")) {
+            liveStatistics = new ManagerLiveStatistics();
+            liveStatistics.setGuiPath(parseStringFromJson(jsonLiveStatistics, "guiPath"));
+            liveStatistics.setTimeperiod(parseLongFromJson(jsonLiveStatistics, "timeperiod"));
+            liveStatistics.setValue(parseDoubleFromJson(jsonLiveStatistics, "value"));
+            liveStatistics.setValueType(parseStringFromJson(jsonLiveStatistics, "valueType"));
+            liveStatistics.setUnitType(parseStringFromJson(jsonLiveStatistics, "unitType"));
+        }
+
+        return liveStatistics;
     }
 
     public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup) {
@@ -112,6 +129,17 @@ public class ParseJsonObjects {
         }
 
         return longValue;
+    }
+
+    public static Double parseDoubleFromJson(JSONObject json, String key) {
+        Double doubleValue = null;
+        try {
+            doubleValue = Double.parseDouble(parseStringFromJson(json, key));
+        } catch (NumberFormatException nfe) {
+            doubleValue = null;
+        }
+
+        return doubleValue;
     }
 
     public static Boolean parseBooleanFromJson(JSONObject json, String key) {

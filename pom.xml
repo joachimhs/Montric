@@ -164,42 +164,10 @@
             <layout>default</layout>
         </repository>
         <repository>
-            <id>sun repo</id>
-            <name>Sun Repository</name>
-            <url>http://download.java.net/maven/2/</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
             <id>Oracle Repo</id>
             <name>Oracle Repo</name>
             <url>http://download.oracle.com/</url>
             <layout>default</layout>
-        </repository>
-        <repository>
-            <id>GSON Repo</id>
-            <name>GSON Repo</name>
-            <url>http://google-gson.googlecode.com/svn/mavenrepo/</url>
-            <layout>default</layout>
-        </repository>
-
-
-        <!-- JBoss RichFaces Repository -->
-        <repository>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-            <id>repository.jboss.com</id>
-            <name>Jboss Repository for Maven</name>
-            <url>http://repository.jboss.com/maven2/</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
-            <id>Kantega-repo</id>
-            <url>http://opensource.kantega.no/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 

@@ -13,6 +13,8 @@ public class ManagerLiveStatistics implements LiveStatistics {
     private String guiPath;
     private Long timeperiod;
     private Double value;
+    private String valueType;
+    private String unitType;
 
     public ManagerLiveStatistics() {
     }
@@ -51,6 +53,22 @@ public class ManagerLiveStatistics implements LiveStatistics {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public String getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
     }
 
     public int compareTo(LiveStatistics other) {

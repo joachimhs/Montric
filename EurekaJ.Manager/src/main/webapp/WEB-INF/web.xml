@@ -54,6 +54,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>LiveStatisticsServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.LiveStatisticsServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>EurekaJGenericServlet</servlet-name>
         <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -84,6 +89,11 @@
         <servlet-name>EmailServlet</servlet-name>
         <url-pattern>/email</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+           <servlet-name>LiveStatisticsServlet</servlet-name>
+           <url-pattern>/liveStatistics</url-pattern>
+       </servlet-mapping>
+
 
     <filter>
         <filter-name>GzipFilter</filter-name>

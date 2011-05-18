@@ -128,14 +128,14 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
     public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
 		
 		BerkeleyTreeMenuNode treeMenu = updateTreeMenu( guiPath, value != null);
-		Double valueLong = parseDouble(value);
+		Double valueDouble = parseDouble(value);
 		
 		BerkeleyLiveStatisticsPk searchStat = new BerkeleyLiveStatisticsPk();
 		searchStat.setGuiPath(guiPath);
 		searchStat.setTimeperiod(timeperiod);
 		
 		BerkeleyLiveStatistics oldStat = liveStatPrimaryIdx.get(searchStat);
-		storeLiveStatistics(oldStat, valueLong, valueType, unitType, guiPath, timeperiod);
+		storeLiveStatistics(oldStat, valueDouble, valueType, unitType, guiPath, timeperiod);
 	}
 	
 	private void storeLiveStatistics(BerkeleyLiveStatistics oldStat,

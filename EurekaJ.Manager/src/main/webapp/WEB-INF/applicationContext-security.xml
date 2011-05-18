@@ -11,6 +11,7 @@
         <intercept-url pattern="/login.html" access="permitAll"/>
         <intercept-url pattern="/favicon.ico" access="permitAll"/>
         <intercept-url pattern="/webservices/**" access="permitAll"/>
+        <intercept-url pattern="/liveStatistics" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()" />
         <logout />
     </http>
