@@ -13,6 +13,7 @@ public class DatabasePluginUtil {
         String pluginName = System.getProperty("PARAM2");
         if (pluginName == null || pluginName.length() == 0) {
             pluginName = System.getProperty("eurekaj.db.type", "Berkeley");
+            System.setProperty("eurekaj.db.type", "Berkeley");
         }
 
         return pluginName;

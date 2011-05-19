@@ -17,17 +17,6 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-
-    <!-- CXF Webservice Servlet -->
-    <servlet>
-        <servlet-name>CXFServlet</servlet-name>
-        <servlet-class>
-            org.apache.cxf.transport.servlet.CXFServlet
-        </servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <!-- //CXF Webservice Servlet -->
-
     <servlet>
         <servlet-name>InstrumentationMenuServlet</servlet-name>
         <servlet-class>org.eurekaj.manager.servlets.InstrumentationMenuServlet</servlet-class>
@@ -63,11 +52,6 @@
         <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-    <servlet-mapping>
-        <servlet-name>CXFServlet</servlet-name>
-        <url-pattern>/webservices/*</url-pattern>
-    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>InstrumentationMenuServlet</servlet-name>

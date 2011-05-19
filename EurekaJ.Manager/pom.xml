@@ -51,28 +51,6 @@
                     <stopPort/>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.cxf</groupId>
-                <artifactId>cxf-codegen-plugin</artifactId>
-                <version>2.3.1</version>
-                <executions>
-                    <execution>
-                        <id>generate-sources</id>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                            <sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
-                            <wsdlOptions>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/cxf/eurekaj-dl.wsdl</wsdl>
-                                </wsdlOption>
-                            </wsdlOptions>
-                        </configuration>
-                        <goals>
-                            <goal>wsdl2java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!--plugin>
                    <groupId>org.simplericity.jettyconsole</groupId>
                    <artifactId>jetty-console-maven-plugin</artifactId>
@@ -109,11 +87,11 @@
             <artifactId>eurekaJ.berkeleyPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.simpleDBPlugin</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency-->
         <!-- Jetty -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -158,17 +136,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
-
-        <!-- WebServices -->
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-        </dependency>
-        <!-- //WebServices -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-parent</artifactId>

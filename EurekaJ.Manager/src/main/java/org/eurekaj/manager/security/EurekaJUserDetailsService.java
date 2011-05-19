@@ -1,10 +1,5 @@
 package org.eurekaj.manager.security;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +24,7 @@ public class EurekaJUserDetailsService implements UserDetailsService {
 
         String param1 = System.getProperty("PARAM1");
         if (param1 != null && param1.equalsIgnoreCase("AWS")) {
-            loadUsersFromProperties(loadUserPropertiesFromAmazonS3());
+            //loadUsersFromProperties(loadUserPropertiesFromAmazonS3());
         } else {
             loadUsersFromProperties(loadUserPropertiesFromFilesystem());
         }
@@ -37,7 +32,7 @@ public class EurekaJUserDetailsService implements UserDetailsService {
 
     }
 
-    private Properties loadUserPropertiesFromAmazonS3() {
+/*    private Properties loadUserPropertiesFromAmazonS3() {
         Properties properties = new Properties();
 
         AmazonS3 amazonS3 = new AmazonS3Client(new BasicAWSCredentials(System.getProperty("AWS_ACCESS_KEY_ID"), System.getProperty("AWS_SECRET_KEY")));
@@ -55,7 +50,7 @@ public class EurekaJUserDetailsService implements UserDetailsService {
 
         return properties;
     }
-
+ */
     private Properties loadUserPropertiesFromFilesystem() {
         Properties properties = new Properties();
 

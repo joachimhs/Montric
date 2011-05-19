@@ -107,23 +107,23 @@ public class ClientGZipContentCompression {
             httpPost.setEntity(requestEntity);
 
             // Execute HTTP request
-            System.out.println("executing request " + httpPost.getURI());
+            //System.out.println("executing request " + httpPost.getURI());
             HttpResponse response = httpclient.execute(httpPost);
 
-            System.out.println("----------------------------------------");
+            /*System.out.println("----------------------------------------");
             System.out.println(response.getStatusLine());
             System.out.println(response.getLastHeader("Content-Encoding"));
             System.out.println(response.getLastHeader("Content-Length"));
-            System.out.println("----------------------------------------");
+            System.out.println("----------------------------------------");*/
 
             statusCode = response.getStatusLine().getStatusCode();
             HttpEntity entity = response.getEntity();
 
             if (entity != null) {
                 String content = EntityUtils.toString(entity);
-                System.out.println(content);
+                /*System.out.println(content);
                 System.out.println("----------------------------------------");
-                System.out.println("Uncompressed size: "+content.length());
+                System.out.println("Uncompressed size: "+content.length());*/
             }
 
         } finally {

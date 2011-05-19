@@ -23,7 +23,9 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     private EurekaJDBPluginService getDbPlugin() {
 
         if (dbPlugin == null) {
+            System.out.println("Getting DB Plugin with name: " + DatabasePluginUtil.getDatabasePluginName());
             dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
+            System.out.println("got dbPlugin: " + dbPlugin);
         }
 
         return dbPlugin;

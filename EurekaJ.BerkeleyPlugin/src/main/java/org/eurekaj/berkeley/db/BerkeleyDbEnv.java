@@ -45,6 +45,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
     }
 	
 	public void setup() {
+        System.out.print(getPluginName() + " DB setup called");
         if (System.getProperty("eurekaj.db.type") != null && getPluginName().equalsIgnoreCase(System.getProperty("eurekaj.db.type"))) {
 
             String dbAbsPath = System.getProperty("eurekaj.db.absPath", "/EurekaJData");
