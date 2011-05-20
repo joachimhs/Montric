@@ -9,8 +9,8 @@ h2. Downloads
 
 EurekaJ Manager and EurekaJ Proxy can be downloaded from GitHub: 
 
-- EurekaJ Manager: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip"></a>
-- EurekaJ Proxy: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip"></a>
+- EurekaJ Manager: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip">https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip</a>
+- EurekaJ Proxy: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip">https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip</a>
 
 BTrace can be downloaded from the BTrace project website: <a href="http://kenai.com/projects/btrace">http://kenai.com/projects/btrace</a>
 
