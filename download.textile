@@ -7,7 +7,12 @@ title: Downloads
 
 h2. Downloads
 
-Coming soon. In the mean time, you can check out the source code from: <a href="https://github.com/joachimhs/EurekaJ">GitHub</a>.
+EurekaJ Manager and EurekaJ Proxy can be downloaded from GitHub: 
+
+- EurekaJ Manager: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip"></a>
+- EurekaJ Proxy: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip"></a>
+
+BTrace can be downloaded from the BTrace project website: <a href="http://kenai.com/projects/btrace">http://kenai.com/projects/btrace</a>
 
 </div>
 	
