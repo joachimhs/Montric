@@ -39,21 +39,20 @@ EurekaJView.mainPage = SC.Page.design({
 
             logoView: SC.LabelView.design({
                 layout: {
-                    top: 25,
+                    top: 15,
                     height: 40,
                     left: 10,
-                    width: 200
+                    width: 250
                 },
-                controlSize: SC.LARGE_CONTROL_SIZE,
+                controlSize: SC.HUGE_CONTROL_SIZE,
                 fontWeight: SC.BOLD_WEIGHT,
                 value: 'EurekaJ Profiler'
-            }),
+            }).classNames(['logoLabel', 'blacklabel', 'underlined']),
 
             administrationButtonView: SC.ImageView.design(SCUI.SimpleButton, {
                 layout: {right: 25, width: 49, height: 49, top: 5},
                 value: static_url('images/ej_tools_49.png'),
                 toolTip: 'Administration',
-                //title: 'Administration',
                 action: 'showAdministrationPaneAction'
             }),
 
@@ -61,9 +60,9 @@ EurekaJView.mainPage = SC.Page.design({
                 layout: {right: 10, width: 100, height: 25, top: 55},
                 value: 'Administration',
                 textAlign: SC.ALIGN_RIGHT,
-                action: 'showAdministrationPaneAction'
-
-            })
+                action: 'showAdministrationPaneAction',
+                fontWeight: SC.BOLD_WEIGHT
+            }).classNames('greylabel')
         }).classNames('toolbarGradient'),
 
 
@@ -110,7 +109,7 @@ EurekaJView.mainPage = SC.Page.design({
                     width: columnWidth
                 };
             }
-        }).classNames(['thinBlackBorderTop', 'whiteBackground']),
+        }).classNames(['whiteBackground']),
 
         informationPanelView: EurekaJView.InformationPanelView.design({
             layout: {
@@ -121,7 +120,7 @@ EurekaJView.mainPage = SC.Page.design({
             },
             anchorLocation: SC.ANCHOR_TOP,
             backgroundColor: "#F0F8FF"
-        }).classNames(['thinBlackBorderTop', 'thinBlackLeftborder']),
+        }).classNames(['thinBlackLeftborder']),
 
         instrumentationTreeView: SC.View.design({
             childViews: 'instrumentationTreeLabelView'.w(),
@@ -130,7 +129,7 @@ EurekaJView.mainPage = SC.Page.design({
                 top: 77,
                 bottom: 0,
                 left: 0,
-                width: 306
+                width: 305
             },
             anchorLocation: SC.ANCHOR_TOP,
             backgroundColor: "#F0F8FF",
@@ -148,7 +147,7 @@ EurekaJView.mainPage = SC.Page.design({
                 textAlign: SC.ALIGN_LEFT,
                 value: 'INSTRUMENTATION MENU'
             }).classNames(['greylabel', 'underlined'])
-        }).classNames(['thinBlackBorderTop', 'thinBlackRightborder']),
+        }).classNames(['thinBlackRightborder']),
 
         instrumentationTreeScrollView: SC.ScrollView.extend({
             isVisible: NO,
@@ -174,12 +173,10 @@ EurekaJView.mainPage = SC.Page.design({
                 contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
                 exampleView: EurekaJView.InstrumentationTreeListItem,
                 recordType: EurekaJView.InstrumentationTreeModel
-            }),
-
-            borderStyle: SC.BORDER_NONE
+            })
         })
 
-    }),
+    }).classNames('thinBlackRightborder'),
 
     adminPanelView: EurekaJView.AdministrationPaneView.design({
         layout: { width: 700, centerX: 0, height: 500 }
