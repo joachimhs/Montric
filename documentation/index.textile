@@ -15,7 +15,7 @@ Documentation is currently under development.
 ** <a href="/documentation/setting_up_users_and_roles.html">Setting up users, roles and permissions</a>
 ** <a href="/documentation/configuring_eurekaj_proxy.html">Configuring EurekaJ Proxy to send tracing information from BTrace to EurekaJ Manager</a>
 * BTrace Instrumentation
-** BTrace Script concepts
+** <a href="/documentation/btrace_script_concepts_1.2.html">BTrace Script concepts for BTrace 1.0 - 1.2</a>
 ** Sample BTrace Scripts
 * Getting started with EurekaJ Manager
 ** Navigating the Metrics collected by EurekaJ Manager

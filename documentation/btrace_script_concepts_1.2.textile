@@ -1,0 +1,115 @@
+---
+layout: localmaster
+title: BTrace Script concepts
+---
+
+<div class='panel'>
+
+h2. BTrace Script == Java Class
+
+At the heart a BTrace Script is a normal Java class annotated with BTrace annotations to tell the BTrace agent what and how to instrument your Java Application. Since the BTrace engine needs to be able instrument your application code with custom byte-code, BTrace scripts needs to be compiled with a special compiler - _btracec_. The reason for this, is that BTrace attempts to ensure that any compiled BTrace script will work inside the instrumented application without causing havoc on performance, memory use or thread-usage. After the compilation process with btracec, the resulting .class file is just a normal java class file. 
+
+The follwoing BTrace script serves as a baseline for discussing the parts required to be able to write a btrace.java file for instrumentation through the BTrace agent. 
+
+{% highlight java %}
+package org.eurekaj.btracers;
+
+import com.sun.btrace.annotations.*;
+import com.sun.btrace.aggregation.*;
+import static com.sun.btrace.BTraceUtils.*;
+import java.util.Deque;
+
+@BTrace public class EurekaJBTracer {
+	
+	private static Aggregation TOTAL_EXEC_TIME = newAggregation(AggregationFunction.SUM);
+	private static Aggregation MIN_TIMESTAMP = newAggregation(AggregationFunction.MINIMUM);
+	private static Aggregation CALLS_PER_INTERVAL = newAggregation(AggregationFunction.COUNT);
+	@TLS private static Deque<Long> q = newDeque();
+	
+	@OnMethod(clazz="/org\\.eurekaJ\\.manager\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
+	public static void enterMethod() {
+		push(q, box(timeNanos()));
+	}
+	
+	@OnMethod(clazz="/org\\.eurekaJ\\.manager\\..*/", method="/.*/", location=@Location(value=Kind.RETURN))
+	public static void exitMethod(@ProbeMethodName String probeMethod, @ProbeClassName String probeClass) {
+		int execTime = (int)(timeNanos() - unbox(poll(q)));
+		Long timePeriod = ((long)(timeNanos() / 15000000000l)*15000);
+		
+		//Yields fullyQualifiedClassName methodName, 15000 millisecond interval since 1970
+		AggregationKey k = newAggregationKey(probeClass, probeMethod, timePeriod);
+
+		addToAggregation(TOTAL_EXEC_TIME, k, execTime);
+		addToAggregation(MIN_TIMESTAMP, k, timeNanos());
+		addToAggregation(CALLS_PER_INTERVAL, k, 1);
+	}
+	
+	@OnTimer(7500)
+    public static void printAverage() {
+		//TotalExecTime: agentname package.Class method timeperiod exectime classType
+		//CallsPerInterval: agentname package.Class method timeperiod callsWithinTimeperiod classType
+		
+		String execStringFormat = strcat("[TotalExecTime;", property("btrace.agentname"));
+		printAggregation("", TOTAL_EXEC_TIME,  strcat(execStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom]"));
+		
+		String callsStringFormat = strcat("[CallsPerInterval: ", property("btrace.agentname"));
+		printAggregation("", CALLS_PER_INTERVAL,  strcat(callsStringFormat, ";%1$s;%2$s;%3$d;%4$d;Custom]"));
+		
+		//printAggregation("TOTAL_EXEC_TIME", TOTAL_EXEC_TIME, strcat("TotalExecTime: ",property("btrace.agentname")), "Custom", " ");
+		//printAggregation("CALLS_PER_INTERVAL: ", CALLS_PER_INTERVAL, strcat("CallsPerInterval: ", property("btrace.agentname")), "Custom", " ");
+		
+		truncateAggregation(TOTAL_EXEC_TIME, 0);
+		truncateAggregation(MIN_TIMESTAMP, 0);
+		truncateAggregation(CALLS_PER_INTERVAL, 0);
+    }	
+}
+{% endhighlight %}
+
+h3. Importing the utilities methods and declaring the script as a BTrace script
+
+In BTrace 1.2 any method that are allowed inside a BTrace script is either declared within the script itself or comes from the BTraceUtils class. Therefore, any BTrace 1.2 script will usually start with statically importing everything from the BTraceUtils class. Secondly, BTrace requires any BTrace script to be annotated with the @BTrace annotation on a class level: 
+
+<div style="text-align: center"><img src="/images/btrace_script_1.png"/></div>
+
+h3. Profiling efficiently with the BTrace Profiler-class
+
+To be able to profile methods efficiently BTrace supplies the Profiler class, from version 1.2 an onwards. The Profiler class will successfully instrument any method specified, and will record the following key information regarding the execution of that method: 
+
+* Average Selftime - The time in nanoseconds the method uses to execute its own statements
+* Average Walltime - The time in nanoseconds the method takes to execute its own statements plus any other method calls issued by the instrumented method
+* Calls Per Interval - The number of method calls within the specified time interval
+* Max Selftime - The maximum execution time within the specified time interval the method uses to execute its own statements
+* Max Walltime - The maximum execution time within the specifies time interval the method uses to execute its own statements plus any other method calls issued by the instrumented method
+* Min Selftime - The minimum execution time within the specified time interval the method uses to execute its own statements
+* Min Walltime - The minimum execution time within the specifies time interval the method uses to execute its own statements plus any other method calls issued by the instrumented method
+* Total Selftime - The total execution time for all method calls within the specified time interval the method uses to execute its own statements
+* Total Walltime - The total execution time for all method calls within the specifies time interval the method uses to execute its own statements plus any other method calls issued by the instrumented method
+
+To utilize the Profiler, a new Profiler objects needs to be instantiated: 
+
+<div style="text-align: center"><img src="/images/btrace_script_2.png"/></div>
+
+For the Profiler to be able to do its job, you need to give BTrace three pieces of information each for method entry and method exit. BTrace supports either absolute names for a single class or method, but also support specifying both class and method names through Java regular expressions. 
+
+* The fully qualified path of the class where Profiling is required
+* The name of the method where Profiling is required
+* The location where BTrace will inject the Profiling byte-code (in this case ENTRY and EXIT)
+
+<div style="text-align: center"><img src="/images/btrace_script_3.png"/></div>
+
+As you can see in the figure above, both class and method names are supplied using Java regular expressions. The above tells BTrace that a profiler is required for both ENTRY and EXIT of any methods that reside inside the package structure org.eurekaj.manager.service.*. BTrace will inject the byte code for the methods registerProfilerBefore(...) and registerProfilerAfter(...). These two methods aren't available from BTraceUtils, but are declared within the BTrace script itself: 
+
+<div style="text-align: center"><img src="/images/btrace_script_4.png"/></div>
+
+The final step of the BTrace Script is to add a timer method that periodically will go through the recorded profiler information and print that information to a file. A timer method is specifies using the @OnTimer annotation. The contents of the method specifies what and how each record is printed to the BTrace output file: 
+
+<div style="text-align: center"><img src="/images/btrace_script_5.png"/></div>
+
+BTrace enables you to get detailed statistics regarding your applications performance, memory usage, thread usage, as well as any other metric that will be valuable for you to measure in your production JVM. The only thing to be careful about is to make sure that you dont over-instrument your application. Instrumenting *everything* will most likely slow down your application as every timer will add about 1700 nanoseconds of execution time. There are a few key points to consider before choosing an instrumentation cost for your application: 
+
+* Make sure each metric is useful
+* New metrics should increase the value of the metrics produced
+* Add alert points that will make it easier to troubleshoot faults
+* Choose metrics that supports or enables a proactive operation of the system in production
+* Do not instrument application cold-spots, as that might convert them into hot-spots. 
+</div>
