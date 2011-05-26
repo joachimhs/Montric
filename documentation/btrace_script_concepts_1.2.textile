@@ -1,5 +1,5 @@
 ---
-layout: localmaster
+layout: master
 title: BTrace Script concepts
 ---
 
@@ -65,7 +65,7 @@ import java.util.Deque;
 }
 {% endhighlight %}
 
-h3. Importing the utilities methods and declaring the script as a BTrace script
+h3. Importing the utilitiy methods and declaring the script as a BTrace script
 
 In BTrace 1.2 any method that are allowed inside a BTrace script is either declared within the script itself or comes from the BTraceUtils class. Therefore, any BTrace 1.2 script will usually start with statically importing everything from the BTraceUtils class. Secondly, BTrace requires any BTrace script to be annotated with the @BTrace annotation on a class level: 
 
@@ -73,7 +73,7 @@ In BTrace 1.2 any method that are allowed inside a BTrace script is either decla
 
 h3. Profiling efficiently with the BTrace Profiler-class
 
-To be able to profile methods efficiently BTrace supplies the Profiler class, from version 1.2 an onwards. The Profiler class will successfully instrument any method specified, and will record the following key information regarding the execution of that method: 
+To be able to profile methods efficiently BTrace supplies the Profiler class, from version 1.2 and onwards. The Profiler class will successfully instrument any method specified, and will record the following key information regarding the execution of that method: 
 
 * Average Selftime - The time in nanoseconds the method uses to execute its own statements
 * Average Walltime - The time in nanoseconds the method takes to execute its own statements plus any other method calls issued by the instrumented method
