@@ -5,10 +5,10 @@
 /*globals EurekaJView */
 
 // This page describes the main user interface for your application.
-sc_require('views/information_panel');
-sc_require('views/chart_view');
-sc_require('views/administration_pane');
-sc_require('views/instrumentation_tree_list_item');
+sc_require('views/informationPanel/information_panel');
+sc_require('views/chart/chart_view');
+sc_require('views/administration/administration_pane');
+sc_require('views/instrumentationTree/instrumentation_tree_list_item');
 
 EurekaJView.mainPage = SC.Page.design({
 

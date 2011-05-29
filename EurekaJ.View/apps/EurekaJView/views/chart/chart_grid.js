@@ -10,7 +10,7 @@
 
  @extends SC.View
  */
-sc_require('views/chart_view');
+sc_require('views/chart/chart_view');
 EurekaJView.ChartGrid = SC.GridView.extend(
 {
 	contentBinding: 'EurekaJView.chartGridController.arrangedObjects',

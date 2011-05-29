@@ -13,25 +13,17 @@
 //
 
 EurekaJView.main = function main() {
-
-    // Step 1: Instantiate Your Views
-    // The default code here will make the mainPane for your application visible
-    // on screen.  If you app gets any level of complexity, you will probably
-    // create multiple pages and panes.
+	//Set up the main pane of the application and initialize the statechart. 
     EurekaJView.getPath('mainPage.mainPane').append();
-
-    // Step 2. Set the content property on your primary controller.
-    // This will make your app come alive!
-
-    // TODO: Set the content property on your primary controller
-    // ex: EurekaJView.contactsController.set('content',EurekaJView.contacts);
     EurekaJView.statechart.initStatechart();
 
+	// Move these into core_statechart, core_action ??
     EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_TREE_QUERY);
     EurekaJView.InstrumentationTreeController.populate();
 
     EurekaJView.chartGridController.init();
 
+	//Below: Ugly gode for observing tab changes. 
     EurekaJView.mainPage.get('informationPanelView').get('informationPanelTabView').addObserver('nowShowing', function(tabView) {
         EurekaJView.chartGridController.set('nowShowingTab', tabView.get('nowShowing'));
     });
