@@ -17,169 +17,40 @@ EurekaJView.mainPage = SC.Page.design({
     // load.
 
     instrumentationTreeView: SC.outlet('mainPane.instrumentationTreeView'),
-    instrumentationTreeScrollView: SC.outlet('mainPane.instrumentationTreeScrollView'),
+    instrumentationTreeScrollView: SC.outlet('mainPane.instrumentationTreeView'),
     topView: SC.outlet('mainPane.topView'),
     flotChartGrid: SC.outlet('mainPane.flotChartGrid'),
     informationPanelView: SC.outlet('mainPane.informationPanelView'),
 
     mainPane: SC.MainPane.design({
         defaultResponder: EurekaJView,
-        childViews: 'flotChartGrid topView instrumentationTreeView informationPanelView instrumentationTreeScrollView'.w(),
+        childViews: 'flotChartGrid topView instrumentationTreeView informationPanelView'.w(),
 
-        topView: SC.View.design({
-            childViews: 'logoView administrationButtonView administrationLabelView'.w(),
+        topView: EurekaJView.TopView.design({
             isVisible: NO,
-            layout: {
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 75
-            },
-            anchorLocation: SC.ANCHOR_TOP,
-
-            logoView: SC.LabelView.design({
-                layout: {
-                    top: 15,
-                    height: 40,
-                    left: 10,
-                    width: 250
-                },
-                controlSize: SC.HUGE_CONTROL_SIZE,
-                fontWeight: SC.BOLD_WEIGHT,
-                value: 'EurekaJ Profiler'
-            }).classNames(['logoLabel', 'blacklabel', 'underlined']),
-
-            administrationButtonView: SC.ImageView.design(SCUI.SimpleButton, {
-                layout: {right: 25, width: 49, height: 49, top: 5},
-                value: static_url('images/ej_tools_49.png'),
-                toolTip: 'Administration',
-                action: 'showAdministrationPaneAction'
-            }),
-
-            administrationLabelView: SC.LabelView.design(SCUI.SimpleButton, {
-                layout: {right: 10, width: 100, height: 25, top: 55},
-                value: 'Administration',
-                textAlign: SC.ALIGN_RIGHT,
-                action: 'showAdministrationPaneAction',
-                fontWeight: SC.BOLD_WEIGHT
-            }).classNames('greylabel')
+            layout: {top: 0, left: 0, right: 0, height: 75 },
+            anchorLocation: SC.ANCHOR_TOP
         }).classNames('toolbarGradient'),
 
-
-
-        chartOptionsContainerView: SC.ContainerView.design({
-            layout: {
-                top: 75,
-                height: 100,
-                left: 306,
-                right: 200
-            },
-            nowShowing: 'EurekaJView.ChartOptionsView'
-        }),
-
-        flotChartGrid: SC.GridView.extend({
-            layout: {
-                top: 77,
-                right: 200,
-                bottom: 0,
-                left: 306
-            },
-            contentBinding: 'EurekaJView.chartGridController.arrangedObjects',
-            selectOnMouseDown: NO,
-            exampleView: EurekaJView.ChartView,
-            recordType: EurekaJView.ChartGridModel,
-            itemsPerRow: 1,
-            isSelectable: NO,
-
-            //extending Grid View to enable dynamic grid-height
-            layoutForContentIndex: function(contentIndex) {
-                var frameHeight = this.get('clippingFrame').height;
-                var rowHeight = (frameHeight / this.get('content').get('length'));
-                SC.Logger.log('frameHeight: ' + frameHeight + ' content.length: ' + this.get('content').get('length') + ' rowHeight: ' + rowHeight);
-                var frameWidth = this.get('clippingFrame').width;
-                var itemsPerRow = this.get('itemsPerRow');
-                var columnWidth = Math.floor(frameWidth / itemsPerRow);
-
-                var row = Math.floor(contentIndex / itemsPerRow);
-                var col = contentIndex - (itemsPerRow * row);
-                return {
-                    left: col * columnWidth,
-                    top: row * rowHeight,
-                    height: rowHeight,
-                    width: columnWidth
-                };
-            }
+        flotChartGrid: EurekaJView.ChartGrid.design({
+            layout: { top: 77, right: 200, bottom: 0, left: 306 }
         }).classNames(['whiteBackground']),
 
         informationPanelView: EurekaJView.InformationPanelView.design({
-            layout: {
-                top: 77,
-                bottom: 0,
-                right: 0,
-                width: 199
-            },
+            layout: {top: 77, bottom: 0, right: 0, width: 199 },
             anchorLocation: SC.ANCHOR_TOP,
             backgroundColor: "#F0F8FF"
         }).classNames(['thinBlackLeftborder']),
 
-        instrumentationTreeView: SC.View.design({
-            childViews: 'instrumentationTreeLabelView'.w(),
+        instrumentationTreeView: EurekaJView.InstrumentationTreeView.design({
             isVisible: NO,
-            layout: {
-                top: 77,
-                bottom: 0,
-                left: 0,
-                width: 305
-            },
+            layout: {top: 77, bottom: 0, left: 0, width: 305 },
             anchorLocation: SC.ANCHOR_TOP,
-            backgroundColor: "#F0F8FF",
+            backgroundColor: "#F0F8FF"
+    	}).classNames('thinBlackRightborder'),
+	}),
 
-
-            instrumentationTreeLabelView: SC.LabelView.design({
-                layout: {
-                    centerY: 0,
-                    height: 30,
-                    top: 5,
-                    left: 10
-                },
-                controlSize: SC.REGULAR_CONTROL_SIZE,
-                fontWeight: SC.BOLD_WEIGHT,
-                textAlign: SC.ALIGN_LEFT,
-                value: 'INSTRUMENTATION MENU'
-            }).classNames(['greylabel', 'underlined'])
-        }).classNames(['thinBlackRightborder']),
-
-        instrumentationTreeScrollView: SC.ScrollView.extend({
-            isVisible: NO,
-            layout: {
-                top: 101,
-                bottom: 0,
-                left: 2,
-                width: 299
-            },
-            canScrollHorizontally: YES,
-            hasHorizontalScroller: YES,
-
-            contentView: SC.ListView.extend({
-                layout: {
-                    width: 450
-                },
-                backgroundColor: '#F0F8FF',
-                contentValueKey: "name",
-                rowHeight: 18,
-                borderStyle: SC.BORDER_NONE,
-                isSelectable: NO,
-
-                contentBinding: 'EurekaJView.InstrumentationTreeController.arrangedObjects',
-                exampleView: EurekaJView.InstrumentationTreeListItem,
-                recordType: EurekaJView.InstrumentationTreeModel
-            })
-        })
-
-    }).classNames('thinBlackRightborder'),
-
-    adminPanelView: EurekaJView.AdministrationPaneView.design({
-        layout: { width: 700, centerX: 0, height: 500 }
-    })
-
+	adminPanelView: EurekaJView.AdministrationPaneView.design({
+    	layout: { width: 700, centerX: 0, height: 500 }
+	})
 });
