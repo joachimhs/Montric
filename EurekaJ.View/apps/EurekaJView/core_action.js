@@ -1,10 +1,5 @@
 EurekaJView.mixin( {
 
-    /*showTimeperiodPane: function() {
-        SC.Logger.log('showing Time Period Panel');
-        EurekaJView.statechart.gotoState('showTopMenu.showTimePeriodPanel');
-    } */
-
 	/** Statechart actions */
 	showAdministrationPaneAction: function() {
 		EurekaJView.EurekaJStore.find(EurekaJView.ALERTS_QUERY);
@@ -25,7 +20,6 @@ EurekaJView.mixin( {
 	/** //Statechart actions */
 
     addNewAlertAction: function() {
-        SC.Logger.log('EurekaJView.mixin Adding new Alert');
         newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: EurekaJView.alertAdministrationController.get('newAlertName')});
         EurekaJView.alertAdministrationController.set('newAlertName', '');
     },
@@ -53,7 +47,6 @@ EurekaJView.mixin( {
     },
 
     addNewEmailGroupAction: function() {
-        SC.Logger.log('EurekaJView.mixin Adding new Email Group');
         newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailGroupModel, {emailGroupName: EurekaJView.emailAdministrationController.get('newEmailGroupName'), emailAddresses: []});
         EurekaJView.emailAdministrationController.set('newEmailGroupName', '');
     },
@@ -68,12 +61,9 @@ EurekaJView.mixin( {
 
         if (SC.kindOf(EurekaJView.editEmailGroupController.get('emailAddresses'), SC.ManyArray) ||
                 SC.kindOf(EurekaJView.editEmailGroupController.get('emailAddresses'), SC.Array) ) {
-            SC.Logger.log('Adding new email address to existing list');
             EurekaJView.editEmailGroupController.get('emailAddresses').pushObject(newEmailRecipient);
         } else {
-            SC.Logger.log('Adding new email address.');
             EurekaJView.editEmailGroupController.set('emailAddresses', [ newEmailRecipient ])
-            SC.Logger.log('new email addresses: ' + EurekaJView.editEmailGroupController.get('emailAddresses'));
         }
     },
 
@@ -94,9 +84,7 @@ EurekaJView.mixin( {
         }, this);
     },
 
-    /*
-    Applying changes to historical time ranges.
-     */
+    // Applying changes to historical time ranges.
     applyHistoricalChanges: function() {
         var parsedFromDate = SC.DateTime.parse(EurekaJView.chartGridController.get('selectedChartFromString'), EurekaJView.chartGridController.get('dateFormat'));
         var parsedToDate = SC.DateTime.parse(EurekaJView.chartGridController.get('selectedChartToString'), EurekaJView.chartGridController.get('dateFormat'));
