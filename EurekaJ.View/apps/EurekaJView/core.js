@@ -16,6 +16,7 @@ EurekaJView = SC.Application.create(
     NAMESPACE: 'EurekaJView',
     VERSION: '0.1.0',
 
-    EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource'),
+    //Create the EurekaJ Store
+    EurekaJStore: SC.Store.create({commitRecordsAutomatically: NO}).from('EurekaJView.EurekaJDataSource')
 });
 

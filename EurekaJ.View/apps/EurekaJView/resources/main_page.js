@@ -33,6 +33,7 @@ EurekaJView.mainPage = SC.Page.design({
         }).classNames('toolbarGradient'),
 
         flotChartGrid: EurekaJView.ChartGrid.design({
+			isVisible: NO,
             layout: { top: 77, right: 200, bottom: 0, left: 306 }
         }).classNames(['whiteBackground']),
 
