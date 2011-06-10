@@ -47,7 +47,7 @@ EurekaJView.mainPage = SC.Page.design({
             layout: {top: 77, bottom: 0, left: 0, width: 305 },
             anchorLocation: SC.ANCHOR_TOP,
             backgroundColor: "#F0F8FF"
-    	}).classNames('thinBlackRightborder'),
+    	}).classNames('thinBlackRightborder')
 	}),
 
 	adminPanelView: EurekaJView.AdministrationPaneView.design({
