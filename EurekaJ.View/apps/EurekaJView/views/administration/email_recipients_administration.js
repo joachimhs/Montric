@@ -103,7 +103,8 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
         smtpPortTextfieldView: SC.TextFieldView.extend({
             layout: {left: 110, width: 100, top: 50, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
-            contentValueKey: "smtpPort"
+            contentValueKey: "smtpPort",
+			validator: SC.Validator.Number 
         }),
 
         smtpSSLLabelView: SC.LabelView.extend({

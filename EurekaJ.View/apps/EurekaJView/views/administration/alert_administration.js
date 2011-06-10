@@ -79,7 +79,8 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         errorTextfieldView: SC.TextFieldView.extend({
             layout: {left: 90, width: 100, top: 25, height: 20},
             contentBinding: 'EurekaJView.editAlertController',
-            contentValueKey: "alertErrorValue"
+            contentValueKey: "alertErrorValue",
+			validator: SC.Validator.Number 
         }),
 
         warningLabelView: SC.LabelView.extend({
@@ -91,7 +92,8 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         warningTextfieldView: SC.TextFieldView.extend({
             layout: {left: 330, width: 100, top: 25, height: 20},
             contentBinding: 'EurekaJView.editAlertController',
-            contentValueKey: "alertWarningValue"
+            contentValueKey: "alertWarningValue",
+			validator: SC.Validator.Number 
         }),
 
         alertTypeLabelView: SC.LabelView.extend({
@@ -124,7 +126,8 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
         delayTextfieldView: SC.TextFieldView.extend({
             layout: {left: 330, width: 100, top: 50, height: 20},
             contentBinding: 'EurekaJView.editAlertController',
-            contentValueKey: "alertDelay"
+            contentValueKey: "alertDelay",
+			validator: SC.Validator.Number 
         }),
 
         alertSourceLabelView: SC.LabelView.extend({
