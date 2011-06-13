@@ -46,7 +46,7 @@
 	</bean>
 
 	<bean id="scheduledAlertValidatorTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
-		<!-- wait 1 seconds before starting repeated execution -->
+		<!-- wait 60 seconds before starting repeated execution -->
 		<property name="delay" value="1000" />
 		<!-- run every 15 seconds -->
 		<property name="period" value="15000" />
@@ -55,8 +55,28 @@
 
 	<bean id="evaluateAlerts"
 		class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+		<property name="targetObject" ref="deleteOldStatisticsTask" />
+		<property name="targetMethod" value="deleteOldStats" />
+	</bean>
+
+    <bean id="scheduledDeleteOldStatisticsTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <!-- wait 60 seconds before starting repeated execution -->
+		<property name="delay" value="60000" />
+		<!-- run every 15 seconds -->
+		<property name="period" value="60000" />
+		<property name="timerTask" ref="deleteOldStats" />
+    </bean>
+
+    <bean id="deleteOldStats"
+		class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
 		<property name="targetObject" ref="alertValidatorTask" />
 		<property name="targetMethod" value="evaluateAlerts" />
+	</bean>
+
+    <bean id="deleteOldStatisticsTask" class="org.eurekaj.manager.task.DeleteOldStatisticsTask">
+		<property name="treeMenuService">
+			<ref bean="treeMenuService" />
+		</property>
 	</bean>
 
 	<bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
@@ -64,6 +84,7 @@
 			<list>
 				<!-- see the example above -->
 				<ref bean="scheduledAlertValidatorTask" />
+                <ref bean="scheduledDeleteOldStatisticsTask" />
 			</list>
 		</property>
 	</bean>

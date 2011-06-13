@@ -1,5 +1,6 @@
 package org.eurekaj.manager.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eurekaj.api.datatypes.*;
@@ -35,4 +36,6 @@ public interface TreeMenuService {
     public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod);
 
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts);
+
+    public void deleteOldLiveStatistics(Date date);
 }

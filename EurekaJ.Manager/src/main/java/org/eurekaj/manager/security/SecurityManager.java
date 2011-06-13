@@ -59,7 +59,6 @@ public class SecurityManager {
             }
         }
 
-        System.out.println("userDetailsIsRole() = " + containsRole);
         return containsRole;
     }
 

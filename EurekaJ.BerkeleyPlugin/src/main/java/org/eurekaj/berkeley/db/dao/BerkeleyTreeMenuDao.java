@@ -2,17 +2,17 @@ package org.eurekaj.berkeley.db.dao;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import com.sleepycat.persist.SecondaryIndex;
 import org.eurekaj.api.dao.LiveStatisticsDao;
 import org.eurekaj.api.dao.TreeMenuDao;
 import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.berkeley.db.BerkeleyDbEnv;
-import org.eurekaj.berkeley.db.datatypes.BerkeleyLiveStatistics;
-import org.eurekaj.berkeley.db.datatypes.BerkeleyLiveStatisticsPk;
-import org.eurekaj.berkeley.db.datatypes.BerkeleyTreeMenuNode;
+import org.eurekaj.berkeley.db.datatypes.*;
 
 import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.PrimaryIndex;
@@ -22,12 +22,13 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 	private PrimaryIndex<String, BerkeleyTreeMenuNode> treeMenuPrimaryIdx;
 	//statIndex = db.<BerkeleyLiveStatistics>createMultidimensionalIndex(BerkeleyLiveStatistics.class, new String[] {"guiPath", "timeperiod"}, true);
 	private PrimaryIndex<BerkeleyLiveStatisticsPk, BerkeleyLiveStatistics> liveStatPrimaryIdx;
-
+    private SecondaryIndex<Long, BerkeleyLiveStatisticsPk, BerkeleyLiveStatistics> liveStatTimeperiodIdx;
 
     public BerkeleyTreeMenuDao(BerkeleyDbEnv dbEnvironment) {
         this.dbEnvironment = dbEnvironment;
         treeMenuPrimaryIdx = this.dbEnvironment.getTreeMenuStore().getPrimaryIndex(String.class, BerkeleyTreeMenuNode.class);
 		liveStatPrimaryIdx = this.dbEnvironment.getLiveStatisticsStore().getPrimaryIndex(BerkeleyLiveStatisticsPk.class, BerkeleyLiveStatistics.class);
+        liveStatTimeperiodIdx = this.dbEnvironment.getLiveStatisticsStore().getSecondaryIndex(liveStatPrimaryIdx, Long.class, "secondaryTimeperiod");
     }
 
     @Override
@@ -150,18 +151,29 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 			liveStatPrimaryIdx.put(oldStat);
 		} else {
 			//No hit, create new BerkeleyLiveStatistics
-			BerkeleyLiveStatistics livestats = new BerkeleyLiveStatistics();
-			BerkeleyLiveStatisticsPk pk = new BerkeleyLiveStatisticsPk();
-			pk.setGuiPath(guiPath);
-			pk.setTimeperiod(timeperiod);
-			livestats.setPk(pk);
-			
-			livestats.setValue(calculatedValue);
+			BerkeleyLiveStatistics livestats = new BerkeleyLiveStatistics(guiPath, timeperiod, calculatedValue);
 			liveStatPrimaryIdx.put(livestats);
 		}
 	}
 
+    @Override
+    public void deleteLiveStatisticsOlderThan(Date date) {
+        Long timeperiod = date.getTime() / 15000;
 
+        BerkeleyLiveStatisticsPk fromKey = new BerkeleyLiveStatisticsPk();
+		fromKey.setTimeperiod(timeperiod);
+
+        EntityCursor<BerkeleyLiveStatistics> pi_cursor = liveStatTimeperiodIdx.entities(
+				null, true, timeperiod, false);
+		try {
+			for (BerkeleyLiveStatistics node : pi_cursor) {
+				liveStatPrimaryIdx.delete(node.getPk());
+			}
+			// Always make sure the cursor is closed when we are done with it.
+		} finally {
+			pi_cursor.close();
+		}
+    }
 
 
 

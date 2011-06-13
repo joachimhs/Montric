@@ -1,5 +1,6 @@
 package org.eurekaj.manager.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.eurekaj.api.dao.AlertDao;
@@ -23,9 +24,7 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     private EurekaJDBPluginService getDbPlugin() {
 
         if (dbPlugin == null) {
-            System.out.println("Getting DB Plugin with name: " + DatabasePluginUtil.getDatabasePluginName());
             dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
-            System.out.println("got dbPlugin: " + dbPlugin);
         }
 
         return dbPlugin;
@@ -86,5 +85,11 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
         return getDbPlugin().getAlertDao().getRecentTriggeredAlerts(numAlerts);
+    }
+
+    public void deleteOldLiveStatistics(Date date) {
+        System.out.println("dbplugin: " + getDbPlugin());
+
+        getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date);
     }
 }

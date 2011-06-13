@@ -10,6 +10,7 @@ import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.simpledb.SimpleDBUtil;
 import org.eurekaj.simpledb.datatypes.SimpleDBLiveStatistics;
 import org.eurekaj.simpledb.datatypes.SimpleDBTreeMenuNode;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
 
@@ -212,5 +213,10 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         }
 
         return liveStatisticsList;
+    }
+
+    @Override
+    public void deleteLiveStatisticsOlderThan(Date date) {
+        throw new NotImplementedException();
     }
 }

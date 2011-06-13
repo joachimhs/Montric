@@ -4,6 +4,7 @@ import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface LiveStatisticsDao {
 
     public List<LiveStatistics> getLiveStatistics(String guiPath,
 			Long minTimeperiod, Long maxTimeperiod);
+
+    public void deleteLiveStatisticsOlderThan(Date date);
 }
