@@ -24,6 +24,9 @@ EurekaJ Profilers main goal is to work as a complete Java Profiler by being:
 * Realtime: The collected data will be visualized, reported and alerted on in real-time
 * Historical: Data is stored in 30 days for visualization, comparisong and reporting of historical data.
 
+## Downloads
+I will frequently post new versions to the followign URL: http://nightly.haagen.name/EurekaJ/
+
 ## Contributors
 
 * Joachim Haagen Skeie
