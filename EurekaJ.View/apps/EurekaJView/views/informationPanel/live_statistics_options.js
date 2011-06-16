@@ -16,7 +16,7 @@ EurekaJView.LiveStatisticsOptionsView = SC.View.extend(
     defaultResponder: EurekaJView,
     childViews: 'timePeriodContainerView'.w(),
 
-    childViews: 'chartOptionsHeadlineLabelView chartOptionsLabelView chartTimespanFieldView chartResolutionLabelView chartResolutionFieldView'.w(),
+    childViews: 'chartOptionsHeadlineLabelView chartTimezoneLabelView chartTimezoneFieldView chartOptionsLabelView chartTimespanFieldView chartResolutionLabelView chartResolutionFieldView'.w(),
 
     chartOptionsHeadlineLabelView: SC.LabelView.design({
         layout: {
@@ -32,6 +32,130 @@ EurekaJView.LiveStatisticsOptionsView = SC.View.extend(
         textAlign: SC.ALIGN_CENTER,
         value: 'LIVE CHART'
     }).classNames(['greylabel', 'underlined']),
+
+	chartTimezoneLabelView: SC.LabelView.design({
+		layout: {left: 10, height: 30, top: 45, width: 60},
+		controlSize: SC.NORMAL_CONTROL_SIZE,
+        //				fontWeight: SC.NORMAL_WEIGHT,
+        textAlign: SC.ALIGN_LEFT,
+        value: 'Timezone: '
+	}).classNames('blacklabel'),
+	
+	chartTimezoneFieldView: SC.SelectFieldView.design({
+        layout: {left: 70, height: 30, top: 45, right: 10},
+        disableSort: YES,
+		
+        objects: [
+            {
+                'timezoneName': 'UTC-12',
+                'timezoneValue': -12
+            },
+			{
+                'timezoneName': 'UTC-11',
+                'timezoneValue': -11
+            },
+			{
+                'timezoneName': 'UTC-10',
+                'timezoneValue': -10
+            },
+			{
+                'timezoneName': 'UTC-9',
+                'timezoneValue': -9
+            },
+			{
+                'timezoneName': 'UTC-8',
+                'timezoneValue': -8
+            },
+			{
+                'timezoneName': 'UTC-7',
+                'timezoneValue': -7
+            },
+			{
+                'timezoneName': 'UTC-6',
+                'timezoneValue': -6
+            },
+			{
+                'timezoneName': 'UTC-5',
+                'timezoneValue': -5
+            },
+			{
+                'timezoneName': 'UTC-4',
+                'timezoneValue': -4
+            },
+			{
+                'timezoneName': 'UTC-3',
+                'timezoneValue': -3
+            },
+			{
+                'timezoneName': 'UTC-2',
+                'timezoneValue': -2
+            },
+			{
+                'timezoneName': 'UTC-1',
+                'timezoneValue': -1
+            },
+			{
+                'timezoneName': 'UTC0',
+                'timezoneValue': 0
+            },
+			{
+                'timezoneName': 'UTC+1',
+                'timezoneValue': 1
+            },
+			{
+                'timezoneName': 'UTC+2',
+                'timezoneValue': 2
+            },
+			{
+                'timezoneName': 'UTC+3',
+                'timezoneValue': 3
+            },
+			{
+                'timezoneName': 'UTC+4',
+                'timezoneValue': 4
+            },
+			{
+                'timezoneName': 'UTC+5',
+                'timezoneValue': -5
+            },
+			{
+                'timezoneName': 'UTC+6',
+                'timezoneValue': 6
+            },
+			{
+                'timezoneName': 'UTC+7',
+                'timezoneValue': -7
+            },
+			{
+                'timezoneName': 'UTC+8',
+                'timezoneValue': -8
+            },
+			{
+                'timezoneName': 'UTC+9',
+                'timezoneValue': -9
+            },
+			{
+                'timezoneName': 'UTC+10',
+                'timezoneValue': 10
+            },
+			{
+                'timezoneName': 'UTC+11',
+                'timezoneValue': 11
+            },
+			{
+                'timezoneName': 'UTC+12',
+                'timezoneValue': 12
+            }
+        ],
+        nameKey: 'timezoneName',
+        valueKey: 'timezoneValue',
+
+        acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+        }.property('isEnabled'),
+
+        valueBinding: 'EurekaJView.chartGridController.selectedTimeZoneOffset'
+    }),
 
     chartOptionsLabelView: SC.LabelView.design({
         layout: {

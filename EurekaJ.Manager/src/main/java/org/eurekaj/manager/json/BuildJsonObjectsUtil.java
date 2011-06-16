@@ -196,7 +196,7 @@ public class BuildJsonObjectsUtil {
         return treeNodeJSONObject;
     }
 
-    public static String generateChartData(String chartId, String label, XYDataSetCollection xyCollection) throws JSONException {
+    public static String generateChartData(String chartId, String label, XYDataSetCollection xyCollection, Long chartOffsetMs) throws JSONException {
         //content: [ {label: 'set1', data:[[0,0]]}, {label: 'set2', data:[[0,0]]} ],
 
         StringBuilder dataArraySB = new StringBuilder();
@@ -223,7 +223,7 @@ public class BuildJsonObjectsUtil {
                     yVal = nf.format(p.getY());
                 }
 
-                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(yVal).append("").append(pointLabel).append("]").append(", ");
+                dataArraySB.append("[").append(nf.format(p.getX().longValue() + chartOffsetMs)).append(",").append(yVal).append("").append(pointLabel).append("]").append(", ");
             }
 
             // Last Row
@@ -239,7 +239,7 @@ public class BuildJsonObjectsUtil {
                     yVal = nf.format(p.getY());
                 }
 
-                dataArraySB.append("[").append(nf.format(p.getX())).append(",").append(yVal).append(pointLabel).append("]");
+                dataArraySB.append("[").append(nf.format(p.getX().longValue() + chartOffsetMs)).append(",").append(yVal).append(pointLabel).append("]");
             }
 
             collectionIndex++;

@@ -25,6 +25,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     showHistoricalData: NO,
     nowShowingTab: null,
     orderBy: 'name',
+	selectedTimeZoneOffset: null,
 
     init: function() {
         var fromDate = this.get('selectedChartFrom').advance({minute: -10});
@@ -32,6 +33,8 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             this.set('selectedChartFrom', fromDate);
         }
         this.generateChartStrings();
+		
+		this.set('selectedTimeZoneOffset', (-1 * new Date().getTimezoneOffset() / 60));
     },
 
     nowShowingTabChange: function() {

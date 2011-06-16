@@ -205,7 +205,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                         'id': storeKey,
                         'path': SC.Store.idFor(storeKey),
                         'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
-                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
+						'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             } else {
@@ -217,7 +218,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                         'path': SC.Store.idFor(storeKey),
                         'chartFrom': fromMs,
                         'chartTo': toMs,
-                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
+						'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             }

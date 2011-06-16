@@ -84,6 +84,15 @@ public class ChartServlet extends EurekaJGenericServlet {
         return toPeriod;
     }
 
+    private Long getChartOffset(JSONObject jsonRequest) throws JSONException {
+        long chartOffset = 0;
+        if (jsonRequest.has("chartOffsetMs")) {
+            chartOffset = jsonRequest.getLong("chartOffsetMs");
+        }
+
+        return chartOffset;
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
@@ -99,6 +108,8 @@ public class ChartServlet extends EurekaJGenericServlet {
 
                 int chartTimespan = getChartTimeSpan(keyObject);
                 int chartResolution = getChartResolution(keyObject);
+                long chartoffset = getChartOffset(keyObject);
+
                 Long fromPeriod = getFromPeriod(chartTimespan, keyObject);
                 Long toPeriod = getToPeriod(keyObject);
 
@@ -144,7 +155,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                 }
 
-                jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection);
+                jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
                 System.out.println("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {
