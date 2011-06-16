@@ -7,10 +7,7 @@ title: Downloads
 
 h2. Downloads
 
-EurekaJ Manager and EurekaJ Proxy can be downloaded from GitHub: 
-
-- EurekaJ Manager: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip">https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.managerServer.zip</a>
-- EurekaJ Proxy: <a href="https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip">https://github.com/downloads/joachimhs/EurekaJ/eurekaJ.Proxy-0.1.jar.zip</a>
+For every build issued by the CI (Jenkins), the artifacts are published to the following URL. The latest build will always be in the "latest" directory: <a href="http://nightly.haagen.name/EurekaJ/">http://nightly.haagen.name/EurekaJ/</a>.
 
 BTrace can be downloaded from the BTrace project website: <a href="http://kenai.com/projects/btrace">http://kenai.com/projects/btrace</a>
 
