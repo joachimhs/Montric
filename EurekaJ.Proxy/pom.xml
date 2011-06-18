@@ -41,31 +41,6 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.cxf</groupId>
-				<artifactId>cxf-codegen-plugin</artifactId>
-				<version>2.2.3</version>
-				<executions>
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
-							<wsdlOptions>
-								<wsdlOption>
-									<wsdl>${basedir}/../EurekaJ.Manager/src/main/cxf/eurekaj-dl.wsdl</wsdl>
-									<extraargs>
-										<extraarg>-client</extraarg>
-									</extraargs>
-								</wsdlOption>
-							</wsdlOptions>
-						</configuration>
-						<goals>
-							<goal>wsdl2java</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 

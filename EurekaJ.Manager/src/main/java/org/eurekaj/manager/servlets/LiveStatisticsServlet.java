@@ -32,7 +32,7 @@ public class LiveStatisticsServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("storeLiveStatistics")) { // && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsUser()) {
+            if (jsonObject.has("storeLiveStatistics") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsAdmin()) {
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
                 for (int index = 0; index < statList.length(); index++) {
                     ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index));

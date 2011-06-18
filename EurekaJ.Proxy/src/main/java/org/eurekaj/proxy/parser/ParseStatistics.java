@@ -71,6 +71,7 @@ public class ParseStatistics {
             jsonBuilder.append("}, ");
         }
 
+        //Last element
         if (statElemList.size() > 0) {
             StoreIncomingStatisticsElement element = statElemList.get(statElemList.size() - 1);
             jsonBuilder.append("{ ");

@@ -29,25 +29,29 @@ package org.apache.http.examples.client;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpResponseInterceptor;
+import org.apache.http.*;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.params.AuthPolicy;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import sun.security.util.Password;
 
 /**
  * Demonstration of the use of protocol interceptors to transparently
@@ -63,10 +67,31 @@ import org.apache.http.util.EntityUtils;
  * interface.
  */
 public class ClientGZipContentCompression {
+    private List<Cookie> cookieList = null;
+    private boolean loggedIn = false;
+    private String username;
+    private String password;
+    private String endpoint;
 
-    public int sendGzipOverHttp(String endpoint, String contents) throws Exception {
+    public ClientGZipContentCompression(String endpoint, String username, String password) {
+        this.endpoint = endpoint;
+        this.username = username;
+        this.password = password;
+    }
+
+    public int sendGzipOverHttp(String contents) throws Exception {
+        if (!loggedIn) {
+            logon();
+        }
+
         int statusCode = -1;
         DefaultHttpClient httpclient = new DefaultHttpClient();
+
+        httpclient.getCookieStore().clear();
+        for (Cookie cookie : cookieList) {
+            httpclient.getCookieStore().addCookie(cookie);
+        }
+
         try {
             httpclient.addRequestInterceptor(new HttpRequestInterceptor() {
 
@@ -101,31 +126,11 @@ public class ClientGZipContentCompression {
 
             });
 
-            HttpPost httpPost = new HttpPost(endpoint);
-            StringEntity requestEntity = new StringEntity(contents);
-            requestEntity.setContentType("text/plain");
-            httpPost.setEntity(requestEntity);
-
-            // Execute HTTP request
-            //System.out.println("executing request " + httpPost.getURI());
-            HttpResponse response = httpclient.execute(httpPost);
-
-            /*System.out.println("----------------------------------------");
-            System.out.println(response.getStatusLine());
-            System.out.println(response.getLastHeader("Content-Encoding"));
-            System.out.println(response.getLastHeader("Content-Length"));
-            System.out.println("----------------------------------------");*/
-
-            statusCode = response.getStatusLine().getStatusCode();
-            HttpEntity entity = response.getEntity();
-
-            if (entity != null) {
-                String content = EntityUtils.toString(entity);
-                /*System.out.println(content);
-                System.out.println("----------------------------------------");
-                System.out.println("Uncompressed size: "+content.length());*/
+            statusCode = postJsonContentsToServer(endpoint, contents, httpclient);
+            if (statusCode != 200) {
+                //Attempt login
+                logon();
             }
-
         } finally {
             // When HttpClient instance is no longer needed,
             // shut down the connection manager to ensure
@@ -136,6 +141,64 @@ public class ClientGZipContentCompression {
         return statusCode;
     }
 
+    private int postJsonContentsToServer(String endpoint, String contents, DefaultHttpClient httpclient) throws IOException {
+        int statusCode;HttpPost httpPost = new HttpPost(endpoint + "/liveStatistics");
+        StringEntity requestEntity = new StringEntity(contents);
+        requestEntity.setContentType("text/plain");
+
+        httpPost.setEntity(requestEntity);
+        HttpResponse response = httpclient.execute(httpPost);
+        statusCode = response.getStatusLine().getStatusCode();
+        HttpEntity entity = response.getEntity();
+        return statusCode;
+    }
+
+    public void logon() {
+        while (cookieList == null || cookieList.isEmpty()) {
+            DefaultHttpClient httpclient = new DefaultHttpClient();
+            try {
+
+                //POST username and password
+                HttpPost httpost = new HttpPost(endpoint + "/j_spring_security_check");
+
+                List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+                nvps.add(new BasicNameValuePair("j_username", username));
+                nvps.add(new BasicNameValuePair("j_password", password));
+
+                httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
+
+                HttpResponse response = httpclient.execute(httpost);
+                HttpEntity entity = response.getEntity();
+                EntityUtils.consume(entity);
+                List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+
+                //Store cookies
+                if (!cookies.isEmpty()) {
+                    cookieList = cookies;
+                }
+
+                //Attempt to send an empty JSON object of stats to verify login
+                int statusCode = postJsonContentsToServer(endpoint + "/liveStatistics", "{}", httpclient);
+
+                //If server side returns status code 200, user is logged in
+                if (statusCode == 200) {
+                    loggedIn = true;
+                } else {
+                    System.err.println("EurekaJ Proxy is not logged in. Verify login credentials.");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } finally {
+                // When HttpClient instance is no longer needed,
+                // shut down the connection manager to ensure
+                // immediate deallocation of all system resources
+                httpclient.getConnectionManager().shutdown();
+            }
+        }
+    }
+
     static class GzipDecompressingEntity extends HttpEntityWrapper {
 
         public GzipDecompressingEntity(final HttpEntity entity) {
@@ -144,7 +207,7 @@ public class ClientGZipContentCompression {
 
         @Override
         public InputStream getContent()
-            throws IOException, IllegalStateException {
+                throws IOException, IllegalStateException {
 
             // the wrapped entity's getContent() decides about repeatability
             InputStream wrappedin = wrappedEntity.getContent();
