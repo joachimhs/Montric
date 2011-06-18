@@ -35,6 +35,8 @@ EurekaJView.TRIGGERED_ALERTS_QUERY = SC.Query.local(EurekaJView.TriggeredAlertMo
     orderby: 'triggeredDate'
 });
 
+EurekaJView.LOGGED_IN_USER_QUERY = SC.Query.local(EurekaJView.UserModel, {});
+
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 /** @scope EurekaJView.EurekaJDataSource.prototype */
 {
@@ -125,6 +127,20 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (query === EurekaJView.LOGGED_IN_USER_QUERY) {
+            SC.Logger.log('fetching logged in user...');
+            var requestStringJson = {
+                'getLoggedInUser': true
+            };
+
+            SC.Request.postUrl('/user').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchLoggedInUser', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
+
         return NO; // return YES if you handled the query
     },
 
@@ -180,9 +196,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
     performFetchTriggeredAlerts: function(response, store, query) {
         if (SC.ok(response)) {
-            SC.Logger.log('Triggered Alerts Fetched: '  + response.get('body').triggeredAlerts);
             store.loadRecords(EurekaJView.TriggeredAlertModel, response.get('body').triggeredAlerts);
             store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+
+    performFetchLoggedInUser: function(response, store, query) {
+        if (SC.ok(response)) {
+            if (response.get('body').loggedInUser) {
+                store.loadRecords(EurekaJView.UserModel, response.get('body').loggedInUser);
+                store.dataSourceDidFetchQuery(query);
+            }
         } else {
             store.dataSourceDidErrorQuery(query, response);
         }
@@ -206,7 +232,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                         'path': SC.Store.idFor(storeKey),
                         'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
                         'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
-						'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             } else {
@@ -219,7 +245,7 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                         'chartFrom': fromMs,
                         'chartTo': toMs,
                         'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
-						'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             }

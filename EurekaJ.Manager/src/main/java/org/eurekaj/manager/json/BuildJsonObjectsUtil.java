@@ -361,6 +361,21 @@ public class BuildJsonObjectsUtil {
         return emailObjectContainer.toString();
     }
 
+    public static String buildUserData(String username, String userRole) throws JSONException {
+        JSONObject userObject = new JSONObject();
+
+        JSONObject userdataObject = new JSONObject();
+        userdataObject.put("username", username);
+        userdataObject.put("userRole", userRole);
+
+        JSONArray array = new JSONArray();
+        array.put(userdataObject);
+
+        userObject.put("loggedInUser", array);
+
+        return userObject.toString();
+    }
+
     public static String generateEmailRecipientJson(String emailAddress) throws JSONException {
         JSONObject emailObject = new JSONObject();
 

@@ -19,7 +19,7 @@ public class SecurityManager {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    private static boolean isAuthenticated() {
+    public static boolean isAuthenticated() {
         boolean isAuthenticated = false;
 
         if (getAuthentication() != null) {
@@ -82,5 +82,9 @@ public class SecurityManager {
         }
 
         return  isAuthenticated;
+    }
+
+    public static String getAuthenticatedUsername() {
+        return getUserDetails().getUsername();
     }
 }

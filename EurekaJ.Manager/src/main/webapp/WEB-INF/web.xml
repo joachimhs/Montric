@@ -48,6 +48,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.UserServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>EurekaJGenericServlet</servlet-name>
         <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -74,9 +79,13 @@
         <url-pattern>/email</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-           <servlet-name>LiveStatisticsServlet</servlet-name>
-           <url-pattern>/liveStatistics</url-pattern>
-       </servlet-mapping>
+        <servlet-name>LiveStatisticsServlet</servlet-name>
+        <url-pattern>/liveStatistics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
 
 
     <filter>
