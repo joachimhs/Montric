@@ -205,10 +205,8 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
     performFetchLoggedInUser: function(response, store, query) {
         if (SC.ok(response)) {
-            if (response.get('body').loggedInUser) {
-                store.loadRecords(EurekaJView.UserModel, response.get('body').loggedInUser);
-                store.dataSourceDidFetchQuery(query);
-            }
+            EurekaJView.userController.set('username', response.get('body').loggedInUser.username);
+            EurekaJView.userController.set('userRole', response.get('body').loggedInUser.userRole);
         } else {
             store.dataSourceDidErrorQuery(query, response);
         }

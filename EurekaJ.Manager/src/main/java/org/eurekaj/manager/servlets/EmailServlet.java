@@ -37,13 +37,13 @@ public class EmailServlet extends EurekaJGenericServlet {
             }
 
 
-            if (jsonObject.has("getEmailGroups") && SecurityManager.isAuthenticatedAsUser()) {
+            if (jsonObject.has("getEmailGroups") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
                 System.out.println("Got Email Groups:\n" + jsonResponse);
 
             }
 
-            if ((jsonObject.has("getEmailRecipient")) && SecurityManager.isAuthenticatedAsUser()) {
+            if ((jsonObject.has("getEmailRecipient")) && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
             }
         } catch (JSONException jsonException) {

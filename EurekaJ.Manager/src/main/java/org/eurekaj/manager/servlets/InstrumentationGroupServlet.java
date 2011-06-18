@@ -35,7 +35,7 @@ public class InstrumentationGroupServlet extends EurekaJGenericServlet {
                 }
             }
 
-            if (jsonObject.has("getInstrumentationGroups") && SecurityManager.isAuthenticatedAsUser()) {
+            if (jsonObject.has("getInstrumentationGroups") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
                 System.out.println("Got InstrumentationGroups:\n" + jsonResponse);
 

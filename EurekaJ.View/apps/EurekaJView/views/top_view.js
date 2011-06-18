@@ -29,7 +29,8 @@ EurekaJView.TopView = SC.View.extend(
         layout: {right: 25, width: 49, height: 49, top: 5},
         value: static_url('images/ej_tools_49.png'),
         toolTip: 'Administration',
-        action: 'showAdministrationPaneAction'
+        action: 'showAdministrationPaneAction',
+        isVisible: false
     }),
 
     administrationLabelView: SC.LabelView.design(SCUI.SimpleButton, {
@@ -37,7 +38,8 @@ EurekaJView.TopView = SC.View.extend(
         value: 'Administration',
         textAlign: SC.ALIGN_RIGHT,
         action: 'showAdministrationPaneAction',
-        fontWeight: SC.BOLD_WEIGHT
+        fontWeight: SC.BOLD_WEIGHT,
+        isVisible: false
     }).classNames('greylabel')
 	
 });

@@ -368,10 +368,7 @@ public class BuildJsonObjectsUtil {
         userdataObject.put("username", username);
         userdataObject.put("userRole", userRole);
 
-        JSONArray array = new JSONArray();
-        array.put(userdataObject);
-
-        userObject.put("loggedInUser", array);
+        userObject.put("loggedInUser", userdataObject);
 
         return userObject.toString();
     }

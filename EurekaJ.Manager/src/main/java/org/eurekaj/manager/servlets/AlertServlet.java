@@ -32,7 +32,7 @@ public class AlertServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             System.out.println("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("getAlerts") && SecurityManager.isAuthenticatedAsUser()) {
+            if (jsonObject.has("getAlerts") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
                 System.out.println("Got Alerts:\n" + jsonResponse);
 
