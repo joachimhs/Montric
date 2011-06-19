@@ -153,7 +153,7 @@ public class BuildJsonObjectsUtilTest {
 
         StringBuilder expected = new StringBuilder();
         expected.append("{\"chart\": [ {\"label\": \"Set1\", \"data\": [[1,1], [2,2], [3,3], [5,5]]}],\"instrumentationNode\":\"chartId\"}");
-        String jsonString = BuildJsonObjectsUtil.generateChartData("chartId", "something", xyCollection);
+        String jsonString = BuildJsonObjectsUtil.generateChartData("chartId", "something", xyCollection, 0l);
         assertEquals(expected.toString(), jsonString);
     }
 }
