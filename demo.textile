@@ -1,0 +1,23 @@
+---
+layout: master
+title: Live Demo
+---
+
+<div class="panel">
+h2. Live Demonstration
+
+EurekaJ is deployed to an Amazon EC2 instance, backed by a Elastic Block Store with 20GB of storage space for the database. The demonstration application is set up so that it will monitor three applications. The EurekaJ Demo application will hold on to its statistics for a maximum of 15 days to ensure not to overrun the 20GB of disk space available. 
+
+* Itself (EurekaJ Agent)
+* The Jenkins Continuous Integration Server running on a Mac Mini in Las Vegas (used as EurekaJ's CI server among other things)
+* The JavaServer Faces Chart library JSFlot's demonstration application, running on the above mentioned Mac Mini. 
+
+To log into the application, use the following credentials: 
+
+Username: user
+Password: user
+
+<a href="http://eurekaj-ec2.haagen.name">http://eurekaj-ec2.haagen.name</a>
+
+</div>
+	
