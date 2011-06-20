@@ -18,6 +18,11 @@ I came across Cappuccino during the summer of 2010, and I was intrigued at what 
 
 I started working with porting the all Java JSF application to a SproutCore client (EurekaJ View) plus a Java Backend (EurekaJ Manager) in November of 2010. All communication between SproutCore and EurekaJ Manager is now done via a JSON REST interface, which led to the the above mentioned SOAP framework also being ported over to JSON and REST. 
 
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_screenshot.png"/><br />
+	EurekaJ Manager RC1
+</div>
+
+
 h2. CodeHaus and Subversion -> GitHub and Git
 
 I initially applied to get EurekaJ accepted at the Codehaus, where it lived a short life before moving on Git and The GitHub. Sadly I work with Subversion each and every day, and getting to work with Git every once in a while when working with EurekaJ surely feels like a treat! 
