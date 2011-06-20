@@ -32,7 +32,7 @@ Documentation is currently under development.
 h2. Complete Arcitecture Overview
 
 <p>
-<a href="images/eurekaj_architecture_complete.png"><img src="/images/eurekaj_architecture_complete_thumb.png" width="737" height="274" alt="Eurekaj Architecture Complete Thumb"></a><br /><a href="/images/eurekaj_architecture_complete.png">EurekaJ Architecture</a>.
+<a href="/images/eurekaj_architecture_complete.png"><img src="/images/eurekaj_architecture_complete_thumb.png" width="737" height="274" alt="Eurekaj Architecture Complete Thumb"></a><br /><a href="/images/eurekaj_architecture_complete.png">EurekaJ Architecture</a>.
 </p>
 
 </div>
