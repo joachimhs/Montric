@@ -28,5 +28,8 @@ h2. Release Candidate 1
 
 I finally finished all the tickets that I had planned for the final release, and changed the version of the project up from version 0.1 - a version EurekaJ has had since its inception back in 2008, to RC1. I am very proud to be able to finally have something substantial to share with the community! Head over to the Downloads section of this page to be download EurekaJ. I am currenlty working on getting the documentation finished and ready to go before the final 1.0 release, which I am aiming to get finished by the end of August, at the very latest. 
 
+h2. MacMini -> Amazon AWS
+
+For the longest time, EurekaJ ran on a Mac Mini hosted by <a href="http://macminicolo.net">MacMini Colo</a>. As the Mini is running a number of other services, among others the CI server Jenkins, the <a href="http://jsflotdemo.haagen.name">JSFlot Demo appliation, and EurekaJ Proxy the server was periodically experiencing high load. As a fix I wanted to see if I could make EurekaJ Manager run successfully in the Cloud, so I started looking into Amazon EC2 and the Amazon Web Services architecture. Most of my findings along the way is documented in my <a href="http://haagen.name/2011/05/17/Moving_the_profiling_into_the_cloud.html">Blog</a>. Today, the Live Demonstration of EurekaJ is running on Amazon EC2. Head over to the <a href="/demo.html">Live Demonstration page</a> for more information on how to access and log in to the EurekaJ Demo. 
 </div>
 	
