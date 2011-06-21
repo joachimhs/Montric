@@ -10,7 +10,7 @@ In version 1 of EurekaJ, the BTrace agent will log its tracing-output to a numbe
 
 EurekaJ Proxy is distributed as a single .jar file. There are two things that needs to be configured to make EurekaJ Proxy do its job, the location of the BTrace trace-log files and the URL of the EurekaJ Manager REST interface. EurekaJ Proxy also needs to know the admin credentials to be able to access the REST interface on the manager-side. These properties is defined in a seperate "config.properties" file that is placed alongside the Proxy jar file.
 
-{% highlight bash %}
+{% highlight text %}
 eurekaj.proxy.scriptpath=/path/to/btrace/scriptoutput
 eurekaj.proxy.endpoint=http://eurekaj.manager.url:portnumber
 eurekaj.proxy.username=admin_username
