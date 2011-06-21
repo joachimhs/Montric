@@ -4,7 +4,7 @@ title: Configuring your application for use with BTrace
 ---
 
 <div class='panel'>
-<h2>Configuring your application for use with BTrace</h2>
+<h1>{{page.title}}</h1>
 	
 Specific documentation relating to EurekaJ Profiler is specified here. Please also refer to the complete BTrace documentation at the <a href="http://kenai.com/projects/btrace/pages/UserGuide">BTrace project site</a>.
 	

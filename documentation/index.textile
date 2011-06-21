@@ -1,10 +1,10 @@
 ---
 layout: master
-title: Documentation
+title: Documentation Topics
 ---
 
 <div class="panel">
-h2. Documentation Topics:
+<h1>{{page.title}}</h1>
 
 <p>
 Documentation is currently under development.

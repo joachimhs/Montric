@@ -135,6 +135,17 @@ border-bottom-left-radius: 1em;
 border-bottom-right-radius: 1em;
 }
 
+#content h1 {
+	text-decoration: none;
+	clear: left;
+	display: block;
+	padding: 0.3em 0;
+	margin: 0 0 0.2em 0;
+	border-bottom: 1px dashed #dba;
+	font-weight: bold;
+	text-align: center;
+}
+
 #content h2 {
 margin: 0 0 0.5em 0;
 font-size: 1.5em;
@@ -236,19 +247,9 @@ float: left;
 	width: 100%;
 	float: left;
 	
-	
-	background: #FAD8AF;
-	  border: 2px solid #B89F80;
 	  letter-spacing: -0.03em;
 	  margin: 1em 1em 0 0;
-	  -moz-border-radius: 0.5em;
-	  -webkit-border-radius: 0.5em;
-	  border-radius: 0.5em;
 	padding: 0.3em 0.5em;
-	
-	-moz-box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
-  	-webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
-	box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
 }
 
 
@@ -266,6 +267,44 @@ float: left;
 }
 
 #content .panel h4 {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.colorpanel {
+	width: 100%;
+	float: left;
+	
+	
+	background: #FAD8AF;
+	  border: 2px solid #B89F80;
+	  letter-spacing: -0.03em;
+	  margin: 1em 1em 0 0;
+	  -moz-border-radius: 0.5em;
+	  -webkit-border-radius: 0.5em;
+	  border-radius: 0.5em;
+	padding: 0.3em 0.5em;
+	
+	-moz-box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+  	-webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+}
+
+
+
+#content .colorpanel h2 {
+	color: black;
+	text-decoration: underline;
+	padding: 0.3em 0.5em;
+	margin: 0em;	
+}
+
+#content .colorpanel h3 {
+    padding-left: 1.1em;
+    padding-right: 1.1em;
+}
+
+#content .colorpanel h4 {
     padding-left: 2em;
     padding-right: 2em;
 }

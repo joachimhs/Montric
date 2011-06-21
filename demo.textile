@@ -1,10 +1,10 @@
 ---
 layout: master
-title: Live Demo
+title: Live Demonstration
 ---
 
 <div class="panel">
-h2. Live Demonstration
+<h1>{{page.title}}</h1>
 
 EurekaJ is deployed to an Amazon EC2 instance, backed by a Elastic Block Store with 20GB of storage space for the database. The demonstration application is set up so that it will monitor three applications. The EurekaJ Demo application will hold on to its statistics for a maximum of 15 days to ensure not to overrun the 20GB of disk space available. 
 

@@ -1,10 +1,10 @@
 ---
 layout: master
-title: BTrace Script concepts
+title: BTrace Script Concepts
 ---
 
 <div class='panel'>
-
+<h1>{{page.title}}</h1>
 h2. BTrace Script == Java Class
 
 At the heart a BTrace Script is a normal Java class annotated with BTrace annotations to tell the BTrace agent what and how to instrument your Java Application. Since the BTrace engine needs to be able instrument your application code with custom byte-code, BTrace scripts needs to be compiled with a special compiler - _btracec_. The reason for this, is that BTrace attempts to ensure that any compiled BTrace script will work inside the instrumented application without causing havoc on performance, memory use or thread-usage. After the compilation process with btracec, the resulting .class file is just a normal java class file. 

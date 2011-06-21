@@ -1,10 +1,10 @@
 ---
 layout: master
-title: Home
+title: EurekaJ Features
 ---
 
 <div class="panel">
-h2. Features
+<h1>{{page.title}}</h1>
 
 <p>
 * The project will develop a complete Java Profiler solution (EurekaJ Profiler) consisting of an agent that can be installed and started together with the application that monitoring is intended for. In addition a Manager application will receive data from multiple agents, accumulate data and make it possible for developer, operations, application managers, technical managers, etc. to log in and view both live and historical data from the last 30 days

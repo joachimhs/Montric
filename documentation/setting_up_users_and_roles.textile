@@ -4,7 +4,7 @@ title: Setting up Users and Roles
 ---
 
 <div class='panel'>
-<h2>Setting up Users and Roles</h2>
+<h1>{{page.title}}</h1>
 	
 EurekaJ Manager uses Spring Security to facilitate its security and the user.properties file has a standard Spring Security format. The sample users.properties file included with the .zip file distribution does contain only two users, one user and one administrator: 
 

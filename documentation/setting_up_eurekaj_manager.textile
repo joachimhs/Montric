@@ -4,7 +4,8 @@ title: Configuring and setting up EurekaJ Manager
 ---
 
 <div class='panel'>
-<h2>Configuring and setting up EurekaJ Manager</h2>
+<h1>{{page.title}}</h1>
+
 EurekaJ Manager is distrubuted as a single .Zip file that contains everything needed to configure and start the manager application. Start with unzipping the .zip file, then change the settings file according to your environment and requirements. 
 
 h3. config.properties

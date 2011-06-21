@@ -4,6 +4,7 @@ title: About EurekaJ - Brief history of the Project.
 ---
 
 <div class="panel">
+	<h1>{{page.title}}</h1>
 h2. Concept and idea
 
 The idea to start EurekaJ came about in summer of 2008. Since then work on EurekaJ have gone through different phases and technologies have been added and replaced along the way. At the start, work was primarily focussed on building a Java agent that would successfully profile a running Java application, letting the user configure which parts of the running JVM they would like to gather statistics on. Shortly after, work started on the visualizing Manager application that would visualize the statistics and automatically alert when any defined thresholds where breached within the gathered statistics. 
