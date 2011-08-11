@@ -79,6 +79,10 @@ public class ClientGZipContentCompression {
         this.password = password;
     }
 
+    private void resetHttpConnection() {
+        cookieList =  null;
+    }
+
     public int sendGzipOverHttp(String contents) throws Exception {
         if (!loggedIn) {
             logon();
@@ -128,6 +132,9 @@ public class ClientGZipContentCompression {
 
             statusCode = postJsonContentsToServer(endpoint, contents, httpclient);
             if (statusCode != 200) {
+                //Reset HTTP Connection
+                resetHttpConnection();
+
                 //Attempt login
                 logon();
             }

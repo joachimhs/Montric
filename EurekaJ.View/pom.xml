@@ -26,7 +26,7 @@
                 <configuration>
                     <executable>sh</executable>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <arguments >
+                    <arguments>
                         <argument>build_dev.sh</argument>
                     </arguments>
                 </configuration>
