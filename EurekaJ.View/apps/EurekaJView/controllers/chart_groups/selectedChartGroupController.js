@@ -10,9 +10,9 @@
 
  @extends SC.Object
  */
-EurekaJView.editInstrumentationGroupController = SC.ObjectController.create(
+EurekaJView.selectedChartGroupController = SC.ObjectController.create(
     /** @scope EurekaJView.editInstrumentationGroupController.prototype */ {
 
-    contentBinding: 'EurekaJView.instrumentationGroupAdminController.selection'
+    contentBinding: 'EurekaJView.chartGroupsAdminController.selection'
 
 });

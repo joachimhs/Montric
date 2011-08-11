@@ -23,5 +23,18 @@ EurekaJView.emailAdministrationController = SC.ArrayController.create(
        } else {
             this.set('showEditAlertView', NO);
         }
-    }.observes('selection')
+    }.observes('selection'),
+
+    newEmailRecipientIsValid: function() {
+        var newNameIsValid = (this.get('newEmailGroupName') && this.get('newEmailGroupName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(emailRecipient) {
+            if (emailRecipient.get('emailGroupName') == this.get('newEmailGroupName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    }
 });
