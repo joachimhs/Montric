@@ -35,6 +35,10 @@ EurekaJView.TRIGGERED_ALERTS_QUERY = SC.Query.local(EurekaJView.TriggeredAlertMo
     orderby: 'triggeredDate'
 });
 
+EurekaJView.INSTRUMENTATION_TABLE_QUERY = SC.Query.local(EurekaJView.InstrumentationTableModel, {
+    orderby: 'name'
+});
+
 EurekaJView.LOGGED_IN_USER_QUERY = SC.Query.local(EurekaJView.UserModel, {});
 
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
@@ -140,6 +144,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (query === EurekaJView.INSTRUMENTATION_TABLE_QUERY) {
+            SC.Logger.log('fetching instrumentation Table...');
+            var requestStringJson = {
+                'getLoggedInUser': true
+            };
+
+            SC.Request.postUrl('/user').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchLoggedInUser', store, query).send(requestStringJson);
+
+            return YES;
+        }
+
 
         return NO; // return YES if you handled the query
     },
@@ -204,7 +221,11 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
     },
 
     performFetchLoggedInUser: function(response, store, query) {
-        if (SC.ok(response)) {
+        SC.Logger.log(response.body);
+        var results = "";
+        if (SC.ok(response) && SC.ok(results = response.get('body'))) {
+            SC.Logger.log('user: ' + response.get('body'));
+            SC.Logger.log('results: ' + results);
             EurekaJView.userController.set('username', response.get('body').loggedInUser.username);
             EurekaJView.userController.set('userRole', response.get('body').loggedInUser.userRole);
         } else {
@@ -275,6 +296,45 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             return YES;
         }
 
+        if (recordType === EurekaJView.InstrumentationTableModel) {
+            SC.Logger.log("Getting Instrumentation Table Model...");
+            var requestStringJson = {};
+
+            if (EurekaJView.chartGridController.get('showHistoricalData') === NO) {
+                requestStringJson = {
+                    'getInstrumentationTableData': {
+                        'id': storeKey,
+                        'path': SC.Store.idFor(storeKey),
+                        'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
+                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                    }
+                };
+            } else {
+                var fromMs = EurekaJView.chartGridController.selectedChartFrom.get('milliseconds');
+                var toMs = EurekaJView.chartGridController.selectedChartTo.get('milliseconds');
+                requestStringJson = {
+                    'getInstrumentationTableData': {
+                        'id': storeKey,
+                        'path': SC.Store.idFor(storeKey),
+                        'chartFrom': fromMs,
+                        'chartTo': toMs,
+                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
+                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                    }
+                };
+            }
+
+            SC.Request.postUrl('/table').header({
+                'Accept': 'application/json'
+            }).json().notify(this, this.performRetrieveTableRecord, {
+                                                                                 store: store,
+                                                                                 storeKey: storeKey
+                                                                             }).send(requestStringJson);
+
+            return YES;
+        }
+
         return NO; // return YES if you handled the storeKey
     },
 
@@ -285,6 +345,20 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         // normal: load into store...response == dataHash
         if (SC.$ok(response)) {
             SC.Logger.log('Finished loading ChartGridRecord');
+            //SC.Logger.log(response.get('body').data);
+            EurekaJView.chartGridController.triggerTimer();
+            store.dataSourceDidComplete(storeKey, response.get('body'));
+            // error: indicate as such...response == error
+        } else store.dataSourceDidError(storeKey, response.get('body'));
+    },
+
+    performRetrieveTableRecord: function(response, params) {
+        var store = params.store;
+        var storeKey = params.storeKey;
+
+        // normal: load into store...response == dataHash
+        if (SC.$ok(response)) {
+            SC.Logger.log('Finished loading Instrumentation Table');
             //SC.Logger.log(response.get('body').data);
             EurekaJView.chartGridController.triggerTimer();
             store.dataSourceDidComplete(storeKey, response.get('body'));

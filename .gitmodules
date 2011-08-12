@@ -16,3 +16,6 @@
 [submodule "EurekaJ.View/garcon"]
 	path = EurekaJ.View/garcon
 	url = https://github.com/erichocean/garcon.git
+[submodule "EurekaJ.View/frameworks/sctable"]
+	path = EurekaJ.View/frameworks/sctable
+	url = https://github.com/jslewis/sctable.git

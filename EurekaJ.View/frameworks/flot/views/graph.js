@@ -80,9 +80,11 @@ Flot.GraphView = SC.View.extend(
             if (this.debugInConsole) console.log('render data');
         } else if (!SC.empty(seriesObject) && (seriesObject.get('status') & SC.Record.READY)) {
             SC.Logger.log('seriesObject.chart: ' + seriesObject.get('chart'));
-            var seriesArray = seriesObject.get('chart');
-            Flot.plot(this.get('layer'), seriesArray, options);
-            if (this.debugInConsole) console.log('render series');
+            if (seriesObject.get('chart')) {
+                var seriesArray = seriesObject.get('chart');
+                Flot.plot(this.get('layer'), seriesArray, options);
+                if (this.debugInConsole) console.log('render series');
+            }
         } else {
             if (this.debugInConsole) console.warn('data was empty');
         }

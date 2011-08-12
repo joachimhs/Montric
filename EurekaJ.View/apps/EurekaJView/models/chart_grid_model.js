@@ -13,10 +13,27 @@
 */
 EurekaJView.ChartGridModel = SC.Record.extend(
 /** @scope EurekaJView.ChartGridModel.prototype */ {
-	primaryKey: 'chart',
+	primaryKey: 'instrumentationNode',
     chart: SC.Record.attr(Array),
-    chartLabel: SC.Record.attr(String)
-  	//label: SC.Record.attr(String),
-	//data: SC.Record.attr(Array)
+    instrumentationNode: SC.Record.attr(String),
+    table: SC.Record.toMany('EurekaJView.InstrumentationTableModel'),
 
-}) ;
+    isChart:  function() {
+        SC.Logger.log("isChart: " + this.get('chart'))
+        if ((this.get('chart'))) {
+            return true;
+        }
+
+        return false;
+    }.property(),
+
+    isTable:  function() {
+        SC.Logger.log("isTable: " + this.get('table'))
+        var isTableBoolean = false;
+        this.get('table').forEach(function(o) {
+            isTableBoolean = true;
+        }, this);
+
+        return isTableBoolean;
+    }.property()
+});

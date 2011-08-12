@@ -48,7 +48,7 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
     }.property(),
 
     checkboxKey: function() {
-        if (!this.get('hasChildren')) {
+        if (this.get('parentPath')) {
             return 'isSelected';
         } else {
             return null;

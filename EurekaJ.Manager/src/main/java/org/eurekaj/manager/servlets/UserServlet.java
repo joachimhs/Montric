@@ -43,7 +43,7 @@ public class UserServlet extends EurekaJGenericServlet {
 
         PrintWriter writer = response.getWriter();
         if (jsonResponse.length() <= 2) {
-            jsonResponse = "{\"loggedInUser\": []}";
+            jsonResponse = "{\"loggedInUser\": null}";
         }
         writer.write(jsonResponse);
         response.flushBuffer();

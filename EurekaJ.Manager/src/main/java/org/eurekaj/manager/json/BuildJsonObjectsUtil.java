@@ -8,6 +8,7 @@ import java.text.NumberFormat;
 import java.util.*;
 
 import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
+import com.sun.tools.javac.util.Name;
 import org.eurekaj.api.datatypes.*;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
@@ -379,5 +380,26 @@ public class BuildJsonObjectsUtil {
         emailObject.put("emailAddress", emailAddress);
 
         return emailObject.toString();
+    }
+
+    public static String generateArrayOfEndNodesStartingWith(List<TreeMenuNode> treeMenuList, String startingWith) {
+        JSONArray jsonArray = new JSONArray();
+
+        SortedMap<String, String> uniqueEndnodes = new TreeMap<String, String>();
+
+        for (TreeMenuNode treeNode : treeMenuList) {
+            String nodeid = startingWith + ";" + treeNode.getGuiPath().substring(treeNode.getGuiPath().lastIndexOf(":") + 1, treeNode.getGuiPath().length());
+
+            if (treeNode.getGuiPath().startsWith(startingWith)
+                    && uniqueEndnodes.get(nodeid) == null) {
+                uniqueEndnodes.put(nodeid, nodeid);
+            }
+        }
+
+        for (String nodename : uniqueEndnodes.values()) {
+            jsonArray.put(nodename);
+
+        }
+        return jsonArray.toString();
     }
 }

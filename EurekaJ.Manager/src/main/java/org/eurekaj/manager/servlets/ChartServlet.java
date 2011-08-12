@@ -3,6 +3,7 @@ package org.eurekaj.manager.servlets;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.datatypes.TreeMenuNode;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
@@ -29,7 +30,7 @@ import java.util.*;
  */
 public class ChartServlet extends EurekaJGenericServlet {
 
-    private int getChartTimeSpan(JSONObject jsonRequest) throws JSONException {
+    protected int getChartTimeSpan(JSONObject jsonRequest) throws JSONException {
         int chartTimespan = 10;
         if (jsonRequest.has("chartTimespan")) {
             chartTimespan = jsonRequest.getInt("chartTimespan");
@@ -38,7 +39,7 @@ public class ChartServlet extends EurekaJGenericServlet {
         return chartTimespan;
     }
 
-    private int getChartResolution(JSONObject jsonRequest) throws JSONException {
+    protected int getChartResolution(JSONObject jsonRequest) throws JSONException {
         int chartResolution = 15;
         if (jsonRequest.has("chartResolution")) {
             chartResolution = jsonRequest.getInt("chartResolution");
@@ -54,7 +55,7 @@ public class ChartServlet extends EurekaJGenericServlet {
         return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_gs_:");
     }
 
-    private Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
+    protected Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
         Long chartFromMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartFrom");
         Long fromPeriod = null;
 
@@ -70,7 +71,7 @@ public class ChartServlet extends EurekaJGenericServlet {
         return fromPeriod;
     }
 
-    private Long getToPeriod(JSONObject jsonRequest) {
+    protected Long getToPeriod(JSONObject jsonRequest) {
         Long chartToMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartTo");
         Long toPeriod = null;
 
@@ -84,7 +85,7 @@ public class ChartServlet extends EurekaJGenericServlet {
         return toPeriod;
     }
 
-    private Long getChartOffset(JSONObject jsonRequest) throws JSONException {
+    protected Long getChartOffset(JSONObject jsonRequest) throws JSONException {
         long chartOffset = 0;
         if (jsonRequest.has("chartOffsetMs")) {
             chartOffset = jsonRequest.getLong("chartOffsetMs");
@@ -125,7 +126,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                     alert = getBerkeleyTreeMenuService().getAlert(alertName);
                     if (alert != null) {
                         chartPath = alert.getGuiPath();
-                        seriesLabel = "BerkeleyAlert: " + alert.getAlertName();
+                        seriesLabel = "Alert: " + alert.getAlertName();
                     }
 
                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
@@ -149,13 +150,18 @@ public class ChartServlet extends EurekaJGenericServlet {
                 } else {
                     chartPath = pathFromClient;
                     seriesLabel = chartPath;
-
                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
                     Collections.sort(liveList);
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                 }
 
-                jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
+                TreeMenuNode treeMenuNode = getBerkeleyTreeMenuService().getTreeMenu(chartPath);
+                if (treeMenuNode != null) {
+                    jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
+                } else {
+                    jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
+                }
+
                 System.out.println("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {
