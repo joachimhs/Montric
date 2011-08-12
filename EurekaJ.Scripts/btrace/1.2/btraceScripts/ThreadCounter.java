@@ -34,7 +34,7 @@ import static com.sun.btrace.BTraceUtils.*;
 
 	@OnTimer(15000)
     public static void printAverage() {
-		Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+		Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 		String timePeriodStr = strcat(str(timePeriod), "]");		
 		
 		String liveThreadFormat = strcat("[Value;", property("btrace.agent"));

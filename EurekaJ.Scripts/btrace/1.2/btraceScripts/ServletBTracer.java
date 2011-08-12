@@ -37,40 +37,40 @@ import java.util.Deque;
 		
 	 	@OnMethod(clazz="+javax.servlet.http.HttpServlet", method="/.*/", location=@Location(value=Kind.ENTRY))
 	    public static void servletDoMethodsBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletEntry(pcn, pmn, timePeriod);
 			
 	    }
 	
 		@OnMethod(clazz="+javax.servlet.http.HttpServlet", method="/.*/", location=@Location(Kind.RETURN))
 		public static void servletDoMethodsAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletExit(pcn, pmn, timePeriod, time);
 		}
 		
 		@OnMethod(clazz="+org.eurekaj.manager.servlets.EurekaJGenericServlet", method="/.*/", location=@Location(value=Kind.ENTRY))
 	    public static void eurekaJServletsDoMethodsBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletEntry(pcn, pmn, timePeriod);
 			
 	    }
 	
 		@OnMethod(clazz="+org.eurekaj.manager.servlets.EurekaJGenericServlet", method="/.*/", location=@Location(Kind.RETURN))
 		public static void eurekaJServletsDoMethodsAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletExit(pcn, pmn, timePeriod, time);
 		}
 		
 		@OnMethod(clazz="+javax.servlet.Servlet", method="/.*/", location=@Location(value=Kind.ENTRY))
 	    public static void ServiceMethodBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletEntry(pcn, pmn, timePeriod);
 	    }
 	
 		@OnMethod(clazz="+javax.servlet.Servlet", method="/.*/", location=@Location(Kind.RETURN)
 	    )
 	    public static void servletServiceAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			recordServletExit(pcn, pmn, timePeriod, time);
 	    }
 	

@@ -14,7 +14,7 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
 /** @scope EurekaJView.TimePeriodPaneView.prototype */ {
 
     defaultResponder: EurekaJView,
-    childViews: 'chartOptionsHeadlineLabelView fromLabelView fromTextFieldView selectFromButtonView toLabelView toTextFieldView selectToButtonView chartResolutionLabelView chartResolutionFieldView applyHistoricalChangesButtonView '.w(),
+    childViews: 'chartOptionsHeadlineLabelView fromLabelView chartTimezoneLabelView chartTimezoneFieldView fromTextFieldView selectFromButtonView toLabelView toTextFieldView selectToButtonView chartResolutionLabelView chartResolutionFieldView applyHistoricalChangesButtonView '.w(),
 
     chartOptionsHeadlineLabelView: SC.LabelView.design({
         layout: {
@@ -30,6 +30,29 @@ EurekaJView.HistoricalStatisticsOptionsView = SC.View.extend(
         textAlign: SC.ALIGN_CENTER,
         value: 'HISTORICAL CHART'
     }).classNames(['greylabel', 'underlined']),
+
+	chartTimezoneLabelView: SC.LabelView.design({
+		layout: {left: 5, height: 30, top: 45, width: 60},
+		controlSize: SC.NORMAL_CONTROL_SIZE,
+        //				fontWeight: SC.NORMAL_WEIGHT,
+        textAlign: SC.ALIGN_LEFT,
+        value: 'Timezone: '
+	}).classNames('blacklabel'),
+	
+	chartTimezoneFieldView: SC.SelectFieldView.design({
+        layout: {left: 70, height: 30, top: 45, right: 10},
+        disableSort: YES,
+		
+        objectsBinding: 'EurekaJView.chartGridController.timezones',
+        nameKey: 'timezoneName',
+        valueKey: 'timezoneValue',
+
+        acceptsFirstResponder: function() {
+            return this.get('isEnabled');
+        }.property('isEnabled'),
+
+        valueBinding: 'EurekaJView.chartGridController.selectedTimeZoneOffset'
+    }),
 
     fromLabelView: SC.LabelView.design({
         layout: {

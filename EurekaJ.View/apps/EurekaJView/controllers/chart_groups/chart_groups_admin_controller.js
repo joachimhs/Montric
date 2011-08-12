@@ -10,7 +10,7 @@
 
  @extends SC.Object
  */
-EurekaJView.instrumentationGroupAdminController = SC.ArrayController.create(
+EurekaJView.chartGroupsAdminController = SC.ArrayController.create(
     /** @scope EurekaJView.instrumentationGroupAdminController.prototype */ {
 
     newInstrumentationGroupName: null,
@@ -20,10 +20,23 @@ EurekaJView.instrumentationGroupAdminController = SC.ArrayController.create(
     observesSelection: function(){
         if (this.getPath('selection.firstObject.instrumentaionGroupName')  != undefined) {
             this.set('showEditInstrumentationGroupView', YES);
-            EurekaJView.instumentationGroupChartController.populate();
+            EurekaJView.chartGroupChartsTreeController.populate();
         } else {
             this.set('showEditInstrumentationGroupView', NO);
         }
-    }.observes('selection')
+    }.observes('selection'),
+
+    newChartGroupIsValid: function() {
+        var newNameIsValid = (this.get('newInstrumentationGroupName') && this.get('newInstrumentationGroupName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(chartGroup) {
+            if (chartGroup.get('instrumentaionGroupName') == this.get('newInstrumentationGroupName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    }
 
 });

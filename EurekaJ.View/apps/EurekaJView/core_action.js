@@ -11,8 +11,16 @@ EurekaJView.mixin( {
 	/** //Statechart actions */
 
     addNewAlertAction: function() {
-        newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: EurekaJView.alertAdministrationController.get('newAlertName')});
-        EurekaJView.alertAdministrationController.set('newAlertName', '');
+        if (EurekaJView.alertAdministrationController.newAlertIsValid()) {
+            newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.AlertModel, {alertName: EurekaJView.alertAdministrationController.get('newAlertName')});
+            EurekaJView.alertAdministrationController.set('newAlertName', '');
+        } else {
+            SC.AlertPane.warn({
+              message: "Unable to create new Alert",
+              description: "The Alert name must be unique, and contain at least one character.",
+              caption: "Try changing the name of the Alert."
+            });
+        }
     },
 
     updateAlertsAction: function() {
@@ -21,25 +29,47 @@ EurekaJView.mixin( {
     },
 
     saveAlertsAction: function() {
-        EurekaJView.EurekaJStore.commitRecords();
+        //Commmit all changes to alerts
+        EurekaJView.alertAdministrationController.get('content').forEach(function(alert) {
+            alert.commitRecord();
+        }, this);
     },
 
     addnewInstrumentationGroupAction: function() {
-        EurekaJView.EurekaJStore.createRecord(EurekaJView.InstrumentationGroupModel, {instrumentaionGroupName: EurekaJView.instrumentationGroupAdminController.get('newInstrumentationGroupName')});
-        EurekaJView.instrumentationGroupAdminController.set('newInstrumentationGroupName', '');
+        if (EurekaJView.chartGroupsAdminController.newChartGroupIsValid()) {
+            EurekaJView.EurekaJStore.createRecord(EurekaJView.InstrumentationGroupModel, {instrumentaionGroupName: EurekaJView.chartGroupsAdminController.get('newInstrumentationGroupName')});
+            EurekaJView.chartGroupsAdminController.set('newInstrumentationGroupName', '');
+        } else {
+            SC.AlertPane.warn({
+              message: "Unable to create new Chart Group",
+              description: "The Chart Group name must be unique, and contain at least one character.",
+              caption: "Try changing the name of the Chart Group."
+            });
+        }
     },
 
     updateInstrumentationGroupsAction: function() {
-        EurekaJView.instrumentationGroupAdminController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationGroupModel));
+        EurekaJView.chartGroupsAdminController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationGroupModel));
     },
 
     saveInformationGroupsAction: function() {
-        EurekaJView.EurekaJStore.commitRecords();
+        //Commit all changes to Chart Groups
+        EurekaJView.chartGroupsAdminController.get('content').forEach(function(chartGroup) {
+            chartGroup.commitRecord();
+        }, this);
     },
 
     addNewEmailGroupAction: function() {
-        newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailGroupModel, {emailGroupName: EurekaJView.emailAdministrationController.get('newEmailGroupName'), emailAddresses: []});
-        EurekaJView.emailAdministrationController.set('newEmailGroupName', '');
+        if (EurekaJView.emailAdministrationController.newEmailRecipientIsValid()) {
+            newAlert = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailGroupModel, {emailGroupName: EurekaJView.emailAdministrationController.get('newEmailGroupName'), emailAddresses: []});
+            EurekaJView.emailAdministrationController.set('newEmailGroupName', '');
+        } else {
+            SC.AlertPane.warn({
+              message: "Unable to create new Email Recipient Group",
+              description: "The Email Recipient Group name must be unique, and contain at least one character.",
+              caption: "Try changing the name of the Email Recipient Group."
+            });
+        }
     },
 
     updateEmailGroupsAction: function() {
@@ -59,7 +89,10 @@ EurekaJView.mixin( {
     },
 
     saveEmailAction: function() {
-        EurekaJView.EurekaJStore.commitRecords();
+        //Commit all email Recipients that have changed
+        EurekaJView.emailRecipientsController.get('content').forEach(function(emailRecipient) {
+            emailRecipient.commitRecord();
+        }, this);
     },
 
     addSelectedChartsToChartGroup: function() {
@@ -68,11 +101,14 @@ EurekaJView.mixin( {
         var selectedChartsContentArray = [];
 
         selectedCharts.forEach(function(chart) {
-            if (chart.instanceOf(EurekaJView.AdminstrationTreeModel) && !EurekaJView.selectedInstrumentationGroupController.get('content').contains(chart)) {
+            if (chart.instanceOf(EurekaJView.AdminstrationTreeModel) && !EurekaJView.selectedChartGroupChartsController.get('content').contains(chart)) {
                 chart.set('isSelected', NO);
-                EurekaJView.selectedInstrumentationGroupController.get('content').pushObject(chart);
+                EurekaJView.selectedChartGroupChartsController.get('content').pushObject(chart);
             }
         }, this);
+
+        //var selectedInstrumentationGroup = EurekaJView.instrumentationGroupAdminController.selection;
+        //selectedInstrumentationGroup.set('instrumentationGroupPath', EurekaJView.selectedInstrumentationGroupController.get('content'));
     },
 
     // Applying changes to historical time ranges.

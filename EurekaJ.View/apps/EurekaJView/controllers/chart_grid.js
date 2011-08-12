@@ -25,6 +25,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     showHistoricalData: NO,
     nowShowingTab: null,
     orderBy: 'name',
+
     selectedTimeZoneOffset: null,
     tableDataColumns: [
         SC.Object.create(SCTable.Column, {
@@ -38,6 +39,35 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             width: 150
         })
     ],
+
+	selectedTimeZoneOffset: null,
+	timezones: [
+		{'timezoneName': 'UTC-12', 'timezoneValue': -12},
+		{'timezoneName': 'UTC-11', 'timezoneValue': -11},
+		{'timezoneName': 'UTC-10', 'timezoneValue': -10},
+		{'timezoneName': 'UTC-9', 'timezoneValue': -9},
+		{'timezoneName': 'UTC-8', 'timezoneValue': -8},
+		{'timezoneName': 'UTC-7', 'timezoneValue': -7},
+		{'timezoneName': 'UTC-6','timezoneValue': -6},
+		{'timezoneName': 'UTC-5','timezoneValue': -5},
+		{'timezoneName': 'UTC-4','timezoneValue': -4},
+		{'timezoneName': 'UTC-3','timezoneValue': -3},
+		{'timezoneName': 'UTC-2','timezoneValue': -2},
+		{'timezoneName': 'UTC-1','timezoneValue': -1},
+		{'timezoneName': 'UTC0','timezoneValue': 0},
+		{'timezoneName': 'UTC+1','timezoneValue': 1},
+		{'timezoneName': 'UTC+2','timezoneValue': 2},
+		{'timezoneName': 'UTC+3','timezoneValue': 3},
+		{'timezoneName': 'UTC+4','timezoneValue': 4},
+		{'timezoneName': 'UTC+5','timezoneValue': -5},
+		{'timezoneName': 'UTC+6','timezoneValue': 6},
+		{'timezoneName': 'UTC+7','timezoneValue': -7},
+		{'timezoneName': 'UTC+8','timezoneValue': -8},
+		{'timezoneName': 'UTC+9','timezoneValue': -9},
+		{'timezoneName': 'UTC+10','timezoneValue': 10},
+		{'timezoneName': 'UTC+11','timezoneValue': 11},
+		{'timezoneName': 'UTC+12','timezoneValue': 12}
+	],
 
     init: function() {
         var fromDate = this.get('selectedChartFrom').advance({minute: -10});
@@ -62,8 +92,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
 
     generateChartStrings: function() {
         this.set('selectedChartFromString', this.generateChartString(this.get('selectedChartFrom')));
-        this.set('selectedChartToString', this.generateChartString(this.get('selectedChartTo')));
-    },
+        this.set('selectedChartToString', this.generateChartString(this.get('selectedChartTo')));},
 
     selectedChartFromMsProperty: function() {
         this.get('selectedChartFrom').get('milliseconds');
@@ -76,22 +105,19 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     generateChartString: function(date) {
         var fmt = this.get('dateFormat') || '%m/%d/%Y';
         var dateString = date ? date.toFormattedString(fmt) : "";
-        return dateString;
-    },
+        return dateString;},
 
     refreshDataFromTimer: function() {
         if (this.get('showHistoricalData') === NO) {
             this.refreshData();
-        }
-    },
+        }},
 
     refreshData: function() {
         if (this.get('content')) {
             this.get('content').forEach(function(item, index, enumerable) {
                 item.refresh();
             });
-        }
-    },
+        }},
 
     triggerTimer: function() {
         SC.Logger.log('Triggering timer');
@@ -107,7 +133,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             });
             this.set('timer', timer)
         }
-    },
+	},
 
     observesChartTimespan: function() {
         if (this.get('showHistoricalData') === NO) {

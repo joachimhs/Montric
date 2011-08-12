@@ -12,7 +12,7 @@ import java.util.Deque;
 	
 	    @OnMethod(clazz="/org\\.jsflot\\.components\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
 	    public static void componentPaintBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			
 			Appendable a = Strings.newStringBuilder(true);
 			Strings.append(a, property("btrace.agent"));
@@ -32,7 +32,7 @@ import java.util.Deque;
 	        location=@Location(Kind.RETURN)
 	    )
 	    public static void componentPaintAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			
 			Appendable a = Strings.newStringBuilder(true);
 			Strings.append(a, property("btrace.agent"));
@@ -48,7 +48,7 @@ import java.util.Deque;
 	
 	       	@OnMethod(clazz="/org\\.jsflot\\.demo\\..*/", method="/.*/", location=@Location(value=Kind.ENTRY))
 		    public static void demoPaintBefore(@ProbeClassName String pcn, @ProbeMethodName String pmn) {
-				Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+				Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 
 				Appendable a = Strings.newStringBuilder(true);
 				Strings.append(a, property("btrace.agent"));
@@ -68,7 +68,7 @@ import java.util.Deque;
 		        location=@Location(Kind.RETURN)
 		    )
 		    public static void demoPaintAfter(@Duration long time, @ProbeClassName String pcn, @ProbeMethodName String pmn) {
-				Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+				Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 
 				Appendable a = Strings.newStringBuilder(true);
 				Strings.append(a, property("btrace.agent"));

@@ -9,7 +9,7 @@ public class TraceMem {
 
 	@OnTimer(7500)
 	public static void printMem() {
-		Long timePeriod = ((long) (timeNanos() / 15000000000l) * 15000);
+		Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 		Appendable sb = Strings.newStringBuilder();
 		Strings.append(sb, "[HeapMemory;");
 		Strings.append(sb, property("btrace.agent"));

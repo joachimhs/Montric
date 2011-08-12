@@ -25,5 +25,18 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(
        } else {
             this.set('showEditAlertView', NO);
         }
-    }.observes('selection')
+    }.observes('selection'),
+
+    newAlertIsValid: function() {
+        var newNameIsValid = (this.get('newAlertName') && this.get('newAlertName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(alert) {
+            if (alert.get('alertName') == this.get('newAlertName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    }
 });

@@ -10,7 +10,7 @@ import java.util.Deque;
 	    @Property(name="eurekaJProfiler") private static Profiler eurekaJProfiler = Profiling.newProfiler();
 	
 		public static void registerProfilerBefore(String pcn, String pmn) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			
 			Appendable a = Strings.newStringBuilder(true);
 			Strings.append(a, property("btrace.agent"));
@@ -25,7 +25,7 @@ import java.util.Deque;
 		}
 		
 		public static void registerProfilerAfter(String pcn, String pmn, long time) {
-			Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+			Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 			
 			Appendable a = Strings.newStringBuilder(true);
 			Strings.append(a, property("btrace.agent"));

@@ -12,7 +12,7 @@ public class CpuInfo {
 	
 	@OnTimer(15000)
 	public static void printCpu() {
-		Long timePeriod = ((long) (timeNanos() / 15000000000l) * 15000);
+		Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 		Appendable sb = Strings.newStringBuilder();
 		Strings.append(sb, "[Value;");
 		Strings.append(sb, property("btrace.agent"));
@@ -65,7 +65,7 @@ public class CpuInfo {
 			println(str(sb));
 		}
 		
-		addLast(sysTimeQueue, timeNanos());
+		addLast(sysTimeQueue, timeMillis());
 		addLast(totalCpuTimeQueue, totalCpuTime);
 	}
 

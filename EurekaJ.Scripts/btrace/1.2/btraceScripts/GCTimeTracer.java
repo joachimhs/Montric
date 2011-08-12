@@ -10,7 +10,7 @@ import java.util.Deque;
 		
 	@OnTimer(15000)
     public static void printGcTime() {
-		Long timePeriod = ((timeNanos() / 15000000000l)*15000);
+		Long timePeriod = ((long) (timeMillis() / 15000) * 15000);
 		
 		if (size(gcTimes) >= 4) {
 			double gcTime = ((double)(peekLast(gcTimes) - (double)peekFirst(gcTimes))  * 100d) / ((double)size(gcTimes) * 15000d);
