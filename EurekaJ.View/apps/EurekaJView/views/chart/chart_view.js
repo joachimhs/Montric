@@ -39,21 +39,28 @@ EurekaJView.ChartView = SC.View.extend(
 		showTooltip: YES
 	}),
 
-    /*table: SC.TableView.design({
-        isVisible: '.parentView.content.isTable',
+    table: SC.TableView.design({
+        isVisibleBinding: '.parentView.content.isTable',
         layout: { top: 30, right: 5, bottom: 5, left: 5 },
 
         columns: [
-            SC.TableColumn.design({
+            SC.TableColumn.create({
                 key: 'name',
-                title: 'value',
-                width: 200
+                label: 'Name',
+                width: 150
+            }),
+			SC.TableColumn.create({
+                key: 'value',
+                label: 'Value',
+                width: 150
             })
         ],
 
-        contentBinding: '.parentView.content.table'
+        contentBinding: '.parentView.content.table',
+		exampleView: SC.TableRowView,
+        recordType: EurekaJView.ChartGridModel
 
-    })*/
+    })
 
     /*table: SC.ListView.design({
         isVisibleBinding: '.parentView.content.isTable',
@@ -67,13 +74,13 @@ EurekaJView.ChartView = SC.View.extend(
         contentBinding: '.parentView.content.table'
     }),   */
 
-    table: SCTable.TableView.design({
+    /*table: SCTable.TableView.design({
       isVisibleBinding: '.parentView.content.isTable',
       layout: { top: 30, right: 5, bottom: 5, left: 5 },
 
       contentBinding: '.parentView.content.table',
 
       columnsBinding: 'EurekaJView.chartGridController.tableDataColumns'
-    })
+    })*/
 
 });

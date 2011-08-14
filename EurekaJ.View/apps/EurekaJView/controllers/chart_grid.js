@@ -27,7 +27,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
     orderBy: 'name',
 
     selectedTimeZoneOffset: null,
-    tableDataColumns: [
+    /*tableDataColumns: [
         SC.Object.create(SCTable.Column, {
             name: "Name",
             valueKey: 'name',
@@ -38,7 +38,7 @@ EurekaJView.chartGridController = SC.ArrayController.create(
             valueKey: 'value',
             width: 150
         })
-    ],
+    ], */
 
 	selectedTimeZoneOffset: null,
 	timezones: [
