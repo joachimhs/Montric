@@ -74,3 +74,27 @@
 .whiteBackground {
     background: #fff;
 }
+
+/* >>>>>>>>>> BEGIN source/table.css */
+.sc-theme .sc-table-header {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
+  -webkit-background-clip: content-box;
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  line-height: 18px;
+}
+
+.sc-theme .sc-table-view {
+  background: #eee;
+  border: 1px solid #666;
+}
+
+.sc-theme .sc-table-header-sort-active {
+  background: #eee;
+}
+
+.sc-theme .sc-table {
+  background: #eee;
+  border: 1px solid #666;
+}
