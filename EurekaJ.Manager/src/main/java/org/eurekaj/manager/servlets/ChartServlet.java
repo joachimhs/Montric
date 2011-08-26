@@ -135,6 +135,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                     valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
                     valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.WARNING, fromPeriod * 15000, toPeriod * 15000));
                 } else if (isGroupedStatisticsChart(keyObject)) {
+                    chartPath = pathFromClient;
                     String groupName = pathFromClient.substring(5, pathFromClient.length());
                     groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName);
                     if (groupedStatistics != null) {
