@@ -156,7 +156,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                 }
 
                 TreeMenuNode treeMenuNode = getBerkeleyTreeMenuService().getTreeMenu(chartPath);
-                if (treeMenuNode != null) {
+                if (treeMenuNode != null || isGroupedStatisticsChart(keyObject)) {
                     jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
                 } else {
                     jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
