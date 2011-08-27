@@ -1,7 +1,3 @@
-// ==========================================================================
-// Project:   EurekaJView.alertSelectionDelegateController
-// Copyright: ©2010 My Company, Inc.
-// ==========================================================================
 /*globals EurekaJView */
 
 /** @class

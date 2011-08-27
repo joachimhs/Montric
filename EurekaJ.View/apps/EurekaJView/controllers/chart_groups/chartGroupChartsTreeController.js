@@ -1,7 +1,3 @@
-// ==========================================================================
-// Project:   EurekaJView.instumentationGroupChartController
-// Copyright: ©2011 My Company, Inc.
-// ==========================================================================
 /*globals EurekaJView */
 
 /** @class

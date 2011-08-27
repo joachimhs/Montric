@@ -1,7 +1,3 @@
-// ==========================================================================
-// Project:   EurekaJView.editInstrumentationGroupController
-// Copyright: ©2011 My Company, Inc.
-// ==========================================================================
 /*globals EurekaJView */
 
 /** @class

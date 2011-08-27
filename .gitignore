@@ -1,6 +1,9 @@
 .idea
 target
 *.iml
+.settings
+.classpath
+.project
 EurekaJ.Manager/src/main/webapp/eurekaJView
 EurekaJ.Manager/src/main/webapp/static
 EurekaJ.View/build
