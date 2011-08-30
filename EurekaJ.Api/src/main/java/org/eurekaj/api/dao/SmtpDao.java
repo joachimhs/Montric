@@ -38,4 +38,6 @@ public interface SmtpDao {
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
+	
+	public void deleteEmailRecipientGroup(String groupName);
 }

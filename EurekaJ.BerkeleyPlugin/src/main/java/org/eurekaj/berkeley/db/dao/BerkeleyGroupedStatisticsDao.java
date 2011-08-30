@@ -72,4 +72,11 @@ public class BerkeleyGroupedStatisticsDao implements GroupedStatisticsDao {
 		groupedStatPrimaryIdx.put(berkeleyGroupedStatistics);
 
 	}
+
+
+	@Override
+	public void deleteGroupedChart(String groupName) {
+		groupedStatPrimaryIdx.delete(groupName);
+		
+	}
 }

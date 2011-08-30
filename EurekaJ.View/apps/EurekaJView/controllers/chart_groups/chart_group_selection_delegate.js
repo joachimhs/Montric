@@ -10,7 +10,7 @@ EurekaJView.chartGroupSelectionDelegate = SC.Object.create(SC.CollectionViewDele
     /** @scope EurekaJView.alertSelectionDelegate.prototype */ {
 
     collectionViewShouldSelectIndexes: function (view, indexes, extend) {
-        SC.Logger.log('EurekaJView.instrumentationGroupSelectionDelegate collectionViewShouldSelectIndexes');
+        SC.Logger.log('EurekaJView.chartGroupSelectionDelegate collectionViewShouldSelectIndexes');
         var getObjectAt = indexes.firstObject();
         var selectedItem = view.get('content').objectAt(getObjectAt);
 

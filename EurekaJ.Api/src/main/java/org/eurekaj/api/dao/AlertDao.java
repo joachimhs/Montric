@@ -36,6 +36,8 @@ public interface AlertDao {
     public Alert getAlert(String alertName);
 
     public List<Alert> getAlerts();
+    
+    public void deleteAlert(String alertName);
 
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert);
 

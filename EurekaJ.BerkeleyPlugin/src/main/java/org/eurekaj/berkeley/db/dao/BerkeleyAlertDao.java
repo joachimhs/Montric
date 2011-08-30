@@ -159,4 +159,9 @@ public class BerkeleyAlertDao implements AlertDao {
 		}
 		return retList;
     }
+
+	@Override
+	public void deleteAlert(String alertName) {
+		alertPrimaryIdx.delete(alertName);
+	}
 }

@@ -70,4 +70,9 @@ public class SimpleDBGroupedStatisticsDao implements GroupedStatisticsDao{
 
         return groupedStatisticsList;
     }
+
+	@Override
+	public void deleteGroupedChart(String groupName) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 }

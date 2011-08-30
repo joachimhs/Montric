@@ -13,7 +13,7 @@
 EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
     /** @scope EurekaJView.EmailRecipientsAdministrationView.prototype */ {
 
-    childViews: 'newEmailGroupView emailGroupSelectionScrollView emailContentView'.w(),
+    childViews: 'newEmailGroupView emailGroupSelectionScrollView deleteAlertButtonView emailContentView'.w(),
     layout: {
         top: 0,
         bottom: 0,
@@ -39,7 +39,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
     }).classNames('thinBlackBorder'),
 
     emailGroupSelectionScrollView: SC.ScrollView.design({
-        layout: {top: 50, bottom: 0, left: 0, width: 200 },
+        layout: {top: 50, bottom: 25, left: 0, width: 200 },
         hasHorizontalScroller: YES,
         hasVerticalScroller: YES,
 
@@ -50,6 +50,12 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
             contentValueKey: 'emailGroupName'
             //selectionDelegate: EurekaJView.alertSelectionDelegate
         })
+    }),
+    
+    deleteAlertButtonView: SC.ButtonView.extend({
+        layout: {left: 0, width: 200, height: 25, centerX: 0, bottom: 0, centerY: 0},
+        title: "Delete Selected Email Recipient",
+        action: 'EurekaJView.deleteSelectedEmailGroupAction'
     }),
 
     emailContentView: SC.View.extend({

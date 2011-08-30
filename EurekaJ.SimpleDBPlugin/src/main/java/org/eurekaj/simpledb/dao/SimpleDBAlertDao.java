@@ -33,6 +33,8 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MethodNotSupportedException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: joahaa
@@ -133,4 +135,9 @@ public class SimpleDBAlertDao implements AlertDao{
 
         return triggeredAlertList;
     }
+
+	@Override
+	public void deleteAlert(String alertName) {
+		throw new UnsupportedOperationException("Not yet implemented");		
+	}
 }

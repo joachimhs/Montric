@@ -38,5 +38,17 @@ EurekaJView.alertAdministrationController = SC.ArrayController.create(
         }, this);
 
         return unique && newNameIsValid;
+    },
+    
+    alertPaneDidDismiss: function(pane, status) {
+        switch(status) {
+          case SC.BUTTON1_STATUS:
+            EurekaJView.deleteSelectedAlertApprovedAction();
+            break;
+
+          case SC.BUTTON2_STATUS:
+            //Cancel... Noting to do really
+            break;
+        }
     }
 });

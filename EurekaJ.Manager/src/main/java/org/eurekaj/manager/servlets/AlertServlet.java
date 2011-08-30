@@ -71,6 +71,12 @@ public class AlertServlet extends EurekaJGenericServlet {
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
                 System.out.println("Got Triggered Alerts:\n" + jsonResponse);
             }
+            
+            if (jsonObject.has("deleteAlert") && SecurityManager.isAuthenticatedAsAdmin()) {
+                String alertName = jsonObject.getString("deleteAlert");
+                getBerkeleyTreeMenuService().deleteAlert(alertName);
+                System.out.println("Successfully deleted Alert with name:\n" + alertName);
+            }
 
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

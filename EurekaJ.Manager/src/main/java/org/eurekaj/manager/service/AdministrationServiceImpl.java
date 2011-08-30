@@ -56,4 +56,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
 		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
 	}
+	
+	@Override
+	public void deleteEmailRecipientGroup(String emailRecipientGroupName) {
+		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroupName);
+	}
 }

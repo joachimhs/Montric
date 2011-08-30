@@ -41,12 +41,16 @@ public interface TreeMenuService {
 	
 	public List<GroupedStatistics> getGroupedStatistics();
 	
+	public void deleteChartGroup(String groupName);
+	
 	public void persistAlert(Alert alert);
 	
 	public Alert getAlert(String alertName);
 	
 	public List<Alert> getAlerts();
 
+	public void deleteAlert(String alertName);
+	
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert);
 
     public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod);

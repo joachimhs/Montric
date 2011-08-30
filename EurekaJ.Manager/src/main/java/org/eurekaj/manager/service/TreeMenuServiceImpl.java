@@ -76,6 +76,11 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 	public List<GroupedStatistics> getGroupedStatistics() {
 		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics();
 	}
+	
+	@Override
+	public void deleteChartGroup(String groupName) {
+		getDbPlugin().getGroupedStatisticsDao().deleteGroupedChart(groupName);
+	}
 
 	public Alert getAlert(String alertName) {
 		return getDbPlugin().getAlertDao().getAlert(alertName);
@@ -87,6 +92,11 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 	
 	public List<Alert> getAlerts() {
 		return getDbPlugin().getAlertDao().getAlerts();
+	}
+	
+	@Override
+	public void deleteAlert(String alertName) {
+		getDbPlugin().getAlertDao().deleteAlert(alertName);
 	}
 
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {

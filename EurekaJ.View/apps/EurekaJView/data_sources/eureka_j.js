@@ -499,9 +499,56 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
 
     destroyRecord: function(store, storeKey) {
         SC.Logger.log('Calling destroyRecord...');
-        // TODO: Add handlers to destroy records on the data source.
-        // call store.dataSourceDidDestroy(storeKey) when done
+        
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.AlertModel)) {
+        	var requestStringJson = {
+                    'deleteAlert': store.idFor(storeKey)
+                };
+        	
+        	SC.Request.postUrl("/alert").header({
+                'Accept': 'application/json'
+            }).json().notify(this, this.didDestroyAlert, store, storeKey).send(requestStringJson);
+    
+        	
+        	return YES;
+        }
+        
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.InstrumentationGroupModel)) {
+        	var requestStringJson = {
+                    'deleteChartGroup': store.idFor(storeKey)
+                };
+        	
+        	SC.Request.postUrl("/instrumentationGroup").header({
+                'Accept': 'application/json'
+            }).json().notify(this, this.didDestroyAlert, store, storeKey).send(requestStringJson);
+    
+        	
+        	return YES;
+        }
+        
+        if (SC.kindOf(store.recordTypeFor(storeKey), EurekaJView.EmailGroupModel)) {
+        	var requestStringJson = {
+                    'deleteEmailGroup': store.idFor(storeKey)
+                };
+        	
+        	SC.Request.postUrl("/email").header({
+                'Accept': 'application/json'
+            }).json().notify(this, this.didDestroyAlert, store, storeKey).send(requestStringJson);
+    
+        	
+        	return YES;
+        }
+        
+        
         return NO; // return YES if you handled the storeKey
-    }
+    },
+    
+    didDestroyAlert: function(response, store, storeKey) {
+    	if (SC.ok(response)) {
+    		store.dataSourceDidDestroy(storeKey);
+    	} else {
+    		store.dataSourceDidError(response);
+    	}
+	}
 
 });

@@ -77,4 +77,9 @@ public class BerkeleySmtpDaoImpl implements SmtpDao {
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
 		emailRecipientGroupPrimaryIdx.delete(emailRecipientGroup.getEmailRecipientGroupName());		
 	}
+
+	@Override
+	public void deleteEmailRecipientGroup(String groupName) {
+		emailRecipientGroupPrimaryIdx.delete(groupName);
+	}
 }

@@ -22,6 +22,27 @@ EurekaJView.mixin( {
             });
         }
     },
+    
+    deleteSelectedAlertAction: function() {
+    	SC.AlertPane.warn({
+            message: "Are you sure you want to delete the selected Alert ?",
+            description: "The alert will be permanently removed from the application. This action cannot be undone!",
+            buttons: [ { title: "Delete" }, { title: "Cancel" } ],
+            delegate: EurekaJView.alertAdministrationController
+          });
+    },
+    
+    deleteSelectedAlertApprovedAction: function() {
+    	SC.Logger.log('Deleting selected Alert');
+    	selectedAlerts = EurekaJView.alertAdministrationController.selection();
+    	if (selectedAlerts) {
+    		selectedAlerts.forEach(function(selectedAlert) {
+    			SC.Logger.log('destroying selected alert'); 
+    			selectedAlert.destroy();
+    			selectedAlert.commitRecord();
+    		}, this)
+    	}
+    },
 
     updateAlertsAction: function() {
         EurekaJView.alertAdministrationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.AlertModel));
@@ -47,6 +68,27 @@ EurekaJView.mixin( {
             });
         }
     },
+    
+    deleteSelectedChartGroupAction: function() {
+    	SC.AlertPane.warn({
+            message: "Are you sure you want to delete the selected Chart Group ?",
+            description: "The Chart Group will be permanently removed from the application. This action cannot be undone!",
+            buttons: [ { title: "Delete" }, { title: "Cancel" } ],
+            delegate: EurekaJView.chartGroupsAdminController
+          });
+    },
+    
+    deleteSelectedChartGroupApprovedAction: function() {
+    	SC.Logger.log('Deleting selected Chart Group');
+    	selectedGroups = EurekaJView.chartGroupsAdminController.selection();
+    	if (selectedGroups) {
+    		selectedGroups.forEach(function(selectedGroup) {
+    			SC.Logger.log('destroying selected chart group'); 
+    			selectedGroup.destroy();
+    			selectedGroup.commitRecord();
+    		}, this)
+    	}
+    },
 
     updateInstrumentationGroupsAction: function() {
         EurekaJView.chartGroupsAdminController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationGroupModel));
@@ -71,6 +113,27 @@ EurekaJView.mixin( {
             });
         }
     },
+    
+    deleteSelectedEmailGroupAction: function() {
+    	SC.AlertPane.warn({
+            message: "Are you sure you want to delete the selected Email Recipient ?",
+            description: "The Email Recipient will be permanently removed from the application. This action cannot be undone!",
+            buttons: [ { title: "Delete" }, { title: "Cancel" } ],
+            delegate: EurekaJView.emailAdministrationController
+          });
+    },
+    
+    deleteSelectedEmailGroupApprovedAction: function() {
+    	SC.Logger.log('Deleting selected Email Group');
+    	selectedEmailGroups = EurekaJView.emailAdministrationController.selection();
+    	if (selectedEmailGroups) {
+    		selectedEmailGroups.forEach(function(selectedGroup) {
+    			SC.Logger.log('destroying selected chart group'); 
+    			selectedGroup.destroy();
+    			selectedGroup.commitRecord();
+    		}, this)
+    	}
+    },
 
     updateEmailGroupsAction: function() {
         EurekaJView.emailAdministrationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.EmailGroupModel));
@@ -90,7 +153,7 @@ EurekaJView.mixin( {
 
     saveEmailAction: function() {
         //Commit all email Recipients that have changed
-        EurekaJView.emailRecipientsController.get('content').forEach(function(emailRecipient) {
+        EurekaJView.emailAdministrationController.get('content').forEach(function(emailRecipient) {
             emailRecipient.commitRecord();
         }, this);
     },

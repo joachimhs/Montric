@@ -58,6 +58,11 @@ public class InstrumentationGroupServlet extends EurekaJGenericServlet {
                 System.out.println("Got InstrumentationGroups:\n" + jsonResponse);
 
             }
+            
+            if (jsonObject.has("deleteChartGroup") && SecurityManager.isAuthenticatedAsAdmin()) {
+                String groupName = jsonObject.getString("deleteChartGroup");
+                getBerkeleyTreeMenuService().deleteChartGroup(groupName);
+            }
 
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

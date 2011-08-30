@@ -13,7 +13,7 @@
 EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
 /** @scope EurekaJView.InstrumentationGroupsAdministrationView.prototype */ {
 
-    childViews: 'newInstrumentationGroupView instrumentationGroupSelectionScrollView instrumentationGroupContentView'.w(),
+    childViews: 'newInstrumentationGroupView instrumentationGroupSelectionScrollView deleteAlertButtonView instrumentationGroupContentView'.w(),
     layout: {
         top: 0,
         left: 0,
@@ -39,17 +39,23 @@ EurekaJView.InstrumentationGroupsAdministrationView = SC.View.extend(
     }).classNames('thinBlackBorder'),
 
     instrumentationGroupSelectionScrollView: SC.ScrollView.design({
-        layout: {top: 50, bottom: 0, left: 0, width: 200 },
+        layout: {top: 50, bottom: 25, left: 0, width: 200 },
         hasHorizontalScroller: YES,
         hasVerticalScroller: YES,
 
         contentView: SC.ListView.extend({
             backgroundColor: '#F0F8FF',
-           contentBinding: 'EurekaJView.chartGroupsAdminController.arrangedObjects',
+            contentBinding: 'EurekaJView.chartGroupsAdminController.arrangedObjects',
             selectionBinding: 'EurekaJView.chartGroupsAdminController.selection',
             contentValueKey: "instrumentaionGroupName",
-            selectionDelegate: EurekaJView.chartGroupSelectionDelegate
+            selectionDelegate: EurekaJView.chartGroupSelectionDelegate,
         })
+    }),
+    
+    deleteAlertButtonView: SC.ButtonView.extend({
+        layout: {left: 0, width: 200, height: 25, centerX: 0, bottom: 0, centerY: 0},
+        title: "Delete Selected Chart Group",
+        action: 'EurekaJView.deleteSelectedChartGroupAction'
     }),
 
     instrumentationGroupContentView: SC.View.extend({

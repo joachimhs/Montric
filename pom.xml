@@ -20,7 +20,6 @@
 		<module>EurekaJ.View</module>
 		<module>EurekaJ.API</module>
         <module>EurekaJ.BerkeleyPlugin</module>
-		<module>EurekaJ.SimpleDBPlugin</module>
     </modules>
 
     <build>

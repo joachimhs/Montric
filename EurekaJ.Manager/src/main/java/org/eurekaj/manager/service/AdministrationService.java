@@ -32,4 +32,6 @@ public interface AdministrationService {
 	
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 	
+	public void deleteEmailRecipientGroup(String emailRecipientGroupName);
+	
 }

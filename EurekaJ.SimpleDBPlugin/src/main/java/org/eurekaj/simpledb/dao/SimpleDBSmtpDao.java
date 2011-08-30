@@ -86,4 +86,9 @@ public class SimpleDBSmtpDao implements SmtpDao{
         Attribute deleteValueAttribute = new Attribute("emailRecipientGroupName", emailRecipientGroup.getEmailRecipientGroupName());
         amazonSimpleDB.deleteAttributes(new DeleteAttributesRequest("EurekaJ_Smtp", emailRecipientGroup.getEmailRecipientGroupName()).withAttributes(deleteValueAttribute));
     }
+
+	@Override
+	public void deleteEmailRecipientGroup(String groupName) {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 }

@@ -13,7 +13,7 @@
 EurekaJView.AlertAdministrationView = SC.View.extend(
     /** @scope EurekaJView.AlertAdministrationView.prototype */ {
 
-    childViews: 'newAlertView alertSelectionScrollView alertContentView'.w(),
+    childViews: 'newAlertView alertSelectionScrollView deleteAlertButtonView alertContentView'.w(),
     layout: {
         top: 0,
         bottom: 0,
@@ -39,17 +39,25 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
     }).classNames('thinBlackBorder'),
 
     alertSelectionScrollView: SC.ScrollView.design({
-        layout: {top: 50, bottom: 0, left: 0, width: 200 },
+        layout: {top: 50, bottom: 25, left: 0, width: 200 },
         hasHorizontalScroller: YES,
         hasVerticalScroller: YES,
 
         contentView: SC.ListView.extend({
+        	allowsMultipleSelection: NO,
+        	
             backgroundColor: '#F0F8FF',
             contentBinding: 'EurekaJView.alertAdministrationController.arrangedObjects',
             selectionBinding: 'EurekaJView.alertAdministrationController.selection',
             contentValueKey: "alertName",
-            selectionDelegate: EurekaJView.alertSelectionDelegate
+            selectionDelegate: EurekaJView.alertSelectionDelegate,
         })
+    }),
+    
+    deleteAlertButtonView: SC.ButtonView.extend({
+        layout: {left: 0, width: 200, height: 25, centerX: 0, bottom: 0, centerY: 0},
+        title: "Delete Selected Alert",
+        action: 'EurekaJView.deleteSelectedAlertAction'
     }),
 
     alertContentView: SC.View.extend({

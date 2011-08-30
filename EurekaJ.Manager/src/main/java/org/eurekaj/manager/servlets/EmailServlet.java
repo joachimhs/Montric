@@ -64,6 +64,12 @@ public class EmailServlet extends EurekaJGenericServlet {
             if ((jsonObject.has("getEmailRecipient")) && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
             }
+            
+            if ((jsonObject.has("deleteEmailGroup")) && SecurityManager.isAuthenticatedAsAdmin()) {
+                String groupName = jsonObject.getString("deleteEmailGroup");
+                getAdministrationService().deleteEmailRecipientGroup(groupName);
+            }
+            
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
