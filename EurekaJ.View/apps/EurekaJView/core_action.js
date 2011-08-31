@@ -140,14 +140,22 @@ EurekaJView.mixin( {
     },
 
     addNewEmailRecipientAction: function() {
-        var newEmailRecipient = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailRecipientModel, {emailAddress: EurekaJView.emailRecipientsController.get('newEmailRecipent')});
-        EurekaJView.emailRecipientsController.set('newEmailRecipent', '');
+        if (EurekaJView.emailRecipientsController.newEmailRecipientIsValid()) {
+           var newEmailRecipient = EurekaJView.EurekaJStore.createRecord(EurekaJView.EmailRecipientModel, {emailAddress: EurekaJView.emailRecipientsController.get('newEmailRecipent')});
+           EurekaJView.emailRecipientsController.set('newEmailRecipent', '');
 
-        if (SC.kindOf(EurekaJView.editEmailGroupController.get('emailAddresses'), SC.ManyArray) ||
+           if (SC.kindOf(EurekaJView.editEmailGroupController.get('emailAddresses'), SC.ManyArray) ||
                 SC.kindOf(EurekaJView.editEmailGroupController.get('emailAddresses'), SC.Array) ) {
-            EurekaJView.editEmailGroupController.get('emailAddresses').pushObject(newEmailRecipient);
+               EurekaJView.editEmailGroupController.get('emailAddresses').pushObject(newEmailRecipient);
+           } else {
+               EurekaJView.editEmailGroupController.set('emailAddresses', [ newEmailRecipient ])
+           }
         } else {
-            EurekaJView.editEmailGroupController.set('emailAddresses', [ newEmailRecipient ])
+            SC.AlertPane.warn({
+              message: "Unable to create new Email Address",
+              description: "The Email Address must be unique for this Email Recipient Group, and contain at least 5 characters.",
+              caption: "Try changing the Email Address."
+            });	
         }
     },
 
