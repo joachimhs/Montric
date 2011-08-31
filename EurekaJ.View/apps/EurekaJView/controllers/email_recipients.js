@@ -15,6 +15,19 @@ EurekaJView.emailRecipientsController = SC.ArrayController.create(
 
     newEmailRecipent: null,
 
-    contentBinding: 'EurekaJView.editEmailGroupController.emailAddresses'
+    contentBinding: 'EurekaJView.editEmailGroupController.emailAddresses',
+    
+    newEmailRecipientIsValid: function() {
+        var newEmailIsValid = (this.get('newEmailRecipent') && this.get('newEmailRecipent').length >= 5);
+
+        var unique = true;
+        this.get('content').forEach(function(emailAddress) {
+            if (emailAddress.get('emailAddress') == this.get('newEmailRecipent')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newEmailIsValid;
+    }
 })
 ;
