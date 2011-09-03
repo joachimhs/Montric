@@ -13,18 +13,12 @@
 EurekaJView.TopView = SC.View.extend(
 {
 	childViews: 'logoView administrationButtonView administrationLabelView'.w(),
-    logoView: SC.LabelView.design({
-        layout: {
-            top: 15,
-            height: 40,
-            left: 10,
-            width: 250
-        },
-        controlSize: SC.HUGE_CONTROL_SIZE,
-        fontWeight: SC.BOLD_WEIGHT,
-        value: 'EurekaJ Profiler'
-    }).classNames(['logoLabel', 'blacklabel', 'underlined']),
-
+	logoView: SC.ImageView.design({
+        layout: {left: 10, width: 430, height: 60, top: 5},
+        value: static_url('images/eurekaj_logo_w_text_60x60.png'),
+        toolTip: 'EurekaJ Profiler',
+    }),
+    
     administrationButtonView: SC.ImageView.design(SCUI.SimpleButton, {
         layout: {right: 25, width: 49, height: 49, top: 5},
         value: static_url('images/ej_tools_49.png'),
