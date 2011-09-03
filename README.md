@@ -25,7 +25,7 @@ EurekaJ Profilers main goal is to work as a complete Java Profiler by being:
 * Historical: Data is stored in 30 days for visualization, comparisong and reporting of historical data.
 
 ## Screenshot
-<img src="http://eurekaj.haagen.name/images/eurekaj_screenshot.png"/>
+![EurekaJ Profiler] (http://eurekaj.haagen.name/images/eurekaj_screenshot.png)
 
 ## Downloads
 I will frequently post new versions to the followign URL: http://nightly.haagen.name/EurekaJ/
