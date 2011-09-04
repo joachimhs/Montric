@@ -29,7 +29,7 @@ EurekaJView.mainPage = SC.Page.design({
 
         topView: EurekaJView.TopView.design({
             isVisible: NO,
-            layout: {top: 0, left: 0, right: 0, height: 75 },
+            layout: {top: 0, left: 0, right: 0, height: 77 },
             anchorLocation: SC.ANCHOR_TOP
         }).classNames('toolbarGradient'),
 

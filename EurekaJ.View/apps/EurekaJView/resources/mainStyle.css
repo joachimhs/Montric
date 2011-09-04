@@ -74,11 +74,7 @@
 }
 
 .toolbarGradient {
-    background: #2b3961; /* for non-css3 browsers */
-
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2b3961', endColorstr='#F0F8FF'); /* for IE */
-    background: -webkit-gradient(linear, left top, left bottom, from(#2b3961), to(#F0F8FF)); /* for webkit browsers */
-    background: -moz-linear-gradient(top,  #2b3961,  #F0F8FF); /* for firefox 3.6+ */
+    background-image: static_url('images/header_bg.gif');
 }
 
 .whiteBackground {
