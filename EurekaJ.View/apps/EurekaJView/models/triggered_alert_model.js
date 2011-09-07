@@ -21,6 +21,10 @@ EurekaJView.TriggeredAlertModel = SC.Record.extend(
     errorValue: SC.Record.attr(Number),
     warningValue: SC.Record.attr(Number),
     triggeredValue: SC.Record.attr(Number),
+    formattedTriggeredDate: function() {
+    	return datetime.toFormattedString("%d/%m/%Y %H:%M:%S");
+    }.property('triggeredDate'),
+    
     alertType: function() {
     	var alertType = 'NORMAL';
         if (this.get('triggeredValue') >= this.get('errorValue')) {

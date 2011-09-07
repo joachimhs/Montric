@@ -68,7 +68,7 @@ EurekaJView.InformationPanelView = SC.View.extend(
             
             columns: [
                       SC.TableColumn.create({
-                          key: 'triggeredDate',
+                          key: 'formattedTriggeredDate',
                           label: 'Triggered Date',
                           width: 100
                       }),
