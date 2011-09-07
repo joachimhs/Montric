@@ -58,17 +58,36 @@ EurekaJView.InformationPanelView = SC.View.extend(
             right: 5
         },
 
-        contentView: SC.ListView.extend({
+        contentView: SC.TableView.design({
             layout: {
                 width: 450
             },
-            backgroundColor: '#F0F8FF',
-            contentValueKey: "summaryContent",
-            rowHeight: 18,
-            borderStyle: SC.BORDER_NONE,
-            isSelectable: NO,
-
-            contentBinding: 'EurekaJView.triggeredAlertListController.arrangedObjects'
+            exampleView: SC.TableRowView,
+            recordType: EurekaJView.TriggeredAlertModel,
+            contentBinding: 'EurekaJView.triggeredAlertListController.arrangedObjects',
+            
+            columns: [
+                      SC.TableColumn.create({
+                          key: 'triggeredDate',
+                          label: 'Triggered Date',
+                          width: 100
+                      }),
+                      SC.TableColumn.create({
+                          key: 'alertType',
+                          label: 'Alert Type',
+                          width: 75
+          			}),
+          			SC.TableColumn.create({
+                          key: 'triggeredValue',
+                          label: 'Triggered Value',
+                          width: 75
+          			}),
+          			SC.TableColumn.create({
+                        key: 'alertName',
+                        label: 'Alert Name',
+                        width: 75
+        			})
+                   ]
         })
 
 

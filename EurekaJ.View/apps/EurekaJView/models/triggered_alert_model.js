@@ -21,15 +21,20 @@ EurekaJView.TriggeredAlertModel = SC.Record.extend(
     errorValue: SC.Record.attr(Number),
     warningValue: SC.Record.attr(Number),
     triggeredValue: SC.Record.attr(Number),
-
-    summaryContent: function() {
-        var datetime = SC.DateTime.create(this.get('triggeredDate'));
-        var alertType = 'NORMAL';
+    alertType: function() {
+    	var alertType = 'NORMAL';
         if (this.get('triggeredValue') >= this.get('errorValue')) {
             alertType = 'CRITICAL';
         } else if (this.get('triggeredValue') >= this.get('warningValue')) {
             alertType = 'WARNING';
         }
+        
+        return alertType;
+    }.property('triggeredValue'),
+    
+    summaryContent: function() {
+        var datetime = SC.DateTime.create(this.get('triggeredDate'));
+        var alertType = this.get('alertType');
         return  this.get('alertName') + ' ' + alertType + " " + datetime.toFormattedString("%d/%m/%Y %H:%M:%S") + " " + this.get('errorValue') + " " + this.get('warningValue') + " " + this.get('triggeredValue');
     }.property('generatedID').cacheable()
 }) ;
