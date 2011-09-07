@@ -21,7 +21,9 @@ EurekaJView.TriggeredAlertModel = SC.Record.extend(
     errorValue: SC.Record.attr(Number),
     warningValue: SC.Record.attr(Number),
     triggeredValue: SC.Record.attr(Number),
+    
     formattedTriggeredDate: function() {
+    	var datetime = SC.DateTime.create(this.get('triggeredDate'));
     	return datetime.toFormattedString("%d/%m/%Y %H:%M:%S");
     }.property('triggeredDate'),
     
