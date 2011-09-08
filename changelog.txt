@@ -1,0 +1,31 @@
+8. September 2011 - Initial Release
+
+The initial release comes with all of the necessary features required to perform basic application profiling. The most important features include: 
+
+EurekaJ Manager:
+
+* Logging in and user authentication via Spring Security. 
+* Viewing charts for gathered statistics for all leaf-nodes
+* Viewing tables with aggregated information for all non-leaf nodes
+* Grouping charts into chart groups and viewing chart groups alongside normal charts
+* Creating alert thresholds and viewing alerts alongside normal charts
+* Setup of Email Recipient Groups that will receive notifications when alert thresholds are breached
+* Ability to delete Alerts, Chart Groups and Email Recipients
+* An Incoming REST-ish API that is used to gather incoming statistics, as well as to transfer information to the client application
+* A Rich Internet Application GUI layer, built with SproutCore, providing the user with a consistent view of the gathered metrics
+* Ability to view Live Statistics, updated in real-time (at most every 15 seconds), up to 24 hours back.
+* Ability to view Historical Statistics in the same manner as the live statistics
+* A List of all alerts triggered within the last 90 minutes
+* The ability to select a different timezone. Useful if the server resides in a different timezone than the user
+
+EurekaJ Proxy: 
+
+* The ability to parse output from BTrace
+* The ability to log into the EurekaJ Manager application through the Spring Security Web-Form
+* The ability to pass in parsed BTrace output to EurekaJ Manager 
+
+Misc: 
+
+* A Bash-Script to be able to log used disk space.
+* Run scripts for both EurekaJ Manager and EurekaJ Proxy
+* Setup scripts for both EurekaJ Manager, EurekaJ Proxy and BTrace  
