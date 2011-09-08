@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaJ</groupId>
     <artifactId>eurekaJ.parent</artifactId>
-    <version>1.0.RC1</version>
+    <version>1.0</version>
     <name>EurekaJ Parent</name>
     <packaging>pom</packaging>
 
@@ -20,6 +20,7 @@
 		<module>EurekaJ.View</module>
 		<module>EurekaJ.API</module>
         <module>EurekaJ.BerkeleyPlugin</module>
+        <module>EurekaJ.Scripts</module>
     </modules>
 
     <build>
