@@ -1,0 +1,60 @@
+---
+layout: master
+title: EurekaJ Profiler 1.0 Released!
+---
+
+h2. A final release... FINALLY!	
+
+The idea to start EurekaJ came about in the summer of 2008. Since then work on EurekaJ have gone through different phases and technologies have been added and replaced along the way. The architecture and infrastructure got nailed down about a year ago when I decided that the right tool for the frontend client application was either SproutCore or Cappuccino. The application had previously been written as a JavaServer Faces application, and it took about 6-7 months to get up to speed with the SproutCore and rewrite the whole front-end of the application architecture. The last 6 months have been used to add the last bit of required features needed to be a complete profiler tool. 
+
+Now, on the 8th of September 2011, EurekaJ Profiler has finally made it into a final 1.0 release. A release that I can honestly say that I am very proud of. The product is in no way perfect, but its important to remember that product releasing is a feature. There is a quite a lot of new functionality and some tweaks to both the REST-ish API and the GUI. 
+
+h2. The main features of EurekaJ Profiler 1.0
+
+The initial release comes with all of the necessary features required to perform basic application profiling. The most important features include: 
+
+EurekaJ Manager:
+
+* Logging in and user authentication via Spring Security. 
+* Viewing charts for gathered statistics for all leaf-nodes
+* Viewing tables with aggregated information for all non-leaf nodes
+* Grouping charts into chart groups and viewing chart groups alongside normal charts
+* Creating alert thresholds and viewing alerts alongside normal charts
+* Setup of Email Recipient Groups that will receive notifications when alert thresholds are breached
+* Ability to delete Alerts, Chart Groups and Email Recipients
+* An Incoming REST-ish API that is used to gather incoming statistics, as well as to transfer information to the client application
+* A Rich Internet Application GUI layer, built with SproutCore, providing the user with a consistent view of the gathered metrics
+* Ability to view Live Statistics, updated in real-time (at most every 15 seconds), up to 24 hours back.
+* Ability to view Historical Statistics in the same manner as the live statistics
+* A List of all alerts triggered within the last 90 minutes
+* The ability to select a different timezone. Useful if the server resides in a different timezone than the user
+
+EurekaJ Proxy: 
+
+* The ability to parse output from BTrace
+* The ability to log into the EurekaJ Manager application through the Spring Security Web-Form
+* The ability to pass in parsed BTrace output to EurekaJ Manager 
+
+Misc: 
+
+* A Bash-Script to be able to log used disk space.
+* Run scripts for both EurekaJ Manager and EurekaJ Proxy
+* Setup scripts for both EurekaJ Manager, EurekaJ Proxy and BTrace
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_screenshot.png"/><br />
+	EurekaJ Manager 1.0
+</div>
+
+h2. Future features
+
+Planned for a future release i added functionality to BTrace, the Javaagent utilized to gather the metrics, as well as features that make it easier to compare metrics also between time-slots. Some times you want to be able to see the difference on a chart between different weekdays, or even compare memory load at different times during the day. 
+
+Currently the only alert-mechanisms built into EurekaJ is via Email and via the client application. I have planned to create an API around the alert feature that makes it possible for others to write specialized plugins that will work in their environment. In addition this will make it possible for EurekaJ's alerts to be integrated with other systems, such as Nagios, SMS-alert systems, or any other system where it would be natural to pass the EurekaJ alerts to. Plugins will be supplied as a Jar file that is placed in the applications classpath. 
+
+A log-viewer feature is also planned where its possible to pass along certain logging information from your monitored application to EurekaJ. 
+
+Lastly, I am also planning upgrading the frontend to SproutCore 2.0 after SC 2.0 goes final, as well as supporting SSL directly (instead of via Apache and AJP/Reverse proxy). 
+
+h2. Downloading EurekaJ Final
+
+EurekaJ 1.0 can be downloaded either from the projects GitHub site (https://github.com/joachimhs/EurekaJ), or via the nightly builds (http://nightly.haagen.name/EurekaJ/). Please refer to the documentation regarding installation of EurekaJ. 
