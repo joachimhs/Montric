@@ -30,6 +30,10 @@ EurekaJ Profilers main goal is to work as a complete Java Profiler by being:
 ## Downloads
 I will frequently post new versions to the followign URL: http://nightly.haagen.name/EurekaJ/
 
+## Final Release
+
+As of 8th September 2011, EurekaJ 1.0 is FINAL! The final release can be downloaded from this GitHub page's Download link above. You can still get the nightly build if you would rather get it fresh from the press :) 
+
 ## Contributors
 
 * Joachim Haagen Skeie
