@@ -18,7 +18,7 @@ Documentation is currently under development.
 ** <a href="/documentation/btrace_script_concepts_1.2.html">BTrace Script concepts for BTrace 1.0 - 1.2</a>
 ** Sample BTrace Scripts
 * Getting started with EurekaJ Manager
-** Navigating the Metrics collected by EurekaJ Manager
+** <a href="/documentation/navigating_the_metrics_collected_by_EurekaJ_Manager.html">Navigating the Metrics collected by EurekaJ Manager</a>
 ** Configuring Alert Points
 ** Configuring Grouped Statistics			
 ** Configuring Email receivers (for alerts

@@ -1,0 +1,44 @@
+---
+layout: master
+title: Navigating the metrics collected by EurekaJ Manager
+---
+
+<div class='panel'>
+<h1>{{page.title}}</h1>
+
+EurekaJ Manager receives metrics via its JSON API. Most likely the incoming metrics will be delivered via EurekaJ Proxy, but in theory, and client that are able to authenticate into EurekaJ Manager via its web-login form will be able to pass metrics into the application. It is therefore entirely the users responsibility to organize and arrange the metrics in a manner that makes sense to their users. Perosnally, I like to organize the metrics into main categories, Frontend, Frontend-Servlets, Backend, Backend-SQL, Memory, Threads, and so on. The main reason for this is that its then easier to find those metrics when the time comes to investigate a bug, memory or performance issue. 
+
+The metrics from the <a href="/demo.html">demo-application</a> are organized in this manner: 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_metric_organization.png"/><br />
+	EurekaJ Metric Organization
+</div>
+
+Note that most of the statistics gathered here do come via the BTrace agent, while information regarding disk usage on the host eurekaj-ec2.haagen.name comes via a Bash shell script that feeds its output data into EurekaJ Proxy (in the same manner that the BTrace Agent prints its output). 
+
+h2. Grouping charts into a single chart
+
+Some charts are often viewed together, for the simple reason that it makes sense to compare the values of the two metrics. Two such metrics are the maximum heap space reserved for the application versus the current amount of heap space used. EurekaJ Manager has included functionality to group charts into groups, called _Chart Groups_. Chart Groups can be configured via the _Administration_ panel by adding a new Chart Group, and then selecting which metrics to include in that Chart Group:  
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_chart_group_admin.png"/><br />
+	EurekaJ Chart Group Administration
+</div>
+
+The Chart Group will then be displayed within the top-level "Grouped Statistics" node in the left hand tree-menu, which can be selected in a similar manner to the other metrics available: 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_chart_group_view.png"/><br />
+	The result of displaying a _Chart Group_
+</div>
+
+h2. Viewing aggregated statistics
+
+Only the leaf-nodes in the tree-menu can be used to display a chart. EurekaJ automatically groups end point with the same metric name and averages the results in a tabular format. This can be useful if you want to know, for example, the average response time for each and every Servlet in your system, or if your application have _Worker Threads_ and you want to know the average execution time per method. EurekaJ displays all aggregated output in a tabular format: 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_tabular_aggregated_view.png"/><br />
+	Aggregated Tabular View
+</div>
+
+The above screenshot illustrates how important it is to group related metrics, while keeping non-related metrics separate. 
+
+
+</div>
