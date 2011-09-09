@@ -1,6 +1,3 @@
-[submodule "EurekaJ.View/frameworks/sproutcore"]
-	path = EurekaJ.View/frameworks/sproutcore
-	url = git://github.com/sproutcore/sproutcore.git
 [submodule "frameworks/calendar"]
 	path = frameworks/calendar
 	url = https://github.com/unicolet/stuff-I-m-proud-of.git
@@ -10,12 +7,3 @@
 [submodule "EurekaJ.View/frameworks/scui"]
 	path = EurekaJ.View/frameworks/scui
 	url = https://github.com/etgryphon/sproutcore-ui.git
-[submodule "EurekaJ.View/frameworks/ki"]
-	path = EurekaJ.View/frameworks/ki
-	url = https://github.com/FrozenCanuck/Ki.git
-[submodule "EurekaJ.View/garcon"]
-	path = EurekaJ.View/garcon
-	url = https://github.com/erichocean/garcon.git
-[submodule "EurekaJ.View/frameworks/sctable"]
-	path = EurekaJ.View/frameworks/sctable
-	url = https://github.com/jslewis/sctable.git
