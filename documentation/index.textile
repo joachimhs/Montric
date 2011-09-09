@@ -19,7 +19,7 @@ Documentation is currently under development.
 ** Sample BTrace Scripts
 * Getting started with EurekaJ Manager
 ** <a href="/documentation/navigating_the_metrics_collected_by_EurekaJ_Manager.html">Navigating the Metrics collected by EurekaJ Manager</a>
-** Configuring Alert Points
+** <a href="/documentation/configuring_alert_points.html">Configuring Alert Points</a>
 ** Configuring Grouped Statistics			
 ** Configuring Email receivers (for alerts
 ** Specifying the chart time-interval

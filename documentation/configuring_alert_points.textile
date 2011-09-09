@@ -1,0 +1,25 @@
+---
+layout: master
+title: Configuring Alert Points
+---
+
+<div class='panel'>
+<h1>{{page.title}}</h1>
+
+Alerts can be configured via the Administration Panel. Access to the administration panel requires the user to be logged in as an administrator. Once inside the Administration panel, the user is presented with the _Alert Administration Tab_. To create a new alert first give the alert a name and click on the _Add_ button to the right of the input-field. Then, select the alert you just created from list of configured alerts. 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_administration_alert.png"/><br />
+	Configuring Alert Points
+</div>
+
+In the example above, I want to be notified whenever the utilization percentage on the disk named _/mnt/eurekaj_data_20110818_ exceeds either the _warning threshold_ of 80 (%), or the _error threshold_ of 90 (%). With the _Alert Delay_ option you can specify a delay, a certain amount of 15-seconds measure intervals where the metrics must exceed the threshold value before EurekaJ Manager will identify the metric in breach of its threshold. This can be useful for situations where either random high measurements exists, or where the application will take some to amend the situation. 
+
+Any alert that you want to be alerted about needs to be activated by ticking the _Activated_ checkbox. This will enable you to turn off certain alerts for a limited period of time, while still keeping the alert configuration available. 
+
+If an alert is no longer needed, it can be deleted using the _Delete Selected Alert_ button. EurekaJ will prompt you one if you are sure you want to delete the alert: 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/eurekaj_delete_alert_confirmation.png"/><br />
+	Alert Deletion Confirmation
+</div>
+
+</div>
