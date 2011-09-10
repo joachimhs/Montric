@@ -55,7 +55,7 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
     }),
     
     deleteAlertButtonView: SC.ButtonView.extend({
-        layout: {left: 0, width: 200, height: 25, centerX: 0, bottom: 0, centerY: 0},
+        layout: {left: 0, width: 200, height: 24, centerX: 0, bottom: 0, centerY: 0},
         title: "Delete Selected Alert",
         action: 'EurekaJView.deleteSelectedAlertAction'
     }),

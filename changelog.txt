@@ -1,4 +1,10 @@
-8. September 2011 - Initial Release
+1.0.1 - 
+
+EurekaJ Manager: 
+
+* Fixed issue with selecting SSL. Changes to checkbox instead of text input field. 
+
+1.0 Final - Initial Release - 8. September 2011
 
 The initial release comes with all of the necessary features required to perform basic application profiling. The most important features include: 
 

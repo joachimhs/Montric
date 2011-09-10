@@ -53,7 +53,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
     }),
     
     deleteAlertButtonView: SC.ButtonView.extend({
-        layout: {left: 0, width: 200, height: 25, centerX: 0, bottom: 0, centerY: 0},
+        layout: {left: 0, width: 200, height: 24, centerX: 0, bottom: 0, centerY: 0},
         title: "Delete Selected Email Recipient",
         action: 'EurekaJView.deleteSelectedEmailGroupAction'
     }),
@@ -119,7 +119,7 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
             value: 'SMTP Use SSL ?:'
         }).classNames('blacklabel'),
 
-        smtpSSLTextfieldView: SC.TextFieldView.extend({
+        smtpSSLTextfieldView: SC.CheckboxView.extend({
             layout: {left: 350, width: 100, top: 50, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
             contentValueKey: "smtpUseSSL"
