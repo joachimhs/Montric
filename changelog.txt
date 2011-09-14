@@ -1,8 +1,9 @@
-1.0.1 - 
+1.0.1 - Bug Fixes - 14. September 2011
 
 EurekaJ Manager: 
 
-* Fixed issue with selecting SSL. Changes to checkbox instead of text input field. 
+* Fixed issue with selecting SSL. Changes to checkbox instead of text input field.
+* Changed email server password field to its proper type - a password field :) 
 
 1.0 Final - Initial Release - 8. September 2011
 

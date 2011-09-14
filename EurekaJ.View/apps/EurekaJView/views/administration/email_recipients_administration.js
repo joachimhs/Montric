@@ -97,7 +97,8 @@ EurekaJView.EmailRecipientsAdministrationView = SC.View.extend(
         smtpPasswordTextfieldView: SC.TextFieldView.extend({
             layout: {left: 350, width: 100, top: 25, height: 20},
             contentBinding: 'EurekaJView.editEmailGroupController',
-            contentValueKey: "smtpPassword"
+            contentValueKey: "smtpPassword",
+            isPassword: YES
         }),
 
         smtpPortLabelView: SC.LabelView.extend({
