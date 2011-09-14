@@ -7,7 +7,7 @@ mkdir eurekaj
 cd eurekaj
 mkdir logs
 mkdir EurekaJData
-curl -o eurekaJ.managerServer.zip http://nightly.haagen.name/EurekaJ/latest/eurekaJ.ManagerServer-1.0.1-SNAPSHOT.zip
+curl -o eurekaJ.managerServer.zip http://nightly.haagen.name/EurekaJ/latest/eurekaJ.ManagerServer-1.0.1.zip
 curl -o run.sh https://raw.github.com/joachimhs/EurekaJ/master/EurekaJ.ManagerServer/run.sh
 chmod 755 run.sh
 curl -o users.properties https://raw.github.com/joachimhs/EurekaJ/master/EurekaJ.ManagerServer/users.properties

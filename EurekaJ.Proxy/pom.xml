@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>eurekaJ.parent</artifactId>
 		<groupId>org.eurekaJ</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.1</version>
 	</parent>
 	<build>
 
