@@ -185,7 +185,7 @@ public class ClientGZipContentCompression {
                 }
 
                 //Attempt to send an empty JSON object of stats to verify login
-                int statusCode = postJsonContentsToServer(endpoint + "/liveStatistics", "{}", httpclient);
+                int statusCode = postJsonContentsToServer(endpoint, "{}", httpclient);
 
                 //If server side returns status code 200, user is logged in
                 if (statusCode == 200) {
