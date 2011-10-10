@@ -33,7 +33,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleDBAlertTest {
-
+	
     @Test
     public void testAtEmailListeMedToEposterBlirFormatertRettTilString() {
         SimpleDBAlert alert = new SimpleDBAlert();
@@ -73,7 +73,5 @@ public class SimpleDBAlertTest {
         ls.setValue("0.5458984375");
 
         Assert.assertEquals(new Double(0.5458984375d), ls.getValue());
-
-        System.out.println("value: " + ls.getValue());
     }
 }

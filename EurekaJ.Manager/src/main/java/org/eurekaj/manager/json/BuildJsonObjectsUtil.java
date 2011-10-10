@@ -112,6 +112,10 @@ public class BuildJsonObjectsUtil {
     }
 
     private static void buildAlertNode(List<Alert> alertList, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
+    	if (!alertList.isEmpty()) {
+    		nodesBuilt.put("Alerts", buildTreeNode("Alerts", nodesBuilt, "alert"));
+    	}
+    	
         for (Alert alert : alertList) {
             String currPath = alert.getGuiPath();
             //Strip away last node (the alert chart) and add the alert name instead
@@ -124,12 +128,21 @@ public class BuildJsonObjectsUtil {
                 JSONObject jsonNode = buildTreeNode(currPath, nodesBuilt, "alert");
                 nodesBuilt.put(currPath, jsonNode);
             }
+            
+            //Extra node to put all alerts in the top menu
+            String alertPath = "Alerts:" + alert.getAlertName();
+            if (nodesBuilt.get(alertPath) == null) {
+                JSONObject jsonNode = buildTreeNode(alertPath, nodesBuilt, "alert");
+                nodesBuilt.put(alertPath, jsonNode);
+            }
         }
     }
 
 
     private static void buildGroupedStatisticNodes(List<GroupedStatistics> groupedStatisticsList, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
-        nodesBuilt.put("Grouped Statistics", buildTreeNode("Grouped Statistics", nodesBuilt, "groupedStatistics"));
+        if (!groupedStatisticsList.isEmpty()) {
+        	nodesBuilt.put("Grouped Statistics", buildTreeNode("Grouped Statistics", nodesBuilt, "groupedStatistics"));
+        }
 
         for (GroupedStatistics groupedStatistics : groupedStatisticsList) {
             String guiPath = "Grouped Statistics:" + groupedStatistics.getName();

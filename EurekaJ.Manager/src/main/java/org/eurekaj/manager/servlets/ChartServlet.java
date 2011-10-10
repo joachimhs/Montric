@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.api.datatypes.LiveStatistics;
@@ -47,7 +48,8 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class ChartServlet extends EurekaJGenericServlet {
-
+	private static final Logger log = Logger.getLogger(ChartServlet.class);
+	
     protected int getChartTimeSpan(JSONObject jsonRequest) throws JSONException {
         int chartTimespan = 10;
         if (jsonRequest.has("chartTimespan")) {
@@ -117,7 +119,7 @@ public class ChartServlet extends EurekaJGenericServlet {
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("getInstrumentationChartData") && SecurityManager.isAuthenticatedAsUser()) {
                 JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartData");
@@ -181,7 +183,7 @@ public class ChartServlet extends EurekaJGenericServlet {
                     jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
                 }
 
-                System.out.println("Got Chart Data:\n" + jsonResponse);
+                log.debug("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

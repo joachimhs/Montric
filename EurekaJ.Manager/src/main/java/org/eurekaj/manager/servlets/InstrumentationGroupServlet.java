@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
@@ -39,12 +40,14 @@ import java.io.PrintWriter;
  * To change this template use File | Settings | File Templates.
  */
 public class InstrumentationGroupServlet extends EurekaJGenericServlet {
+	private static final Logger log = Logger.getLogger(InstrumentationGroupServlet.class);
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("instrumentaionGroupName") && SecurityManager.isAuthenticatedAsAdmin()) {
                 GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
@@ -55,7 +58,7 @@ public class InstrumentationGroupServlet extends EurekaJGenericServlet {
 
             if (jsonObject.has("getInstrumentationGroups") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
-                System.out.println("Got InstrumentationGroups:\n" + jsonResponse);
+                log.debug("Got InstrumentationGroups:\n" + jsonResponse);
 
             }
             

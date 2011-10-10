@@ -2,14 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.eurekaJ</groupId>
     <artifactId>eurekaJ.Manager</artifactId>
     <packaging>war</packaging>
     <name>EurekaJ Manager</name>
     <parent>
         <artifactId>eurekaJ.parent</artifactId>
         <groupId>org.eurekaJ</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
     <build>
 
@@ -85,6 +84,11 @@
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eurekaJ</groupId>
+            <artifactId>eurekaJ.alertEmailPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!--dependency>

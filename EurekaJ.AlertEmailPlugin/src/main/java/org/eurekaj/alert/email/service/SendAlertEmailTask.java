@@ -1,22 +1,4 @@
-/**
-    EurekaJ Profiler - http://eurekaj.haagen.name
-    
-    Copyright (C) 2010-2011 Joachim Haagen Skeie
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
-package org.eurekaj.manager.task;
+package org.eurekaj.alert.email.service;
 
 import java.util.Properties;
 
@@ -29,18 +11,21 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.api.util.ListToString;
 
-public class SendEmailTask implements Runnable {
+public class SendAlertEmailTask implements Runnable {
+	private static Logger log = Logger.getLogger(SendAlertEmailTask.class);
 	private EmailRecipientGroup emailRecipientGroup;
 	private Alert alert;
 	private AlertStatus oldStatus;
 	private double currValue;
 	private String timeString;
-
-	public SendEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
+	
+	public SendAlertEmailTask(EmailRecipientGroup emailRecipientGroup, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
 		super();
 		this.emailRecipientGroup = emailRecipientGroup;
 		this.alert = alert;
@@ -48,17 +33,17 @@ public class SendEmailTask implements Runnable {
 		this.currValue = currValue;
 		this.timeString = timeString;
 	}
-
+	
 	@Override
 	public void run() {
 		StringBuffer emailMessage = new StringBuffer();
-		emailMessage.append("EurekaJ BerkeleyAlert: ").append(alert.getGuiPath()).append(" Has changed status from ").append(oldStatus.getStatusName()).append(" to status ")
+		emailMessage.append("EurekaJ Alert: ").append(alert.getGuiPath()).append(" Has changed status from ").append(oldStatus.getStatusName()).append(" to status ")
 				.append(alert.getStatus().getStatusName()).append(".\n Current Value: ").append(currValue).append(".\n Warning Value: ").append(alert.getWarningValue()).append(".\n Critical Value: ")
 				.append(alert.getErrorValue()).append(".\n Time: ").append(timeString);
 
-		String emailSubject = "EurekaJ BerkeleyAlert: " + alert.getStatus().getStatusName() + " : " + alert.getGuiPath();
+		String emailSubject = "EurekaJ Alert: " + alert.getStatus().getStatusName() + " : " + alert.getGuiPath();
 
-		System.out.println("\t\tAttempting to send Email through: " + emailRecipientGroup.getSmtpServerhost() + ":" + emailRecipientGroup.getPort() + " using " + emailRecipientGroup.getSmtpUsername()
+		log.debug("\t\tAttempting to send Email through: " + emailRecipientGroup.getSmtpServerhost() + ":" + emailRecipientGroup.getPort() + " using " + emailRecipientGroup.getSmtpUsername()
 				+ " auth with " + emailRecipientGroup.getSmtpPassword() + " via SSL: " + emailRecipientGroup.isUseSSL() + " ::: " + emailSubject);
 
 		if (emailRecipientGroup.isUseSSL()) {
@@ -67,13 +52,13 @@ public class SendEmailTask implements Runnable {
 			sendEmailWithoutSSL(emailSubject, emailMessage.toString());
 		}
 
-		System.out.println("\t\tEmail Sent");
+		log.debug("\t\tEmail Sent");
 	}
 
 	private Message buildMessage(Session session, String emailSubject, String emailMessage) throws AddressException, MessagingException {
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress(emailRecipientGroup.getSmtpUsername()));
-		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(getRecipientsAsString()));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ",")));
 		message.setSubject(emailSubject);
 		message.setText(emailMessage);
 
@@ -121,30 +106,10 @@ public class SendEmailTask implements Runnable {
 
 			Transport.send(buildMessage(session, emailSubject, emailMessage));
 
-			System.out.println("Done");
+			log.debug("Done");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 	}
-
-	private String getRecipientsAsString() {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < emailRecipientGroup.getEmailRecipientList().size(); i++) {
-			sb.append(emailRecipientGroup.getEmailRecipientList().get(i));
-			if (i < (emailRecipientGroup.getEmailRecipientList().size() - 1)) {
-				sb.append(",");
-			}
-		}
-		return sb.toString();
-	}
-
-	private String[] getRecipients() {
-		String[] emailReceiverArray = new String[emailRecipientGroup.getEmailRecipientList().size()];
-		for (int i = 0; i < emailRecipientGroup.getEmailRecipientList().size(); i++) {
-			emailReceiverArray[i] = emailRecipientGroup.getEmailRecipientList().get(i);
-		}
-		return emailReceiverArray;
-	}
-
 }

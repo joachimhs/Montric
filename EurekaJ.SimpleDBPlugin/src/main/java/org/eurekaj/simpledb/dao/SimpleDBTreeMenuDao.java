@@ -20,6 +20,8 @@ package org.eurekaj.simpledb.dao;
 
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
 import com.amazonaws.services.simpledb.model.*;
+
+import org.apache.log4j.Logger;
 import org.eurekaj.api.dao.LiveStatisticsDao;
 import org.eurekaj.api.dao.TreeMenuDao;
 import org.eurekaj.api.datatypes.*;
@@ -40,6 +42,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
+	private static final Logger log = Logger.getLogger(SimpleDBTreeMenuDao.class);
     private AmazonSimpleDB amazonSimpleDB;
     private List<ReplaceableItem> liveStatisticsToSendList;
     private Long statsSentTimestamp = 0l;
@@ -67,14 +70,14 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         liveStatisticsToSendList.add(liveStatisticsReplacableItem);
 
         if (System.currentTimeMillis() - statsSentTimestamp > 5000) {
-            System.out.println("Sending contents to SimpleDB");
+            log.debug("Sending contents to SimpleDB");
             amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_LiveStatistics", liveStatisticsToSendList));
-            System.out.println("Finished sendinging contents to SimpleDB");
+            log.debug("Finished sendinging contents to SimpleDB");
             liveStatisticsToSendList.clear();
             statsSentTimestamp = System.currentTimeMillis();
         }
 
-        System.out.println("Added/Sent LiveStats in: " + (System.currentTimeMillis() - before) + " ms..");
+        log.debug("Added/Sent LiveStats in: " + (System.currentTimeMillis() - before) + " ms..");
     }
 
     /**
@@ -88,14 +91,14 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         treeMenuToSendList.add(treeMenuReplacableItem);
 
         if (System.currentTimeMillis() - statsSentTimestamp > 5000) {
-            System.out.println("Sending treeMenu to SimpleDB");
+            log.debug("Sending treeMenu to SimpleDB");
             amazonSimpleDB.batchPutAttributes(new BatchPutAttributesRequest("EurekaJ_TreeMenuNode", treeMenuToSendList));
-            System.out.println("Finished treeMenu contents to SimpleDB");
+            log.debug("Finished treeMenu contents to SimpleDB");
             treeMenuToSendList.clear();
             treeMenuSentTimestamp = System.currentTimeMillis();
         }
 
-        System.out.println("Added/Sent TreeMenu in: " + (System.currentTimeMillis() - before) + " ms..");
+        log.debug("Added/Sent TreeMenu in: " + (System.currentTimeMillis() - before) + " ms..");
     }
 
     private void fetchTreeMenuAndAddToHash() {
@@ -147,7 +150,7 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 
         SimpleDBLiveStatistics simpleDBLiveStatistics = new SimpleDBLiveStatistics(result.getAttributes());
 
-        System.out.println("Got Livestats in: " + (System.currentTimeMillis() - before) + " ms..");
+        log.debug("Got Livestats in: " + (System.currentTimeMillis() - before) + " ms..");
         return simpleDBLiveStatistics;
     }
 
@@ -156,7 +159,7 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
         Long before = System.currentTimeMillis();
 
         updateTreeMenu(guiPath);
-        System.out.println("Updated TreeMenu. Took: " + (System.currentTimeMillis() - before) + " ms");
+        log.debug("Updated TreeMenu. Took: " + (System.currentTimeMillis() - before) + " ms");
 
         SimpleDBLiveStatistics simpleDBLiveStatistics = new SimpleDBLiveStatistics();
         simpleDBLiveStatistics.setGuiPath(guiPath);
@@ -165,14 +168,14 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 
         Double calculatedValue = LiveStatisticsUtil.calculateValueBasedOnUnitType(simpleDBLiveStatistics.getValue(), unitType);
 
-        System.out.println("Calculated value. Took: " + (System.currentTimeMillis() - before) + " ms");
+        log.debug("Calculated value. Took: " + (System.currentTimeMillis() - before) + " ms");
 
         SimpleDBLiveStatistics livestat = getLiveStatistics(guiPath, timeperiod);
         if (livestat == null) {
             livestat = new SimpleDBLiveStatistics();
         }
 
-        System.out.println("Got Old LiveStats. Took: " + (System.currentTimeMillis() - before) + " ms");
+        log.debug("Got Old LiveStats. Took: " + (System.currentTimeMillis() - before) + " ms");
 
         livestat.setGuiPath(guiPath);
         livestat.setTimeperiod(timeperiod);
@@ -182,11 +185,11 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
                 simpleDBLiveStatistics.getGuiPath() + "_" + simpleDBLiveStatistics.getTimeperiod(),
                 simpleDBLiveStatistics.getAmazonSimpleDBAttribute());
 
-        System.out.println("Created ReplacableItem. Took: " + (System.currentTimeMillis() - before) + " ms");
+        log.debug("Created ReplacableItem. Took: " + (System.currentTimeMillis() - before) + " ms");
 
         this.addAndSendLiveStatistics(ri);
 
-        System.out.println("Finished storing LiveStatistics. Took: " + (System.currentTimeMillis() - before) + " ms");
+        log.debug("Finished storing LiveStatistics. Took: " + (System.currentTimeMillis() - before) + " ms");
     }
 
     private SimpleDBTreeMenuNode updateTreeMenu(String guiPath) {

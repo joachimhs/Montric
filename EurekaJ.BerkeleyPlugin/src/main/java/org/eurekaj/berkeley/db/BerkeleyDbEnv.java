@@ -25,6 +25,8 @@ import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
 import com.sleepycat.persist.EntityStore;
 import com.sleepycat.persist.StoreConfig;
+
+import org.apache.log4j.Logger;
 import org.eurekaj.api.dao.*;
 import org.eurekaj.berkeley.db.dao.BerkeleySmtpDaoImpl;
 import org.eurekaj.berkeley.db.dao.BerkeleyAlertDao;
@@ -33,7 +35,7 @@ import org.eurekaj.berkeley.db.dao.BerkeleyTreeMenuDao;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class BerkeleyDbEnv extends EurekaJDBPluginService {
-
+	private static Logger log = Logger.getLogger(BerkeleyDbEnv.class);
 	private Environment environment;
 	private File dbFile;
 	private EntityStore treeMenuStore;
@@ -63,7 +65,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
     }
 	
 	public void setup() {
-        System.out.print(getPluginName() + " DB setup called");
+        log.debug(getPluginName() + " DB setup called");
         if (System.getProperty("eurekaj.db.type") != null && getPluginName().equalsIgnoreCase(System.getProperty("eurekaj.db.type"))) {
 
             String dbAbsPath = System.getProperty("eurekaj.db.absPath", "/EurekaJData");
@@ -170,7 +172,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				treeMenuStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing treeMenuStore" + dbe.toString());
+				log.error("Error closing treeMenuStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -179,7 +181,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				liveStatisticsStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing treeMenuStore" + dbe.toString());
+				log.error("Error closing treeMenuStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -188,7 +190,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				groupedStatisticsStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing groupedStatisticsStore" + dbe.toString());
+				log.error("Error closing groupedStatisticsStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -197,7 +199,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				alertStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing alertStore" + dbe.toString());
+				log.error("Error closing alertStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -206,7 +208,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				smtpServerStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing smtpServerStore" + dbe.toString());
+				log.error("Error closing smtpServerStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -215,7 +217,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				dashboardStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing dashboardStore" + dbe.toString());
+				log.error("Error closing dashboardStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -224,7 +226,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				logStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing logStore" + dbe.toString());
+				log.error("Error closing logStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -233,7 +235,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 			try {
 				triggeredAlertStore.close();
 			} catch (DatabaseException dbe) {
-				System.err.println("Error closing triggeredAlertStore" + dbe.toString());
+				log.error("Error closing triggeredAlertStore" + dbe.toString());
                 dbe.printStackTrace();
 			}
 		}
@@ -242,7 +244,7 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
             try {
             	environment.close();
             } catch(DatabaseException dbe) {
-                System.err.println("Error closing environment" + dbe.toString());
+                log.error("Error closing environment" + dbe.toString());
                 dbe.printStackTrace();
             }
         }

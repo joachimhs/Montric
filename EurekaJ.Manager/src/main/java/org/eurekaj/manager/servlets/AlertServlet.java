@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
@@ -42,17 +43,18 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class AlertServlet extends EurekaJGenericServlet {
-
+	private static final Logger log = Logger.getLogger(AlertServlet.class);
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("getAlerts") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
-                System.out.println("Got Alerts:\n" + jsonResponse);
+                log.debug("Got Alerts:\n" + jsonResponse);
 
             }
 
@@ -69,13 +71,13 @@ public class AlertServlet extends EurekaJGenericServlet {
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
                 List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
-                System.out.println("Got Triggered Alerts:\n" + jsonResponse);
+                log.debug("Got Triggered Alerts:\n" + jsonResponse);
             }
             
             if (jsonObject.has("deleteAlert") && SecurityManager.isAuthenticatedAsAdmin()) {
                 String alertName = jsonObject.getString("deleteAlert");
                 getBerkeleyTreeMenuService().deleteAlert(alertName);
-                System.out.println("Successfully deleted Alert with name:\n" + alertName);
+                log.debug("Successfully deleted Alert with name:\n" + alertName);
             }
 
         } catch (JSONException jsonException) {

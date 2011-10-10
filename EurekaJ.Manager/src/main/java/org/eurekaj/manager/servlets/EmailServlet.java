@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
@@ -39,25 +40,26 @@ import java.io.PrintWriter;
  * To change this template use File | Settings | File Templates.
  */
 public class EmailServlet extends EurekaJGenericServlet {
+	private static final Logger log = Logger.getLogger(EmailServlet.class);
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("emailGroupName") && SecurityManager.isAuthenticatedAsAdmin()) {
                 EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
                 if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
                     getAdministrationService().persistEmailRecipientGroup(emailRecipientGroup);
                 }
-
             }
 
 
             if (jsonObject.has("getEmailGroups") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
-                System.out.println("Got Email Groups:\n" + jsonResponse);
+                log.debug("Got Email Groups:\n" + jsonResponse);
 
             }
 

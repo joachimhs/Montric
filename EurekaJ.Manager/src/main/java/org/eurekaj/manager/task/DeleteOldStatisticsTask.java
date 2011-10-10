@@ -23,13 +23,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.Calendar;
 
-/**
- * Created by IntelliJ IDEA.
- * User: joahaa
- * Date: 6/10/11
- * Time: 8:25 PM
- * To change this template use File | Settings | File Templates.
- */
 public class DeleteOldStatisticsTask {
 
     private int numDaysToKeepStatistics = 35;

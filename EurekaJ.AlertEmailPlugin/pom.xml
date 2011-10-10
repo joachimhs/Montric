@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eurekaJ</groupId>
-    <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+    <artifactId>eurekaJ.alertEmailPlugin</artifactId>
     <packaging>jar</packaging>
-    <name>EurekaJ Berkeley DB JE Plugin</name>
+    <name>EurekaJ Alert Email Plugin</name>
     <parent>
         <artifactId>eurekaJ.parent</artifactId>
         <groupId>org.eurekaJ</groupId>
@@ -40,9 +40,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sleepycat</groupId>
-            <artifactId>je</artifactId>
-            <version>4.0.71</version>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.4</version>
         </dependency>
     </dependencies>
 </project>

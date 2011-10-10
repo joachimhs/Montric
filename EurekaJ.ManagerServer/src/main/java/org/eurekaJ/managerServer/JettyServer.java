@@ -25,14 +25,13 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.xml.XmlConfiguration;
 
 public class JettyServer {
-	private static final Log log = LogFactory.getLog(JettyServer.class);
+	private static Logger log = Logger.getLogger(JettyServer.class);
 	private static Server jettyServer;
 	private static int localPort;
 

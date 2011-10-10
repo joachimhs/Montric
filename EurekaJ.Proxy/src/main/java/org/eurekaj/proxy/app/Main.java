@@ -31,6 +31,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.eurekaj.proxy.FileMatcher;
 import org.eurekaj.proxy.parser.ParseStatistics;
 
@@ -46,6 +47,8 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class Main {
+	private static final Logger log = Logger.getLogger(Main.class);
+	
     private String scriptPath;
     private String endpointUrl;
     private String username;
@@ -62,7 +65,7 @@ public class Main {
         try {
             readProperties();
         } catch (IOException e) {
-            System.err.println("Unable to read required properties file 'config.properties'.");
+            log.error("Unable to read required properties file 'config.properties'.");
             throw new RuntimeException("Required properties file missing: 'config.properties'");
         }
 
@@ -78,11 +81,11 @@ public class Main {
 
                 for (File scriptOutputfile : scriptOutputfileList) {
                     String json = ParseStatistics.parseBtraceFile(scriptOutputfile);
-                    System.out.println("Attempting to send JSON contents of: " + scriptOutputfile.getName() + " length: " + json.length());
+                    log.debug("Attempting to send JSON contents of: " + scriptOutputfile.getName() + " length: " + json.length());
 
                     int statusCode = gzipClient.sendGzipOverHttp(json);
                     if (statusCode != 200) {
-                        System.out.println("Unable to send JSON data. Server returned status code: " + statusCode + ". Please verify your endpoint, username and password in your 'config.properties' file");
+                    	log.debug("Unable to send JSON data. Server returned status code: " + statusCode + ". Please verify your endpoint, username and password in your 'config.properties' file");
                     } else {
                         scriptOutputfile.delete();
                     }
@@ -105,25 +108,25 @@ public class Main {
         Properties properties = new Properties();
 		File configFile = new File("config.properties");
 		if (!configFile.exists()) {
-            System.out.println("config.properties not found at : " + configFile.getAbsolutePath() + " trying one level up.");
+			log.debug("config.properties not found at : " + configFile.getAbsolutePath() + " trying one level up.");
 			configFile = new File("../config.properties");
 		}
 		if (!configFile.exists()) {
-            System.out.println("config.properties not found at : " + configFile.getAbsolutePath() + " trying one level up.");
+			log.debug("config.properties not found at : " + configFile.getAbsolutePath() + " trying one level up.");
 			configFile = new File("../../config.properties");
 		}
 		if (configFile.exists()) {
 			FileInputStream configStream = new FileInputStream(configFile);
 			properties.load(configStream);
 			configStream.close();
-			System.out.println("Server properties loaded from " + configFile.getAbsolutePath());
+			log.debug("Server properties loaded from " + configFile.getAbsolutePath());
 			for (Enumeration<Object> e = properties.keys(); e.hasMoreElements();) {
 				Object property = (String) e.nextElement();
-				System.out.println("\t\t* " + property + "=" + properties.get(property));
+				log.debug("\t\t* " + property + "=" + properties.get(property));
 			}
 		} else {
 			String message = "Could not find " + configFile.getAbsolutePath() + ". Unable to start.";
-			System.err.println(message);
+			log.error(message);
 			throw new RuntimeException(message);
 		}
 

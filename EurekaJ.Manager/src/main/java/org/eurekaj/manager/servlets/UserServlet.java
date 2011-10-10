@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
@@ -37,13 +38,14 @@ import java.io.PrintWriter;
  * To change this template use File | Settings | File Templates.
  */
 public class UserServlet extends EurekaJGenericServlet {
-
+	private static final Logger log = Logger.getLogger(UserServlet.class);
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("getLoggedInUser") && SecurityManager.isAuthenticated() ) {
                 String username = SecurityManager.getAuthenticatedUsername();

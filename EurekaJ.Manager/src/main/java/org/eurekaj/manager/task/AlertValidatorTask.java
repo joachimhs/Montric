@@ -21,20 +21,26 @@ package org.eurekaj.manager.task;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
+import org.eurekaj.api.util.ListToString;
 import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.datatypes.ManagerTriggeredAlert;
+import org.eurekaj.manager.plugin.ManagerAlertPluginService;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
+import org.eurekaj.manager.util.PropertyUtil;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 public class AlertValidatorTask {
+	private static final Logger log = Logger.getLogger(AlertValidatorTask.class);
 	private TreeMenuService treeMenuService;
 	private AdministrationService administrationService;
 	private ThreadPoolTaskExecutor sendEmailExecutor;
@@ -80,9 +86,12 @@ public class AlertValidatorTask {
 				List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay());
 				//Get statistics and evaluate alert condition
 				AlertStatus newStatus = evaluateStatistics(alert, statList);
-				if (oldStatus != newStatus) {
+				if (oldStatus != newStatus && statList.size() >= 1) {
                     //Status have changed, store new triggeredAlert and send email
-
+					ManagerAlert newAlert = new ManagerAlert(alert);
+                    newAlert.setStatus(newStatus);
+                    treeMenuService.persistAlert(newAlert);
+                    
                     ManagerTriggeredAlert managerTriggeredAlert = new ManagerTriggeredAlert(
                             alert.getAlertName(),
                             statList.get(statList.size() -1).getTimeperiod(),
@@ -99,17 +108,27 @@ public class AlertValidatorTask {
 					for (String emailGroup : alert.getSelectedEmailSenderList()) {
 						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup);
 						if (emailRecipientGroup != null) {
-                            //public SendEmailTask(BerkeleyEmailRecipientGroup emailRecipientGroup, BerkeleyAlert alert, int oldStatus, long currValue, String timeString) {)
-							SendEmailTask sendEmailTask = new SendEmailTask(emailRecipientGroup, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
-							sendEmailExecutor.execute(sendEmailTask);
+							log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking email plugin.");
+							//The email alert is special, as properties needs to be built up for each alert being sent. 
+							Properties alertProperties = new Properties();
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.host", emailRecipientGroup.getSmtpServerhost());
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.username", emailRecipientGroup.getSmtpUsername());
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.password", emailRecipientGroup.getSmtpPassword());
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.useSSL", new Boolean(emailRecipientGroup.isUseSSL()).toString());
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.port", emailRecipientGroup.getPort().toString());
+							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList", ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ","));
+
+							ManagerAlertPluginService.getInstance().sendAlert(alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
+						} else {
+							log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
+							//TODO: Figure out which plugin to send the alert to.
+							Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
+							ManagerAlertPluginService.getInstance().sendAlert(alertProperties, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
 						}
 					}
 
-                    ManagerAlert newAlert = new ManagerAlert(alert);
-                    newAlert.setStatus(newStatus);
-					treeMenuService.persistAlert(newAlert);
 				} else {
-					System.out.println("\t\tBerkeleyAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
+					log.debug("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
 				}
 			}
 		}	
@@ -164,7 +183,7 @@ public class AlertValidatorTask {
 		Long millisNow = Calendar.getInstance().getTimeInMillis();
 		millisNow = (millisNow / 15000) -1;
 		Long millisThen = millisNow - timeperiods;
-		//System.out.println("Getting stats from: " + millisThen + " to: " + millisNow);
+		//log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
 		
 		return treeMenuService.getLiveStatistics(guiPath, millisThen, millisNow);
 	}

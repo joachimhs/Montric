@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
@@ -42,13 +43,14 @@ import java.io.PrintWriter;
  * To change this template use File | Settings | File Templates.
  */
 public class LiveStatisticsServlet extends EurekaJGenericServlet {
-
+	private static final Logger log = Logger.getLogger(LiveStatisticsServlet.class);
+	
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
 
             if (jsonObject.has("storeLiveStatistics") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsAdmin()) {
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");

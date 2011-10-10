@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>eurekaJ.parent</artifactId>
 		<groupId>org.eurekaJ</groupId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.2</version>
 	</parent>
 	<build>
 
@@ -104,6 +104,14 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-jmx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>

@@ -1,3 +1,10 @@
+1.0.2 - Alert Plugin Phase 1
+
+* Changed sending email via a plugin instead of via code internal to the manager (https://github.com/joachimhs/EurekaJ/issues/13)
+* Moved away from System.out and System.err (about time) to Log4J
+* Upgraded to Jetty 8.0.2.v20111006
+* Added Alerts to the main Tree menu (https://github.com/joachimhs/EurekaJ/issues/17)
+
 1.0.1 - Bug Fixes - 14. September 2011
 
 EurekaJ Manager: 

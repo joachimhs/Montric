@@ -21,10 +21,7 @@ package org.eurekaj.manager.service;
 import java.util.Date;
 import java.util.List;
 
-import org.eurekaj.api.dao.AlertDao;
-import org.eurekaj.api.dao.GroupedStatisticsDao;
-import org.eurekaj.api.dao.LiveStatisticsDao;
-import org.eurekaj.api.dao.TreeMenuDao;
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
@@ -33,6 +30,7 @@ import org.eurekaj.manager.util.DatabasePluginUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class TreeMenuServiceImpl implements TreeMenuService {
+	private static final Logger log = Logger.getLogger(TreeMenuServiceImpl.class);
     EurekaJDBPluginService dbPlugin = null;
 
     public TreeMenuServiceImpl() {
@@ -116,7 +114,7 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     }
 
     public void deleteOldLiveStatistics(Date date) {
-        System.out.println("dbplugin: " + getDbPlugin());
+        log.debug("dbplugin: " + getDbPlugin());
 
         getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date);
     }

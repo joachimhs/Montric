@@ -40,7 +40,6 @@ public enum ValueType {
                 return c;
             }
         }
-        System.out.println("No ValueType for: " + v);
         throw new IllegalArgumentException(v);
     }
 

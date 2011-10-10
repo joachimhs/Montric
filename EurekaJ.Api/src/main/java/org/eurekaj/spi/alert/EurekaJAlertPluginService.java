@@ -16,38 +16,14 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-package org.eurekaj.api.enumtypes;
 
-/**
- * Created by IntelliJ IDEA.
- * User: jhs
- * Date: 5/6/11
- * Time: 12:07 AM
- * To change this template use File | Settings | File Templates.
- */
-public enum AlertType {
-    GREATER_THAN("greater_than"),
-    EQUALS("equals"),
-    LESS_THAN("less_than");
+package org.eurekaj.spi.alert;
 
-    private final String typeName;
+import org.eurekaj.api.service.AlertService;
 
-    AlertType(String typeName) {
-        this.typeName = typeName;
-    }
+public abstract class EurekaJAlertPluginService {
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public static AlertType fromValue(String typeName) {
-        for (AlertType c: AlertType.values()) {
-            if (c.getTypeName().equals(typeName)) {
-                return c;
-            }
-        }
-        
-        //Return default value if none is selected
-        return GREATER_THAN;
-    }
+	public abstract String getAlertPluginName();
+	
+	public abstract AlertService getAlertService();
 }

@@ -31,7 +31,9 @@ import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.proxy.StoreIncomingStatisticsElement;
 
 public class ParseStatistics {
-
+	private static final Logger log = Logger.getLogger(ParseStatistics.class);
+	private static String DELIMETER = ";";
+	
     public static String parseBtraceFile(File file) throws IOException {
         ParseStatistics parser = new ParseStatistics();
 		List<StoreIncomingStatisticsElement> statElemList = new ArrayList<StoreIncomingStatisticsElement>();
@@ -103,9 +105,6 @@ public class ParseStatistics {
         jsonBuilder.append("] }");
 		return jsonBuilder.toString();
 	}
-
-	private static Logger log = Logger.getLogger(ParseStatistics.class);
-	private static String DELIMETER = ";";
 	
 	public List<StoreIncomingStatisticsElement> processBtraceProfiling(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
@@ -144,7 +143,7 @@ public class ParseStatistics {
                     timeperiod = Long.parseLong(timestampStr);
                     timeperiod = ((long)(timeperiod / 15000));
                 } catch (NumberFormatException nfe) {
-                    System.err.println("Unable to read in timestamp");
+                    log.error("Unable to read in timestamp");
                 }
 
                 invocations = params[4];
@@ -295,7 +294,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000));
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 			
 			StringBuilder sb = new StringBuilder();
@@ -338,7 +337,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Data is stored in 15-second intervals
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
@@ -420,7 +419,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
@@ -479,7 +478,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
@@ -529,7 +528,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -571,7 +570,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 			
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
@@ -629,7 +628,7 @@ public class ParseStatistics {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
 			} catch (NumberFormatException nfe) {
-				System.err.println("Unable to read in timestamp");
+				log.error("Unable to read in timestamp");
 			}
 			
 			
@@ -672,7 +671,7 @@ public class ParseStatistics {
 				
 				try {
 					headId = statisticsDao.storeCallTraceHead(1L, threadName, Long.parseLong(startTimestamp), Long.parseLong(stopTimestamp), agentName, sb.toString());
-					System.out.println("headID: " + headId);
+					log.debug("headID: " + headId);
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -687,7 +686,7 @@ public class ParseStatistics {
 						String[] params = traces[i].split(" ");
 						if (params.length == 5) {
 							try {
-								System.out.println("TraceRow: " + traces[i]);
+								log.debug("TraceRow: " + traces[i]);
 								rowList.add(new CallTraceRow(headId, params[0], params[1], Long.parseLong(params[2]), params[3], Integer.parseInt(params[4])));
 								//statisticsDao.storeCallTraceRow(headId, params[0], params[1], Long.parseLong(params[2]), params[3], Integer.parseInt(params[4]));
 								//Long headid, String packageAndClassname, String methodName, Long timestamp, String execTime, int callTraceLevel

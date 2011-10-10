@@ -24,14 +24,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by IntelliJ IDEA.
- * User: jhs
- * Date: 3/23/11
- * Time: 9:02 PM
- * To change this template use File | Settings | File Templates.
- */
+import org.apache.log4j.Logger;
+
 public class FileMatcher {
+	private static final Logger log = Logger.getLogger(FileMatcher.class);
+	
     private static Pattern filePattern = Pattern.compile(".*\\d+");
 
     public static List<File> getScriptOutputFilesInDirectory(String scriptPath) {
@@ -47,7 +44,7 @@ public class FileMatcher {
                 }
             }
         } else {
-            System.err.println("Argument is not a valid directory with BTrace Output files: " + scriptPath);
+            log.error("Argument is not a valid directory with BTrace Output files: " + scriptPath);
         }
 
         return scriptOutputFileList;

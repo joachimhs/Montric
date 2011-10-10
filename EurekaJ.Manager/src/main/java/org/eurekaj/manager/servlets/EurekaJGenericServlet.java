@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.servlets;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
@@ -40,6 +41,8 @@ import java.io.PrintWriter;
  * To change this template use File | Settings | File Templates.
  */
 public class EurekaJGenericServlet extends HttpServlet {
+	private static final Logger log = Logger.getLogger(EurekaJGenericServlet.class);
+	
     private TreeMenuService berkeleyTreeMenuService;
     private AdministrationService administrationService;
 
@@ -62,7 +65,7 @@ public class EurekaJGenericServlet extends HttpServlet {
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
-            System.out.println("Accepted JSON: \n" + jsonObject);
+            log.debug("Accepted JSON: \n" + jsonObject);
         }  catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
         }

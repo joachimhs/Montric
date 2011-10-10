@@ -51,6 +51,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
+
 import sun.security.util.Password;
 
 /**
@@ -67,6 +69,7 @@ import sun.security.util.Password;
  * interface.
  */
 public class ClientGZipContentCompression {
+	private static final Logger log = Logger.getLogger(ClientGZipContentCompression.class);
     private List<Cookie> cookieList = null;
     private boolean loggedIn = false;
     private String username;
@@ -191,7 +194,7 @@ public class ClientGZipContentCompression {
                 if (statusCode == 200) {
                     loggedIn = true;
                 } else {
-                    System.err.println("EurekaJ Proxy is not logged in. Verify login credentials.");
+                    log.error("EurekaJ Proxy is not logged in. Verify login credentials.");
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
