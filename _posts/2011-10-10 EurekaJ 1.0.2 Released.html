@@ -1,0 +1,29 @@
+---
+layout: master
+title: EurekaJ Profiler 1.0.2 Released!
+---
+
+h2. Bug Fixes and a move to a plugin architecture
+
+EurekaJ has had the ability to send alerts when metrics breach defined thresholds. Extending on this feature towards EurekaJ 1.1.0 the code for sending emails have been extracted out from the main source code and into a separate plugin. This plugin architecture will be documented when its ready for third party development. In short it allows anyone to create a Jar file that can be included in the classpath for EurekaJ. Once its installed in the classpath, it will be selectable in the Alert Setup GUI. The plugin-jar will be executed whenever those alert thresholds are breached. 
+
+Minor additions in the 1.0.2 release is the addition and collection of all alert metrics via a top-level node in the metrics-tree. The alerts will also be available as before, alongside the metric which it is alerting upon. All calls to System.out and System.err is now removed and replaced with calls to Log4J. 
+
+EurekaJ.ManagerServer have been upgraded to use Jetty 8.0.2.v20111006. 
+
+h3. Downloads
+
+EurekaJ 1.0.2 can be downloaded from: <a href="http://nightly.haagen.name/EurekaJ/1.0.2/">http://nightly.haagen.name/EurekaJ/1.0.2/</a>.
+
+h3. Changelog
+
+1.0.2 - Alert Plugin Phase 1
+
+* Changed sending email via a plugin instead of via code internal to the manager (https://github.com/joachimhs/EurekaJ/issues/13)
+* Moved away from System.out and System.err (about time) to Log4J
+* Upgraded to Jetty 8.0.2.v20111006
+* Added Alerts to the main Tree menu (https://github.com/joachimhs/EurekaJ/issues/17)
+
+1.0.1 - Bug Fixes - 14. September 2011
+
+* Fixed a bug with EurekaJ.Proxy where it was unable to login to the manager in some cases. 
