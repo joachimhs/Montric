@@ -73,8 +73,20 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
             if (dbFile == null || !dbFile.exists()) {
                 dbFile.mkdir();
             }
+            
+            long cachcesize = 256 * 1024 * 1024; //256 MB
+            String berkeleyCacheSize = System.getProperty("eurekaj.plugin.berkeley.cachesize");
+            if (berkeleyCacheSize == null) {
+            	try {
+            		cachesize = Long.parseLong(berkeleyCacheSize);
+            		environmentconfig.setCacheSize(cachcesize);
+            	} catch (Exception e) {
+            		//do nothing
+            	}
+            }
 
             EnvironmentConfig environmentconfig = new EnvironmentConfig();
+            
             StoreConfig storeConfig = new StoreConfig();
 
             environmentconfig.setReadOnly(false);
