@@ -67,7 +67,8 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
 	public void setup() {
         log.debug(getPluginName() + " DB setup called");
         if (System.getProperty("eurekaj.db.type") != null && getPluginName().equalsIgnoreCase(System.getProperty("eurekaj.db.type"))) {
-
+		EnvironmentConfig environmentconfig = new EnvironmentConfig();
+		
             String dbAbsPath = System.getProperty("eurekaj.db.absPath", "/EurekaJData");
             dbFile = new File(dbAbsPath);
             if (dbFile == null || !dbFile.exists()) {
@@ -85,8 +86,6 @@ public class BerkeleyDbEnv extends EurekaJDBPluginService {
             	}
             }
 
-            EnvironmentConfig environmentconfig = new EnvironmentConfig();
-            
             StoreConfig storeConfig = new StoreConfig();
 
             environmentconfig.setReadOnly(false);
