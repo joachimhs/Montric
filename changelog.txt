@@ -1,3 +1,7 @@
+1.0.3 - 
+
+* Adding cache sizing options to the Berkeley DB plugin
+
 1.0.2 - Alert Plugin Phase 1
 
 * Changed sending email via a plugin instead of via code internal to the manager (https://github.com/joachimhs/EurekaJ/issues/13)
