@@ -6,7 +6,7 @@ title: Live Demonstration
 <div class="panel">
 <h1>{{page.title}}</h1>
 
-EurekaJ is deployed to an Amazon EC2 instance, backed by a Elastic Block Store with 20GB of storage space for the database. The demonstration application is set up so that it will monitor three applications. The EurekaJ Demo application will hold on to its statistics for a maximum of 15 days to ensure not to overrun the 20GB of disk space available. 
+EurekaJ is deployed to an Rackspace Cloud instance with 160 GB of data available. 
 
 * Itself (EurekaJ Agent)
 * The Jenkins Continuous Integration Server running on a Mac Mini in Las Vegas (used as EurekaJ's CI server among other things)
@@ -17,7 +17,7 @@ To log into the application, use the following credentials:
 Username: user
 Password: user
 
-<a href="http://eurekaj-ec2.haagen.name">http://eurekaj-ec2.haagen.name</a>
+<a href="http://eurekaj-ec2.haagen.name">http://eurekajdemo.haagen.name</a>
 
 </div>
 	
