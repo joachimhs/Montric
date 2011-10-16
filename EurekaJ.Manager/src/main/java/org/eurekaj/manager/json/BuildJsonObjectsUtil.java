@@ -22,11 +22,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.text.NumberFormat;
 import java.util.*;
 
 import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
 import com.sun.tools.javac.util.Name;
+
+import org.apache.commons.io.IOUtils;
 import org.eurekaj.api.datatypes.*;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
@@ -46,7 +49,20 @@ public class BuildJsonObjectsUtil {
         InputStream in = request.getInputStream();
 
         BufferedReader r = new BufferedReader(new InputStreamReader(in));
-        jsonRequestObject = new JSONObject(new JSONTokener(r));
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(in, writer);
+        String theString = writer.toString();
+        
+        //Append and prepend { and } if its missing - SC 2
+        if (!theString.startsWith("{")) {
+        	theString = "{" + theString;
+        }
+        
+        if (!theString.endsWith("}")) {
+        	theString = theString + "}";
+        }
+        
+        jsonRequestObject = new JSONObject(new JSONTokener(theString));
 
         return jsonRequestObject;
     }

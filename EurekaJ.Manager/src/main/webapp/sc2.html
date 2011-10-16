@@ -1,0 +1,70 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="resources/css/style.css?v=2">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <script type="text/x-handlebars">
+    {{#view SC.View id="topView"}}
+		{{#view SC.View id="logoView"}}
+			<img src="/resources/images/eurekaj_logo_w_text_60x60.png" />
+		{{/view}}
+		{{#view SC.Button id="adminButtonView" type="image"
+			target="EurekaJView.appController"
+			action="selectAdminPanel"
+		}}
+			<img src="/resources/images/ej_tools_49.png" />
+		{{/view}}
+		{{#view SC.Button id="adminLabelView"
+			target="EurekaJView.appController"
+			action="selectAdminPanel"
+		}}
+			Administration
+		{{/view}}
+    {{/view}}
+
+	{{#view SC.View id="instrumentationTreeView"}}
+		<div width="305px" class="headlineText">INSTRUMENTATION MENU</div>
+	{{/view}}
+  </script>
+
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
+  <script src="js/libs/sproutcore-2.0.beta.3.js"></script>
+  <script src="js/libs/sproutcore-datastore-2.0-20110720.min.js"></script>
+  <script src="js/EurekaJView.js"></script>
+  
+  <script src="js/libs/sproutcore-utils.js"></script>
+  <script src="js/data_sources/eureka_j.js"></script>
+  <script src="js/libs/sproutcore-statechart.js"></script>
+  <script src="js/coreStatechart.js"></script>
+  <script src="js/coreAction.js"></script>
+  
+  <script src="js/models/adminstration_tree_model.js"></script>
+  <script src="js/models/alert_model.js"></script>
+  <script src="js/models/chart_data_model.js"></script>
+  <script src="js/models/chart_grid_model.js"></script>
+  <script src="js/models/chart_series_model.js"></script>
+  <script src="js/models/email_group_model.js"></script>
+  <script src="js/models/email_recipient_model.js"></script>
+  <script src="js/models/instrumentation_group_model.js"></script>
+  <script src="js/models/instrumentation_table_model.js"></script>
+  <script src="js/models/instrumentation_tree_model.js"></script>
+  <script src="js/models/triggered_alert_model.js"></script>
+</body>
+</html>

@@ -44,5 +44,9 @@
             <artifactId>je</artifactId>
             <version>4.0.71</version>
         </dependency>
+        <dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
     </dependencies>
 </project>

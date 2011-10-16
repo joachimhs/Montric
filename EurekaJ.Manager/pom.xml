@@ -45,6 +45,10 @@
                             <name>eurekaj.db.absPath</name>
                             <value>/srv/EurekaJRunnable/eurekajData</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>log4j.configuration</name>
+                            <value>/srv/EurekaJRunnable/log4j.xml</value>
+                        </systemProperty>
                     </systemProperties>
                     <stopKey/>
                     <stopPort/>
