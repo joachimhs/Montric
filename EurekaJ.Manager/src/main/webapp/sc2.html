@@ -41,6 +41,9 @@
 
 	{{#view SC.View id="instrumentationTreeView"}}
 		<div width="305px" class="headlineText">INSTRUMENTATION MENU</div>
+		{{#collection contentBinding="EurekaJView.InstrumentationTreeController" tagName="ul" itemViewClass="EurekaJView.InstrumentationTreeNodeView"}}
+			{{view EurekaJView.Checkbox titleBinding="content.guiPath" valueBinding="content.isSelected" iconBinding="content.itemIcon"}}
+		{{/collection}}
 	{{/view}}
   </script>
 
@@ -51,9 +54,15 @@
   
   <script src="js/libs/sproutcore-utils.js"></script>
   <script src="js/data_sources/eureka_j.js"></script>
+  
+  <script src="js/controllers/instrumentationTreeController.js"></script>
+  
   <script src="js/libs/sproutcore-statechart.js"></script>
   <script src="js/coreStatechart.js"></script>
   <script src="js/coreAction.js"></script>
+  
+  <script src="js/views/instrumentationTreeNodeView.js"></script>
+  <script src="js/views/checkbox.js"></script>
   
   <script src="js/models/adminstration_tree_model.js"></script>
   <script src="js/models/alert_model.js"></script>

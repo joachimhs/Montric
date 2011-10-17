@@ -78,6 +78,25 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    	String jsonResponse = "";
+    	
+    	try {
+	    	if (SecurityManager.isAuthenticatedAsUser()) {
+	    		jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("instrumentationMenu",
+	                    getBerkeleyTreeMenuService().getTreeMenu(),
+	                    getBerkeleyTreeMenuService().getAlerts(),
+	                    getBerkeleyTreeMenuService().getGroupedStatistics(),
+	                    0, 15, true, null).toString();
+	    	}
+    	} catch (JSONException jsonException) {
+            throw new IOException("Unable to process JSON Request", jsonException);
+        }
+    	
+    	PrintWriter writer = response.getWriter();
+        if (jsonResponse.length() <= 2) {
+            jsonResponse = "{}";
+        }
+        writer.write(jsonResponse);
+        response.flushBuffer();
     }
 }

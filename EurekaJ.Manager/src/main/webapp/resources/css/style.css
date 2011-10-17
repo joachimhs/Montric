@@ -135,8 +135,9 @@ body #instrumentationTreeView {
 	top: 77px;
 	bottom: 0px;
 	left: 0px;
-	widht: 305px;
+	width: 350px;
 	background-color: #F0F8FF;
+	overflow: scroll;
 }
 
 .headlineText {
