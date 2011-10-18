@@ -3,7 +3,7 @@ var set = SC.set, get = SC.get;
 // TODO: Be explicit in the class documentation that you
 // *MUST* set the value of a checkbox through SproutCore.
 // Updating the value of a checkbox directly via jQuery objects
-// will not work.
+// will not work.<img {{bindAttr src="icon"}} />
 
 EurekaJView.Checkbox = SC.View.extend({
   title: null,
@@ -12,7 +12,7 @@ EurekaJView.Checkbox = SC.View.extend({
 
   classNames: ['sc-checkbox'],
 
-  defaultTemplate: SC.Handlebars.compile('<label><input type="checkbox" {{bindAttr checked="value"}}><img {{bindAttr src="icon"}} />{{title}}</label>'),
+  defaultTemplate: SC.Handlebars.compile('<label><input type="checkbox" {{bindAttr checked="value"}}>{{title}}</label>'),
 
   change: function() {
     SC.run.once(this, this._updateElementValue);

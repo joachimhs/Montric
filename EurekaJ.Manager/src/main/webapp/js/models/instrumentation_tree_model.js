@@ -36,7 +36,9 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
     }.property(),
 
     itemIcon: function() {
-    	if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "chart") == 0) {
+    	return '/resources/images/ej_chart_16.png';
+    	
+    	/*if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "chart") == 0) {
         	return '/resources/images/ej_chart_16.png';
         } else if (!this.get('hasChildren') && SC.compare(this.get('nodeType'), "alert") == 0) {
         	return '/resources/images/ej_chart_alert_16.png';
@@ -46,8 +48,8 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
             //return static_url('images/ej_groupedstats_16.png');
         } else {
             return '/resources/images/transparent_1x1.png';
-        }
-    }.property().cacheable(),
+        }*/
+    }.property(),
 
     checkboxKey: function() {
         if (this.get('parentPath')) {

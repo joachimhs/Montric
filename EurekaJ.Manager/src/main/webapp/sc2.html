@@ -41,21 +41,33 @@
 
 	{{#view SC.View id="instrumentationTreeView"}}
 		<div width="305px" class="headlineText">INSTRUMENTATION MENU</div>
-		{{#collection contentBinding="EurekaJView.InstrumentationTreeController" tagName="ul" itemViewClass="EurekaJView.InstrumentationTreeNodeView"}}
+		{{#collection contentBinding="EurekaJView.InstrumentationTreeController" itemViewClass="EurekaJView.InstrumentationTreeNodeView"}}
 			{{view EurekaJView.Checkbox titleBinding="content.guiPath" valueBinding="content.isSelected" iconBinding="content.itemIcon"}}
 		{{/collection}}
 	{{/view}}
+
+	
+		{{#collection id="chartGridView" contentBinding="EurekaJView.chartGridArrayController"}}
+			{{view EurekaJView.FlotChartView dataBinding="content.chart"}}
+		{{/collection}}
+	
   </script>
 
   <script>!window.jQuery && document.write(unescape('%3Cscript src="js/libs/jquery-1.6.1.min.js"%3E%3C/script%3E'))</script>
   <script src="js/libs/sproutcore-2.0.beta.3.js"></script>
   <script src="js/libs/sproutcore-datastore-2.0-20110720.min.js"></script>
+  <script src="js/libs/jquery.flot.js"></script>
   <script src="js/EurekaJView.js"></script>
   
   <script src="js/libs/sproutcore-utils.js"></script>
+  <script src="js/controllers/chartGridArrayController.js"></script>
   <script src="js/data_sources/eureka_j.js"></script>
   
+  
   <script src="js/controllers/instrumentationTreeController.js"></script>
+  
+  
+  
   
   <script src="js/libs/sproutcore-statechart.js"></script>
   <script src="js/coreStatechart.js"></script>
@@ -63,6 +75,7 @@
   
   <script src="js/views/instrumentationTreeNodeView.js"></script>
   <script src="js/views/checkbox.js"></script>
+  <script src="js/views/flotChartView.js"></script>
   
   <script src="js/models/adminstration_tree_model.js"></script>
   <script src="js/models/alert_model.js"></script>

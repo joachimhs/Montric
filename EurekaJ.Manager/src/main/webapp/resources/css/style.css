@@ -140,6 +140,21 @@ body #instrumentationTreeView {
 	overflow: scroll;
 }
 
+body #chartGridView {
+	position: absolute;
+	top: 77px;
+	bottom: 0px;
+	left: 350px;
+	right: 0px;
+	background-color: #bb0000;
+	
+}
+
+body #chartGridView .flot-chart {
+	height: 300px;
+	
+}
+
 .headlineText {
 	text-decoration: underline;
 	font-weight: bold;

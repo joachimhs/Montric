@@ -265,14 +265,14 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Logger.log("Getting Chart Grid Model");
             var requestStringJson = {};
 
-            if (EurekaJView.chartGridController.get('showHistoricalData') === NO) {
+            if (EurekaJView.chartGridArrayController.get('showHistoricalData') === false) {
                 requestStringJson = {
                     'getInstrumentationChartData': {
                         'id': storeKey,
                         'path': SC.Store.idFor(storeKey),
-                        'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
-                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
-                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                        'chartTimespan': EurekaJView.chartGridArrayController.selectedChartTimespan,
+                        'chartResolution': EurekaJView.chartGridArrayController.selectedChartResolution,
+                        'chartOffsetMs': EurekaJView.chartGridArrayController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             } else {
@@ -284,19 +284,18 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
                         'path': SC.Store.idFor(storeKey),
                         'chartFrom': fromMs,
                         'chartTo': toMs,
-                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
-                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
+                        'chartResolution': EurekaJView.chartGridArrayController.selectedChartResolution,
+                        'chartOffsetMs': EurekaJView.chartGridArrayController.selectedTimeZoneOffset * 60 * 60 * 1000
                     }
                 };
             }
 
-            SC.Request.postUrl('/chart').header({
-                'Accept': 'application/json'
-            }).json().notify(this, this.performRetrieveChartGridRecord, {
-                                                                            store: store,
-                                                                            storeKey: storeKey
-                                                                        }).send(requestStringJson);
-
+            var jqxhr = $.ajax({ url: '/chart' , type: 'POST', data: JSON.stringify(requestStringJson), processData: false})
+            .done(function(dataHashes) {
+            	//EurekaJView.chartGridController.triggerTimer();
+                store.dataSourceDidComplete(storeKey, dataHashes);
+            });
+            
             return YES;
 
         }
