@@ -17,7 +17,7 @@
 		<module>EurekaJ.Manager</module>
 		<module>EurekaJ.ManagerServer</module>
 		<module>EurekaJ.Proxy</module>
-		<module>EurekaJ.View</module>
+		<!-- >module>EurekaJ.View</module-->
 		<module>EurekaJ.API</module>
 		<module>EurekaJ.BerkeleyPlugin</module>
 		<module>EurekaJ.AlertEmailPlugin</module>

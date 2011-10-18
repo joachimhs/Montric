@@ -6,7 +6,7 @@
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
     <http use-expressions="true">
-        <form-login login-page="/login.html" default-target-url="/static/EurekaJView/en/eurekajview/index.html" authentication-failure-url="/index.html?loginFailed=true" />
+        <form-login login-page="/login.html" default-target-url="/sc1/index.html" authentication-failure-url="/index.html?loginFailed=true" />
         <intercept-url pattern="/index.html" access="permitAll"/>
         <intercept-url pattern="/login.html" access="permitAll"/>
         <intercept-url pattern="/favicon.ico" access="permitAll"/>

@@ -7,8 +7,8 @@
 #cp -R ./build/eurekaJView ../EurekaJ.Manager/src/main/webapp/eurekaJView
 
 #SproutCore build tools
-rm -rf ../EurekaJ.Manager/src/main/webapp/static
+#rm -rf ../EurekaJ.Manager/src/main/webapp/static
 rm -rf ./tmp
 /usr/bin/sc-build --build eurekajview
-cp -R ./tmp/build/static ../EurekaJ.Manager/src/main/webapp/static
+#cp -R ./tmp/build/static ../EurekaJ.Manager/src/main/webapp/static
 

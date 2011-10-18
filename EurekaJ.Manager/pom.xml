@@ -74,12 +74,12 @@
     </profiles>
 
     <dependencies>
-        <!-- EurekaJ View -->
+        <!-- EurekaJ View >
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.View</artifactId>
             <version>${project.version}</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.api</artifactId>

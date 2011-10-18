@@ -1,0 +1,106 @@
+.blacklabel {
+	color: black;
+}
+
+.whitelabel {
+	color: white;
+}
+
+.greylabel {
+    color: #606060;
+}
+
+.logoLabel {
+  font-family: Rockwell, Verdana, sans-serif;
+  letter-spacing: 0em;
+  margin: 0;
+  padding: 0;
+  font-size: 2.5em;
+  color: #00004e;
+}
+
+.redLabel {
+	color: #b60d02;
+	font-family: Rockwell, Verdana, sans-serif;
+  	letter-spacing: 0em;
+  	margin: 0;
+  	padding: 0;
+  	font-size: 2.5em;
+}
+
+.underlined {
+    text-decoration: underline
+}
+
+.thickBlackBorderTopAndBottom {
+	border-top: 4px solid #000;
+	border-bottom: 4px solid #000;
+}
+
+.thickBlackBorderTop {
+	border-top: 4px solid #000;
+}
+
+.thinBlackBorderTop {
+	border-top: 2px solid #000;
+}
+
+.thinBlackBorderBottom {
+	border-bottom: 1px solid #000;
+}
+
+.smallTextfield {
+    font-size: 10px;
+}
+
+.noborder {
+    border: none;
+}
+
+.thinBlackBorder {
+	border: 1px solid #000;
+}
+
+.blackRightborder {
+	border-right: 2px solid #000;
+}
+
+.thinBlackRightborder {
+	border-right: 1px solid #000;
+}
+
+.thinBlackLeftborder {
+	border-left: 1px solid #000;
+}
+
+.toolbarGradient {
+    background-image: static_url('images/header_bg.gif');
+}
+
+.whiteBackground {
+    background: #fff;
+}
+
+/* >>>>>>>>>> BEGIN source/table.css */
+.sc-theme .sc-table-header {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e6e6e6));
+  -webkit-background-clip: content-box;
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  line-height: 18px;
+}
+
+.sc-theme .sc-table-view {
+  background: #eee;
+  border: 1px solid #666;
+}
+
+.sc-theme .sc-table-header-sort-active {
+  background: #eee;
+}
+
+.sc-theme .sc-table {
+  background: #eee;
+  border: 1px solid #666;
+}
