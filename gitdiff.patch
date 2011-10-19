@@ -1,0 +1,757 @@
+diff --git .gitmodules .gitmodules
+index 097d5e3..c251e01 100644
+--- .gitmodules
++++ .gitmodules
+@@ -16,3 +16,6 @@
+ [submodule "EurekaJ.View/garcon"]
+ 	path = EurekaJ.View/garcon
+ 	url = https://github.com/erichocean/garcon.git
++[submodule "EurekaJ.View/frameworks/sctable"]
++	path = EurekaJ.View/frameworks/sctable
++	url = https://github.com/jslewis/sctable.git
+diff --git EurekaJ.Manager/src/main/java/org/eurekaj/manager/json/BuildJsonObjectsUtil.java EurekaJ.Manager/src/main/java/org/eurekaj/manager/json/BuildJsonObjectsUtil.java
+index a22c106..0c72bff 100644
+--- EurekaJ.Manager/src/main/java/org/eurekaj/manager/json/BuildJsonObjectsUtil.java
++++ EurekaJ.Manager/src/main/java/org/eurekaj/manager/json/BuildJsonObjectsUtil.java
+@@ -8,6 +8,7 @@ import java.text.NumberFormat;
+ import java.util.*;
+ 
+ import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
++import com.sun.tools.javac.util.Name;
+ import org.eurekaj.api.datatypes.*;
+ import org.jsflot.xydata.XYDataList;
+ import org.jsflot.xydata.XYDataPoint;
+@@ -380,4 +381,25 @@ public class BuildJsonObjectsUtil {
+ 
+         return emailObject.toString();
+     }
++
++    public static String generateArrayOfEndNodesStartingWith(List<TreeMenuNode> treeMenuList, String startingWith) {
++        JSONArray jsonArray = new JSONArray();
++
++        SortedMap<String, String> uniqueEndnodes = new TreeMap<String, String>();
++
++        for (TreeMenuNode treeNode : treeMenuList) {
++            String nodeid = startingWith + ";" + treeNode.getGuiPath().substring(treeNode.getGuiPath().lastIndexOf(":") + 1, treeNode.getGuiPath().length());
++
++            if (treeNode.getGuiPath().startsWith(startingWith)
++                    && uniqueEndnodes.get(nodeid) == null) {
++                uniqueEndnodes.put(nodeid, nodeid);
++            }
++        }
++
++        for (String nodename : uniqueEndnodes.values()) {
++            jsonArray.put(nodename);
++
++        }
++        return jsonArray.toString();
++    }
+ }
+diff --git EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/ChartServlet.java EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/ChartServlet.java
+index f0fe526..cf5bd80 100644
+--- EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/ChartServlet.java
++++ EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/ChartServlet.java
+@@ -3,6 +3,7 @@ package org.eurekaj.manager.servlets;
+ import org.eurekaj.api.datatypes.Alert;
+ import org.eurekaj.api.datatypes.GroupedStatistics;
+ import org.eurekaj.api.datatypes.LiveStatistics;
++import org.eurekaj.api.datatypes.TreeMenuNode;
+ import org.eurekaj.api.enumtypes.AlertStatus;
+ import org.eurekaj.manager.json.BuildJsonObjectsUtil;
+ import org.eurekaj.manager.json.ParseJsonObjects;
+@@ -29,7 +30,7 @@ import java.util.*;
+  */
+ public class ChartServlet extends EurekaJGenericServlet {
+ 
+-    private int getChartTimeSpan(JSONObject jsonRequest) throws JSONException {
++    protected int getChartTimeSpan(JSONObject jsonRequest) throws JSONException {
+         int chartTimespan = 10;
+         if (jsonRequest.has("chartTimespan")) {
+             chartTimespan = jsonRequest.getInt("chartTimespan");
+@@ -38,7 +39,7 @@ public class ChartServlet extends EurekaJGenericServlet {
+         return chartTimespan;
+     }
+ 
+-    private int getChartResolution(JSONObject jsonRequest) throws JSONException {
++    protected int getChartResolution(JSONObject jsonRequest) throws JSONException {
+         int chartResolution = 15;
+         if (jsonRequest.has("chartResolution")) {
+             chartResolution = jsonRequest.getInt("chartResolution");
+@@ -54,7 +55,7 @@ public class ChartServlet extends EurekaJGenericServlet {
+         return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_gs_:");
+     }
+ 
+-    private Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
++    protected Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
+         Long chartFromMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartFrom");
+         Long fromPeriod = null;
+ 
+@@ -70,7 +71,7 @@ public class ChartServlet extends EurekaJGenericServlet {
+         return fromPeriod;
+     }
+ 
+-    private Long getToPeriod(JSONObject jsonRequest) {
++    protected Long getToPeriod(JSONObject jsonRequest) {
+         Long chartToMs = ParseJsonObjects.parseLongFromJson(jsonRequest, "chartTo");
+         Long toPeriod = null;
+ 
+@@ -84,7 +85,7 @@ public class ChartServlet extends EurekaJGenericServlet {
+         return toPeriod;
+     }
+ 
+-    private Long getChartOffset(JSONObject jsonRequest) throws JSONException {
++    protected Long getChartOffset(JSONObject jsonRequest) throws JSONException {
+         long chartOffset = 0;
+         if (jsonRequest.has("chartOffsetMs")) {
+             chartOffset = jsonRequest.getLong("chartOffsetMs");
+@@ -125,7 +126,7 @@ public class ChartServlet extends EurekaJGenericServlet {
+                     alert = getBerkeleyTreeMenuService().getAlert(alertName);
+                     if (alert != null) {
+                         chartPath = alert.getGuiPath();
+-                        seriesLabel = "BerkeleyAlert: " + alert.getAlertName();
++                        seriesLabel = "Alert: " + alert.getAlertName();
+                     }
+ 
+                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
+@@ -149,13 +150,18 @@ public class ChartServlet extends EurekaJGenericServlet {
+                 } else {
+                     chartPath = pathFromClient;
+                     seriesLabel = chartPath;
+-
+                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
+                     Collections.sort(liveList);
+                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
+                 }
+ 
+-                jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
++                TreeMenuNode treeMenuNode = getBerkeleyTreeMenuService().getTreeMenu(chartPath);
++                if (treeMenuNode != null) {
++                    jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
++                } else {
++                    jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
++                }
++
+                 System.out.println("Got Chart Data:\n" + jsonResponse);
+             }
+         } catch (JSONException jsonException) {
+diff --git EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/InstrumentationTableServlet.java EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/InstrumentationTableServlet.java
+new file mode 100644
+index 0000000..521a977
+--- /dev/null
++++ EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/InstrumentationTableServlet.java
+@@ -0,0 +1,101 @@
++package org.eurekaj.manager.servlets;
++
++import org.eurekaj.api.datatypes.LiveStatistics;
++import org.eurekaj.api.datatypes.TreeMenuNode;
++import org.eurekaj.manager.json.BuildJsonObjectsUtil;
++import org.eurekaj.manager.security.*;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import javax.servlet.ServletException;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import java.io.IOException;
++import java.io.PrintWriter;
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * Created by IntelliJ IDEA.
++ * User: joahaa
++ * Date: 7/9/11
++ * Time: 10:43 AM
++ * To change this template use File | Settings | File Templates.
++ */
++public class InstrumentationTableServlet extends ChartServlet {
++
++    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++        String jsonResponse = "";
++
++        try {
++            JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
++            if (jsonObject.has("getInstrumentationTableData") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsUser()) {
++                JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationTableData");
++                String pathFromClient = keyObject.getString("path");
++                Double averageSum = 0.0d;
++                String startsWith = null;
++                String endsWith = null;
++
++                String[] pathParts = pathFromClient.split(";");
++                if (pathParts.length == 2) {
++                    startsWith = pathParts[0];
++                    endsWith = pathParts[1];
++
++                    int chartTimespan = getChartTimeSpan(keyObject);
++
++                    Long fromPeriod = getFromPeriod(chartTimespan, keyObject);
++                    Long toPeriod = getToPeriod(keyObject);
++
++                    int numNodesFound = 0;
++
++                    for (TreeMenuNode treeMenuNode : getBerkeleyTreeMenuService().getTreeMenu()) {
++                        if (treeMenuNode.getGuiPath().startsWith(startsWith)
++                                && treeMenuNode.getGuiPath().endsWith(endsWith)) {
++
++                            numNodesFound++;
++                            Double averageNodeValue = 0.0d;
++                            List<LiveStatistics> liveList = getBerkeleyTreeMenuService().getLiveStatistics(treeMenuNode.getGuiPath(), fromPeriod, toPeriod);
++
++                            if (liveList.size() > 0) {
++                                Double sumValue = 0.0d;
++                                for (LiveStatistics liveStatistics : liveList) {
++                                    sumValue += liveStatistics.getValue();
++                                }
++
++                                averageNodeValue = sumValue / liveList.size();
++                            }
++
++                            averageSum += averageNodeValue;
++                        }
++                    }
++
++                    if (numNodesFound > 0) {
++                        averageSum = averageSum / numNodesFound;
++                    }
++
++                }
++
++                JSONObject jsonResponseObj = new JSONObject();
++                jsonResponseObj.put("columnId", pathFromClient);
++                jsonResponseObj.put("name", endsWith);
++                jsonResponseObj.put("value", averageSum);
++                jsonResponse = jsonResponseObj.toString();
++            }
++
++            PrintWriter writer = response.getWriter();
++            if (jsonResponse.length() <= 2) {
++                jsonResponse = "{}";
++            }
++            writer.write(jsonResponse);
++            response.flushBuffer();
++
++        } catch (JSONException jsonException) {
++            throw new IOException("Unable to process JSON Request", jsonException);
++        }
++    }
++
++    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
++
++    }
++
++}
+diff --git EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/UserServlet.java EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/UserServlet.java
+index 89d4a10..3da2abc 100644
+--- EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/UserServlet.java
++++ EurekaJ.Manager/src/main/java/org/eurekaj/manager/servlets/UserServlet.java
+@@ -43,7 +43,7 @@ public class UserServlet extends EurekaJGenericServlet {
+ 
+         PrintWriter writer = response.getWriter();
+         if (jsonResponse.length() <= 2) {
+-            jsonResponse = "{\"loggedInUser\": []}";
++            jsonResponse = "{\"loggedInUser\": null}";
+         }
+         writer.write(jsonResponse);
+         response.flushBuffer();
+diff --git EurekaJ.Manager/src/main/webapp/WEB-INF/web.xml EurekaJ.Manager/src/main/webapp/WEB-INF/web.xml
+index 807a0c7..bbd32ca 100644
+--- EurekaJ.Manager/src/main/webapp/WEB-INF/web.xml
++++ EurekaJ.Manager/src/main/webapp/WEB-INF/web.xml
+@@ -53,6 +53,11 @@
+         <load-on-startup>1</load-on-startup>
+     </servlet>
+     <servlet>
++        <servlet-name>InstrumentationTableServlet</servlet-name>
++        <servlet-class>org.eurekaj.manager.servlets.InstrumentationTableServlet</servlet-class>
++        <load-on-startup>1</load-on-startup>
++    </servlet>
++    <servlet>
+         <servlet-name>EurekaJGenericServlet</servlet-name>
+         <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
+         <load-on-startup>1</load-on-startup>
+@@ -86,6 +91,10 @@
+         <servlet-name>UserServlet</servlet-name>
+         <url-pattern>/user</url-pattern>
+     </servlet-mapping>
++    <servlet-mapping>
++        <servlet-name>InstrumentationTableServlet</servlet-name>
++        <url-pattern>/table</url-pattern>
++    </servlet-mapping>
+ 
+ 
+     <filter>
+diff --git EurekaJ.View/Buildfile EurekaJ.View/Buildfile
+index 96303b5..78a6058 100644
+--- EurekaJ.View/Buildfile
++++ EurekaJ.View/Buildfile
+@@ -4,6 +4,6 @@
+ # ===========================================================================
+ 
+ # Add initial buildfile information here
+-config :all, :required => ['sproutcore', 'sproutcore/statechart', 'flot', 'ki', 'scui'], :theme => "sproutcore/ace"
++config :all, :required => ['sproutcore', 'sproutcore/statechart', 'flot', 'sctable', 'scui'], :theme => "sproutcore/ace"
+ 
+ proxy '/', :to => 'localhost:8081'
+\ No newline at end of file
+diff --git EurekaJ.View/apps/EurekaJView/controllers/chart_grid.js EurekaJ.View/apps/EurekaJView/controllers/chart_grid.js
+index 3c7e544..4f758eb 100644
+--- EurekaJ.View/apps/EurekaJView/controllers/chart_grid.js
++++ EurekaJ.View/apps/EurekaJView/controllers/chart_grid.js
+@@ -25,7 +25,19 @@ EurekaJView.chartGridController = SC.ArrayController.create(
+     showHistoricalData: NO,
+     nowShowingTab: null,
+     orderBy: 'name',
+-	selectedTimeZoneOffset: null,
++    selectedTimeZoneOffset: null,
++    tableDataColumns: [
++        SC.Object.create(SCTable.Column, {
++            name: "Name",
++            valueKey: 'name',
++            width: 150
++        }),
++        SC.Object.create(SCTable.Column, {
++            name: "Value",
++            valueKey: 'value',
++            width: 150
++        })
++    ],
+ 
+     init: function() {
+         var fromDate = this.get('selectedChartFrom').advance({minute: -10});
+@@ -33,8 +45,8 @@ EurekaJView.chartGridController = SC.ArrayController.create(
+             this.set('selectedChartFrom', fromDate);
+         }
+         this.generateChartStrings();
+-		
+-		this.set('selectedTimeZoneOffset', (-1 * new Date().getTimezoneOffset() / 60));
++
++        this.set('selectedTimeZoneOffset', (-1 * new Date().getTimezoneOffset() / 60));
+     },
+ 
+     nowShowingTabChange: function() {
+diff --git EurekaJ.View/apps/EurekaJView/data_sources/eureka_j.js EurekaJ.View/apps/EurekaJView/data_sources/eureka_j.js
+index 555e736..5c20645 100644
+--- EurekaJ.View/apps/EurekaJView/data_sources/eureka_j.js
++++ EurekaJ.View/apps/EurekaJView/data_sources/eureka_j.js
+@@ -35,6 +35,10 @@ EurekaJView.TRIGGERED_ALERTS_QUERY = SC.Query.local(EurekaJView.TriggeredAlertMo
+     orderby: 'triggeredDate'
+ });
+ 
++EurekaJView.INSTRUMENTATION_TABLE_QUERY = SC.Query.local(EurekaJView.InstrumentationTableModel, {
++    orderby: 'name'
++});
++
+ EurekaJView.LOGGED_IN_USER_QUERY = SC.Query.local(EurekaJView.UserModel, {});
+ 
+ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
+@@ -140,6 +144,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
+             return YES;
+         }
+ 
++        if (query === EurekaJView.INSTRUMENTATION_TABLE_QUERY) {
++            SC.Logger.log('fetching instrumentation Table...');
++            var requestStringJson = {
++                'getLoggedInUser': true
++            };
++
++            SC.Request.postUrl('/user').header({
++                'Accept': 'application/json'
++            }).json().notify(this, 'performFetchLoggedInUser', store, query).send(requestStringJson);
++
++            return YES;
++        }
++
+ 
+         return NO; // return YES if you handled the query
+     },
+@@ -204,7 +221,11 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
+     },
+ 
+     performFetchLoggedInUser: function(response, store, query) {
+-        if (SC.ok(response)) {
++        SC.Logger.log(response.body);
++        var results = "";
++        if (SC.ok(response) && SC.ok(results = response.get('body'))) {
++            SC.Logger.log('user: ' + response.get('body'));
++            SC.Logger.log('results: ' + results);
+             EurekaJView.userController.set('username', response.get('body').loggedInUser.username);
+             EurekaJView.userController.set('userRole', response.get('body').loggedInUser.userRole);
+         } else {
+@@ -275,6 +296,45 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
+             return YES;
+         }
+ 
++        if (recordType === EurekaJView.InstrumentationTableModel) {
++            SC.Logger.log("Getting Instrumentation Table Model...");
++            var requestStringJson = {};
++
++            if (EurekaJView.chartGridController.get('showHistoricalData') === NO) {
++                requestStringJson = {
++                    'getInstrumentationTableData': {
++                        'id': storeKey,
++                        'path': SC.Store.idFor(storeKey),
++                        'chartTimespan': EurekaJView.chartGridController.selectedChartTimespan,
++                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
++                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
++                    }
++                };
++            } else {
++                var fromMs = EurekaJView.chartGridController.selectedChartFrom.get('milliseconds');
++                var toMs = EurekaJView.chartGridController.selectedChartTo.get('milliseconds');
++                requestStringJson = {
++                    'getInstrumentationTableData': {
++                        'id': storeKey,
++                        'path': SC.Store.idFor(storeKey),
++                        'chartFrom': fromMs,
++                        'chartTo': toMs,
++                        'chartResolution': EurekaJView.chartGridController.selectedChartResolution,
++                        'chartOffsetMs': EurekaJView.chartGridController.selectedTimeZoneOffset * 60 * 60 * 1000
++                    }
++                };
++            }
++
++            SC.Request.postUrl('/table').header({
++                'Accept': 'application/json'
++            }).json().notify(this, this.performRetrieveTableRecord, {
++                                                                                 store: store,
++                                                                                 storeKey: storeKey
++                                                                             }).send(requestStringJson);
++
++            return YES;
++        }
++
+         return NO; // return YES if you handled the storeKey
+     },
+ 
+@@ -292,6 +352,20 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
+         } else store.dataSourceDidError(storeKey, response.get('body'));
+     },
+ 
++    performRetrieveTableRecord: function(response, params) {
++        var store = params.store;
++        var storeKey = params.storeKey;
++
++        // normal: load into store...response == dataHash
++        if (SC.$ok(response)) {
++            SC.Logger.log('Finished loading Instrumentation Table');
++            //SC.Logger.log(response.get('body').data);
++            EurekaJView.chartGridController.triggerTimer();
++            store.dataSourceDidComplete(storeKey, response.get('body'));
++            // error: indicate as such...response == error
++        } else store.dataSourceDidError(storeKey, response.get('body'));
++    },
++
+     performRetrieveEmailRecipientRecord: function(response, params) {
+         var store = params.store;
+         var storeKey = params.storeKey;
+diff --git EurekaJ.View/apps/EurekaJView/models/chart_grid_model.js EurekaJ.View/apps/EurekaJView/models/chart_grid_model.js
+index 051e6e1..ba2003b 100644
+--- EurekaJ.View/apps/EurekaJView/models/chart_grid_model.js
++++ EurekaJ.View/apps/EurekaJView/models/chart_grid_model.js
+@@ -13,10 +13,27 @@
+ */
+ EurekaJView.ChartGridModel = SC.Record.extend(
+ /** @scope EurekaJView.ChartGridModel.prototype */ {
+-	primaryKey: 'chart',
++	primaryKey: 'instrumentationNode',
+     chart: SC.Record.attr(Array),
+-    chartLabel: SC.Record.attr(String)
+-  	//label: SC.Record.attr(String),
+-	//data: SC.Record.attr(Array)
++    instrumentationNode: SC.Record.attr(String),
++    table: SC.Record.toMany('EurekaJView.InstrumentationTableModel'),
+ 
+-}) ;
++    isChart:  function() {
++        SC.Logger.log("isChart: " + this.get('chart'))
++        if ((this.get('chart'))) {
++            return true;
++        }
++
++        return false;
++    }.property(),
++
++    isTable:  function() {
++        SC.Logger.log("isTable: " + this.get('table'))
++        var isTableBoolean = false;
++        this.get('table').forEach(function(o) {
++            isTableBoolean = true;
++        }, this);
++
++        return isTableBoolean;
++    }.property()
++});
+diff --git EurekaJ.View/apps/EurekaJView/models/instrumentation_table_model.js EurekaJ.View/apps/EurekaJView/models/instrumentation_table_model.js
+new file mode 100644
+index 0000000..1578427
+--- /dev/null
++++ EurekaJ.View/apps/EurekaJView/models/instrumentation_table_model.js
+@@ -0,0 +1,26 @@
++// ==========================================================================
++// Project:   EurekaJView.InstrumentationTableModel
++// Copyright: ©2010 My Company, Inc.
++// ==========================================================================
++/*globals EurekaJView */
++
++/** @class
++
++  (Document your Model here)
++
++  @extends SC.Record
++  @version 0.1
++*/
++EurekaJView.InstrumentationTableModel = SC.Record.extend(
++/** @scope EurekaJView.InstrumentationTableModel.prototype */
++{
++
++    primaryKey: 'columnId',
++    columnId: SC.Record.attr(String),
++    name: SC.Record.attr(String),
++    value: SC.Record.attr(Number),
++
++    listValue: function() {
++        return this.get('name') + ' avg: ' + this.get('value');
++    }.property()
++});
+diff --git EurekaJ.View/apps/EurekaJView/models/instrumentation_tree_model.js EurekaJ.View/apps/EurekaJView/models/instrumentation_tree_model.js
+index 6be69ee..68e394f 100644
+--- EurekaJ.View/apps/EurekaJView/models/instrumentation_tree_model.js
++++ EurekaJ.View/apps/EurekaJView/models/instrumentation_tree_model.js
+@@ -48,7 +48,7 @@ EurekaJView.InstrumentationTreeModel = SC.Record.extend(
+     }.property(),
+ 
+     checkboxKey: function() {
+-        if (!this.get('hasChildren')) {
++        if (this.get('parentPath')) {
+             return 'isSelected';
+         } else {
+             return null;
+diff --git EurekaJ.View/apps/EurekaJView/resources/images/mini_222222.png EurekaJ.View/apps/EurekaJView/resources/images/mini_222222.png
+new file mode 100755
+index 0000000..67560da
+Binary files /dev/null and EurekaJ.View/apps/EurekaJView/resources/images/mini_222222.png differ
+diff --git EurekaJ.View/apps/EurekaJView/resources/images/mini_888888.png EurekaJ.View/apps/EurekaJView/resources/images/mini_888888.png
+new file mode 100755
+index 0000000..5c56455
+Binary files /dev/null and EurekaJ.View/apps/EurekaJView/resources/images/mini_888888.png differ
+diff --git EurekaJ.View/apps/EurekaJView/resources/table.css EurekaJ.View/apps/EurekaJView/resources/table.css
+new file mode 100755
+index 0000000..6867cfa
+--- /dev/null
++++ EurekaJ.View/apps/EurekaJView/resources/table.css
+@@ -0,0 +1,123 @@
++/* ==========================================================================
++ * Project:   SCTable - JavaScript Framework
++ * Copyright: ©2011 Jonathan Lewis and contributors.
++ * License:   Licensed under MIT license (see license.js)
++ * ==========================================================================
++ */
++
++/* Table */
++
++.sctable-table-view {
++  background-color: #e7e7e7;
++  white-space: nowrap;
++}
++
++ 
++/* Table Header */
++
++.sctable-header-scroll-view {
++  background-color: #e7e7e7;
++}
++
++.sctable-header-view div {
++  position: absolute;
++  overflow: hidden;
++}
++
++
++/* Column Headers */
++
++.sctable-column-header-view {
++  background-color: #e7e7e7;
++}
++
++.sctable-column-header-view .col-border {
++  top: 0px;
++  left: 0px;
++  bottom: 0px;
++  right: 0px;
++  border-left: 1px solid #f7f7f7;
++  border-right: 1px solid #d6d6d6;
++}
++
++.sctable-column-header-view .col-name {
++  top: 0px;
++  left: 0px;
++  bottom: 0px;
++  right: 0px;
++  margin-top: 5px;
++  margin-left: 3px;
++}
++
++.sctable-column-header-view .resize-handle {
++  top: 5px;
++  right: 0px;
++  width: 16px;
++  height: 16px;
++  cursor: col-resize;
++	background-image: static_url('images/mini_888888.png');
++	background-position: -32px -224px;
++}
++
++.sctable-column-header-view .sort-indicator {
++  top: 6px;
++  right: 10px;
++  width: 16px;
++  height: 16px;
++}
++
++.sctable-column-header-view .sort-indicator.asc {
++  background-image: static_url('images/mini_888888.png');
++  background-position: 0px -16px;
++}
++
++.sctable-column-header-view .sort-indicator.desc {
++  background-image: static_url('images/mini_888888.png');
++  background-position: -64px -16px;
++}
++
++.sctable-column-header-view.hover {
++  background-color: #efefef;
++}
++
++.sctable-column-header-view.sel {
++  background-color: #ffffff !important;
++}
++
++
++/* Table Rows */
++
++.sctable-row-view div {
++  position: absolute;
++  overflow: hidden;
++}
++
++.sctable-row-view {
++  border-left: 0px;
++  border-right: 0px;
++  border-top: 0px;
++  border-bottom: 1px solid #d6d6d6;
++}
++
++.sctable-row-view .cell {
++  border-right: 1px solid #f2f2f2;
++}
++
++.sctable-row-view .cell .text {
++  top: 2px;
++  left: 3px;
++}
++
++.sctable-row-view.sel {
++  background-color: #CDDBF6 !important;
++  border-right: 0px none;
++  color: black !important;
++}
++
++.sctable-row-view.sel .cell {
++  border-right: 0px none;
++}
++
++.sctable-row-view.hover {
++  background-color: #e7e7e7;
++}
+\ No newline at end of file
+diff --git EurekaJ.View/apps/EurekaJView/views/chart/chart_view.js EurekaJ.View/apps/EurekaJView/views/chart/chart_view.js
+index 7fc5cb1..e4df36e 100644
+--- EurekaJ.View/apps/EurekaJView/views/chart/chart_view.js
++++ EurekaJ.View/apps/EurekaJView/views/chart/chart_view.js
+@@ -14,7 +14,7 @@ EurekaJView.ChartView = SC.View.extend(
+ /** @scope EurekaJView.ChartViewTwo.prototype */
+ {
+ 	contentDisplayProperties: 'content'.w(),
+-    childViews: 'chartLabel chart'.w(),
++    childViews: 'chartLabel chart table'.w(),
+ 
+     chartLabel: SC.LabelView.design({
+         layout: {
+@@ -31,11 +31,49 @@ EurekaJView.ChartView = SC.View.extend(
+     }),
+ 
+ 	chart: Flot.GraphView.design({
++        isVisibleBinding: '.parentView.content.isChart',
+         layout: { top: 30, right: 5, bottom: 5, left: 5 },
+ 		seriesBinding: '.parentView.content',
+ 		//data: [SC.Object.create({label: 'set1', data:[[1,1], [2,2]]})],
+ 		debugInConsole: NO,
+ 		showTooltip: YES
+-	})
++	}),
++
++    /*table: SC.TableView.design({
++        isVisible: '.parentView.content.isTable',
++        layout: { top: 30, right: 5, bottom: 5, left: 5 },
++
++        columns: [
++            SC.TableColumn.design({
++                key: 'name',
++                title: 'value',
++                width: 200
++            })
++        ],
++
++        contentBinding: '.parentView.content.table'
++
++    })*/
++
++    /*table: SC.ListView.design({
++        isVisibleBinding: '.parentView.content.isTable',
++        layout: { top: 30, right: 5, bottom: 5, left: 5 },
++        backgroundColor: '#F0F8FF',
++        contentValueKey: "listValue",
++        rowHeight: 18,
++        borderStyle: SC.BORDER_NONE,
++        isSelectable: YES,
++
++        contentBinding: '.parentView.content.table'
++    }),   */
++
++    table: SCTable.TableView.design({
++      isVisibleBinding: '.parentView.content.isTable',
++      layout: { top: 30, right: 5, bottom: 5, left: 5 },
++
++      contentBinding: '.parentView.content.table',
++
++      columnsBinding: 'EurekaJView.chartGridController.tableDataColumns'
++    })
+ 
+ });
+diff --git EurekaJ.View/frameworks/flot/views/graph.js EurekaJ.View/frameworks/flot/views/graph.js
+index 9bcae10..6f580e3 100644
+--- EurekaJ.View/frameworks/flot/views/graph.js
++++ EurekaJ.View/frameworks/flot/views/graph.js
+@@ -80,9 +80,11 @@ Flot.GraphView = SC.View.extend(
+             if (this.debugInConsole) console.log('render data');
+         } else if (!SC.empty(seriesObject) && (seriesObject.get('status') & SC.Record.READY)) {
+             SC.Logger.log('seriesObject.chart: ' + seriesObject.get('chart'));
+-            var seriesArray = seriesObject.get('chart');
+-            Flot.plot(this.get('layer'), seriesArray, options);
+-            if (this.debugInConsole) console.log('render series');
++            if (seriesObject.get('chart')) {
++                var seriesArray = seriesObject.get('chart');
++                Flot.plot(this.get('layer'), seriesArray, options);
++                if (this.debugInConsole) console.log('render series');
++            }
+         } else {
+             if (this.debugInConsole) console.warn('data was empty');
+         }
+diff --git EurekaJ.View/frameworks/sctable EurekaJ.View/frameworks/sctable
+new file mode 160000
+index 0000000..77ddd6a
+--- /dev/null
++++ EurekaJ.View/frameworks/sctable
+@@ -0,0 +1 @@
++Subproject commit 77ddd6a5a59f981bf631ed5d3049d3a921b21078
