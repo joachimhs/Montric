@@ -34,6 +34,7 @@ public class EurekaJScriptServlet extends HttpServlet {
 	                                            "/sc1/js/controllers/tree_menu_selection_delegate.js",
 	                                            "/sc1/js/controllers/triggeredAlertListController.js",
 	                                            "/sc1/js/controllers/user/user_controller.js",
+	                                            "/sc1/js/controllers/admin/instrumentation_tree_admin_tree_controller.js",
 	                                            "/sc1/js/core_action.js",
 	                                            "/sc1/js/core_statechart.js",
 	                                            "/sc1/js/models/instrumentation_tree_model.js",
@@ -54,10 +55,11 @@ public class EurekaJScriptServlet extends HttpServlet {
 	                                            "/sc1/js/statechart/showingTopPanel/showingAdminPanel.js",
 	                                            "/sc1/js/statechart/showingTopPanel/showingTopPanel.js",
 	                                            "/sc1/js/statechart/showingTreePanel/showingTreePanel.js",
+	                                            "/sc1/js/views/instrumentationTree/instrumentation_tree_list_item.js",
 	                                            "/sc1/js/views/administration/administration_pane.js",
 	                                            "/sc1/js/views/administration/alert_administration.js",
 	                                            "/sc1/js/views/administration/email_recipients_administration.js",
-	                                            "/sc1/js/views/administration/tree_menu_administration.js",
+	                                            
 	                                            "/sc1/js/views/calendar.js",
 	                                            "/sc1/js/views/chart/chart_view.js",
 	                                            "/sc1/js/views/chart/chart_grid.js",
@@ -66,8 +68,9 @@ public class EurekaJScriptServlet extends HttpServlet {
 	                                            "/sc1/js/views/informationPanel/live_statistics_options.js",
 	                                            "/sc1/js/views/instrumentationTree/instrumentation_group_list_item.js",
 	                                            "/sc1/js/views/instrumentationTree/instrumentation_groups_administration.js",
-	                                            "/sc1/js/views/instrumentationTree/instrumentation_tree_list_item.js",
+	                                            
 	                                            "/sc1/js/views/instrumentationTree/instrumentation_tree_view.js",
+	                                            "/sc1/js/views/administration/tree_menu_administration.js",
 	                                            "/sc1/js/views/top_view.js",
 	                                            "/sc1/js/main_page.js",
 	                                            "/sc1/js/main.js"};
@@ -80,14 +83,21 @@ public class EurekaJScriptServlet extends HttpServlet {
 		
 		for (String scriptFilename : scriptArray) {
 			String absoluteFilePath = getServletContext().getRealPath(scriptFilename);
-            BufferedReader inStream = new BufferedReader(new InputStreamReader(new FileInputStream(absoluteFilePath)));
-            String nextLine = inStream.readLine();
-            while (nextLine != null) {
-            	scripts.append(nextLine);
-            	scripts.append("\n");
-            	nextLine = inStream.readLine();
+			
+			BufferedReader inStream = null;
+			try {
+            	inStream = new BufferedReader(new InputStreamReader(new FileInputStream(absoluteFilePath)));
+	            String nextLine = inStream.readLine();
+	            while (nextLine != null) {
+	            	scripts.append(nextLine).append("\n");
+	            	nextLine = inStream.readLine();
+	            }
+	            scripts.append("\n");
+            } finally {
+            	if (inStream != null) {
+            		inStream.close();
+            	}
             }
-            scripts.append("\n");
 		}
 		
 		PrintWriter writer = response.getWriter();

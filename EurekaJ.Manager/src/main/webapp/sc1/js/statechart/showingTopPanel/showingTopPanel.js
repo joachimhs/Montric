@@ -21,6 +21,7 @@ EurekaJView.showingTopPanel = SC.State.extend({
             EurekaJView.updateAlertsAction();
             EurekaJView.updateInstrumentationGroupsAction();
             EurekaJView.updateEmailGroupsAction();
+            EurekaJView.updateTreeMenuAdminAction();
             this.gotoState('showingAdminPanel');
         }
     }),

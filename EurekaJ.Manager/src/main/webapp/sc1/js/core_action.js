@@ -93,6 +93,11 @@ EurekaJView.mixin( {
     updateInstrumentationGroupsAction: function() {
         EurekaJView.chartGroupsAdminController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.InstrumentationGroupModel));
     },
+    
+    updateTreeMenuAdminAction: function() {
+    	SC.Logger.log('updateTreeMenuAdminAction');
+    	EurekaJView.instrumentationTreeAdminTreeController.populate();
+    },
 
     saveInformationGroupsAction: function() {
         //Commit all changes to Chart Groups
@@ -133,6 +138,65 @@ EurekaJView.mixin( {
     			selectedGroup.commitRecord();
     		}, this)
     	}
+    },
+    
+    deleteTreeMenuItemButtonAction: function() {
+    	SC.Logger.log('Deleting selected items from the treemenu');
+    	var hasNodes = NO;
+    	var nodes = EurekaJView.instrumentationTreeAdminTreeController.getSelectedNodes();
+    	
+    	var nodesForDeletionText = "";
+    	
+    	nodes.forEach(function(node) {
+    		hasNodes = YES;
+    		nodesForDeletionText = nodesForDeletionText + "* " + node.get('guiPath') + "\n"; 
+    	}, this);
+    	
+    	if (hasNodes) {
+    		var description = "The Item will be permanently removed from the application along with its related data. \nThis action cannot be undone!\nThe following nodes and its subnodes will be deleted:\n" + nodesForDeletionText;
+    		
+	    	SC.AlertPane.warn({
+	            message: "Are you sure you want to delete the selected Items from the Instrumentation Menu?",
+	            description: description,
+	            buttons: [ { title: "Delete" }, { title: "Cancel" } ],
+	            delegate: EurekaJView.instrumentationTreeAdminTreeController
+	          });
+    	} else {
+    		SC.AlertPane.warn({
+	            message: "You must select at least one node to delete.",
+	            buttons: [ { title: "Cancel" } ],
+	          });
+    	}
+    },
+    
+    confirmDeleteSelectedInstrumentationNodes: function() {
+    	var nodeIndex = 0;
+    	var nodesForDeletionText = "[";
+    	var nodes = EurekaJView.instrumentationTreeAdminTreeController.getSelectedNodes();
+    	
+    	nodes.forEach(function(node) {
+    		if (nodeIndex > 0) {
+    			nodesForDeletionText += ", "
+    		}
+    		nodesForDeletionText = nodesForDeletionText + "'" + node.get('guiPath') + "'";
+    		nodeIndex++;
+    		node.set('isSelected', NO);
+    	}, this);
+    	
+    	nodesForDeletionText += "]";
+    	
+    	if (nodeIndex > 0) {
+    		var requestStringJson = {
+                'deleteInstrumentationMenu': 'instrumentationMenu',
+                'nodes': nodesForDeletionText
+            };
+
+            SC.Request.postUrl('/instrumentationMenu').header({
+                'Accept': 'application/json'
+            }).json().send(requestStringJson);
+    	}
+    	
+    	
     },
 
     updateEmailGroupsAction: function() {
