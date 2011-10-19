@@ -13,11 +13,11 @@ A long-awaited feature, the ability to delete nodes from the Instrumentation Tre
 
 h3. Downloads
 
-EurekaJ 1.0.2 can be downloaded from: <a href="http://nightly.haagen.name/EurekaJ/1.0.3/">http://nightly.haagen.name/EurekaJ/1.0.3/</a>.
+EurekaJ 1.0.3 can be downloaded from: <a href="http://nightly.haagen.name/EurekaJ/1.0.3/">http://nightly.haagen.name/EurekaJ/1.0.3/</a>.
 
 h3. Changelog
 
-1.0.3 - cache sizing options and node deletiaon 
+1.0.3 - cache sizing options and node deletion 
 
 * Adding cache sizing options to the Berkeley DB plugin
 * Adding deletion of TreeMenu nodes via the administration menu

@@ -9,7 +9,7 @@ title: Downloads
 
 For every build issued by the CI (Jenkins), the artifacts are published to the following URL. The latest build will always be in the "latest" directory: <a href="http://nightly.haagen.name/EurekaJ/">http://nightly.haagen.name/EurekaJ/</a>.
 
-Version 1.0.2 can be downloaded from <a href="http://nightly.haagen.name/EurekaJ/1.0.2/">http://nightly.haagen.name/EurekaJ/1.0.2/</a>.
+Version 1.0.3 can be downloaded from <a href="http://nightly.haagen.name/EurekaJ/1.0.3/">http://nightly.haagen.name/EurekaJ/1.0.3/</a>.
 
 BTrace can be downloaded from the BTrace project website: <a href="http://kenai.com/projects/btrace">http://kenai.com/projects/btrace</a>
 
