@@ -33,8 +33,8 @@ EurekaJView.AdministrationPaneView = SC.SheetPane.extend(
             items: [
                 {title: 'Alerts', value: 'EurekaJView.AlertAdministrationView'},
                 {title: 'Chart Groups', value: 'EurekaJView.InstrumentationGroupsAdministrationView'},
-                {title: 'Email Recipients', value: 'EurekaJView.EmailRecipientsAdministrationView'}
-                //{title: 'Instrumentation Menu', value: 'EurekaJView.TreeMenuAdministrationView'}
+                {title: 'Email Recipients', value: 'EurekaJView.EmailRecipientsAdministrationView'},
+                {title: 'Instrumentation Menu', value: 'EurekaJView.TreeMenuAdministrationView'}
             ]
 
         }),

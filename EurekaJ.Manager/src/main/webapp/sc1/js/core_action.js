@@ -170,33 +170,26 @@ EurekaJView.mixin( {
     },
     
     confirmDeleteSelectedInstrumentationNodes: function() {
-    	var nodeIndex = 0;
-    	var nodesForDeletionText = "[";
+    	SC.Logger.log('confirmDeleteSelectedInstrumentationNodes');
+    	var nodesForDeletion = [];
     	var nodes = EurekaJView.instrumentationTreeAdminTreeController.getSelectedNodes();
     	
     	nodes.forEach(function(node) {
-    		if (nodeIndex > 0) {
-    			nodesForDeletionText += ", "
-    		}
-    		nodesForDeletionText = nodesForDeletionText + "'" + node.get('guiPath') + "'";
-    		nodeIndex++;
+    		nodesForDeletion.push(node.get('guiPath'));
     		node.set('isSelected', NO);
     	}, this);
     	
-    	nodesForDeletionText += "]";
-    	
-    	if (nodeIndex > 0) {
+    	if (nodesForDeletion.length > 0) {
     		var requestStringJson = {
-                'deleteInstrumentationMenu': 'instrumentationMenu',
-                'nodes': nodesForDeletionText
+                'deleteInstrumentationMenuNodes': nodesForDeletion
             };
 
+    		SC.Logger.log('confirmDeleteSelectedInstrumentationNodes: ' + requestStringJson);
+    		
             SC.Request.postUrl('/instrumentationMenu').header({
                 'Accept': 'application/json'
             }).json().send(requestStringJson);
-    	}
-    	
-    	
+    	}    	
     },
 
     updateEmailGroupsAction: function() {

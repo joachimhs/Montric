@@ -14,14 +14,6 @@
 
        <!-- the thread pool will grow only up to 200 -->
        <Set name="maxThreads">768</Set>
-
-       <!-- indicates that having 20 and below, the pool will be
-considered low on threads -->
-       <Set name="lowThreads">100</Set>
-
-       <!-- The number of queued jobs (or idle threads) needed before the
-thread pool is grown (or shrunk) -->
-       <Set name="SpawnOrShrinkAt">2</Set>
      </New>
    </Set>
 

@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.security.SecurityManager;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,29 +42,11 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             log.debug("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("getInstrumentationMenu") && SecurityManager.isAuthenticatedAsUser()) {
-                String menuId = jsonObject.getString("getInstrumentationMenu");
-                boolean includeCharts = jsonObject.has("includeCharts") && jsonObject.getBoolean("includeCharts");
+            jsonResponse = buildInstrumentationMenu(jsonResponse, jsonObject);
 
-                String includeChartType = null;
-                if (jsonObject.has("nodeType")) {
-                    includeChartType = jsonObject.getString("nodeType");
-                }
-                jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId,
-                        getBerkeleyTreeMenuService().getTreeMenu(),
-                        getBerkeleyTreeMenuService().getAlerts(),
-                        getBerkeleyTreeMenuService().getGroupedStatistics(),
-                        0, 15, includeCharts, includeChartType).toString();
-
-                log.debug("Got Tree Type Menu:\n" + jsonResponse);
-            }
-
-            if (jsonObject.has("getInstrumentationMenuNode") && SecurityManager.isAuthenticatedAsUser()) {
-                String nodeId = jsonObject.getString("getInstrumentationMenuNode");
-                TreeMenuNode node = getBerkeleyTreeMenuService().getTreeMenu(nodeId);
-                jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
-                log.debug("Got Node: \n" + jsonResponse);
-            }
+            jsonResponse = buildInstrumentationMenuNode(jsonResponse,jsonObject);
+            
+            deleteInstrumentationMenuNode(jsonObject);
 
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
@@ -77,9 +60,51 @@ public class InstrumentationMenuServlet extends EurekaJGenericServlet {
         response.flushBuffer();
     }
 
+	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject) throws JSONException {
+		if (jsonObject.has("getInstrumentationMenuNode") && SecurityManager.isAuthenticatedAsUser()) {
+		    String nodeId = jsonObject.getString("getInstrumentationMenuNode");
+		    TreeMenuNode node = getBerkeleyTreeMenuService().getTreeMenu(nodeId);
+		    jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
+		    log.debug("Got Node: \n" + jsonResponse);
+		}
+		return jsonResponse;
+	}
+
+	private String buildInstrumentationMenu(String jsonResponse, JSONObject jsonObject) throws JSONException {
+		if (jsonObject.has("getInstrumentationMenu") && SecurityManager.isAuthenticatedAsUser()) {
+		    String menuId = jsonObject.getString("getInstrumentationMenu");
+		    boolean includeCharts = jsonObject.has("includeCharts") && jsonObject.getBoolean("includeCharts");
+
+		    String includeChartType = null;
+		    if (jsonObject.has("nodeType")) {
+		        includeChartType = jsonObject.getString("nodeType");
+		    }
+		    jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId,
+		            getBerkeleyTreeMenuService().getTreeMenu(),
+		            getBerkeleyTreeMenuService().getAlerts(),
+		            getBerkeleyTreeMenuService().getGroupedStatistics(),
+		            0, 15, includeCharts, includeChartType).toString();
+
+		    log.debug("Got Tree Type Menu:\n" + jsonResponse);
+		}
+		return jsonResponse;
+	}
+
+	private void deleteInstrumentationMenuNode(JSONObject jsonObject) throws JSONException {
+		if (jsonObject.has("deleteInstrumentationMenuNodes") && SecurityManager.isAuthenticatedAsAdmin()) {
+			JSONArray nodes = jsonObject.getJSONArray("deleteInstrumentationMenuNodes");
+			for (int i = 0; i < nodes.length(); i++) {
+				String guiPath = nodes.getString(i);
+				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath);
+			}
+			
+		}
+	}
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String jsonResponse = "";
     	
+    	//SC 2.0 stuff for future implementation
     	try {
 	    	if (SecurityManager.isAuthenticatedAsUser()) {
 	    		jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("instrumentationMenu",

@@ -60,4 +60,6 @@ public interface TreeMenuService {
     public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts);
 
     public void deleteOldLiveStatistics(Date date);
+    
+    public void deleteTreeMenuNode(String guiPath);
 }

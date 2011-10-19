@@ -42,5 +42,4 @@ EurekaJView.instrumentationTreeAdminTreeController = SC.TreeController.create(
             break;
         }
     }
-
 });

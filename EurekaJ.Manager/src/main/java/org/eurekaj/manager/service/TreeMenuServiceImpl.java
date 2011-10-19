@@ -118,4 +118,9 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 
         getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date);
     }
+    
+    @Override
+    public void deleteTreeMenuNode(String guiPath) {
+    	getDbPlugin().getTreeMenuDao().deleteTreeMenu(guiPath);    	
+    }
 }

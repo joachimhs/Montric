@@ -193,6 +193,19 @@ public class BerkeleyTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
 		}
     }
 
-
+    @Override
+    public void deleteTreeMenu(String guiPath) {
+		EntityCursor<BerkeleyTreeMenuNode> pi_cursor = treeMenuPrimaryIdx.entities();
+		try {
+		    for (BerkeleyTreeMenuNode node : pi_cursor) {
+		        if (node.getGuiPath().startsWith(guiPath) || node.getGuiPath().equals(guiPath)) {
+		        	treeMenuPrimaryIdx.delete(node.getGuiPath());
+		        }
+		    }
+		// Always make sure the cursor is closed when we are done with it.
+		} finally {
+			pi_cursor.close();
+		} 
+    }
 
 }

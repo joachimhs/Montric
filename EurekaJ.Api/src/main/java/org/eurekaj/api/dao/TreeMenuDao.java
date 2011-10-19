@@ -29,5 +29,7 @@ public interface TreeMenuDao {
 	public List<TreeMenuNode> getTreeMenu();
 
 	public TreeMenuNode getTreeMenu(String guiPath);
+	
+	public void deleteTreeMenu(String guiPath);
 
 }
