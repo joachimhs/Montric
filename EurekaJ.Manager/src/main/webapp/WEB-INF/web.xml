@@ -58,6 +58,11 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
+        <servlet-name>EurekaJScriptServlet</servlet-name>
+        <servlet-class>org.eurekaj.manager.servlets.EurekaJScriptServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
         <servlet-name>EurekaJGenericServlet</servlet-name>
         <servlet-class>org.eurekaj.manager.servlets.EurekaJGenericServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
@@ -90,6 +95,10 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EurekaJScriptServlet</servlet-name>
+        <url-pattern>/eurekajscripts</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InstrumentationTableServlet</servlet-name>
