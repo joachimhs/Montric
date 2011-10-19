@@ -1,8 +1,9 @@
-1.0.3 - cache sizing options and node deletiaon 
+1.0.3 - cache sizing options and node deletion 
 
 * Adding cache sizing options to the Berkeley DB plugin
 * Adding deletion of TreeMenu nodes via the administration menu
 * Restructuring the SproutCore app, so that the SC Buildtools isnt required to develop EurekaJ
+* Started work on the SproutCore 2.0 port of the application
 
 1.0.2 - Alert Plugin Phase 1
 
