@@ -14,6 +14,6 @@ title: Downloads By File
 <li>1.0-jar-with-dependencies.jar - 3 downloads</li>
 <li>1.0.1.-jar-with-dependencies.jar - 57 downloads</li>
 <li>1.0.2-jar-with-dependencies.jar - 28 downloads</li>
-<li>1.0.3-jar-with-dependencies.jar - 1 downloads</li>
+<li>1.0.3-jar-with-dependencies.jar - 2 downloads</li>
 </ul>
 </div>
