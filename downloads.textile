@@ -1,13 +1,14 @@
----
-layout: master
-title: Downloads By File
----
-
-<div class="panel" style="width: 100%;">
-
-<h1>{{page.title}}</h1>
-
-<ul><li>1.0.3.zip - 65 downloads</li></ul>
-
-</div>
-	
+---\n
+layout: master\n
+title: Downloads By File\n
+---\n
+<div class="panel" style="width: 100%;">\n
+<h1>{{page.title}}</h1>\n
+<ul>\n
+<li>
+1.0.zip - 
+grep -c 1.0.zip
+ downloads</li>\n
+</ul>\n
+<li>1.0.3.zip - 65 downloads</li></ul>\n
+</div>\n
