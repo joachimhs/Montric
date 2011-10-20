@@ -5,22 +5,10 @@ title: Downloads By File
 <div class="panel" style="width: 100%;">
 <h1>{{page.title}}</h1>
 <ul>
-<li>
-1.0.zip - 
-3
- downloads</li>
-<li>
-1.0.1.zip - 
-70
- downloads</li>
-<li>
-1.0.2.zip - 
-235
- downloads</li>
-<li>
-1.0.3.zip - 
-2
- downloads</li>
+<li>1.0.zip -3 downloads</li>
+<li>1.0.1.zip -70 downloads</li>
+<li>1.0.2.zip -235 downloads</li>
+<li>1.0.3.zip -2 downloads</li>
 </ul>
 <li>1.0.3.zip - 65 downloads</li></ul>
 </div>
