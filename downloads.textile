@@ -7,7 +7,7 @@ title: Downloads By File
 <ul>
 <li>1.0.zip - 3 downloads</li>
 <li>1.0.1.zip - 70 downloads</li>
-<li>1.0.2.zip - 235 downloads</li>
+<li>1.0.2.zip - 244 downloads</li>
 <li>1.0.3.zip - 2 downloads</li>
 </ul>
 <ul>
