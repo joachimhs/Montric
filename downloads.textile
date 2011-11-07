@@ -5,15 +5,15 @@ title: Downloads By File
 <div class="panel" style="width: 100%;">
 <h1>{{page.title}}</h1>
 <ul>
-<li>1.0.zip - 3 downloads</li>
+<li>1.0.zip - 4 downloads</li>
 <li>1.0.1.zip - 70 downloads</li>
-<li>1.0.2.zip - 263 downloads</li>
-<li>1.0.3.zip - 630 downloads</li>
+<li>1.0.2.zip - 283 downloads</li>
+<li>1.0.3.zip - 667 downloads</li>
 </ul>
 <ul>
-<li>1.0-jar-with-dependencies.jar - 4 downloads</li>
+<li>1.0-jar-with-dependencies.jar - 5 downloads</li>
 <li>1.0.1.-jar-with-dependencies.jar - 57 downloads</li>
-<li>1.0.2-jar-with-dependencies.jar - 29 downloads</li>
-<li>1.0.3-jar-with-dependencies.jar - 37 downloads</li>
+<li>1.0.2-jar-with-dependencies.jar - 30 downloads</li>
+<li>1.0.3-jar-with-dependencies.jar - 43 downloads</li>
 </ul>
 </div>
