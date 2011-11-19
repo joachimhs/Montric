@@ -27,7 +27,7 @@ import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
 
-@Entity(version=3)
+@Entity(version=4)
 public class BerkeleyAlert implements Comparable<BerkeleyAlert>, Alert {
 	@PrimaryKey private String alertName;
     private String guiPath;
