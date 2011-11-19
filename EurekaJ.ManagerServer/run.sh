@@ -17,7 +17,7 @@ rm -rf $app
 unzip $app.zip > /dev/null
 #cd $currdir
 #sh $app/bin/$server > /dev/null 2>&1 &
-classpathVar=$(find $workingdir/$app -name '*.jar' -exec printf :{} ';')$(find $workingdir/$app -name '*.war' -exec printf :{} ';')
+classpathVar=$(find $workingdir/$app -name '*.jar' -exec printf :{} ';')$(find $workingdir/$app -name '*.war' -exec printf :{} ';')$(find $workingdir/lib -name '*.jar' -exec printf :{} ';')
 
 #Start EurekaJ Manager
 nohup java $JAVA_OPTS -classpath $classpathVar -Dbasedir=$workingdir/$app $execClass > /dev/null 2>&1 &
