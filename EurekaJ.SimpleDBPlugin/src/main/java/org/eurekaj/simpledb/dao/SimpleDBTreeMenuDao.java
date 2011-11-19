@@ -240,4 +240,9 @@ public class SimpleDBTreeMenuDao implements TreeMenuDao, LiveStatisticsDao {
     public void deleteLiveStatisticsOlderThan(Date date) {
         throw new NotImplementedException();
     }
+
+	@Override
+	public void deleteTreeMenu(String guiPath) {
+		throw new NotImplementedException();		
+	}
 }
