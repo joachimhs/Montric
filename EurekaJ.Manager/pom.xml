@@ -8,7 +8,7 @@
     <parent>
         <artifactId>eurekaJ.parent</artifactId>
         <groupId>org.eurekaJ</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
     <build>
 
@@ -100,56 +100,32 @@
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.api</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.berkeleyPlugin</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.alertEmailPlugin</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.nexmoPlugin</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
-        <!--dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.simpleDBPlugin</artifactId>
-            <version>${project.version}</version>
-        </dependency-->
-        <!-- Jetty -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-jmx</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-        </dependency>
-        <!-- //Jetty -->
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
-
 
         <!-- JSF Flot -->
         <dependency>
             <groupId>org.jsflot</groupId>
             <artifactId>jsflot</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- //JSF Flot -->
 
@@ -160,26 +136,30 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-parent</artifactId>
             <type>pom</type>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>3.0.5.RELEASE</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>3.0.5.RELEASE</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

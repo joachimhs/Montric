@@ -59,6 +59,7 @@ public class BerkeleyAlertDao implements AlertDao {
 	public void persistAlert(Alert alert) {
         BerkeleyAlert berkeleyAlert = new BerkeleyAlert(alert);
 		alertPrimaryIdx.put(berkeleyAlert);
+		
 	}
 
     @Override

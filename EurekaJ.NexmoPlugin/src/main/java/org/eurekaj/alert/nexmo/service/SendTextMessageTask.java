@@ -40,7 +40,7 @@ public class SendTextMessageTask implements Runnable {
 			try {
 				String requestString = buildRequestString(recipient);
 				String responseText = "";
-				URLConnection connection = new URL("http://rest.nexmo.com/sms/json?" + requestString).openConnection();
+				URLConnection connection = new URL("https://rest.nexmo.com/sms/json?" + requestString).openConnection();
 				InputStream response = connection.getInputStream();
 				BufferedReader reader = null;
 			    try {
