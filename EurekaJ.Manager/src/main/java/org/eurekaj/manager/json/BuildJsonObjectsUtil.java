@@ -327,6 +327,12 @@ public class BuildJsonObjectsUtil {
                 emailGroupArray.put(emailRecipientGroup);
             }
             alertObject.put("alertNotifications", emailGroupArray);
+            
+            JSONArray selectedPluginsArray = new JSONArray();
+            for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
+            	selectedPluginsArray.put(selectedPlugin);
+            }
+            alertObject.put("alertPlugins", selectedPluginsArray);
 
             alertArray.put(alertObject);
         }
@@ -334,6 +340,22 @@ public class BuildJsonObjectsUtil {
         alertsObject.put("alerts", alertArray);
 
         return alertsObject.toString();
+    }
+    
+    public static String generateAlertPluginsJson(List<String> loadedPlugins) throws JSONException {
+    	JSONObject alertPluginsObject = new JSONObject();
+    	
+    	JSONArray alertPluginArray = new JSONArray();
+    	for (String loadedPlugin : loadedPlugins) {
+    		JSONObject alertPluginObject = new JSONObject();
+    		alertPluginObject.put("alertPluginName", loadedPlugin);
+    		
+    		alertPluginArray.put(alertPluginObject);
+    	}
+    	
+    	alertPluginsObject.put("alertPlugins", alertPluginArray);
+    	
+    	return alertPluginsObject.toString();
     }
 
     public static String generateTriggeredAlertsJson(List<TriggeredAlert> triggeredAlertList) throws JSONException {

@@ -42,6 +42,7 @@ public class ManagerAlert implements Alert {
 	private long alertDelay = 0;
 	private AlertStatus status = AlertStatus.NORMAL;
 	private List<String> selectedEmailSenderList = new ArrayList<String>();
+	private List<String> selectedAlertPluginList = new ArrayList<String>();
 
     public ManagerAlert() {
     }
@@ -56,6 +57,7 @@ public class ManagerAlert implements Alert {
         this.alertDelay = alert.getAlertDelay();
         this.status = alert.getStatus();
         this.selectedEmailSenderList = alert.getSelectedEmailSenderList();
+        this.selectedAlertPluginList = alert.getSelectedAlertPluginList();
     }
 
     public String getAlertName() {
@@ -129,4 +131,13 @@ public class ManagerAlert implements Alert {
     public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
         this.selectedEmailSenderList = selectedEmailSenderList;
     }
+
+	@Override
+	public List<String> getSelectedAlertPluginList() {
+		return selectedAlertPluginList;
+	}
+	
+	public void setSelectedAlertPluginList(List<String> selectedAlertPluginList) {
+		this.selectedAlertPluginList = selectedAlertPluginList;
+	}
 }

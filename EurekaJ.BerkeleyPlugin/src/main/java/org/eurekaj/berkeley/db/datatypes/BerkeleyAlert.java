@@ -38,6 +38,7 @@ public class BerkeleyAlert implements Comparable<BerkeleyAlert>, Alert {
 	private long alertDelay = 0;
 	private AlertStatus status = AlertStatus.NORMAL;
 	private List<String> selectedEmailSenderList = new ArrayList<String>();
+	private List<String> selectedAlertPluginList = new ArrayList<String>();
 
 
     public BerkeleyAlert(Alert alert) {
@@ -50,6 +51,7 @@ public class BerkeleyAlert implements Comparable<BerkeleyAlert>, Alert {
         this.alertDelay = alert.getAlertDelay();
         this.status = alert.getStatus();
         this.selectedEmailSenderList = alert.getSelectedEmailSenderList();
+        this.selectedAlertPluginList = alert.getSelectedAlertPluginList();
     }
 
 	public BerkeleyAlert() {
@@ -126,8 +128,14 @@ public class BerkeleyAlert implements Comparable<BerkeleyAlert>, Alert {
 
     public void setSelectedEmailSenderList(List<String> selectedEmailSenderList) {
         this.selectedEmailSenderList = selectedEmailSenderList;
-    }
-
+    }    
+    
+    public void setSelectedAlertPluginList(List<String> selectedAlertPluginList) {
+		this.selectedAlertPluginList = selectedAlertPluginList;
+	}
+    
+    
+    
     public int compareTo(BerkeleyAlert other) {
 		if (other == null || other.getGuiPath() == null) {
 			return 1;
@@ -138,6 +146,11 @@ public class BerkeleyAlert implements Comparable<BerkeleyAlert>, Alert {
 		}
 		
 		return this.getGuiPath().compareTo(other.getGuiPath());
+	}
+
+	@Override
+	public List<String> getSelectedAlertPluginList() {
+		return selectedAlertPluginList;
 	}
 	
 	

@@ -43,6 +43,20 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
             emailNotificationSelectionSet.addObjects(emailNotificationsForSelect);
 
             EurekaJView.alertNotificationController.set('selection', emailNotificationSelectionSet);
+            
+            //Set selected Alert Plugins
+            var alertPluginsForSelect = selectedItem.get('alertPlugins');
+            SC.Logger.log('alertPluginsForSelect: ' + alertPluginsForSelect);
+
+            var alertPluginSelectionSet = SC.SelectionSet.create();
+            alertPluginSelectionSet.addObjects(alertPluginsForSelect);
+
+            alertPluginSelectionSet.forEach(function(plugin) {
+                SC.Logger.log('Plugin Selection: ' + plugin.get('alertPluginName'));
+            }, this);
+            
+            EurekaJView.alertPluignListController.set('selection', alertPluginSelectionSet);
+
         }
 
         if (selectedItem.instanceOf(EurekaJView.AdminstrationTreeModel)) {
@@ -51,6 +65,10 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
 
         if (selectedItem.instanceOf(EurekaJView.EmailGroupModel)) {
             this.setSelectedEmailNotifications(view, indexes);
+        }
+        
+        if (selectedItem.instanceOf(EurekaJView.AlertPluginModel)) {
+            this.setSelectedAlertPlugins(view, indexes);
         }
 
         return indexes;
@@ -80,6 +98,19 @@ EurekaJView.alertSelectionDelegate = SC.Object.create(SC.CollectionViewDelegate,
         }, this);
 
         EurekaJView.editAlertController.set('alertNotifications', selectionArray);
+    },
+    
+    setSelectedAlertPlugins: function(view, indexes){
+        var selectionArray = [];
+
+        indexes.forEach(function(o) {
+            var selectedItem = view.get('content').objectAt(o);
+            if (selectedItem.instanceOf(EurekaJView.AlertPluginModel)) {
+                selectionArray.pushObject(selectedItem);
+            }
+        }, this);
+
+        EurekaJView.editAlertController.set('alertPlugins', selectionArray);
     },
 
     markNodeAndParentsAsExpanded: function(treeModel, setExpanded) {

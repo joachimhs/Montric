@@ -49,6 +49,22 @@
                             <name>log4j.configuration</name>
                             <value>/srv/EurekaJRunnable/log4j.xml</value>
                         </systemProperty>
+                        <systemProperty>
+                            <name>org.eurekaj.plugin.alert.nexmoPlugin.username</name>
+                            <value>d2ef1f89</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>org.eurekaj.plugin.alert.nexmoPlugin.password</name>
+                            <value>fc8ad737</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>org.eurekaj.plugin.alert.nexmoPlugin.from</name>
+                            <value>EurekaJ</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>org.eurekaj.plugin.alert.nexmoPlugin.to</name>
+                            <value>004741415805</value>
+                        </systemProperty>
                     </systemProperties>
                     <stopKey/>
                     <stopPort/>
@@ -93,6 +109,11 @@
         <dependency>
             <groupId>org.eurekaJ</groupId>
             <artifactId>eurekaJ.alertEmailPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eurekaJ</groupId>
+            <artifactId>eurekaJ.nexmoPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!--dependency>

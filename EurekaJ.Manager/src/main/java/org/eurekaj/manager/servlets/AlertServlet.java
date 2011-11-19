@@ -23,6 +23,7 @@ import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
+import org.eurekaj.manager.plugin.ManagerAlertPluginService;
 import org.eurekaj.manager.security.SecurityManager;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +56,12 @@ public class AlertServlet extends EurekaJGenericServlet {
             if (jsonObject.has("getAlerts") && SecurityManager.isAuthenticatedAsAdmin()) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
                 log.debug("Got Alerts:\n" + jsonResponse);
+
+            }
+            
+            if (jsonObject.has("getAlertPlugins") && SecurityManager.isAuthenticatedAsAdmin()) {
+                jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
+                log.debug("Got Alert Plugins:\n" + jsonResponse);
 
             }
 

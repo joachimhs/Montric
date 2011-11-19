@@ -67,6 +67,12 @@ public class TestNexmo {
 			public long getAlertDelay() {
 				return 0;
 			}
+
+			@Override
+			public List<String> getSelectedAlertPluginList() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 		};
 		
 		executor.getAlertService().sendAlert(nexmoProperties, alert, AlertStatus.NORMAL, 95d, "19/11/2011 12:18:00");

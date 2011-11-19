@@ -56,6 +56,7 @@ public class ParseJsonObjects {
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
             parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(jsonAlert, "alertType")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
+            parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(jsonAlert, "alertPlugins"));
         }
         return parsedAlert;
     }

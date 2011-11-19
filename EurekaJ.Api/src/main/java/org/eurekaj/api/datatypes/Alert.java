@@ -49,4 +49,6 @@ public interface Alert {
     public AlertStatus getStatus();
 
     public List<String> getSelectedEmailSenderList();
+    
+    public List<String> getSelectedAlertPluginList();
 }

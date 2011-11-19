@@ -17,8 +17,10 @@ EurekaJView.showingTopPanel = SC.State.extend({
             EurekaJView.EurekaJStore.find(EurekaJView.ADMINISTRATION_TREE_QUERY);
             EurekaJView.EurekaJStore.find(EurekaJView.INSTRUMENTATION_GROUPS_QUERY);
             EurekaJView.EurekaJStore.find(EurekaJView.EMAIL_GROUPS_QUERY);
+            EurekaJView.EurekaJStore.find(EurekaJView.ALERT_PLUGIN_QUERY);
 
             EurekaJView.updateAlertsAction();
+            EurekaJView.updateAlertPluginsAction();
             EurekaJView.updateInstrumentationGroupsAction();
             EurekaJView.updateEmailGroupsAction();
             EurekaJView.updateTreeMenuAdminAction();

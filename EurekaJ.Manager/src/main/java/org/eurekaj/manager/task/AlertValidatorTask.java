@@ -118,13 +118,15 @@ public class AlertValidatorTask {
 							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.port", emailRecipientGroup.getPort().toString());
 							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList", ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ","));
 
-							ManagerAlertPluginService.getInstance().sendAlert(alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
-						} else {
-							log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
-							//TODO: Figure out which plugin to send the alert to.
-							Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
-							ManagerAlertPluginService.getInstance().sendAlert(alertProperties, alert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
+							ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
 						}
+					}
+					
+					for (String pluginName : alert.getSelectedAlertPluginList()) {
+						log.debug("\t\tAlert through plugin: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
+						//TODO: Figure out which plugin to send the alert to.
+						Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
+						ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
 					}
 
 				} else {

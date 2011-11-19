@@ -39,6 +39,10 @@ EurekaJView.INSTRUMENTATION_TABLE_QUERY = SC.Query.local(EurekaJView.Instrumenta
     orderby: 'name'
 });
 
+EurekaJView.ALERT_PLUGIN_QUERY = SC.Query.local(EurekaJView.AlertPluginModel, {
+    orderby: 'alertPluginName'
+});
+
 EurekaJView.LOGGED_IN_USER_QUERY = SC.Query.local(EurekaJView.UserModel, {});
 
 EurekaJView.EurekaJDataSource = SC.DataSource.extend(
@@ -88,6 +92,19 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
             SC.Request.postUrl('/alert').header({
                 'Accept': 'application/json'
             }).json().notify(this, 'performFetchAlerts', store, query).send(requestStringJson);
+
+            return YES;
+        }
+        
+        if (query === EurekaJView.ALERT_PLUGIN_QUERY) {
+            SC.Logger.log('fetching alert pluginss...');
+            var requestStringJson = {
+                'getAlertPlugins': true
+            };
+
+            SC.Request.postUrl('/alert').header({
+                'Accept': 'application/json'
+            }).json().notify(this, 'performFetchAlertPlugins', store, query).send(requestStringJson);
 
             return YES;
         }
@@ -185,6 +202,16 @@ EurekaJView.EurekaJDataSource = SC.DataSource.extend(
         if (SC.ok(response)) {
             SC.Logger.log('Alerts Fetched');
             store.loadRecords(EurekaJView.AlertModel, response.get('body').alerts);
+            store.dataSourceDidFetchQuery(query);
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
+    },
+    
+    performFetchAlertPlugins: function(response, store, query) {
+        if (SC.ok(response)) {
+            SC.Logger.log('Alert plugins Fetched');
+            store.loadRecords(EurekaJView.AlertPluginModel, response.get('body').alertPlugins);
             store.dataSourceDidFetchQuery(query);
         } else {
             store.dataSourceDidErrorQuery(query, response);

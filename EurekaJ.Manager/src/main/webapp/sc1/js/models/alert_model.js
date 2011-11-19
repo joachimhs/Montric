@@ -19,6 +19,7 @@ EurekaJView.AlertModel = SC.Record.extend(
     alertActivated: SC.Record.attr(Boolean),
     alertInstrumentationNode: SC.Record.toOne('EurekaJView.AdminstrationTreeModel', {isMaster: YES }),
     alertNotifications: SC.Record.toMany('EurekaJView.EmailGroupModel', {isMaster: YES}),
+    alertPlugins: SC.Record.toMany('EurekaJView.AlertPluginModel', {isMaster: YES}),
     alertWarningValue: SC.Record.attr(Number),
     alertErrorValue: SC.Record.attr(Number),
     alertType: SC.Record.attr(String),

@@ -48,6 +48,10 @@ EurekaJView.mixin( {
         EurekaJView.alertAdministrationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.AlertModel));
         EurekaJView.alertNotificationController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.EmailGroupModel));
     },
+    
+    updateAlertPluginsAction: function() {
+    	EurekaJView.alertPluignListController.set('content', EurekaJView.EurekaJStore.find(EurekaJView.AlertPluginModel));
+    },
 
     saveAlertsAction: function() {
         //Commmit all changes to alerts

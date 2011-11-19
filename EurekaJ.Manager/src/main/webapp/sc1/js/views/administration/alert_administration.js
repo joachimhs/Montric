@@ -61,7 +61,7 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
     }),
 
     alertContentView: SC.View.extend({
-        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertNotificationLabelView alertNotificationSelectFieldView alertChartSelectScrollView'.w(),
+        childViews: 'activeLabelView activeCheckboxView errorLabelView errorTextfieldView warningLabelView warningTextfieldView alertTypeLabelView alertTypeSelectFieldView delayLabelView delayTextfieldView alertSourceLabelView saveAlertButtonView alertEmailNotificationLabelView alertEmailNotificationSelectFieldView alertChartSelectScrollView alertPluginNotificationLabelView alertPluginNotificationSelectFieldView'.w(),
         isVisibleBinding: 'EurekaJView.alertAdministrationController.showEditAlertView',
         layout: {top: 20, bottom: 0, right: 0, left: 215},
 
@@ -161,14 +161,14 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
             })
         }),
 
-        alertNotificationLabelView: SC.LabelView.extend({
-            layout: {left: 10, right: 20, top: 250, height: 25},
+        alertEmailNotificationLabelView: SC.LabelView.extend({
+            layout: {left: 10, width: 200, top: 250, height: 25},
             controlSize: SC.REGULAR_CONTROL_SIZE,
-            value: 'Alert Notification:'
+            value: 'Email Notification:'
         }).classNames('blacklabel'),
 
-        alertNotificationSelectFieldView: SC.ScrollView.design({
-            layout: {left: 10, right: 20, top: 280, bottom: 40},
+        alertEmailNotificationSelectFieldView: SC.ScrollView.design({
+            layout: {left: 10, width: 200, top: 280, bottom: 40},
             hasHorizontalScroller: YES,
             hasVerticalScroller: YES,
 
@@ -180,6 +180,34 @@ EurekaJView.AlertAdministrationView = SC.View.extend(
                 contentBinding: 'EurekaJView.alertNotificationController.arrangedObjects',
                 selectionBinding: 'EurekaJView.alertNotificationController.selection',
                 contentValueKey: "emailGroupName",
+                selectionDelegate: EurekaJView.alertSelectionDelegate,
+
+
+                acceptsFirstResponder: function() {
+                    return this.get('isEnabled');
+                }.property('isEnabled')
+            })
+        }),
+        
+        alertPluginNotificationLabelView: SC.LabelView.extend({
+            layout: {left: 225, right: 20, top: 250, height: 25},
+            controlSize: SC.REGULAR_CONTROL_SIZE,
+            value: 'Plugin Notification:'
+        }).classNames('blacklabel'),
+        
+        alertPluginNotificationSelectFieldView: SC.ScrollView.design({
+            layout: {left: 225, right: 20, top: 280, bottom: 40},
+            hasHorizontalScroller: YES,
+            hasVerticalScroller: YES,
+
+
+            contentView: SC.ListView.extend({
+                allowsMultipleSelection: NO,
+                backgroundColor: '#F0F8FF',
+                contentValueKey: "name",
+                contentBinding: 'EurekaJView.alertPluignListController.arrangedObjects',
+                selectionBinding: 'EurekaJView.alertPluignListController.selection',
+                contentValueKey: "alertPluginName",
                 selectionDelegate: EurekaJView.alertSelectionDelegate,
 
 

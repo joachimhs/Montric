@@ -47,7 +47,8 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
 	private long alertDelay = 0;
 	private AlertStatus status = AlertStatus.NORMAL;
 	private List<String> selectedEmailSenderList = new ArrayList<String>();
-
+	private List<String> selectedAlertPluginList = new ArrayList<String>();
+	
     public SimpleDBAlert() {
     }
 
@@ -232,5 +233,14 @@ public class SimpleDBAlert implements Comparable<Alert>, Alert {
 		}
 
 		return this.getGuiPath().compareTo(other.getGuiPath());
+	}
+
+	@Override
+	public List<String> getSelectedAlertPluginList() {
+		return selectedAlertPluginList;
+	}
+	
+	public void setSelectedAlertPluginList(List<String> selectedAlertPluginList) {
+		this.selectedAlertPluginList = selectedAlertPluginList;
 	}
 }
