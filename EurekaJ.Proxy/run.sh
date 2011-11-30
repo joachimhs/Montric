@@ -11,4 +11,4 @@ JAVA_OPTS="-Xmx64m -Xms32m"
 currdir=`pwd`
 cd $workingdir
 
-nohup java -jar $workingdir/$jarFile /home/ec2-user/btrace/scripts http://localhost:8080/liveStatistics > output.txt &
+nohup java -jar $workingdir/$jarFile > output.txt &
