@@ -4,8 +4,36 @@
 	</formats>
 	<fileSets>
 		<fileSet>
-			<directory>target/appassembler</directory>
-			<outputDirectory>/</outputDirectory>
+			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>run.sh</include>
+			</includes>
+			<fileMode>0755</fileMode>
+			<lineEnding>unix</lineEnding>
 		</fileSet>
 	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>*.zip</exclude>
+				<exclude>*war</exclude>
+				<exclude>berkeleyPlugin*jar</exclude>
+				<exclude>alertEmailPlugin*jar</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>plugins</outputDirectory>
+			<includes>
+				<include>berkeleyPlugin*jar</include>
+				<include>alertEmailPlugin*jar</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>webapp</outputDirectory>
+			<includes>
+				<include>*war</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
 </assembly>

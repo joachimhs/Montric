@@ -102,24 +102,24 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+        <!-- dependency>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>berkeleyPlugin</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.alertEmailPlugin</artifactId>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>alertEmailPlugin</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.nexmoPlugin</artifactId>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>nexmoPlugin</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency-->
 
         <!-- JSF Flot -->
         <dependency>

@@ -1,3 +1,13 @@
+1.0.4 - Alert Plugin Architecture, Faster Database Structure
+
+* Updated and finalized the Alert Plugin Architecture. 
+* Added Plugin to integrate with Nexmo SMS service. 
+* Added a new plugin BerkeleyHour that structures the data more efficiently. Effectively reducing the storage requirements by a factor of 10-30x. 
+* Changed the way application is assembled
+* Moved the plugins into their own GitHub Repo https://github.com/joachimhs/EurekaJPlugins
+* Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Amber"
+* Fixing bug where EurekaJ Manager would not load any other database plugin than "Berkeley"
+
 1.0.3 - cache sizing options and node deletion 
 
 * Adding cache sizing options to the Berkeley DB plugin

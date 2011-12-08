@@ -19,10 +19,7 @@
 		<module>EurekaJ.Proxy</module>
 		<!-- >module>EurekaJ.View</module-->
 		<module>EurekaJ.API</module>
-		<module>EurekaJ.BerkeleyPlugin</module>
-		<module>EurekaJ.AlertEmailPlugin</module>
 		<module>EurekaJ.Scripts</module>
-		<module>EurekaJ.NexmoPlugin</module>
 	</modules>
 
 	<build>

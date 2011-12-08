@@ -58,4 +58,18 @@ public class LiveStatisticsUtil {
 
         return valueReturn;
     }
+    
+    public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType) {
+        Double valueReturn = newValue;
+
+        if (valueType == ValueType.VALUE) {
+            valueReturn = newValue;
+        } else if (oldValue != null && valueType == ValueType.AGGREGATE) {
+            valueReturn = oldValue + newValue;
+        } else if (oldValue != null && valueType == ValueType.AVERAGE) {
+            valueReturn = (oldValue + newValue) / 2;
+        }
+
+        return valueReturn;
+    }
 }

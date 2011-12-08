@@ -43,27 +43,6 @@
 				<finalName>eurekaJ.managerServer</finalName>
 				<plugins>
 					<plugin>
-						<artifactId>appassembler-maven-plugin</artifactId>
-						<groupId>org.codehaus.mojo</groupId>
-						<version>1.0-alpha-2</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>assemble</goal>
-								</goals>
-								<configuration>
-									<includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
-									<programs>
-										<program>
-											<mainClass>org.eurekaJ.managerServer.JettyServer</mainClass>
-											<name>eurekaJ.ManagerServer</name>
-										</program>
-									</programs>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
 						<artifactId>maven-assembly-plugin</artifactId>
 						<executions>
 							<execution>
@@ -99,13 +78,13 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.berkeleyPlugin</artifactId>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>berkeleyPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.eurekaJ</groupId>
-            <artifactId>eurekaJ.alertEmailPlugin</artifactId>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>alertEmailPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
 		<dependency>
