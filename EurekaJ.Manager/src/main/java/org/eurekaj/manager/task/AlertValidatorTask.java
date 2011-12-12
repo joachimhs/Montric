@@ -118,7 +118,15 @@ public class AlertValidatorTask {
 							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.port", emailRecipientGroup.getPort().toString());
 							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList", ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ","));
 
-							ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
+							log.debug("statList: " + statList);
+							log.debug("dateFormat: " + dateFormat);
+							log.debug("newValue: " + statList.get(statList.size() - 1));
+							
+							double currvalue = 0d;
+							if (statList.get(statList.size() - 1).getValue() != null) {
+								currvalue = statList.get(statList.size() - 1).getValue();
+							}
+							ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
 						}
 					}
 					
@@ -126,7 +134,11 @@ public class AlertValidatorTask {
 						log.debug("\t\tAlert through plugin: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
 						//TODO: Figure out which plugin to send the alert to.
 						Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
-						ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, statList.get(statList.size() - 1).getValue(), dateFormat.format(cal.getTime()));
+						double currvalue = 0d;
+						if (statList.get(statList.size() - 1).getValue() != null) {
+							currvalue = statList.get(statList.size() - 1).getValue();
+						}
+						ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
 					}
 
 				} else {
@@ -185,7 +197,7 @@ public class AlertValidatorTask {
 		Long millisNow = Calendar.getInstance().getTimeInMillis();
 		millisNow = (millisNow / 15000) -1;
 		Long millisThen = millisNow - timeperiods;
-		//log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
+		log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
 		
 		return treeMenuService.getLiveStatistics(guiPath, millisThen, millisNow);
 	}
