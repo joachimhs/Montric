@@ -9,7 +9,7 @@ body {
 }
 
 #wrapper {
-	width: 1000px;
+	width: 1200px;
 	  margin: 0 auto;
 	  padding-top: 1em;
 	  -moz-border-radius: 1.5em;
@@ -63,7 +63,7 @@ font-weight: normal;
 
 .mainarea {
 	top: 160px;
-	width: 800px;
+	width: 1000px;
 	position: absolute;
 	float: left;
 	
@@ -114,7 +114,7 @@ color: #ff4433;
 }
 
 #sidebar {
-	left: 850px;
+	left: 1050px;
 	width: 200px;
 	top: 20px;
 	position: relative;
