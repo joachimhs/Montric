@@ -1,7 +1,8 @@
 ---
 layout: master
-title: Announcing the EurekaJ SaaS ?
+title: Announcing the EurekaJ SaaS Beta Project!
 ---
+1st of January 2012. 
 
 h1. {{page.title}}
 
