@@ -1,9 +1,11 @@
 ---
 layout: master
-title: Announcing the EurekaJ SaaS ?
+title: Announcing the EurekaJ SaaS Beta Project!
 ---
 
 h1. {{page.title}}
+
+1st of January 2012. 
 
 In essence, EurekaJ is a scalable real-time graphing and alerting system. EurekaJ is able to plot any numerical time-series data that is passed in to it, it uses that data and consolidates that data into a consistent, clean interface. It currently has the ability to set up thresholds that it will continuously monitor and specified alerts will be sent whenever those thresholds are breached. The current version of EurekaJ is an "install and operate yourself" solution. The goal is to also be able to offer EurekaJ as a Service, to enable both small and large applications to be monitored.
 
