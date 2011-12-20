@@ -7,13 +7,13 @@ title: Downloads By File
 <ul>
 <li>1.0.zip - 5 downloads</li>
 <li>1.0.1.zip - 70 downloads</li>
-<li>1.0.2.zip - 286 downloads</li>
-<li>1.0.3.zip - 2322 downloads</li>
+<li>1.0.2.zip - 288 downloads</li>
+<li>1.0.3.zip - 2823 downloads</li>
 </ul>
 <ul>
-<li>1.0-jar-with-dependencies.jar - 5 downloads</li>
+<li>1.0-jar-with-dependencies.jar - 6 downloads</li>
 <li>1.0.1.-jar-with-dependencies.jar - 58 downloads</li>
-<li>1.0.2-jar-with-dependencies.jar - 32 downloads</li>
-<li>1.0.3-jar-with-dependencies.jar - 274 downloads</li>
+<li>1.0.2-jar-with-dependencies.jar - 33 downloads</li>
+<li>1.0.3-jar-with-dependencies.jar - 387 downloads</li>
 </ul>
 </div>
