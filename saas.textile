@@ -1,0 +1,65 @@
+---
+layout: master
+title: Announcing the EurekaJ SaaS ?
+---
+
+h1. {{page.title}}
+
+In essence, EurekaJ is a scalable real-time graphing and alerting system. EurekaJ is able to plot any numerical time-series data that is passed in to it, it uses that data and consolidates that data into a consistent, clean interface. It currently has the ability to set up thresholds that it will continuously monitor and specified alerts will be sent whenever those thresholds are breached. The current version of EurekaJ is an "install and operate yourself" solution. The goal is to also be able to offer EurekaJ as a Service, to enable both small and large applications to be monitored.
+
+With CA acquiring Nimsoft and CloudKick joining Rackspace, the need for a truly open sourced and libre Application Monitoring solution is increasing. EurekaJ will remain completely open sourced, even the parts of the system that is specifically built for the hosted/SaaS version of EurekaJ. The aim is to provide the core of EurekaJ under the Apache Licence version 2, while a few of the plugins offered will require GPLv3 licencing due to the licence of third party tools (like the Berkeley DB JE plugins).
+
+h2. A complete Plugin architecture
+
+EurekaJ is built around plugins. In version 1.0.4 EurekaJ accepts two types of plugins, database plugins and alert plugins. This makes it possible to swap out the backend very easy with another backend datastore. Currently there are only plugins that support Berkeley BD JE Embedded, but there are plans to write plugins that supports other backends in the future. The alert plugin architecture makes it possible to extend the alerting capabilities of EurekaJ to enable multiple alert endpoints. Currently EurekaJ support sending alerts via email and via SMS (through Nexmo.com). It is planned to offer plugin capabilities for other functionality like metric analysis.
+
+This highly pluggable architecture will make EurekaJ highly extendable moving forward.
+
+h2. A note about scalability
+
+The architecture of EurekaJ is scalable in multiple ways. As the client application is written in SproutCore, the client scales along with its users. There is very little state that the server-side needs to hold on to for each user and the client application runs completely in the users browser.
+
+The alerting functionality today is limited to vertical scalability (each node in the cluster would effectively pick up and alert simultaniously). This will, however be replaced with a plugin architecture that will allow horisontal scalability as well.
+
+Todays embedded backend, Berkeley DB JE can also only scale in a vertical manner. Work on a backend plugin to support the Cassandra database have started to enable horizontal scalability of the backend.
+
+The planned features will bring scalability to each of the layers of EurekaJ.s architecture and will result in a highly scalable solution.
+
+h2. EurekaJ Monitoring Overview
+
+Application Monitoring is all about tracking the health of an application, defining thresholds and alerting as fast as possible when these thresholds are breached. The goal of the alerts can range from automatic horizontal or vertical application scaling, to manual tasks that needs to be performed (like cleaning out old log files or Database Administration tasks that needs to be performed).
+
+An equally important goal of EurekaJ  is the ability to introspect your applications internals in a way that makes it possible to identify the real root cause of hangs, slow service, high memory or CPU usage or high disk usage directly in your production environment. Because we have all experienced problems in production that we are simply not able to reproduce in test. Having details metrics about the internal operations of you production application will make it a lot easier to pinpoint the real root cause whenever issues arise.
+
+h2. EurekaJ is .Agent Agnostic.
+
+It will accept incoming metrics from any source, as long as it adheres to the specified JSON interface. That means that its easy to gather and collect statistics from a wide array of sources like your Java Virtual Machine (BTrace), Collectd, Libvrt, Shell scripts, or even from application logfiles or from DTrace (if your OS supports it).
+
+EurekaJ does not impose or suggest how you gather your metrics, which means that you are free to gather and send in metrics from any source and from application written in any programming language, running on any hardware and operating system.
+
+Throughout the beta-period this website will be filled with guides and techniques that will go through different scenarios om how to collect and gather statistics from different sources.  
+
+h2. Pricing
+
+Pricing is an important aspect for any Software as a Service offering. It is important to note though, that you can install EurekaJ on your own servers, which will always be free. EurekaJ SaaS, though, will offer a unique hosted experience that will enable you to focus your attention to what matters the most to you (the features and he customers of your own application), while leaving the operations of the Monitoring Application to the EurekaJ team.
+That said, it is important that EurekaJ SaaS remains as affordable as possible. The goal is to be able to offer packages that start below USD $10, while still having plenty of value in it.
+
+EurekaJ stores metrics, aggregated to a maximum resolution of 15 second time periods. The goal of EurekaJ Saas is to be able to offer storage for 90 million data-points a month in the basic plan, which breaks down to being able to track about 500 metric values every 15 seconds. Data retention will start out at 1 calendar month, which can be extended at the price of the basic plan for each month.
+
+Some charges like SMS alerting might be extra.
+
+h2. Code on GitHub and Jenkins builds
+
+Throughout the development and beta-stages of EurekaJ SaaS the code will be available at GitHub. Each and every push to the master branch will be built by Jenkins and published online. If you would like to contribute code to the main EurekaJ project, contribute code to a plugin, or contribute a new pluing, you will be able to issue a Pull Request in order to get your code into the main EurekaJ codebase.
+
+Currently the EurekaJ sourecode is located here: https://github.com/joachimhs/EurekaJ and the EurekaJ Plugins here: https://github.com/joachimhs/EurekaJPlugins, but the location might be moved into a GItHub Organization closer to the start of the beta period.
+
+h2. Current situation and application scaling
+
+Currently EurekaJ SaaS will be deployed to a single dedicated server. This server will run the main EurekaJ application, as well as the Cassandra database. For each USD $1500 raised either through donations via IndieGoGo http://www.indiegogo.com/EurekaJ-Profiler-SaaS?a=342130, or via payment for the basic plan an additional dedicated server will be added to the SaaS offer, both to be able to offer redundancy to the solution, and to be able to build a highly horizontally scalable solution.
+
+That means that, initially, there will be no redundancy or no scalability built into the service, something that will be addressed when the need and opportunity arise.
+
+The EurekaJ SaaS Project will be up front and honest with the hosting situation at all times.
+
+
