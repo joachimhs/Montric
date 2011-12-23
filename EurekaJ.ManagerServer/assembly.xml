@@ -25,7 +25,6 @@
 		<dependencySet>
 			<outputDirectory>plugins</outputDirectory>
 			<includes>
-				<include>berkeleyPlugin*jar</include>
 				<include>alertEmailPlugin*jar</include>
 			</includes>
 		</dependencySet>
