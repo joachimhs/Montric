@@ -7,7 +7,7 @@
 * Moved the plugins into their own GitHub Repo https://github.com/joachimhs/EurekaJPlugins
 * Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Amber"
 * Fixing bug where EurekaJ Manager would not load any other database plugin than "Berkeley"
-* Added Jetty server to EurekaJ.Proxy to enable listening for incoming calls via Plain Text Protocol (CollectD Integration)
+* Added Jetty server to EurekaJ.Proxy to enable listening for incoming calls via Plain Text Protocol (CollectD Integration) http://collectd.org/wiki/index.php/Plain_text_protoco
 * Changed the way the Jetty application is started for EurekaJ.Manager
 
 1.0.3 - cache sizing options and node deletion 
