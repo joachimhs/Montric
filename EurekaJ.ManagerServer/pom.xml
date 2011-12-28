@@ -9,7 +9,7 @@
 	<parent>
 		<artifactId>eurekaJ.parent</artifactId>
 		<groupId>org.eurekaJ</groupId>
-		<version>1.0.4</version>
+		<version>1.0.5-SNAPSHOT</version>
 	</parent>
 	<build>
 
@@ -68,7 +68,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.eurekaJ</groupId>
-			<artifactId>eurekaJ.Manager</artifactId>
+			<artifactId>eurekaJ.Manager</artifactId> 
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
