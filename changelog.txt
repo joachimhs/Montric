@@ -1,4 +1,4 @@
-1.0.4 - Alert Plugin Architecture, Faster Database Structure
+1.0.5 - Alert Plugin Architecture, Faster Database Structure
 
 * Updated and finalized the Alert Plugin Architecture. 
 * Added Plugin to integrate with Nexmo SMS service. 
@@ -7,6 +7,8 @@
 * Moved the plugins into their own GitHub Repo https://github.com/joachimhs/EurekaJPlugins
 * Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Amber"
 * Fixing bug where EurekaJ Manager would not load any other database plugin than "Berkeley"
+* Added Jetty server to EurekaJ.Proxy to enable listening for incoming calls via Plain Text Protocol (CollectD Integration)
+* Changed the way the Jetty application is started for EurekaJ.Manager
 
 1.0.3 - cache sizing options and node deletion 
 
