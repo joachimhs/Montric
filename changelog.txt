@@ -1,4 +1,4 @@
-1.0.5 - Alert Plugin Architecture, Faster Database Structure
+1.0.5 - Alert Plugin Architecture, Faster Database Structure, CollectD integration
 
 * Updated and finalized the Alert Plugin Architecture. 
 * Added Plugin to integrate with Nexmo SMS service. 
