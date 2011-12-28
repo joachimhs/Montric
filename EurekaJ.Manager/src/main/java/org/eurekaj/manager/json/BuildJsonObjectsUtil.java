@@ -30,7 +30,9 @@ import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
 import com.sun.tools.javac.util.Name;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
+import org.eurekaj.manager.servlets.CollectdServlet;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -42,7 +44,8 @@ import org.json.JSONTokener;
 import javax.servlet.http.HttpServletRequest;
 
 public class BuildJsonObjectsUtil {
-
+	private static final Logger log = Logger.getLogger(BuildJsonObjectsUtil.class);
+	
     public static JSONObject extractRequestJSONContents(HttpServletRequest request) throws IOException, JSONException {
         JSONObject jsonRequestObject = new JSONObject();
 

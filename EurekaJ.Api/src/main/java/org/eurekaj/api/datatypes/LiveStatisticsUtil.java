@@ -72,4 +72,39 @@ public class LiveStatisticsUtil {
 
         return valueReturn;
     }
+    
+    public static Double parseDouble(String strVal) {
+		Double retVal = null;
+		if (strVal != null) {
+			try {
+				retVal = Double.parseDouble(strVal);
+			} catch (NumberFormatException nfe) {
+				retVal = null;
+			}
+		}
+		
+		return retVal;
+	}
+	
+	public static Long parseLong(String strVal) {
+		Long retVal = null;
+		if (strVal != null) {
+			try {
+				retVal = Long.parseLong(strVal);
+			} catch (NumberFormatException nfe) {
+				retVal = null;
+			}
+		}
+		
+		return retVal;
+	}
+	
+	public static int getFifteensecondTimeperiodsSinceStartOfHour(Long secondsSince1970) {
+    	int hoursSince1970 = secondsSince1970.intValue() / 3600;
+    	
+    	int secondsFromStartOfHour = secondsSince1970.intValue() - (hoursSince1970 * 3600);
+    	int fifteensecondTimeperiodsSinceStartOfHour = secondsFromStartOfHour / 15;
+    	
+    	return fifteensecondTimeperiodsSinceStartOfHour;
+    }
 }

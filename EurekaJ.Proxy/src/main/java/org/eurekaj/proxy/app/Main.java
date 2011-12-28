@@ -18,33 +18,20 @@
 */
 package org.eurekaj.proxy.app;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.examples.client.ClientGZipContentCompression;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
-import org.eurekaj.proxy.FileMatcher;
-import org.eurekaj.proxy.parser.ParseStatistics;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.PrivilegedExceptionAction;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
+
+import org.apache.http.examples.client.ClientGZipContentCompression;
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.Server;
+import org.eurekaj.proxy.FileMatcher;
+import org.eurekaj.proxy.http.handlers.PlainTextProtocolHandler;
+import org.eurekaj.proxy.parser.ParseStatistics;
 
 public class Main {
 	private static final Logger log = Logger.getLogger(Main.class);
@@ -70,8 +57,28 @@ public class Main {
         }
 
         gzipClient = new ClientGZipContentCompression(endpointUrl, username, password);
-
-        parseAndSendBtraceScripts(scriptPath);
+     
+        String enablePTP = System.getProperty("org.eurekaj.proxy.enablePTP", "false");
+        if (enablePTP.equalsIgnoreCase("true")) {
+        	setupHttpServer();
+        }
+        
+    	parseAndSendBtraceScripts(scriptPath);
+    }
+    
+    private void setupHttpServer() {
+    	Integer ptpPortInt = PlainTextProtocolHandler.parseInteger(System.getProperty("org.eurekaj.proxy.PTPPort"), new Integer(8108));
+    	Server server = new Server(ptpPortInt);
+        try {
+        	server.setHandler(new PlainTextProtocolHandler(gzipClient));
+			server.start();
+			server.join();
+        } catch (Exception e) {
+			log.error("Unable to start PTP listener on port " + ptpPortInt);
+			e.printStackTrace();
+		}
+        
+        log.info("Started PTP listener or port: "+ ptpPortInt);
     }
 
     private void parseAndSendBtraceScripts(String scriptPath) {

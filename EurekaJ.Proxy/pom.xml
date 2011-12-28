@@ -111,5 +111,13 @@
             <artifactId>btrace-api</artifactId>
             <version>1.3-SNAPSHOT</version>
         </dependency>
+        <dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
 	</dependencies>
 </project>

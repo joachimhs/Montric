@@ -98,18 +98,22 @@ public class JettyServer {
 	}
 
 	private static void setWebAppContext() {
-		File repoDir = new File(System.getProperty("basedir", "target/appassembler/repo"));
-		String artifactId = null;
-		try {
-			artifactId = System.getProperty("context.root", repoDir.getParentFile().getParentFile().getName());
-		} catch (Exception e) {
-			String melding = "artifactId (context.root) is : " + artifactId + ".'basedir' must have at least to levels (i.e. /pathTo/basedir). Unable to start.";
-			log.fatal(melding);
-			throw new RuntimeException(melding);
-		}
+		File repoDir = new File(System.getProperty("basedir", "target"));
+		System.out.println("Using repo directory: " + repoDir.getAbsolutePath() + " exists: " + repoDir.exists());
+		String artifactId = System.getProperty("context.root", "");
+		
 		String inplace = System.getProperty("inplace.trueFalse", "false");
 		if (inplace.equalsIgnoreCase("true")) {
-			jettyServer.setHandler(new WebAppContext(repoDir.getAbsolutePath(), "/"+ artifactId));
+			String targetPath = repoDir.getAbsolutePath();
+			targetPath = targetPath.substring(0, 
+					targetPath.indexOf("EurekaJ.ManagerServer")) + 
+						File.separatorChar + "EurekaJ.Manager" + 
+						File.separatorChar + "src" + 
+						File.separatorChar + "main" + 
+						File.separatorChar + "webapp";
+			System.out.println("Inplace Path: " + targetPath);
+			//System.out.println(repoDir.getParentFile().getParentFile().getAbsolutePath() + File.separatorChar + "EurekaJ.Manager");
+			jettyServer.setHandler(new WebAppContext(targetPath, "/"+ artifactId));
 		} else {
 			if (repoDir.canRead()) {
 				Collection<File> warFiles = FileUtils.listFiles(repoDir, new String[] { "war" }, true);

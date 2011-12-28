@@ -77,8 +77,12 @@ public class ParseStatistics {
 	    	line = inStream.readLine();
 		}
 
+        StringBuilder jsonBuilder = convertStatListToJson(statElemList);
+		return jsonBuilder.toString();
+	}
 
-        StringBuilder jsonBuilder = new StringBuilder();
+	public static StringBuilder convertStatListToJson(List<StoreIncomingStatisticsElement> statElemList) {
+		StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{ \"storeLiveStatistics\": [");
         for (int index = 0; index < statElemList.size() - 1; index++) {
             StoreIncomingStatisticsElement element = statElemList.get(index);
@@ -103,7 +107,7 @@ public class ParseStatistics {
             jsonBuilder.append("}");
         }
         jsonBuilder.append("] }");
-		return jsonBuilder.toString();
+		return jsonBuilder;
 	}
 	
 	public List<StoreIncomingStatisticsElement> processBtraceProfiling(String line) {
