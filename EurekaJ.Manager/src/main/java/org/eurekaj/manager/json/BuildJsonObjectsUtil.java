@@ -26,13 +26,9 @@ import java.io.StringWriter;
 import java.text.NumberFormat;
 import java.util.*;
 
-import com.sun.org.apache.bcel.internal.generic.GotoInstruction;
-import com.sun.tools.javac.util.Name;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
-import org.eurekaj.manager.servlets.CollectdServlet;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
