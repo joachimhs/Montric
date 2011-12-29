@@ -1,14 +1,10 @@
 package org.eurekaj.proxy.http.handlers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.examples.client.ClientGZipContentCompression;
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eurekaj.api.enumtypes.UnitType;
@@ -24,6 +21,7 @@ import org.eurekaj.proxy.StoreIncomingStatisticsElement;
 import org.eurekaj.proxy.parser.ParseStatistics;
 
 public class PlainTextProtocolHandler extends AbstractHandler {
+	private static final Logger log = Logger.getLogger(PlainTextProtocolHandler.class);
 	private ClientGZipContentCompression gzipClient;
 	private String prepend;
 	public PlainTextProtocolHandler(ClientGZipContentCompression gzipClient) {
@@ -34,6 +32,9 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 		}
 	}
 	
+	/**
+	 * This method will handle incoming PlainTextProtocol messages over HTTP. The contents will be passed on to EurekaJ Manager.
+	 */
 	@Override
 	public void handle(String target, 
 			Request baseRequest, 
@@ -41,7 +42,6 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 			HttpServletResponse response) throws IOException, ServletException {
 		
 		InputStream in = request.getInputStream();
-		BufferedReader r = new BufferedReader(new InputStreamReader(in));
         StringWriter writer = new StringWriter();
         IOUtils.copy(in, writer);
         String ptpString = writer.toString();
@@ -49,11 +49,14 @@ public class PlainTextProtocolHandler extends AbstractHandler {
         try {
         	List<StoreIncomingStatisticsElement> statElemList = parsePlainTextProtocol(ptpString);
         	String string = ParseStatistics.convertStatListToJson(statElemList).toString();
-			gzipClient.sendGzipOverHttp(string);
+			int statusCode = gzipClient.sendGzipOverHttp(string);
 			responseString = statElemList.size() + " records OK.";
+			log.info("Sent PTP contents to EurekaJ. EurekaJ responded with status code: " + statusCode);
 		} catch (Exception e) {
 			responseString = "-1 Unable to parse and/or transmit records to EurekaJ";
 		}
+        
+        log.info("Sending response back to PTP source: " + responseString);
 		
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -77,6 +80,11 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 		return statElemList;
 	}
 	
+	/**
+	 * Parsing a PlainTextProtocol PUTVAL line and returning a populated instance of {@link StoreIncomingStatisticsElement}
+	 * @param ptpLine
+	 * @return {@link StoreIncomingStatisticsElement}
+	 */
 	private StoreIncomingStatisticsElement parsePtpLine(String ptpLine) {
 		StoreIncomingStatisticsElement stat = null;
 		String[] ptpParts = ptpLine.split(" ");
@@ -95,6 +103,12 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 		return stat;
 	}
 	
+	/**
+	 * Prepending a EurekaJ Path to the PTP input. 
+	 * @param guiPath
+	 * @param prepend
+	 * @return
+	 */
 	private static String addPrependToGuiPath(String guiPath, String prepend) {
 		String newGuiPath = null;
 		if (guiPath.contains(":")) {
@@ -106,12 +120,7 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 		
 		return newGuiPath;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(addPrependToGuiPath("CollectDTest:cpu-3:cpu-nice", "CollectD:"));
-
-	}
-	
+		
 	public static Double parseDouble(String input) {
 		Double val = null;
 		

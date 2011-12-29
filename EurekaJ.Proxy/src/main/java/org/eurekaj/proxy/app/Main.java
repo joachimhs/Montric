@@ -40,8 +40,6 @@ public class Main {
     private String endpointUrl;
     private String username;
     private String password;
-
-    private Pattern filePattern = Pattern.compile(".*\\d+");
     private ClientGZipContentCompression gzipClient;
 
     public static void main(String[] args) {
