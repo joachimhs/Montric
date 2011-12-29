@@ -1,0 +1,69 @@
+---
+layout: master
+title: EurekaJ Profiler 1.0.5 Released!
+---
+
+h1. Alert Plugin Architecture, Faster Database Structure, CollectD integration
+
+*Note that the structure of the ZIP file have changed in version 1.0.5*
+
+h2. Alert Plugins Architecture and Nexmo Plugin
+
+Version 1.0.5 finalizes the Alert Plugin Architecture. This makes it possible to write and deploy custom jar files to be able to pass alerts on third party applications. Along with Version 1.0.5, a new plugin is made available to enable sending alerts via SMS (via Nexmo.com). You can view the source of this plugin on GitHub: <a href="https://github.com/joachimhs/EurekaJPlugins/tree/master/EurekaJ.NexmoPlugin">https://github.com/joachimhs/EurekaJPlugins/tree/master/EurekaJ.NexmoPlugin</a>.
+
+The Nexmo Plugin required additional parameters inside EurekaJ's config.properties file:
+
+{% highlight xml %}
+org.eurekaj.plugin.alert.nexmoPlugin.username=nexmoUsername
+org.eurekaj.plugin.alert.nexmoPlugin.password=nexmoPassword
+org.eurekaj.plugin.alert.nexmoPlugin.from=Source of SMS alerts (Either a cellphone number or a text)
+org.eurekaj.plugin.alert.nexmoPlugin.to=Comma separated list of cellphone numbers to send alerts to
+{% endhighlight %}
+
+
+h2. Faster Database Structure
+
+The Berkeley DB JE Datasource can now be replaced with a Berkeley DB JE Hour datasource. The difference is that the Hour datastore stores metrics grouped by hours, instead of storing each 15-second metric by itself. The result is a reduced database size (effectively reducing the storage requirements by a factor of 10-30x.), an application that requires less RAM, and less CPU. The down side is that you have to either scrap your database and start fresh with the new "BerkeleyHour" plugin, or try your luck with the ConvertApp (this worked for me, but your mileage might vary): <a href="https://github.com/joachimhs/EurekaJPlugins/tree/master/EurekaJ.ConvertApp">https://github.com/joachimhs/EurekaJPlugins/tree/master/EurekaJ.ConvertApp</a>.
+
+h2. CollectD integration
+
+Integration with CollectD is done via the EurekaJ Proxy. Se the CollectD Documentation for more information: <a href="/documentation/collectd.html">CollectD Documentation</a>.
+
+h2. Changed the way the .zip file is structured
+
+Version 1.0.5 of EurekaJ has a new file structure both to clean up old dependencies and to be able to support plugins that can be added to a seperate folder outside the .zip file. See the <a href="/documentation/setting_up_eurekaj_manager.html">seperate documentation</a>.
+
+A screencast describing the installation procedure will be made available shortly. 
+
+h3. Downloads
+
+EurekaJ 1.0.5 can be downloaded from: <a href="http://nightly.haagen.name/EurekaJ/1.0.5/">http://nightly.haagen.name/EurekaJ/1.0.5/</a>.
+EurekaJ Plugins can be downloaded from: <a href="http://nightly.haagen.name/EurekaJPlugins/1.0.5/">http://nightly.haagen.name/EurekaJPlugins/1.0.5/</a>.
+
+h3. Changelog
+
+1.0.5 - Alert Plugin Architecture, Faster Database Structure, CollectD integration
+
+* Updated and finalized the Alert Plugin Architecture. 
+* Added Plugin to integrate with Nexmo SMS service. 
+* Added a new plugin BerkeleyHour that structures the data more efficiently. Effectively reducing the storage requirements by a factor of 10-30x. 
+* Changed the way application is assembled
+* Moved the plugins into their own GitHub Repo https://github.com/joachimhs/EurekaJPlugins
+* Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Amber"
+* Fixing bug where EurekaJ Manager would not load any other database plugin than "Berkeley"
+* Added Jetty server to EurekaJ.Proxy to enable listening for incoming calls via Plain Text Protocol (CollectD Integration) http://collectd.org/wiki/index.php/Plain_text_protoco
+* Changed the way the Jetty application is started for EurekaJ.Manager
+
+1.0.3 - cache sizing options and node deletion 
+
+* Adding cache sizing options to the Berkeley DB plugin
+* Adding deletion of TreeMenu nodes via the administration menu
+* Restructuring the SproutCore app, so that the SC Buildtools isnt required to develop EurekaJ
+* Started work on the SproutCore 2.0 port of the application
+
+1.0.2 - Alert Plugin Phase 1
+
+* Changed sending email via a plugin instead of via code internal to the manager (https://github.com/joachimhs/EurekaJ/issues/13)
+* Moved away from System.out and System.err (about time) to Log4J
+* Upgraded to Jetty 8.0.2.v20111006
+* Added Alerts to the main Tree menu (https://github.com/joachimhs/EurekaJ/issues/17)

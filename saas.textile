@@ -33,7 +33,7 @@ Application Monitoring is all about tracking the health of an application, defin
 
 An equally important goal of EurekaJ  is the ability to introspect your applications internals in a way that makes it possible to identify the real root cause of hangs, slow service, high memory or CPU usage or high disk usage directly in your production environment. Because we have all experienced problems in production that we are simply not able to reproduce in test. Having details metrics about the internal operations of you production application will make it a lot easier to pinpoint the real root cause whenever issues arise.
 
-h2. EurekaJ is .Agent Agnostic.
+h2. EurekaJ is *Agent Agnostic*
 
 It will accept incoming metrics from any source, as long as it adheres to the specified JSON interface. That means that its easy to gather and collect statistics from a wide array of sources like your Java Virtual Machine (BTrace), Collectd, Libvrt, Shell scripts, or even from application logfiles or from DTrace (if your OS supports it).
 

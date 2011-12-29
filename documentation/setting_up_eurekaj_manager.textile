@@ -70,7 +70,7 @@ user=user,ROLE_USER,enabled
 admin=admin,ROLE_ADMIN,ROLE_USER,enabled
 {% endhighlight %}
 
-h3. run.sh
+h3. startEurekaJ.sh
 
-A sample run.sh file is specified that will work with the bash shell environment. This script may not be complete for you runtime requirements, but it will be sufficient for starting up and running EurekaJ Manager on your local machine. The EurekaJ Manager Demo application is using this file as-is, however Apples launchdeamon is used to make sure that the application is kept alive, etc. The launchdeamon .plist file used for the demo application is also included in the .zip file. 
+A sample startEurekaJ.sh file is specified that will work with the bash shell environment. This script may not be complete for you runtime requirements, but it will be sufficient for starting up and running EurekaJ Manager on your local machine. The EurekaJ Manager Demo application is using this file as-is, however Apples launchdeamon is used to make sure that the application is kept alive, etc. The sample startEurekaJ.sh script is available in EurekaJ's source: <a href="https://github.com/joachimhs/EurekaJ/blob/master/EurekaJ.ManagerServer/startEurekaJ.sh">https://github.com/joachimhs/EurekaJ/blob/master/EurekaJ.ManagerServer/startEurekaJ.sh</a>.
 </div>
