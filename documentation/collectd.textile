@@ -1,0 +1,54 @@
+---
+layout: master
+title: Sending data from CollectD to EurekaJ
+---
+
+<div class='panel'>
+
+h1. {{page.title}}
+
+*Note: This feature is only available in EurekaJ from version 1.0.5, which will be released just before the end of 2011. CollectD integration is available in the nightly builds as of 28th December 2011.*
+
+CollectD is, according to the projects website - http://collectd.org, "a daemon which collects system performance statistics periodically and provides mechanisms to store the values in a variety of ways". CollectD gathers its metrics using various plugins and is therefore able to gather metrics from a wide variety of sources, including CPU, Disk usage, Network, Apache, Nginx, Memory, etc. CollectD also have various plugins that can be used to write these metrics to a host of different sources ranging from the file system to remote applications. In order to integrate CollectD with EurekaJ, EurekaJ Proxy have been extended with options to support the Plain Text Protocol (PTP) via HTTP. These options have to be enabled in EurekaJ Proxy's config.properties file in order for EurekaJ to fire up a Jetty instance listening for incoming PTP transmissions. For more information regarding PTP, please have a look at information posted at the CollectD Wiki article regarding the Plain Text Protocol http://collectd.org/wiki/index.php/Plain_text_protocol. 
+
+h1. Options to enable EurekaJ Proxy's HTTP listener
+
+To enable EurekaJ Proxy's HTTP listener, the following options are available in config.properties: 
+
+{% highlight xml %}
+org.eurekaj.proxy.enablePTP=true/false
+org.eureaj.proxy.prependPTPStatsWith=eurekaj:path
+org.eurekaj.proxy.PTPPort=portnumber
+{% endhighlight %}
+	
+The first option is required for EurekaJ Proxy to start Jetty. By default it will listen to port number 8108 and it will not prepend the PTP statistics with any additional information. It is possible to specify a different port number if port 8108 is not suitable for your environment. 
+
+h1. Enabling and configuring the CollectD Write_Http plugin
+
+Collectd.conf is usually located at /etc/collectd.conf, and within this file, you need to enable the plugins that you wish to use both to gather metrics, and to pass the metrics on to EurekaJ Proxy. First, incomment the following line: 
+
+{% highlight xml %}
+#LoadPlugin write_http
+{% endhighlight %}
+
+Then you need to configure the write_http plugin to send its metrics in the PTP format, as well as the URL endpoint to send the metrics to: 
+
+{% highlight xml %}
+<Plugin write_http>
+	<URL "localhost:8108">
+		Format "Command"
+		StoreRates true
+	</URL>
+</Plugin>
+
+{% endhighlight %}
+
+The above configuration tells CollectD to send its metrics using the "Command" format (which is PTP), that is will pass rates whenever possible (a percentage instead of increasing numbers where possible), and that the metrics will be sent to http://localhost:8108. Make sure that the port number here matches with either the default port 8108 or the "PTPPort" specified in EurekaJ Proxys config.properties file. 
+
+Once everything is set up, the metrics gathered with CollectD will be made available in EurekaJ: 
+
+<div style="text-align: center; widht: 100%;"><img src="/images/collectd-stats.png"/><br />
+	EurekaJ Manager 1.0.5 showing CollectD Metrics
+</div>
+
+</div>

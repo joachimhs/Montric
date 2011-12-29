@@ -17,6 +17,8 @@ Documentation is currently under development.
 * BTrace Instrumentation
 ** <a href="/documentation/btrace_script_concepts_1.2.html">BTrace Script concepts for BTrace 1.0 - 1.2</a>
 ** Sample BTrace Scripts
+* CollectD Integration
+** <a href="/documentation/collectd.html">Integrating EurekaJ with CollectD for system metrics</a>
 * Getting started with EurekaJ Manager
 ** <a href="/documentation/navigating_the_metrics_collected_by_EurekaJ_Manager.html">Navigating the Metrics collected by EurekaJ Manager</a>
 ** <a href="/documentation/configuring_alert_points.html">Configuring Alert Points</a>
