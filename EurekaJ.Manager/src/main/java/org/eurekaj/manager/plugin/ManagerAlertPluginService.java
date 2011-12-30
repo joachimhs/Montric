@@ -17,6 +17,9 @@ public class ManagerAlertPluginService {
     
 	public ManagerAlertPluginService() {
 		loader = ServiceLoader.load(EurekaJAlertPluginService.class);
+		for (EurekaJAlertPluginService alertPlugin : loader) {
+			alertPlugin.setApplicationServices(EurekaJManagerApplicationServices.getInstance());
+		}
 	}
 	
 	public static ManagerAlertPluginService getInstance() {

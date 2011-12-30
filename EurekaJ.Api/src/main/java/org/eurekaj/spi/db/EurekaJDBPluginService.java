@@ -19,6 +19,7 @@
 package org.eurekaj.spi.db;
 
 import org.eurekaj.api.dao.*;
+import org.eurekaj.api.service.EurekaJApplicationServices;
 
 public abstract class EurekaJDBPluginService {
     public abstract String getPluginName();
@@ -36,4 +37,9 @@ public abstract class EurekaJDBPluginService {
     public abstract SmtpDao getSmtpDao();
 
     public abstract TreeMenuDao getTreeMenuDao();
+    
+    public void setApplicationServices(EurekaJApplicationServices applicationServices) {
+    	//Each plugin must choose to implement this method in order to gain access to the EurekaJ Application Services 
+    	return;
+    }
 }

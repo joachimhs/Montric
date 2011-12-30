@@ -38,6 +38,7 @@ public class ManagerDbPluginService {
         loader = ServiceLoader.load(EurekaJDBPluginService.class);
         for (EurekaJDBPluginService pluginService : loader) {
             pluginService.setup();
+            pluginService.setApplicationServices(EurekaJManagerApplicationServices.getInstance());
         }
     }
 

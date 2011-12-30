@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eurekaJ</groupId>
 	<artifactId>eurekaJ.parent</artifactId>
-	<version>1.0.5</version>
+	<version>1.0.6-SNAPSHOT</version>
 	<name>EurekaJ Parent</name>
 	<packaging>pom</packaging>
 
@@ -17,8 +17,9 @@
 		<module>EurekaJ.Manager</module>
 		<module>EurekaJ.ManagerServer</module>
 		<module>EurekaJ.Proxy</module>
+		<module>EurekaJ.api</module>
+		<module>EurekaJ.AlertEmailPlugin</module>
 		<!-- >module>EurekaJ.View</module-->
-		<module>EurekaJ.API</module>
 		<module>EurekaJ.Scripts</module>
 	</modules>
 

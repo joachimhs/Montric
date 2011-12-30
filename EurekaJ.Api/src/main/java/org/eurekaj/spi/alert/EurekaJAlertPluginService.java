@@ -20,10 +20,16 @@
 package org.eurekaj.spi.alert;
 
 import org.eurekaj.api.service.AlertService;
+import org.eurekaj.api.service.EurekaJApplicationServices;
 
 public abstract class EurekaJAlertPluginService {
 
 	public abstract String getAlertPluginName();
 	
 	public abstract AlertService getAlertService();
+	
+	public void setApplicationServices(EurekaJApplicationServices applicationServices) {
+    	//Each plugin must choose to implement this method in order to gain access to the EurekaJ Application Services 
+    	return;
+    }
 }

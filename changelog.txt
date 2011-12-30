@@ -1,3 +1,7 @@
+1.0.6 - 
+
+* Adding EurekaJApplicationServices to API so that plugins can request resources and information from EurekaJ Manager.
+
 1.0.5 - Alert Plugin Architecture, Faster Database Structure, CollectD integration
 
 * Updated and finalized the Alert Plugin Architecture. 

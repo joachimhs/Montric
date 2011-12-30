@@ -103,6 +103,10 @@ public class SecurityManager {
     }
 
     public static String getAuthenticatedUsername() {
+    	if (getUserDetails() == null) {
+    		return null;
+    	}
+    	
         return getUserDetails().getUsername();
     }
 }

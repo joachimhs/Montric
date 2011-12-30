@@ -6,9 +6,9 @@
 	<packaging>jar</packaging>
 	<name>EurekaJ API</name>
 	<parent>
-		<artifactId>eurekaJ.parent</artifactId>
 		<groupId>org.eurekaJ</groupId>
-		<version>1.0.5</version>
+		<artifactId>eurekaJ.parent</artifactId>
+		<version>1.0.6-SNAPSHOT</version>
 	</parent>
 	<build>
 

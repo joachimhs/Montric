@@ -120,7 +120,7 @@ public class ChartServlet extends EurekaJGenericServlet {
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             log.debug("Accepted JSON: \n" + jsonObject);
-
+            
             if (jsonObject.has("getInstrumentationChartData") && SecurityManager.isAuthenticatedAsUser()) {
                 JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartData");
                 String chartId = keyObject.getString("id");
