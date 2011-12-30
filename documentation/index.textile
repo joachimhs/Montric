@@ -3,10 +3,8 @@ layout: master
 title: Documentation Topics
 ---
 
-<div class="panel">
 <h1>{{page.title}}</h1>
 
-<p>
 Documentation is currently under development.
 
 * Installation Guide
@@ -27,14 +25,13 @@ Documentation is currently under development.
 ** Specifying the chart time-interval
 ** Specifying the Time-zone used for displaying charts
 * Committer Checklist
-</p></div>
 
-<div class="panel">
+h1. Screencast
 
-h2. Complete Arcitecture Overview
+h2. EurekaJ Manager 1.0.5 Installation
 
-<p>
+<iframe src="http://player.vimeo.com/video/34344529?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><p><a href="http://vimeo.com/34344529">EurekaJ 1.0.5 Installation Video</a> from <a href="http://vimeo.com/user9814613">joachimhs</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+
+h1. Complete Arcitecture Overview
+
 <a href="/images/eurekaj_architecture_complete.png"><img src="/images/eurekaj_architecture_complete_thumb.png" width="737" height="274" alt="Eurekaj Architecture Complete Thumb"></a><br /><a href="/images/eurekaj_architecture_complete.png">EurekaJ Architecture</a>.
-</p>
-
-</div>

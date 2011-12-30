@@ -35,6 +35,10 @@ Version 1.0.5 of EurekaJ has a new file structure both to clean up old dependenc
 
 A screencast describing the installation procedure will be made available shortly. 
 
+h3. EurekaJ 1.0.5 Installation Screencast
+
+<iframe src="http://player.vimeo.com/video/34344529?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe><p><a href="http://vimeo.com/34344529">EurekaJ 1.0.5 Installation Video</a> from <a href="http://vimeo.com/user9814613">joachimhs</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+
 h3. Downloads
 
 EurekaJ 1.0.5 can be downloaded from: <a href="http://nightly.haagen.name/EurekaJ/1.0.5/">http://nightly.haagen.name/EurekaJ/1.0.5/</a>.
