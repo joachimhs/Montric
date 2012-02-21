@@ -1,0 +1,51 @@
+div.topView {
+	background: white;
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	position: absolute;
+	left: 5px;
+	right: 5px;
+	top: 5px;
+	height:65px;
+}
+
+div.treeView {
+	background: aliceBlue;
+	border-bottom-left-radius: 8px;
+	position: absolute;
+	left: 5px;
+	width: 305px;
+	top: 70px;
+	bottom:5px;
+	border-top: 1px solid #C0C4CC;
+	border-right: 1px solid #C0C4CC
+}
+
+div.chartView {
+	background: white;
+	position: absolute;
+	right: 205px;
+	left: 311px;
+	top: 70px;
+	bottom:5px;
+	border-top: 1px solid #C0C4CC;
+	border-right: 1px solid #C0C4CC
+}
+
+div.chartConfigView {
+	background: white;
+	border-bottom-right-radius: 8px;
+	position: absolute;
+	width: 200px;
+	right: 5px;
+	top: 70px;
+	bottom:5px;
+	border-top: 1px solid #C0C4CC;
+}
+
+div.treeView h1 {
+	font-size: 11pt;
+	color: #777;
+	text-decoration: underline;
+	text-align: center;
+}

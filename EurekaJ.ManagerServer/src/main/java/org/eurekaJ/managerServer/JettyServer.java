@@ -106,14 +106,20 @@ public class JettyServer {
 		if (inplace.equalsIgnoreCase("true")) {
 			String targetPath = repoDir.getAbsolutePath();
 			targetPath = targetPath.substring(0, 
-					targetPath.indexOf("EurekaJ.ManagerServer")) + 
-						File.separatorChar + "EurekaJ.Manager" + 
+					targetPath.indexOf("EurekaJ.Manager")) + 
+						"EurekaJ.Manager" + 
 						File.separatorChar + "src" + 
 						File.separatorChar + "main" + 
-						File.separatorChar + "webapp";
+						File.separatorChar + "webapp/";
 			System.out.println("Inplace Path: " + targetPath);
 			//System.out.println(repoDir.getParentFile().getParentFile().getAbsolutePath() + File.separatorChar + "EurekaJ.Manager");
-			jettyServer.setHandler(new WebAppContext(targetPath, "/"+ artifactId));
+			WebAppContext wc = new WebAppContext();
+			wc.setContextPath("/" + artifactId);
+			//wc.setExtraClasspath(repoDir.getAbsolutePath().replaceAll("EurekaJ.ManagerServer", "EurekaJ.Manager") + "/classes/");
+			wc.setExtraClasspath(System.getProperty("java.class.path").replaceAll(":", ";") + ";" + repoDir.getAbsolutePath().replaceAll("EurekaJ.ManagerServer", "EurekaJ.Manager") + "/classes/");
+			wc.setDescriptor(targetPath + "WEB-INF/web.xml");
+			wc.setResourceBase(targetPath);
+			jettyServer.setHandler(wc);
 		} else {
 			if (repoDir.canRead()) {
 				Collection<File> warFiles = FileUtils.listFiles(repoDir, new String[] { "war" }, true);

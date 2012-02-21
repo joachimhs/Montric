@@ -82,6 +82,12 @@
             <artifactId>alertEmailPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>berkeleyHourPlugin</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
