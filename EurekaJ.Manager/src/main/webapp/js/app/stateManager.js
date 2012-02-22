@@ -8,6 +8,7 @@ setTimeout(function() {
             enter: function(stateManager) {
                 this._super(stateManager);
                 //EME.PhotoListController.set('content', EME.store.findAll(EME.Photo));
+                EurekaJ.store.findAll(EurekaJ.InstrumentationTreeItem);
                 console.log('entering showMainArea');
             },
 
