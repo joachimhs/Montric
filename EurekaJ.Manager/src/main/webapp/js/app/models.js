@@ -7,6 +7,7 @@ EurekaJ.InstrumentationTreeItem.reopen({
     guiPath: DS.attr('string'),
     name: DS.attr('string'),
     isSelected: DS.attr('boolean'),
+    isExpanded: false,
     parentPath: DS.attr('string'),
     hasChildren: DS.attr('boolean'),
     childrenNodes: DS.hasMany(EurekaJ.InstrumentationTreeItem),
@@ -24,14 +25,3 @@ EurekaJ.InstrumentationTreeItem.reopenClass({
 	   return jQuery.parseJSON(data).instrumentationMenu;
    }
 });
-
-EurekaJ.Node = Ember.Object.extend({
-    name: null,
-    children: [],
-    nodeIsExpanded: true
-  });
-
-EurekaJ.Tree = EurekaJ.Node.extend({
-    name: "",
-    children: []
-  });

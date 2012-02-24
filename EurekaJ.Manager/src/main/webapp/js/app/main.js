@@ -32,13 +32,20 @@ EurekaJ.InstrumentationTreeController = Em.ArrayProxy.create({
 
 EurekaJ.nodeView = Ember.View.extend({
     templateName: 'tree-node',
+    tagName: 'div'
     
+});
+
+EurekaJ.nodeContentView = Ember.View.extend({
+	templateName: 'tree-node-content',
+	tagName: 'span'
 });
 
 EurekaJ.nodeTextView = Ember.View.extend({
 	templateName: 'tree-node-text',
+	tagName: 'span',
 	click: function(evt) {
     	console.log(evt.currentTarget);
-    	this.get('content').set('isSelected', !this.get('content').get('isSelected'));
+    	this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
     }
 });

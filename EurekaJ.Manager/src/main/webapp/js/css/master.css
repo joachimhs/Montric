@@ -50,3 +50,11 @@ div.treeView h1 {
 	text-decoration: underline;
 	text-align: center;
 }
+
+.floatLeft {
+	float: left;
+}
+
+.smallMarginRight {
+	margin-right: 5px;
+}
