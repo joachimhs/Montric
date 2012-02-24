@@ -18,7 +18,8 @@ div.treeView {
 	top: 70px;
 	bottom:5px;
 	border-top: 1px solid #C0C4CC;
-	border-right: 1px solid #C0C4CC
+	border-right: 1px solid #C0C4CC;
+	overflow: scroll;
 }
 
 div.chartView {

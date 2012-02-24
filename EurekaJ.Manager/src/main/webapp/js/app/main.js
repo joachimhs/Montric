@@ -1,5 +1,5 @@
-EurekaJ.InstrumentationTreeController = Em.Object.create({
-	content: null,
+EurekaJ.InstrumentationTreeController = Em.ArrayProxy.create({
+	content: [],
 	rootElement: null,
 	
 	initializeWithServerContent: function() {
@@ -16,18 +16,14 @@ EurekaJ.InstrumentationTreeController = Em.Object.create({
 		var root = this.get('rootElement');
 		
 		if (root.get('length') > 0) {
-			var tree = this.get('content');
+			var content = [];
 
-			var children = [];
-			
 			for (index = 0; index < root.get('length'); index++) {
-				var elem = root.objectAt(index);
-				console.log('elem name: ' + elem.get('name'));
-				
-				children.pushObject(EurekaJ.Node.create({nodeIsExpanded: true, name: elem.get('name'), children: []}));
+				console.log('pushing object: ' + root.objectAt(index).get('name'));
+				content.pushObject(root.objectAt(index));
 			}
 			
-			tree.set('children', children);
+			this.set('content', content);
 		}
 		
 		
@@ -35,5 +31,14 @@ EurekaJ.InstrumentationTreeController = Em.Object.create({
 });
 
 EurekaJ.nodeView = Ember.View.extend({
-    templateName: 'tree-node'
+    templateName: 'tree-node',
+    
+});
+
+EurekaJ.nodeTextView = Ember.View.extend({
+	templateName: 'tree-node-text',
+	click: function(evt) {
+    	console.log(evt.currentTarget);
+    	this.get('content').set('isSelected', !this.get('content').get('isSelected'));
+    }
 });

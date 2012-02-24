@@ -10,9 +10,6 @@ setTimeout(function() {
                 
                 EurekaJ.store.findAll(EurekaJ.InstrumentationTreeItem);
                 
-                var tree = EurekaJ.Tree.create();
-    			tree.set('name', 'INSTRUMENTATION MENU');
-    			EurekaJ.InstrumentationTreeController.set('content', tree);
                 EurekaJ.InstrumentationTreeController.initializeWithServerContent();
                 
                 console.log('entering showMainArea');

@@ -26,28 +26,33 @@
 
 	<script type="text/x-handlebars" data-template-name="eurekaJTreeTemplate">
         <div class="treeView">
-			{{#with content}}
-				<h1>{{name}}</h1>
-				{{#each children}}
-					{{view EurekaJ.nodeView nameBinding="name" childrenBinding="children"}}
-				{{/each}}
-			{{/with}}
+			<h1>INSTRUMENTATION MENU</h1>
+			{{#each content}}
+				{{view EurekaJ.nodeView contentBinding="this"}}
+			{{/each}}
 		</div>
     </script>
     
-    <script type="text/x-handlebars" data-template-name="tree-node">
-    	<div>{{name}}</div>
-		<div>{{nodeIsExpanded}}</div>
-      	{{#if children}}
+    <script type="text/x-handlebars" data-template-name="tree-node-text">
+		{{#with content}}
+			<div>{{name}}</div>
+		{{/with}}
+	</script>
+	
+	<script type="text/x-handlebars" data-template-name="tree-node">
+    	{{#with content}}
+			{{view EurekaJ.nodeTextView contentBinding="this"}}
+
+			{{#if isSelected}}
 			<div>
-			
-        		{{#each children}}
+        		{{#each childrenNodes}}
          			{{#with this}}
-           				<div style="margin-left: 18px;">{{view EurekaJ.nodeView nameBinding="name" childrenBinding="children"}}</div>
+           				<div style="margin-left: 18px;">{{view EurekaJ.nodeView contentBinding="this"}}</div>
          			{{/with}}
         		{{/each}}
-      	</div>
-		{{/if}}
+      		</div>
+			{{/if}}
+		{{/with}}
 	</script>
 	
 	<script type="text/x-handlebars" data-template-name="eurekaJMainView">
