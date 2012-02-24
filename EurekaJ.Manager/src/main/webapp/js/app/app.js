@@ -16,6 +16,13 @@ EurekaJ.Adapter = DS.Adapter.create({
         	  contentType: 'application/json',
         	  success: function(data) { var nodes = type.getData(data); EurekaJ.store.loadMany(type, nodes); }
         	});
+    },
+    
+    find: function(store, type, id) {
+    	var url = type.url;
+        var requestStringJson = type.requestStringJson;
+        
+        console.log('finding: ' + id);
     }
 });
 

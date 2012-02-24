@@ -7,8 +7,14 @@ setTimeout(function() {
         showMainArea: Ember.ViewState.create({
             enter: function(stateManager) {
                 this._super(stateManager);
-                //EME.PhotoListController.set('content', EME.store.findAll(EME.Photo));
+                
                 EurekaJ.store.findAll(EurekaJ.InstrumentationTreeItem);
+                
+                var tree = EurekaJ.Tree.create();
+    			tree.set('name', 'INSTRUMENTATION MENU');
+    			EurekaJ.InstrumentationTreeController.set('content', tree);
+                EurekaJ.InstrumentationTreeController.initializeWithServerContent();
+                
                 console.log('entering showMainArea');
             },
 
@@ -20,7 +26,8 @@ setTimeout(function() {
                 }), 
                 
                 eurkajTreeMenuView: Em.View.extend({
-                	templateName: 'eurekaJTreeTemplate'
+                	templateName: 'eurekaJTreeTemplate',
+                	contentBinding: 'EurekaJ.InstrumentationTreeController.content'	
                 }),
                 
                 eurkajMainView: Em.View.extend({
