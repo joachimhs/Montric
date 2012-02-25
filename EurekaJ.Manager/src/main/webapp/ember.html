@@ -33,9 +33,26 @@
 		</div>
     </script>
     
+    <script type="text/x-handlebars" data-template-name="tree-node-arrow">
+		{{#with content}}
+			{{#if hasChildren}}
+				{{#if isExpanded}}
+					<span class="downarrow"></span>
+				{{else}}
+					<span class="rightarrow"></span>
+				{{/if}}
+			{{/if}}
+		{{/with}}
+	</script>
+    
     <script type="text/x-handlebars" data-template-name="tree-node-content">
 		{{#with content}}
-			{{view Ember.Checkbox valueBinding="isSelected" tagName="span"}} {{view EurekaJ.nodeTextView contentBinding="this"}}
+			{{#unless hasChildren}}
+				<span style="margin-right: 17px;"></span>
+			{{/unless}}
+			{{view Ember.Checkbox valueBinding="isSelected" tagName="span"}}
+			{{view EurekaJ.nodeArrowView contentBinding="this"}}
+			{{view EurekaJ.nodeTextView contentBinding="this"}}
 		{{/with}}
 	</script>
 	

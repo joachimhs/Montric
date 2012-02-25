@@ -22,6 +22,45 @@ div.treeView {
 	overflow: scroll;
 }
 
+div.treeView.is-expanded:after {
+    content: '';
+    display:block;
+    position: relative;
+    width:0;
+    height:0;
+    bottom:126px;
+    left: 40px;
+    border-color: transparent transparent black transparent; /*border color should be same as div div background color*/
+    border-style: solid;
+    border-width: 10px;
+}
+
+.rightarrow {
+    content: '';
+    float: left;
+    width: 0;
+	height: 0;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 3px;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid black;
+}
+
+.downarrow {
+    content: '';
+    float: left;
+    width: 0;
+	height: 0;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid black;
+}
+
 div.chartView {
 	background: white;
 	position: absolute;

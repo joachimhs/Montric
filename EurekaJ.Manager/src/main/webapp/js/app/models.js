@@ -12,7 +12,15 @@ EurekaJ.InstrumentationTreeItem.reopen({
     hasChildren: DS.attr('boolean'),
     childrenNodes: DS.hasMany(EurekaJ.InstrumentationTreeItem),
 	//chartGrid: DS.Record.toMany('EurekaJView.ChartGridModel'),
-    nodeType: DS.attr('string')
+    nodeType: DS.attr('string'),
+    
+    observesSelected: function() {
+    	if (this.get('isSelected')) {
+    		EurekaJ.selecedTreeNodesController.selectNode(this);
+    	} else {
+    		EurekaJ.selecedTreeNodesController.deselectNode(this);
+    	}
+    }.observes('isSelected')
 });
 
 EurekaJ.InstrumentationTreeItem.reopenClass({
