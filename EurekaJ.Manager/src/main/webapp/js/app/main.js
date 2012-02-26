@@ -37,10 +37,13 @@ EurekaJ.selecedTreeNodesController = Em.ArrayProxy.create({
 		if (this.findSelectedNodeIndex(node) == 0) {
 			this.get('content').pushObject(node);
 		}
+		
+		this.resizeSelectedCharts()
 	},
 	
 	deselectNode: function(node) {
-		console.log('content: ' + this.get('content').get('length'));
+		this.get('content').removeObject(node);
+		this.resizeSelectedCharts();
 	},
 	
 	findSelectedNodeIndex: function(node) {
@@ -53,6 +56,19 @@ EurekaJ.selecedTreeNodesController = Em.ArrayProxy.create({
         }
 
         return 0;
+    },
+    
+    resizeSelectedCharts: function() {
+    	var height = $("#chartView").height();
+		if (EurekaJ.selecedTreeNodesController.get('content').get('length') > 0) {
+			height = height / EurekaJ.selecedTreeNodesController.get('content').get('length');
+		}
+		
+    	for (eIndex = 0; eIndex < this.get('content').get('length'); eIndex++) {
+    		var element = this.get('content').objectAt(eIndex);
+    		$("#" + element.get('guiPathTranslated')).css('height', height + 'px');    		
+    	}
+    	
     }
 });
 
@@ -81,4 +97,14 @@ EurekaJ.nodeArrowView = Ember.View.extend({
 	click: function(evt) {
     	this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
     }
+});
+
+EurekaJ.ChartView = Ember.View.extend({
+	templateName: 'chart-view',
+	
+	didInsertElement: function() {
+		this._super();
+		EurekaJ.selecedTreeNodesController.resizeSelectedCharts();
+		$.plot($("#" + this.get('elementId')), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+	}
 });

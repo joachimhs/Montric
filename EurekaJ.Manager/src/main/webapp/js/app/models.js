@@ -20,7 +20,11 @@ EurekaJ.InstrumentationTreeItem.reopen({
     	} else {
     		EurekaJ.selecedTreeNodesController.deselectNode(this);
     	}
-    }.observes('isSelected')
+    }.observes('isSelected'),
+    
+    guiPathTranslated: function() {
+    	return this.get('guiPath').replace(/\:/g,'_').replace(/ /g, 'Ð');
+    }.property('guiPath')
 });
 
 EurekaJ.InstrumentationTreeItem.reopenClass({

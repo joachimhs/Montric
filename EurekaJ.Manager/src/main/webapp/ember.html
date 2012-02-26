@@ -12,6 +12,8 @@
     <script src="js/scripts/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/scripts/ember-0.9.5.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/scripts/ember-data-latest.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/scripts/jquery.flot.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/scripts/jquery.flot.resize.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app/stateManager.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app/main.js" type="text/javascript" charset="utf-8"></script>
@@ -79,10 +81,17 @@
 	</script>
 	
 	<script type="text/x-handlebars" data-template-name="eurekaJMainView">
-        <div class="chartView">
-			
+        <div id="chartView" class="chartView">
+			{{#each EurekaJ.selecedTreeNodesController}}
+				{{view EurekaJ.ChartView elementIdBinding="guiPathTranslated" classNames="chartStyle"}}
+			{{/each}}
 		</div>
     </script>
+    
+    <script type="text/x-handlebars" data-template-name="chart-view">
+		
+	</script>
+    
 	
 	<script type="text/x-handlebars" data-template-name="eurekaJConfigView">
         <div class="chartConfigView">
