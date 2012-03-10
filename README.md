@@ -15,14 +15,14 @@ The goal is to develop a general application for monitoring Java applications wi
 * A complete Manager application that provides its users with the possibility to see crucial information regarding the monitored applications performance and resource consumptions (memory, CPU, Threads, IO, etc), as well as errors and exceptions
 * The possibility to set up alerts for any measurements passed from any agent to the Manager application, as well as sending alerts via multiple channels (Email, SNMP, etc.)
 
-EurekaJ Profilers main goal is to work as a complete Java Profiler by being:
+EurekaJ Profiler's main goal is to work as a complete Java Profiler by being:
 
 * Fine-grained: Low-level methods can be monitored
-* Consolidated: All collected statistics is routed to the same logical server having the possibility to deliver a consolidated view
+* Consolidated: All collected statistics are routed to the same logical server having the possibility to deliver a consolidated view
 * Constant: Monitoring will take place 24/7
 * Effective: Gathering monitoring data shall have a small as possible negative effect on the performance of the monitored application
 * Realtime: The collected data will be visualized, reported and alerted on in real-time
-* Historical: Data is stored in 30 days for visualization, comparisong and reporting of historical data.
+* Historical: Data is stored in 30 days for visualization, comparison and reporting of historical data.
 
 ## Screenshot
 ![EurekaJ Profiler] (http://eurekaj.haagen.name/images/eurekaj_screenshot.png)
