@@ -20,9 +20,20 @@ EurekaJ.Adapter = DS.Adapter.create({
     
     find: function(store, type, id) {
     	var url = type.url;
+    	
         var requestStringJson = type.requestStringJson;
+        requestStringJson.getInstrumentationChartData.id = id;
+        requestStringJson.getInstrumentationChartData.path = id;
         
-        console.log('finding: ' + id);
+        console.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
+        
+        $.ajax({
+      	  type: 'POST',
+      	  url: url,
+      	  data: JSON.stringify(requestStringJson, null, '\t'),
+      	  contentType: 'application/json',
+      	  success: function(data) { EurekaJ.store.load(type, id, type.getData(data)); }
+      	});
     }
 });
 

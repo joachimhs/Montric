@@ -36,6 +36,7 @@ EurekaJ.selecedTreeNodesController = Em.ArrayProxy.create({
 	selectNode: function(node) {
 		if (this.findSelectedNodeIndex(node) == 0) {
 			this.get('content').pushObject(node);
+			this.get('content').get('chartGrid');
 		}
 		
 		this.resizeSelectedCharts()
@@ -104,7 +105,9 @@ EurekaJ.ChartView = Ember.View.extend({
 	
 	didInsertElement: function() {
 		this._super();
+		console.log('chart content: ' + this.get('content').get('chartGrid').objectAt(0).get('chart'));
+		//console.log('chart content: ' + this.get('content').get('chartGrid').objectAt(0).get('chart'));
 		EurekaJ.selecedTreeNodesController.resizeSelectedCharts();
-		$.plot($("#" + this.get('elementId')), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+		$.plot($("#" + this.get('elementId')), jQuery.parseJSON(this.get('content').get('chartGrid').objectAt(0).get('chart')) , { yaxis: { min: 0 } });
 	}
 });

@@ -83,7 +83,7 @@
 	<script type="text/x-handlebars" data-template-name="eurekaJMainView">
         <div id="chartView" class="chartView">
 			{{#each EurekaJ.selecedTreeNodesController}}
-				{{view EurekaJ.ChartView elementIdBinding="guiPathTranslated" classNames="chartStyle"}}
+				{{view EurekaJ.ChartView contentBinding="this" elementIdBinding="guiPathTranslated" classNames="chartStyle"}}
 			{{/each}}
 		</div>
     </script>

@@ -25,11 +25,11 @@
     </layout> 
   </appender>
   	
-   <!--logger name="org.eurekaj.manager.plugin">
-      <priority value="debug"/>
+   <logger name="org.eurekaj">
+      <level value="info"/>
    </logger>
 	  
-	<logger name="org.eurekaj.alert">
+	<!--logger name="org.eurekaj.alert">
 		<priority value="debug" />
 	</logger>
 	

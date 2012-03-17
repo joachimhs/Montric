@@ -1,6 +1,14 @@
-1.0.6 - 
+1.1.0 - Executable WAR file
 
+* Made the WAR file an executable instead of a ZIP file. Simplifies deployment a LOT. 
 * Adding EurekaJApplicationServices to API so that plugins can request resources and information from EurekaJ Manager.
+* Removing the need for the jetty.xml file. Adding jetty.maxThreads to the configFile instead.
+* Removing the need for the config.properties file, using sensible defaults instead
+* Removing the need for the users.properties file, using default users 'user' and 'admin'
+* Made a requirement that -Xmx is set to a minimum of 512MB. 
+* Removed the eurekaJ.managerServer project entirely 
+* Fixed typo in expected deleteStatsOlderThanDays
+* Upgrading to Jetty 8.1.2
 
 1.0.5 - Alert Plugin Architecture, Faster Database Structure, CollectD integration
 

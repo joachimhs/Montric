@@ -29,7 +29,7 @@ public class DeleteOldStatisticsTask {
     private TreeMenuService treeMenuService;
 
     public DeleteOldStatisticsTask() {
-        String daysStr = System.getProperty("org.eurekaj.delteStatsOlderThanDays");
+        String daysStr = System.getProperty("org.eurekaj.deleteStatsOlderThanDays");
         if (daysStr != null) {
             try {
                 numDaysToKeepStatistics = Integer.parseInt(daysStr);

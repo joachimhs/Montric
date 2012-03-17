@@ -13,7 +13,7 @@ public class EurekaJManagerApplicationServices implements EurekaJApplicationServ
 		
 		return applicationServices;
 	}
-	@Override
+	
 	public String getLoggedInUsername() {
 		return SecurityManager.getAuthenticatedUsername();
 	}

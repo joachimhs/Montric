@@ -75,7 +75,6 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics();
 	}
 	
-	@Override
 	public void deleteChartGroup(String groupName) {
 		getDbPlugin().getGroupedStatisticsDao().deleteGroupedChart(groupName);
 	}
@@ -92,7 +91,6 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return getDbPlugin().getAlertDao().getAlerts();
 	}
 	
-	@Override
 	public void deleteAlert(String alertName) {
 		getDbPlugin().getAlertDao().deleteAlert(alertName);
 	}
@@ -119,7 +117,6 @@ public class TreeMenuServiceImpl implements TreeMenuService {
         getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date);
     }
     
-    @Override
     public void deleteTreeMenuNode(String guiPath) {
     	getDbPlugin().getTreeMenuDao().deleteTreeMenu(guiPath);    	
     }

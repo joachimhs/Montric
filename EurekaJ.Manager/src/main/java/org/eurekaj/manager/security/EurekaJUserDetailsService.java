@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.security;
 
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,7 +36,8 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class EurekaJUserDetailsService implements UserDetailsService {
-    List<EurekaJUserDetails> configuredUsers;
+    private static Logger log = Logger.getLogger(EurekaJUserDetailsService.class);
+	List<EurekaJUserDetails> configuredUsers;
 
     public EurekaJUserDetailsService() {
         configuredUsers = new ArrayList<EurekaJUserDetails>();
@@ -85,11 +87,10 @@ public class EurekaJUserDetailsService implements UserDetailsService {
                 properties.load(configStream);
                 configStream.close();
             } else {
-                String message = "Unable to find users file:" + configFile.getAbsolutePath() + ". Unable to start.";
-                throw new FileNotFoundException(message);
+            	log.error("Unable to find users.properties file. Using standard Users: 'user' and 'admin'.");
+            	properties.setProperty("user", "user,ROLE_USER,enabled");
+            	properties.setProperty("admin", "admin,ROLE_ADMIN,ROLE_USER,enabled");
             }
-
-
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e.getMessage(), e);
         } catch (IOException e) {
@@ -116,7 +117,6 @@ public class EurekaJUserDetailsService implements UserDetailsService {
         }
     }
 
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         UserDetails userDetails = null;
 

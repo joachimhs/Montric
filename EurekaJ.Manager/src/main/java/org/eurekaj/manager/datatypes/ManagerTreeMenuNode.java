@@ -60,7 +60,6 @@ public class ManagerTreeMenuNode implements TreeMenuNode {
         this.nodeLive = nodeLive;
     }
 
-    @Override
     public int compareTo(TreeMenuNode other) {
 		if (other == null || other.getGuiPath() == null) {
 			return 1;

@@ -16,10 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-package org.eurekaJ.managerServer;
+package org.eurekaj.manager.server;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.management.ManagementFactory;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -27,19 +28,35 @@ import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.xml.XmlConfiguration;
+import org.eurekaj.api.util.IntegerParser;
 
 public class JettyServer {
 	private static Logger log = Logger.getLogger(JettyServer.class);
 	private static Server jettyServer;
 	private static int localPort;
+	private static Long megabytes = 0l;
 
 	public static void main(String[] args) throws Exception {
 		start();
 	}
 
 	private static void start() throws Exception {
+		Long bytes = ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax();
+		
+		if (bytes != null && bytes.longValue() > 0l) {
+			megabytes = bytes / (1024*1024);
+		}
+		
+		log.info("Configured max HEAP memory: " + megabytes + " MB.");
+		
+		if (megabytes.longValue() < 480) {
+			log.fatal("EurekaJ requires at lest 480MB of HEAP to operate. Please set your -Xmx option accordingly (minimum -Xmx512m).");
+			System.exit(-1);
+		}
+		
 		if (jettyServer != null && jettyServer.isRunning()) {
 			log.warn("JettyServer.start() called, but the server is already started.");
 			return;
@@ -68,38 +85,35 @@ public class JettyServer {
 				Object property = (String) e.nextElement();
 				log.info("\t\t* " + property + "=" + properties.get(property));
 			}
-		} else {
-			String message = "Could not find " + configFile.getAbsolutePath() + ". Unable to start.";
-			log.fatal(message);
-			throw new RuntimeException(message);
 		}
-
+		
 		setProperties(properties);
-		jettyServer = new Server(Integer.parseInt(System.getProperty("jetty.port", "8080")));
-
-		File jettyConfigFile = new File("jetty.xml");
-		if (!jettyConfigFile.exists()) {
-			jettyConfigFile = new File("../jetty.xml");
-		}
-		if (!jettyConfigFile.exists()) {
-			jettyConfigFile = new File("../../jetty.xml");
-		}
-		if (jettyConfigFile.exists()) {
-			log.info("Configuring Jetty with jetty.xml: " + jettyConfigFile.getAbsolutePath());
-			XmlConfiguration configuration = new XmlConfiguration(jettyConfigFile.toURL());
-			configuration.configure(jettyServer);
-		} else {
-			String message = "Unable to find " + jettyConfigFile.getAbsolutePath() + ". Unble to start.";
-			log.fatal(message);
-			throw new RuntimeException(message);
-		}
+		
+		Integer port = IntegerParser.parseIntegerFromString(System.getProperty("jetty.port"), 8080);
+		Integer maxThreads = IntegerParser.parseIntegerFromString(System.getProperty("jetty.maxThreads"), 768);
+		
+		jettyServer = new Server();		
+		
+		log.info("Starting connector on port: " + port);
+		log.info("Maximum threads configured: " + maxThreads);
+		
+		SelectChannelConnector webConnector = new SelectChannelConnector();
+		webConnector.setPort(port);
+		webConnector.setThreadPool(new QueuedThreadPool(maxThreads));
+		
+		jettyServer.addConnector(webConnector);
+		
+		//MBeanContainer mbContainer=new MBeanContainer(ManagementFactory.getPlatformMBeanServer());
+		//jettyServer.getContainer().addEventListener(mbContainer);
+		//jettyServer.addBean(mbContainer);
+		//mbContainer.addBean(log);
 
 		setWebAppContext();
 	}
 
 	private static void setWebAppContext() {
-		File repoDir = new File(System.getProperty("basedir", "target"));
-		System.out.println("Using repo directory: " + repoDir.getAbsolutePath() + " exists: " + repoDir.exists());
+		File repoDir = new File(System.getProperty("basedir", "."));
+		log.info("Using repo directory: " + repoDir.getAbsolutePath() + " exists: " + repoDir.exists());
 		String artifactId = System.getProperty("context.root", "");
 		
 		String inplace = System.getProperty("inplace.trueFalse", "false");
@@ -111,7 +125,7 @@ public class JettyServer {
 						File.separatorChar + "src" + 
 						File.separatorChar + "main" + 
 						File.separatorChar + "webapp/";
-			System.out.println("Inplace Path: " + targetPath);
+			log.info("Inplace Path: " + targetPath);
 			//System.out.println(repoDir.getParentFile().getParentFile().getAbsolutePath() + File.separatorChar + "EurekaJ.Manager");
 			WebAppContext wc = new WebAppContext();
 			wc.setContextPath("/" + artifactId);
@@ -146,6 +160,36 @@ public class JettyServer {
 		while (propEnum.hasMoreElements()) {
 			String property = (String) propEnum.nextElement();
 			System.setProperty(property, properties.getProperty(property));
+		}
+		
+		if (System.getProperty("jetty.port") == null) {
+			System.setProperty("jetty.port", "8080");
+			log.info(" * Property 'jetty.port' is not specified. Using default: 8080. Configure in file config.properties.");
+		}
+		
+		if (System.getProperty("jetty.maxThreads") == null) {
+			System.setProperty("jetty.maxThreads", "150");
+			log.info(" * Property 'jetty.maxThreads' is not specified. Using default: 150 Configure in file config.properties.");
+		}
+		
+		if (System.getProperty("org.eurekaj.deleteStatsOlderThanDays") == null) {
+			System.setProperty("org.eurekaj.deleteStatsOlderThanDays", "30");
+			log.info(" * Property 'org.eurekaj.deleteStatsOlderThanDays' is not specified. Using default: 30 Configure in file config.properties.");
+		}
+		
+		if (System.getProperty("eurekaj.db.type") == null) {
+			System.setProperty("eurekaj.db.type", "BerkeleyHour");
+			log.info(" * Property 'eurekaj.db.type' is not specified. Using default: 'BerkeleyHour' Configure in file config.properties.");
+		}
+		
+		if (System.getProperty("context.root") == null) {
+			System.setProperty("context.root", "");
+			log.info(" * Property 'context.root' is not specified. Using default: '' Configure in file config.properties.");
+		}
+		
+		if (System.getProperty("eurekaj.db.absPath") == null) {
+			System.setProperty("eurekaj.db.absPath", "data");
+			log.info(" * Property 'eurekaj.db.absPath' is not specified. Using default: 'data' Configure in file config.properties.");
 		}
 	}
 

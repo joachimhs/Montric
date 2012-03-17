@@ -132,7 +132,6 @@ public class ManagerAlert implements Alert {
         this.selectedEmailSenderList = selectedEmailSenderList;
     }
 
-	@Override
 	public List<String> getSelectedAlertPluginList() {
 		return selectedAlertPluginList;
 	}
