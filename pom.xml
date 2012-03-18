@@ -13,7 +13,7 @@
 	</properties>
 
 	<modules>
-		<module>EurekaJ.Agent</module>
+		<!-- Module Depricated! module>EurekaJ.Agent</module-->
 		<module>EurekaJ.Manager</module>
 		<module>EurekaJ.Proxy</module>
 		<module>EurekaJ.api</module>
