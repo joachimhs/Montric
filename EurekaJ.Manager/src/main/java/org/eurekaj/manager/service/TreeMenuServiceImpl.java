@@ -38,7 +38,6 @@ public class TreeMenuServiceImpl implements TreeMenuService {
     }
 
     private EurekaJDBPluginService getDbPlugin() {
-
         if (dbPlugin == null) {
             dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
         }

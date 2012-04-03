@@ -29,5 +29,7 @@ public interface LiveStatistics extends Comparable<LiveStatistics> {
     public String getGuiPath();
     public Long getTimeperiod();
     public Double getValue();
+    public String getValueType();
+    public String getUnitType();
 
 }

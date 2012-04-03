@@ -20,7 +20,7 @@
 		<module>EurekaJ.AlertEmailPlugin</module>
 		<!-- >module>EurekaJ.View</module-->
 		<module>EurekaJ.Scripts</module>
-	</modules>
+    </modules>
 
 	<build>
 		<!-- directory>/Volumes/ramdisk/testtarget</directory -->

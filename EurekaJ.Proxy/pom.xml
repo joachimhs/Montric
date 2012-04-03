@@ -78,6 +78,16 @@
 											<mainClass>org.eurekaj.proxy.app.Main</mainClass>
 										</transformer>
 									</transformers>
+                                    <filters>
+                                        <filter>
+                                            <artifact>org.eclipse.jetty.orbit:javax.servlet</artifact>
+                                            <excludes>
+                                                <exclude>META-INF/ECLIPSEF.RSA</exclude>
+                                                <exclude>META-INF/ECLIPSEF.SF</exclude>
+                                                <exclude>META-INF/eclipse.inf</exclude>
+                                            </excludes>
+                                        </filter>
+                                    </filters>
 								</configuration>
 							</execution>
 						</executions>

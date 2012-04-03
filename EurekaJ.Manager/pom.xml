@@ -149,6 +149,11 @@
             <artifactId>berkeleyHourPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>aggregateLiveStatisticsPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 		<!-- JSF Flot -->
 		<dependency>

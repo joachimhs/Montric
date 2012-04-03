@@ -25,6 +25,7 @@ import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
+import org.eurekaj.manager.plugin.ManagerProcessIncomingStatisticsPluginService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,16 +57,15 @@ public class LiveStatisticsServlet extends EurekaJGenericServlet {
 
             if (jsonObject.has("storeLiveStatistics") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsAdmin()) {
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
+                List<LiveStatistics> liveStatList = new ArrayList<LiveStatistics>();
+
                 for (int index = 0; index < statList.length(); index++) {
                     ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index));
-
-                    String value = null;
-                    if (liveStatistics.getValue() != null) {
-                        value = liveStatistics.getValue().toString();
-                    }
-                    getBerkeleyTreeMenuService().storeIncomingStatistics(liveStatistics.getGuiPath(), liveStatistics.getTimeperiod(), value,
-                            ValueType.fromValue(liveStatistics.getValueType()), UnitType.fromValue(liveStatistics.getUnitType()));
+                    liveStatList.add(liveStatistics);
                 }
+
+                //Send to available plugins for processing
+                ManagerProcessIncomingStatisticsPluginService.getInstance().processStatistics(liveStatList);
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
