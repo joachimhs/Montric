@@ -1,4 +1,4 @@
-1.1.0 - Executable WAR file
+1.1.0 - Executable WAR file, and ease of deployment (!!)
 
 * Made the WAR file an executable instead of a ZIP file. Simplifies deployment a LOT. 
 * Adding EurekaJApplicationServices to API so that plugins can request resources and information from EurekaJ Manager.
@@ -11,6 +11,7 @@
 * Upgrading to Jetty 8.1.2
 * Removing old WSDL stuff
 * Adding API and SPI for handling LiveStatistics.
+* Starting the migration of the SproutCore 2.0 port over to Ember.js.
 
 1.0.5 - Alert Plugin Architecture, Faster Database Structure, CollectD integration
 
@@ -19,7 +20,7 @@
 * Added a new plugin BerkeleyHour that structures the data more efficiently. Effectively reducing the storage requirements by a factor of 10-30x. 
 * Changed the way application is assembled
 * Moved the plugins into their own GitHub Repo https://github.com/joachimhs/EurekaJPlugins
-* Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Amber"
+* Holding off further SproutCore 2.0 work, as SproutCore 2 migrates over to "Ember.js"
 * Fixing bug where EurekaJ Manager would not load any other database plugin than "Berkeley"
 * Added Jetty server to EurekaJ.Proxy to enable listening for incoming calls via Plain Text Protocol (CollectD Integration) http://collectd.org/wiki/index.php/Plain_text_protoco
 * Changed the way the Jetty application is started for EurekaJ.Manager
