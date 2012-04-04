@@ -32,6 +32,7 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eurekaj.api.util.IntegerParser;
+import org.eurekaj.manager.util.ClassPathUtil;
 
 public class JettyServer {
 	private static Logger log = Logger.getLogger(JettyServer.class);

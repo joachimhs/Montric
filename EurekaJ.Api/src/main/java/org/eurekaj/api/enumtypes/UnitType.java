@@ -41,7 +41,8 @@ public enum UnitType {
                 return c;
             }
         }
-        throw new IllegalArgumentException(v);
+        
+        return N;
     }
 
 }

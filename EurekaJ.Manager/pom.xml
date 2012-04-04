@@ -30,6 +30,7 @@
 									todir="${project.build.directory}/${project.artifactId}-${project.version}/">
 									<fileset dir="${project.build.directory}/classes/">
 										<include name="org/eurekaj/manager/server/JettyServer.class" />
+                                        <include name="org/eurekaj/manager/util/ClassPathUtil.class" />
 									</fileset>
 								</move>
 							</tasks>
@@ -154,6 +155,11 @@
             <artifactId>aggregateLiveStatisticsPlugin</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--dependency>
+            <groupId>org.eurekaJ.plugin</groupId>
+            <artifactId>liveStatisticsCounterPlugin</artifactId>
+            <version>${project.version}</version>
+        </dependency-->
 
 		<!-- JSF Flot -->
 		<dependency>

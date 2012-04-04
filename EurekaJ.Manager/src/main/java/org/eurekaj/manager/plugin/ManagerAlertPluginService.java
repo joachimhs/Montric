@@ -8,6 +8,7 @@ import java.util.ServiceLoader;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.spi.alert.EurekaJAlertPluginService;
 
 public class ManagerAlertPluginService {
@@ -16,6 +17,7 @@ public class ManagerAlertPluginService {
     private ServiceLoader<EurekaJAlertPluginService> loader;
     
 	public ManagerAlertPluginService() {
+        ClassPathUtil.addPluginDirectory();
 		loader = ServiceLoader.load(EurekaJAlertPluginService.class);
 		for (EurekaJAlertPluginService alertPlugin : loader) {
 			alertPlugin.setApplicationServices(EurekaJManagerApplicationServices.getInstance());

@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.plugin;
 
+import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 import java.util.Iterator;
@@ -35,6 +36,7 @@ public class ManagerDbPluginService {
     private ServiceLoader<EurekaJDBPluginService> loader;
 
     private ManagerDbPluginService() {
+        ClassPathUtil.addPluginDirectory();
         loader = ServiceLoader.load(EurekaJDBPluginService.class);
         for (EurekaJDBPluginService pluginService : loader) {
             pluginService.setup();

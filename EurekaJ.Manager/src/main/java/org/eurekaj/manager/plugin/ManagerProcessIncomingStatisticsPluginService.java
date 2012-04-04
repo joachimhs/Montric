@@ -3,6 +3,7 @@ package org.eurekaj.manager.plugin;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.service.EurekaJProcessIncomingStatisticsService;
+import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.manager.util.DatabasePluginUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 import org.eurekaj.spi.statistics.EurekaJProcessIncomingStatisticsPluginService;
@@ -24,6 +25,7 @@ public class ManagerProcessIncomingStatisticsPluginService implements EurekaJPro
     private EurekaJDBPluginService dbPlugin = null;
 
     public ManagerProcessIncomingStatisticsPluginService() {
+        ClassPathUtil.addPluginDirectory();
         loader = ServiceLoader.load(EurekaJProcessIncomingStatisticsPluginService.class);
         for (EurekaJProcessIncomingStatisticsPluginService statPluginEurekaJ : loader) {
             statPluginEurekaJ.setApplicationServices(EurekaJManagerApplicationServices.getInstance());
@@ -47,10 +49,9 @@ public class ManagerProcessIncomingStatisticsPluginService implements EurekaJPro
         return dbPlugin;
     }
 
+
     public void processStatistics(List<LiveStatistics> liveStatisticsList) {
-        System.out.println("Sending liveStats to plugins: " + liveStatisticsList.size());
         for (EurekaJProcessIncomingStatisticsPluginService statPluginEurekaJ : loader) {
-            System.out.println("Plugin name: " + statPluginEurekaJ.getPluginName());;
             statPluginEurekaJ.getProcessIncomingStatisticsService().processStatistics(liveStatisticsList);
         }
     }

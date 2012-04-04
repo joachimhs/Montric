@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.AlertStatus;
+import org.eurekaj.api.enumtypes.ValueType;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -58,6 +59,9 @@ public class ChartUtil {
             currentTick.setX(currentMillis);
             currentTick.setY(null);
             double aggregatedValue = 0.0d;
+            double averageValue = 0.0d;
+            ValueType valueType = null;
+
             int numStatsInCurrentTick = 0;
 
             for (int i = 0; i < numTicksInResolution; i++) {
@@ -65,6 +69,9 @@ public class ChartUtil {
                 if (currStat == null || currStat.getValue() == null) {
                     //No stat for this timeperiod, skipping
                 } else {
+                    if (valueType == null) {
+                        valueType = ValueType.fromValue(currStat.getValueType());
+                    }
                     //Add to current
                     aggregatedValue += currStat.getValue();
                     numStatsInCurrentTick++;
@@ -74,7 +81,13 @@ public class ChartUtil {
             }
 
             if (numStatsInCurrentTick > 0) {
-                currentTick.setY(aggregatedValue / numStatsInCurrentTick);
+                //If value type is aggregate, return the aggregate value
+                if (ValueType.AGGREGATE.equals(valueType)) {
+                    currentTick.setY(aggregatedValue);
+                } else {
+                    //Otherwise return the average
+                    currentTick.setY(aggregatedValue / numStatsInCurrentTick);
+                }
             }
 
             valueList.addDataPoint(currentTick);

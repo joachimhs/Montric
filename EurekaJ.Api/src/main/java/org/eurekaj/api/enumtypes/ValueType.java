@@ -40,7 +40,8 @@ public enum ValueType {
                 return c;
             }
         }
-        throw new IllegalArgumentException(v);
+
+        return AVERAGE;
     }
 
 }
