@@ -1,8 +1,6 @@
 package org.eurekaj.manager.util;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.manager.plugin.ManagerProcessIncomingStatisticsPluginService;
-import org.fuin.utils4j.Utils4J;
 
 import java.io.File;
 import java.io.IOException;
