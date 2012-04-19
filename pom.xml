@@ -20,7 +20,6 @@
 		<module>EurekaJ.AlertEmailPlugin</module>
 		<!-- >module>EurekaJ.View</module-->
 		<module>EurekaJ.Scripts</module>
-        <module>EurekaJ.DatabaseTest</module>
     </modules>
 
 	<build>
