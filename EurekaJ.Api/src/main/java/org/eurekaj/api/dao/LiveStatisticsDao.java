@@ -41,4 +41,6 @@ public interface LiveStatisticsDao {
 			Long minTimeperiod, Long maxTimeperiod);
 
     public void deleteLiveStatisticsOlderThan(Date date);
+
+    public void deleteLiveStatisticsBetween(String guiPath, Long fromTimeperiod, Long toTimeperiod);
 }

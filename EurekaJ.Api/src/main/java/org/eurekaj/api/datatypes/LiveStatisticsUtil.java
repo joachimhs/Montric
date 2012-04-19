@@ -48,7 +48,10 @@ public class LiveStatisticsUtil {
     public static Double calculateValueBasedOnValueType(LiveStatistics oldStat, Double newValue, ValueType valueType) {
         Double valueReturn = newValue;
 
-        if (valueType == ValueType.VALUE) {
+        if (newValue == null) {
+            //in this case, the return value is NULL regardless.
+            valueReturn = null;
+        } else if (valueType == ValueType.VALUE) {
             valueReturn = newValue;
         } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AGGREGATE) {
             valueReturn = oldStat.getValue() + newValue;
@@ -62,7 +65,10 @@ public class LiveStatisticsUtil {
     public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType) {
         Double valueReturn = newValue;
 
-        if (valueType == ValueType.VALUE) {
+        if (newValue == null) {
+            //in this case, the return value is NULL regardless.
+            valueReturn = null;
+        } else if (valueType == ValueType.VALUE) {
             valueReturn = newValue;
         } else if (oldValue != null && valueType == ValueType.AGGREGATE) {
             valueReturn = oldValue + newValue;

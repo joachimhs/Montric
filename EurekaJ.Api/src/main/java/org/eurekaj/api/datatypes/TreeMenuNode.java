@@ -30,6 +30,13 @@ import java.util.Comparator;
 public interface TreeMenuNode extends Comparable<TreeMenuNode> {
     public String getGuiPath();
     public String getNodeLive();
+    public Long getOneMinuteAverageLastUpdated();
+    public Long getFiveMinuteAverageLastUpdated();
+    public Long getHalfHourAverageLastUpdated();
+    public Long getHourAverageLastUpdated();
+    public Long getDailyAverageLastUpdated();
+    public Long getWeeklyAverageLastUpdated();
+
 
     public class TreeMenuNodeComparator implements Comparator<TreeMenuNode> {
 
