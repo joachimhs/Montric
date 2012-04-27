@@ -85,7 +85,7 @@ public class Main {
                 List<File> scriptOutputfileList = FileMatcher.getScriptOutputFilesInDirectory(scriptPath);
 
                 for (File scriptOutputfile : scriptOutputfileList) {
-                    String json = ParseStatistics.parseBtraceFile(scriptOutputfile);
+                    String json = ParseStatistics.parseBtraceFile(scriptOutputfile, password);
                     log.debug("Attempting to send JSON contents of: " + scriptOutputfile.getName() + " length: " + json.length());
 
                     int statusCode = gzipClient.sendGzipOverHttp(json);
@@ -141,7 +141,6 @@ public class Main {
     private void setProperties(Properties properties) {
         scriptPath = (String)properties.get("eurekaj.proxy.scriptpath");
         endpointUrl = (String)properties.get("eurekaj.proxy.endpoint");
-        username = (String)properties.get("eurekaj.proxy.username");
         password = (String)properties.get("eurekaj.proxy.password");
 
         if (scriptPath == null || scriptPath.length() == 1) {
@@ -150,10 +149,6 @@ public class Main {
 
         if (endpointUrl == null || endpointUrl.length() == 1) {
             throw new RuntimeException("The properties file 'config.properties' requires that the property 'eurekaj.proxy.endpoint' is defined. Example: eurekaj.proxy.endpoint=http://hostname:port");
-        }
-
-        if (username == null || username.length() == 1) {
-            throw new RuntimeException("The properties file 'config.properties' requires that the property 'eurekaj.proxy.username' is defined. Example: eurekaj.proxy.username=username");
         }
 
         if (password == null || password.length() == 1) {

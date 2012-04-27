@@ -70,34 +70,38 @@ import sun.security.util.Password;
  */
 public class ClientGZipContentCompression {
 	private static final Logger log = Logger.getLogger(ClientGZipContentCompression.class);
-    private List<Cookie> cookieList = null;
-    private boolean loggedIn = false;
-    private String username;
+    //private List<Cookie> cookieList = null;
+    //private boolean loggedIn = false;
+    //private String username;
     private String password;
     private String endpoint;
 
     public ClientGZipContentCompression(String endpoint, String username, String password) {
         this.endpoint = endpoint;
-        this.username = username;
+        //this.username = username;
         this.password = password;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     private void resetHttpConnection() {
-        cookieList =  null;
+        //cookieList =  null;
     }
 
     public int sendGzipOverHttp(String contents) throws Exception {
-        if (!loggedIn) {
-            logon();
-        }
+        //if (!loggedIn) {
+        //    logon();
+        //}
 
         int statusCode = -1;
         DefaultHttpClient httpclient = new DefaultHttpClient();
 
-        httpclient.getCookieStore().clear();
+        /*httpclient.getCookieStore().clear();
         for (Cookie cookie : cookieList) {
             httpclient.getCookieStore().addCookie(cookie);
-        }
+        }*/
 
         try {
             httpclient.addRequestInterceptor(new HttpRequestInterceptor() {
@@ -135,11 +139,12 @@ public class ClientGZipContentCompression {
 
             statusCode = postJsonContentsToServer(endpoint, contents, httpclient);
             if (statusCode != 200) {
+                log.error("Did not recieve status code 200 from EurekaJ Manager: " + statusCode);
                 //Reset HTTP Connection
-                resetHttpConnection();
+                //resetHttpConnection();
 
                 //Attempt login
-                logon();
+                //logon();
             }
         } finally {
             // When HttpClient instance is no longer needed,
@@ -163,7 +168,7 @@ public class ClientGZipContentCompression {
         return statusCode;
     }
 
-    public void logon() {
+    /*public void logon() {
         while (cookieList == null || cookieList.isEmpty()) {
             DefaultHttpClient httpclient = new DefaultHttpClient();
             try {
@@ -207,7 +212,7 @@ public class ClientGZipContentCompression {
                 httpclient.getConnectionManager().shutdown();
             }
         }
-    }
+    }*/
 
     static class GzipDecompressingEntity extends HttpEntityWrapper {
 

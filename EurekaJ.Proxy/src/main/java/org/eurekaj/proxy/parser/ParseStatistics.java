@@ -34,7 +34,7 @@ public class ParseStatistics {
 	private static final Logger log = Logger.getLogger(ParseStatistics.class);
 	private static String DELIMETER = ";";
 	
-    public static String parseBtraceFile(File file) throws IOException {
+    public static String parseBtraceFile(File file, String password) throws IOException {
         ParseStatistics parser = new ParseStatistics();
 		List<StoreIncomingStatisticsElement> statElemList = new ArrayList<StoreIncomingStatisticsElement>();
 
@@ -77,11 +77,11 @@ public class ParseStatistics {
 	    	line = inStream.readLine();
 		}
 
-        StringBuilder jsonBuilder = convertStatListToJson(statElemList);
+        StringBuilder jsonBuilder = convertStatListToJson(statElemList, password);
 		return jsonBuilder.toString();
 	}
 
-	public static StringBuilder convertStatListToJson(List<StoreIncomingStatisticsElement> statElemList) {
+	public static StringBuilder convertStatListToJson(List<StoreIncomingStatisticsElement> statElemList, String password) {
 		StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{ \"storeLiveStatistics\": [");
         for (int index = 0; index < statElemList.size() - 1; index++) {
@@ -106,7 +106,7 @@ public class ParseStatistics {
             jsonBuilder.append("\"unitType\": \"" + element.getUnitType() + "\"");
             jsonBuilder.append("}");
         }
-        jsonBuilder.append("] }");
+        jsonBuilder.append("], \"liveStatisticsToken\": \"" + password + "\" }");
 		return jsonBuilder;
 	}
 	
@@ -639,6 +639,7 @@ public class ParseStatistics {
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
 			commitedElem.setGuiPath(agentName + ":Memory:GC:Time Spent In GC(%)");
 			commitedElem.setTimeperiod(timeperiod);
+            commitedElem.setValue(gcTimeStr);
 			commitedElem.setUnitType(UnitType.N.value());
             commitedElem.setValueType(ValueType.VALUE.value());
 			statList.add(commitedElem);

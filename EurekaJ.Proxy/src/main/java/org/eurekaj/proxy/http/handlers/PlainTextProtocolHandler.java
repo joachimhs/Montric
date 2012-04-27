@@ -26,7 +26,7 @@ public class PlainTextProtocolHandler extends AbstractHandler {
 	private String prepend;
 	public PlainTextProtocolHandler(ClientGZipContentCompression gzipClient) {
 		this.gzipClient = gzipClient;
-		prepend = System.getProperty("org.eureaj.proxy.prependPTPStatsWith", "");
+		prepend = System.getProperty("org.eurekaj.proxy.prependPTPStatsWith", "");
 		if (!prepend.endsWith(":")) {
 			prepend += ":";
 		}
@@ -48,7 +48,7 @@ public class PlainTextProtocolHandler extends AbstractHandler {
         String responseString = "";
         try {
         	List<StoreIncomingStatisticsElement> statElemList = parsePlainTextProtocol(ptpString);
-        	String string = ParseStatistics.convertStatListToJson(statElemList).toString();
+        	String string = ParseStatistics.convertStatListToJson(statElemList, gzipClient.getPassword()).toString();
 			int statusCode = gzipClient.sendGzipOverHttp(string);
 			responseString = statElemList.size() + " records OK.";
 			log.info("Sent PTP contents to EurekaJ. EurekaJ responded with status code: " + statusCode);

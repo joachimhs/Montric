@@ -55,7 +55,7 @@ public class LiveStatisticsServlet extends EurekaJGenericServlet {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractRequestJSONContents(request);
             log.debug("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("storeLiveStatistics") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsAdmin()) {
+            if (jsonObject.has("storeLiveStatistics") && statisticsHasValidToken(jsonObject)) {
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
                 List<LiveStatistics> liveStatList = new ArrayList<LiveStatistics>();
 
@@ -66,6 +66,8 @@ public class LiveStatisticsServlet extends EurekaJGenericServlet {
 
                 //Send to available plugins for processing
                 ManagerProcessIncomingStatisticsPluginService.getInstance().processStatistics(liveStatList);
+            } else {
+                response.setStatus(401);
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
@@ -78,6 +80,27 @@ public class LiveStatisticsServlet extends EurekaJGenericServlet {
         writer.write(jsonResponse);
         response.flushBuffer();
 
+    }
+
+    private boolean statisticsHasValidToken(JSONObject jsonObject) {
+        boolean validToken = false;
+
+        String liveStatisticsToken = System.getProperty("org.eurekaj.liveStatisticsToken");
+        if (liveStatisticsToken != null && liveStatisticsToken.length() > 0) {
+            try {
+                validToken = jsonObject.has("liveStatisticsToken") && jsonObject.getString("liveStatisticsToken").equals(liveStatisticsToken);
+                log.info("validToken: " + validToken);
+                log.info("liveStatisticsToken proxy: " + jsonObject.get("liveStatisticsToken"));
+                log.info("liveStatisticsToken manager: " + liveStatisticsToken);
+            } catch (JSONException e) {
+                log.error("Unable to get liveStatisticsToken from JSON Hash. Refusing to accept live statistics");
+                validToken = false;
+            }
+        } else {
+            validToken = true;
+        }
+
+        return validToken;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
