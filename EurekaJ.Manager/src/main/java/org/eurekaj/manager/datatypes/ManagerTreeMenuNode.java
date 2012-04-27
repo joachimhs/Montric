@@ -30,16 +30,31 @@ import org.eurekaj.api.datatypes.TreeMenuNode;
 public class ManagerTreeMenuNode implements TreeMenuNode {
     String guiPath;
 	String nodeLive;
+    private Long oneMinuteAverageLastUpdated;
+    private Long fiveMinuteAverageLastUpdated;
+    private Long halfHourAverageLastUpdated;
+    private Long hourAverageLastUpdated;
+    private Long dailyAverageLastUpdated;
+    private Long weeklyAverageLastUpdated;
 
     public ManagerTreeMenuNode(String guiPath, String nodeLive) {
+        this();
         this.guiPath = guiPath;
         this.nodeLive = nodeLive;
     }
 
     public ManagerTreeMenuNode() {
+        super();
+        halfHourAverageLastUpdated = 0l;
+        hourAverageLastUpdated = 0l;
+        dailyAverageLastUpdated = 0l;
+        weeklyAverageLastUpdated = 0l;
+        oneMinuteAverageLastUpdated = 0l;
+        fiveMinuteAverageLastUpdated = 0l;
     }
 
     public ManagerTreeMenuNode(TreeMenuNode treeMenuNode) {
+        this();
         this.guiPath = treeMenuNode.getGuiPath();
         this.nodeLive = treeMenuNode.getNodeLive();
     }
@@ -54,6 +69,54 @@ public class ManagerTreeMenuNode implements TreeMenuNode {
 
     public String getNodeLive() {
         return nodeLive;
+    }
+
+    public Long getOneMinuteAverageLastUpdated() {
+        return oneMinuteAverageLastUpdated;
+    }
+
+    public void setOneMinuteAverageLastUpdated(Long oneMinuteAverageLastUpdated) {
+        this.oneMinuteAverageLastUpdated = oneMinuteAverageLastUpdated;
+    }
+
+    public Long getFiveMinuteAverageLastUpdated() {
+        return fiveMinuteAverageLastUpdated;
+    }
+
+    public void setFiveMinuteAverageLastUpdated(Long fiveMinuteAverageLastUpdated) {
+        this.fiveMinuteAverageLastUpdated = fiveMinuteAverageLastUpdated;
+    }
+
+    public Long getHalfHourAverageLastUpdated() {
+        return halfHourAverageLastUpdated;
+    }
+
+    public void setHalfHourAverageLastUpdated(Long halfHourAverageLastUpdated) {
+        this.halfHourAverageLastUpdated = halfHourAverageLastUpdated;
+    }
+
+    public Long getHourAverageLastUpdated() {
+        return hourAverageLastUpdated;
+    }
+
+    public void setHourAverageLastUpdated(Long hourAverageLastUpdated) {
+        this.hourAverageLastUpdated = hourAverageLastUpdated;
+    }
+
+    public Long getDailyAverageLastUpdated() {
+        return dailyAverageLastUpdated;
+    }
+
+    public void setDailyAverageLastUpdated(Long dailyAverageLastUpdated) {
+        this.dailyAverageLastUpdated = dailyAverageLastUpdated;
+    }
+
+    public Long getWeeklyAverageLastUpdated() {
+        return weeklyAverageLastUpdated;
+    }
+
+    public void setWeeklyAverageLastUpdated(Long weeklyAverageLastUpdated) {
+        this.weeklyAverageLastUpdated = weeklyAverageLastUpdated;
     }
 
     public void setNodeLive(String nodeLive) {

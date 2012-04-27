@@ -53,11 +53,11 @@
 						</systemProperty>
 						<systemProperty>
 							<name>eurekaj.db.type</name>
-							<value>Berkeley</value>
+							<value>BerkeleyHour</value>
 						</systemProperty>
 						<systemProperty>
 							<name>eurekaj.db.absPath</name>
-							<value>/srv/EurekaJRunnable/eurekajData</value>
+							<value>/srv/eurekaj/eurekajData</value>
 						</systemProperty>
 						<systemProperty>
 							<name>log4j.configuration</name>
