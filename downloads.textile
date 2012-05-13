@@ -6,18 +6,18 @@ title: Downloads By File
 <h1>{{page.title}}</h1>
 <ul>
 <li>1.0.zip - 7 downloads</li>
-<li>1.0.1.zip - 72 downloads</li>
-<li>1.0.2.zip - 311 downloads</li>
-<li>1.0.3.zip - 3694 downloads</li>
-<li>1.0.4.zip - 31 downloads</li>
-<li>1.0.5.zip - 899 downloads</li>
+<li>1.0.1.zip - 73 downloads</li>
+<li>1.0.2.zip - 313 downloads</li>
+<li>1.0.3.zip - 3696 downloads</li>
+<li>1.0.4.zip - 32 downloads</li>
+<li>1.0.5.zip - 1429 downloads</li>
 </ul>
 <ul>
 <li>1.0-jar-with-dependencies.jar - 8 downloads</li>
 <li>1.0.1.-jar-with-dependencies.jar - 60 downloads</li>
-<li>1.0.2-jar-with-dependencies.jar - 38 downloads</li>
+<li>1.0.2-jar-with-dependencies.jar - 39 downloads</li>
 <li>1.0.3-jar-with-dependencies.jar - 394 downloads</li>
-<li>1.0.4-jar-with-dependencies.jar - 21 downloads</li>
-<li>1.0.5-jar-with-dependencies.jar - 114 downloads</li>
+<li>1.0.4-jar-with-dependencies.jar - 22 downloads</li>
+<li>1.0.5-jar-with-dependencies.jar - 204 downloads</li>
 </ul>
 </div>
