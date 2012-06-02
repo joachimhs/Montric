@@ -18,9 +18,6 @@
 */
 package org.eurekaj.proxy;
 
-import org.eurekaj.api.enumtypes.UnitType;
-import org.eurekaj.api.enumtypes.ValueType;
-
 /**
  * Created by IntelliJ IDEA.
  * User: jhs

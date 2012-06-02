@@ -1,7 +1,6 @@
 package org.eurekaj.manager.plugin;
 
 import org.eurekaj.api.service.EurekaJApplicationServices;
-import org.eurekaj.manager.security.SecurityManager;
 import org.eurekaj.manager.util.ClassPathUtil;
 
 public class EurekaJManagerApplicationServices implements EurekaJApplicationServices {
@@ -17,6 +16,6 @@ public class EurekaJManagerApplicationServices implements EurekaJApplicationServ
 	}
 	
 	public String getLoggedInUsername() {
-		return SecurityManager.getAuthenticatedUsername();
+		return null;//SecurityManager.getAuthenticatedUsername();
 	}
 }

@@ -18,8 +18,9 @@
 		<module>EurekaJ.Proxy</module>
 		<module>EurekaJ.api</module>
 		<module>EurekaJ.AlertEmailPlugin</module>
-		<!-- >module>EurekaJ.View</module-->
+		<module>EurekaJ.View</module>
 		<module>EurekaJ.Scripts</module>
+		<module>EurekaJ.Application</module>
     </modules>
 
 	<build>

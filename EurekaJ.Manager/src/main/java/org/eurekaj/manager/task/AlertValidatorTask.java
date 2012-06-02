@@ -22,12 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.LiveStatistics;
-import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.api.util.ListToString;
@@ -37,13 +37,12 @@ import org.eurekaj.manager.plugin.ManagerAlertPluginService;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.manager.util.PropertyUtil;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 public class AlertValidatorTask {
 	private static final Logger log = Logger.getLogger(AlertValidatorTask.class);
 	private TreeMenuService treeMenuService;
 	private AdministrationService administrationService;
-	private ThreadPoolTaskExecutor sendEmailExecutor;
+	private ThreadPoolExecutor sendEmailExecutor;
 	private SimpleDateFormat dateFormat;
 	
 	public AlertValidatorTask() {
@@ -58,11 +57,11 @@ public class AlertValidatorTask {
 		this.treeMenuService = treeMenuService;
 	}
 	
-	public ThreadPoolTaskExecutor getSendEmailExecutor() {
+	public ThreadPoolExecutor getSendEmailExecutor() {
 		return sendEmailExecutor;
 	}
 	
-	public void setSendEmailExecutor(ThreadPoolTaskExecutor sendEmailExecutor) {
+	public void setSendEmailExecutor(ThreadPoolExecutor sendEmailExecutor) {
 		this.sendEmailExecutor = sendEmailExecutor;
 	}
 	

@@ -20,7 +20,6 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
-import org.eurekaj.api.dao.SmtpDao;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.manager.util.DatabasePluginUtil;

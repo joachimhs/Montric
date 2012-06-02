@@ -21,7 +21,6 @@ package org.eurekaj.manager.plugin;
 import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
-import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**

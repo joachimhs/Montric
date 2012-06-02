@@ -21,7 +21,6 @@ package org.eurekaj.manager.json;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.GroupedStatistics;
-import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.datatypes.ManagerEmailRecipientGroup;

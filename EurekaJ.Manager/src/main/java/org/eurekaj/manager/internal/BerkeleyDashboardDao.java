@@ -20,7 +20,6 @@ package org.eurekaj.manager.internal;
 
 import org.eurekaj.manager.internal.dashboard.Dashboard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

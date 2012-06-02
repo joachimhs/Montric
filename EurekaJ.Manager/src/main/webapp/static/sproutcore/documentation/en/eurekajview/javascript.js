@@ -1,2 +1,0 @@
-/* >>>>>>>>>> BEGIN source/core.js */
-

@@ -18,13 +18,6 @@
 */
 package org.eurekaj.proxy;
 
-import org.eurekaj.proxy.parser.ParseStatistics;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by IntelliJ IDEA.
  * User: jhs

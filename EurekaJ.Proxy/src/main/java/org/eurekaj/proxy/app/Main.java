@@ -24,8 +24,6 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
-
 import org.apache.http.examples.client.ClientGZipContentCompression;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;

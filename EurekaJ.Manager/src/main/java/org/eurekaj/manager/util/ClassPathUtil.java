@@ -83,7 +83,7 @@ public class ClassPathUtil {
                     return;
                 }
             }
-            Class sysclass = URLClassLoader.class;
+            Class<URLClassLoader> sysclass = URLClassLoader.class;
             try {
                 Method method = sysclass.getDeclaredMethod("addURL", parameters);
                 method.setAccessible(true);

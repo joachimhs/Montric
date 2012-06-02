@@ -18,17 +18,21 @@
 */
 package org.eurekaj.manager.json;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.EmailRecipientGroup;
+import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -37,34 +41,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import javax.servlet.http.HttpServletRequest;
-
 public class BuildJsonObjectsUtil {
 	private static final Logger log = Logger.getLogger(BuildJsonObjectsUtil.class);
-	
-    public static JSONObject extractRequestJSONContents(HttpServletRequest request) throws IOException, JSONException {
-        JSONObject jsonRequestObject = new JSONObject();
 
-        InputStream in = request.getInputStream();
-
-        BufferedReader r = new BufferedReader(new InputStreamReader(in));
-        StringWriter writer = new StringWriter();
-        IOUtils.copy(in, writer);
-        String theString = writer.toString();
-        
+	public static JSONObject extractJsonContents(String inputString) throws JSONException {
+		JSONObject jsonRequestObject;
+		
+		//If there is no inpu string, return empty JSON
+		if (inputString == null) {
+			inputString = "{}";
+		}
+		
         //Append and prepend { and } if its missing - SC 2
-        if (!theString.startsWith("{")) {
-        	theString = "{" + theString;
+        if (!inputString.startsWith("{")) {
+        	inputString = "{" + inputString;
         }
         
-        if (!theString.endsWith("}")) {
-        	theString = theString + "}";
+        if (!inputString.endsWith("}")) {
+        	inputString = inputString + "}";
         }
         
-        jsonRequestObject = new JSONObject(new JSONTokener(theString));
-
-        return jsonRequestObject;
-    }
+        jsonRequestObject = new JSONObject(new JSONTokener(inputString));
+		return jsonRequestObject;
+	}
 
     public static JSONObject buildTreeTypeMenuJsonObject(String treeId,
                                                          List<TreeMenuNode> nodeList,
