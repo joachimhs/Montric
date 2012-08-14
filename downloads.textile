@@ -6,20 +6,20 @@ title: Downloads By File
 <h1>{{page.title}}</h1>
 EurekaJ Zip<br />
 <ul>
-<li>1.0.zip - 7 downloads</li>
-<li>1.0.1.zip - 73 downloads</li>
+<li>1.0.zip - 23 downloads</li>
+<li>1.0.1.zip - 75 downloads</li>
 <li>1.0.2.zip - 313 downloads</li>
-<li>1.0.3.zip - 3696 downloads</li>
-<li>1.0.4.zip - 32 downloads</li>
-<li>1.0.5.zip - 1429 downloads</li>
+<li>1.0.3.zip - 3701 downloads</li>
+<li>1.0.4.zip - 34 downloads</li>
+<li>1.0.5.zip - 2076 downloads</li>
 </ul>
 EurekaJ Proxy Jar<br />
 <ul>
-<li>1.0-jar-with-dependencies.jar - 8 downloads</li>
-<li>1.0.1.-jar-with-dependencies.jar - 60 downloads</li>
+<li>1.0-jar-with-dependencies.jar - 21 downloads</li>
+<li>1.0.1.-jar-with-dependencies.jar - 61 downloads</li>
 <li>1.0.2-jar-with-dependencies.jar - 39 downloads</li>
-<li>1.0.3-jar-with-dependencies.jar - 394 downloads</li>
-<li>1.0.4-jar-with-dependencies.jar - 22 downloads</li>
-<li>1.0.5-jar-with-dependencies.jar - 204 downloads</li>
+<li>1.0.3-jar-with-dependencies.jar - 396 downloads</li>
+<li>1.0.4-jar-with-dependencies.jar - 24 downloads</li>
+<li>1.0.5-jar-with-dependencies.jar - 290 downloads</li>
 </ul>
 </div>
