@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js" line="60" mnemonic="9" />
-    <bookmark url="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js" line="25" mnemonic="8" />
-    <bookmark url="file://$PROJECT_DIR$/frameworks/flot/views/graph.js" line="102" mnemonic="7" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="03f5f7d6-376e-4ca6-a6a0-cbf396dbc541" name="Default" comment="" />
+    <list default="true" id="03f5f7d6-376e-4ca6-a6a0-cbf396dbc541" name="Default" comment="" />
     <ignored path="EurekaJ.View.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,7 +13,6 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
-    <option name="REVERSE_PATCH" value="false" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
@@ -26,94 +20,12 @@
   <component name="FavoritesManager">
     <favorites_list name="EurekaJ.View" />
   </component>
-  <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="instrumentation_tree.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js">
+      <file leaf-file-name="views.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="27" selection-start="2283" selection-end="2283" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="instrumentation_tree_model.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="16" selection-start="363" selection-end="387" vertical-scroll-proportion="0.29783827">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="graph.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frameworks/flot/views/graph.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="185" column="38" selection-start="6499" selection-end="6499" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery.flot.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frameworks/flot/jquery.flot.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="553" column="22" selection-start="24657" selection-end="24657" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chart_view.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="22" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eureka_j.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="70" selection-start="1503" selection-end="1503" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/core.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="103" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="61" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="instrumentation_group_panel.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="10" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_page.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="85" selection-start="6411" selection-end="6411" vertical-scroll-proportion="0.0">
+            <state line="57" column="33" selection-start="1318" selection-end="1318" vertical-scroll-proportion="0.23672566">
               <folding />
             </state>
           </provider>
@@ -126,29 +38,35 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
-  <component name="Git.Settings">
-    <option name="GIT_EXECUTABLE" value="/usr/local/git/bin/git" />
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/tmp/debug/build/static/flot/en/current/source/views/graph.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/views/chart_options.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js" />
-        <option value="$PROJECT_DIR$/frameworks/flot/views/graph.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/main.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/core.js" />
-        <option value="$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index_old.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/stateManager.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/main.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/css/master.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/mainMenu.jsons" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/nv.d3.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/cumulativeLineData.json" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/master.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/templates.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/mainMenu.json" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/views.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectFrameBounds">
+    <option name="x" value="42" />
+    <option name="y" value="22" />
+    <option name="width" value="1878" />
+    <option name="height" value="878" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -166,7 +84,7 @@
       <flattenPackages />
       <showMembers />
       <showModules />
-      <showLibraryContents ProjectPane="false" />
+      <showLibraryContents ProjectPane="true" />
       <hideEmptyPackages />
       <abbreviatePackageNames />
       <autoscrollToSource />
@@ -174,8 +92,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -183,6 +99,12 @@
               <option name="myItemId" value="EurekaJ.View" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="EurekaJ.View" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -198,33 +120,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frameworks" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="flot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="frameworks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flot" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -238,33 +142,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -278,37 +172,23 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -322,74 +202,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
+              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="fixtures" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data_sources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EurekaJ.View" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eureka_j_view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.general" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="DefaultHtmlFileTemplate" value="Html" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
+    </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node JS" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -419,29 +277,44 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="450" y="22" width="1614" height="1418" extended-state="0" />
-    <editor active="false" />
+    <frame x="42" y="22" width="1878" height="878" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4015852" sideWeight="0.9703504" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3899371" sideWeight="0.6694915" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19622642" sideWeight="0.5984148" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32511556" sideWeight="0.99748427" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
     <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
@@ -451,7 +324,19 @@
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORISONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
     <option name="LAST_COMMIT_MESSAGE" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -470,88 +355,116 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tmp/debug/staging/static/sproutcore/foundation/en/current/views/view.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="21" selection-start="4909" selection-end="4909" vertical-scroll-proportion="-0.14612246" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tmp/debug/staging/static/sproutcore/foundation/en/current/views/container.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="8" selection-start="2489" selection-end="2505" vertical-scroll-proportion="0.34692246" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tmp/debug/build/static/flot/en/current/source/views/graph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="40" selection-start="2609" selection-end="2609" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/chart_grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="6" selection-start="589" selection-end="1243" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_options.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="215" column="49" selection-start="6577" selection-end="6577" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tmp/debug/staging/static/sproutcore/datastore/en/current/system/query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="0" selection-start="4384" selection-end="4384" vertical-scroll-proportion="-0.7079646" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/controllers/instrumentation_tree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="27" selection-start="2283" selection-end="2283" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/frameworks/flot/views/graph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="38" selection-start="6499" selection-end="6499" vertical-scroll-proportion="0.0">
+        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frameworks/flot/jquery.flot.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="553" column="22" selection-start="24657" selection-end="24657" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/chart_view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="22" selection-start="615" selection-end="615" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/data_sources/eureka_j.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="70" selection-start="1503" selection-end="1503" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="103" selection-start="880" selection-end="880" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="61" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/views/instrumentation_group_panel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="10" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="85" selection-start="6411" selection-end="6411" vertical-scroll-proportion="0.0">
+        <state line="16" column="56" selection-start="589" selection-end="589" vertical-scroll-proportion="0.53097343">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/eureka_j_view/models/instrumentation_tree_model.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/mainMenu.jsons">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="16" selection-start="363" selection-end="387" vertical-scroll-proportion="0.29783827">
+        <state line="14" column="38" selection-start="318" selection-end="358" vertical-scroll-proportion="0.46460176">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/d3.v2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="442" column="9" selection-start="13027" selection-end="13034" vertical-scroll-proportion="-3.4620574">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/cumulativeLineData.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="21" selection-end="21" vertical-scroll-proportion="0.024232633">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-data-20120815.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2994" column="8" selection-start="87700" selection-end="87706" vertical-scroll-proportion="0.43338954">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="38" selection-start="841" selection-end="841" vertical-scroll-proportion="0.64082277">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="100" selection-start="697" selection-end="697" vertical-scroll-proportion="0.56962025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/nv.d3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="244" column="33" selection-start="7114" selection-end="7114" vertical-scroll-proportion="0.38279933">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/nv.d3.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="318" column="27" selection-start="5364" selection-end="5364" vertical-scroll-proportion="6.075949">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="22" selection-start="1728" selection-end="1728" vertical-scroll-proportion="0.66611844">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="11" selection-start="611" selection-end="611" vertical-scroll-proportion="-0.14240506">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="56" selection-start="709" selection-end="709" vertical-scroll-proportion="0.023734177">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/mainMenu.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="38" selection-start="1409" selection-end="1409" vertical-scroll-proportion="0.83386075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13669" column="11" selection-start="400859" selection-end="400866" vertical-scroll-proportion="0.3322091">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="33" selection-start="1318" selection-end="1318" vertical-scroll-proportion="0.23672566">
           <folding />
         </state>
       </provider>

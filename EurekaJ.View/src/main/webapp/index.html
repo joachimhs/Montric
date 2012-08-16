@@ -7,101 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
 	<title>EurekaJ</title>
-	<link rel="stylesheet" href="js/css/master.css" type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/css/master.css" type="text/css" charset="utf-8">
+    <link rel="stylesheet" href="/css/nv.d3.css" type="text/css" charset="utf-8">
 	<meta name="author" content="Joachim Haagen Skeie">
-    <script src="js/scripts/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/scripts/ember-0.9.5.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/scripts/ember-data-latest.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/scripts/jquery.flot.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/scripts/jquery.flot.resize.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/app/app.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/app/stateManager.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/app/main.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/app/models.js" type="text/javascript" charset="utf-8"></script>
-    
+    <script src="/js/scripts/jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/scripts/d3.v2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/scripts/nv.d3.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/scripts/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/scripts/ember-1.0.pre.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/scripts/ember-data-20120815.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/controllers.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/templates.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/views.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/models.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/router.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/app/main.js" type="text/javascript" charset="utf-8"></script>
 
-	<script type="text/x-handlebars" data-template-name="eurekaJTopTemplate">
-        <div class="topView">
-			<img src="/resources/images/eurekaj_logo_w_text_60x60.png" />
-		</div>
-    </script>
-
-	<script type="text/x-handlebars" data-template-name="eurekaJTreeTemplate">
-        <div class="treeView">
-			<h1>INSTRUMENTATION MENU</h1>
-			{{#each content}}
-				{{view EurekaJ.nodeView contentBinding="this"}}
-			{{/each}}
-		</div>
-    </script>
-    
-    <script type="text/x-handlebars" data-template-name="tree-node-arrow">
-		{{#with content}}
-			{{#if hasChildren}}
-				{{#if isExpanded}}
-					<span class="downarrow"></span>
-				{{else}}
-					<span class="rightarrow"></span>
-				{{/if}}
-			{{/if}}
-		{{/with}}
-	</script>
-    
-    <script type="text/x-handlebars" data-template-name="tree-node-content">
-		{{#with content}}
-			{{#unless hasChildren}}
-				<span style="margin-right: 17px;"></span>
-			{{/unless}}
-			{{view Ember.Checkbox valueBinding="isSelected" tagName="span"}}
-			{{view EurekaJ.nodeArrowView contentBinding="this"}}
-			{{view EurekaJ.nodeTextView contentBinding="this"}}
-		{{/with}}
-	</script>
-	
-    <script type="text/x-handlebars" data-template-name="tree-node-text">
-		{{#with content}}
-			{{name}}
-		{{/with}}
-	</script>
-	
-	<script type="text/x-handlebars" data-template-name="tree-node">
-    	{{#with content}}
-			{{view EurekaJ.nodeContentView contentBinding="this"}}
-
-			{{#if isExpanded}}
-			<div style="width: 500px;">
-        		{{#each childrenNodes}}
-         			{{#with this}}
-           				<div style="margin-left: 18px;">{{view EurekaJ.nodeView contentBinding="this"}}</div>
-         			{{/with}}
-        		{{/each}}
-      		</div>
-			{{/if}}
-		{{/with}}
-	</script>
-	
-	<script type="text/x-handlebars" data-template-name="eurekaJMainView">
-        <div id="chartView" class="chartView">
-			{{#each EurekaJ.selecedTreeNodesController}}
-				{{view EurekaJ.ChartView contentBinding="this" elementIdBinding="guiPathTranslated" classNames="chartStyle"}}
-			{{/each}}
-		</div>
-    </script>
-    
-    <script type="text/x-handlebars" data-template-name="chart-view">
-		
-	</script>
-    
-	
-	<script type="text/x-handlebars" data-template-name="eurekaJConfigView">
-        <div class="chartConfigView">
-			
-		</div>
-    </script>
 </head>
-<body bgcolor="#555154">
-    <div id="mainArea">
-
-    </div>
+<body bgcolor="#ffffff">
 </body>
 </html>

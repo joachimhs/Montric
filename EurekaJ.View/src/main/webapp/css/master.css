@@ -1,0 +1,186 @@
+body {
+    padding: 10px;
+    color: black;
+    background-color: #ffffff;
+}
+
+#mainArea {
+    font-family: Rockwell, Verdana, sans-serif;
+    letter-spacing: 0em;
+    color: #353B40;
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.1em;
+
+}
+
+#headerArea {
+    text-align: left;
+    font-size: 1.3em;
+    position: absolute;
+    right: 10px;
+    left: 10px;
+    top: 10px;
+    height: 45px;
+    background: #E9EBDD;
+    padding-top: 12px;
+    padding-left: 10px;
+}
+
+#menuArea {
+    background: aliceBlue;
+    border-bottom-left-radius: 8px;
+    position: absolute;
+    left: 10px;
+    width: 305px;
+    top: 67px;
+    bottom:10px;
+    overflow: scroll;
+}
+
+#menuArea h1 {
+    text-align: center;
+    font-size: 1.4em;
+    text-decoration: underline;
+    letter-spacing: 0.06em;
+    color: #333333;
+}
+
+#mainContentArea {
+    background: white;
+    position: absolute;
+    right: 10px;
+    left: 320px;
+    top: 67px;
+    bottom: 10px;
+    overflow: scroll;
+}
+
+div.loginBox {
+    color: #000000;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -150px;
+}
+
+div.loginBox h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.eurekajChart {
+    height: 100%;
+    width: 100%;
+}
+
+.eurekajChart h1 {
+    text-align: center;
+    font-size: 1.4em;
+    text-decoration: underline;
+    letter-spacing: 0.06em;
+    color: #333333;
+}
+
+.tenPxMarginTop {
+    margin-top: 10px;
+}
+
+.rightarrow {
+    content: '';
+    float: left;
+    width: 0;
+	height: 0;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 3px;
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	border-left: 6px solid black;
+}
+
+.downarrow {
+    content: '';
+    float: left;
+    width: 0;
+	height: 0;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid black;
+}
+
+div.chartConfigView {
+	background: white;
+	border-bottom-right-radius: 8px;
+	position: absolute;
+	width: 200px;
+	right: 5px;
+	top: 70px;
+	bottom:5px;
+	border-top: 1px solid #C0C4CC;
+}
+
+div.treeView h1 {
+	font-size: 11pt;
+	color: #777;
+	text-decoration: underline;
+	text-align: center;
+}
+
+.floatLeft {
+	float: left;
+}
+
+.centerAlign {
+    text-align: center;
+}
+
+.smallMarginRight {
+	margin-right: 5px;
+}
+
+.chartStyle {
+	position: relative;
+	height: 100%;
+}
+
+.rightarrow {
+    content: '';
+    float: left;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    margin-right: 11px;
+    margin-top: 3px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid black;
+}
+
+.downarrow {
+    content: '';
+    float: left;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid black;
+}
+
+.treeMenuCheckbox {
+    padding-right: 10px;
+}
+
+.treeMenuText {
+    margin-left: 5px;
+}

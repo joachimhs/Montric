@@ -16,14 +16,12 @@
     You should have received a copy of the GNU General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-package org.eurekaj.manager.servlets;
+package org.eurekaj.manager.server.handlers;
 
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
-import org.eurekaj.manager.json.ParseJsonObjects;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.json.JSONException;
@@ -31,44 +29,41 @@ import org.json.JSONObject;
 
 /**
  * Created by IntelliJ IDEA.
- * User: joahaa
- * Date: 1/20/11
- * Time: 9:16 AM
+ * User: jhs
+ * Date: 5/18/11
+ * Time: 10:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHandler {
-	private static final Logger log = Logger.getLogger(InstrumentationGroupChannelHandler.class);
+public class CollectdChannelHandler extends EurekaJGenericChannelHandler {
+	private static final Logger log = Logger.getLogger(CollectdChannelHandler.class);
 	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		String jsonResponse = "";
+		
+        String jsonResponse = "";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            /*log.debug("Accepted JSON: \n" + jsonObject);
 
-            if (jsonObject.has("instrumentaionGroupName")) {
-                GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
-                if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0 && groupedStatistics.getGroupedPathList().size() > 0) {
-                    getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
+            if (jsonObject.has("storeLiveStatistics") && org.eurekaj.manager.security.SecurityManager.isAuthenticatedAsAdmin()) {
+                JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
+                for (int index = 0; index < statList.length(); index++) {
+                    ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index));
+
+                    String value = null;
+                    if (liveStatistics.getValue() != null) {
+                        value = liveStatistics.getValue().toString();
+                    }
+                    getBerkeleyTreeMenuService().storeIncomingStatistics(liveStatistics.getGuiPath(), liveStatistics.getTimeperiod(), value,
+                            ValueType.fromValue(liveStatistics.getValueType()), UnitType.fromValue(liveStatistics.getUnitType()));
                 }
             }
-
-            if (jsonObject.has("getInstrumentationGroups")) {
-                jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
-                log.debug("Got InstrumentationGroups:\n" + jsonResponse);
-
-            }
-            
-            if (jsonObject.has("deleteChartGroup")) {
-                String groupName = jsonObject.getString("deleteChartGroup");
-                getBerkeleyTreeMenuService().deleteChartGroup(groupName);
-            }
-
+            */
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
         writeContentsToBuffer(ctx, jsonResponse);
-	}
-	
     }
+}

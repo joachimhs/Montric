@@ -11,11 +11,9 @@ public class AppWebappPluginService {
 	private ServiceLoader<EurekaJWebappPluginService> serviceLoader;
 	
 	public AppWebappPluginService() {
-		logger.info("Loading EurekaJWebappPluginService");
 		serviceLoader = ServiceLoader.load(EurekaJWebappPluginService.class);
 		
 		for (EurekaJWebappPluginService pluginService : serviceLoader) {
-			logger.info("Found EurekaJWebappPluginService class");
 			pluginService.start();
 		}
 	}

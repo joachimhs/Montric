@@ -1,4 +1,4 @@
-package org.eurekaj.manager.servlets;
+package org.eurekaj.manager.server.handlers;
 
 import static org.jboss.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;

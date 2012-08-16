@@ -6,13 +6,13 @@ import java.util.LinkedHashMap;
 import org.apache.log4j.Logger;
 import org.eurekaj.manager.server.handlers.CacheableFileServerHandler;
 import org.eurekaj.manager.server.router.RouterHandler;
-import org.eurekaj.manager.servlets.AlertChannelHandler;
-import org.eurekaj.manager.servlets.ChartChannelHandler;
-import org.eurekaj.manager.servlets.EmailChannelHandler;
-import org.eurekaj.manager.servlets.InstrumentationGroupChannelHandler;
-import org.eurekaj.manager.servlets.InstrumentationMenuChannelHandler;
-import org.eurekaj.manager.servlets.LiveStatisticsChannelHandler;
-import org.eurekaj.manager.servlets.UserChannelhandler;
+import org.eurekaj.manager.server.handlers.AlertChannelHandler;
+import org.eurekaj.manager.server.handlers.ChartChannelHandler;
+import org.eurekaj.manager.server.handlers.EmailChannelHandler;
+import org.eurekaj.manager.server.handlers.InstrumentationGroupChannelHandler;
+import org.eurekaj.manager.server.handlers.InstrumentationMenuChannelHandler;
+import org.eurekaj.manager.server.handlers.LiveStatisticsChannelHandler;
+import org.eurekaj.manager.server.handlers.UserChannelhandler;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -34,12 +34,6 @@ public class EurekaJNetyPipeline implements ChannelPipelineFactory {
 		logger.info("Getting pipeline from: " + EurekaJNetyPipeline.class.getName());
 		
 		ChannelPipeline pipeline = Channels.pipeline();
-
-        // Uncomment the following line if you want HTTPS
-        //SSLEngine engine = SecureChatSslContextFactory.getServerContext().createSSLEngine();
-        //engine.setUseClientMode(false);
-        //pipeline.addLast("ssl", new SslHandler(engine));
-
         pipeline.addLast("decoder", new HttpRequestDecoder());
         pipeline.addLast("aggregator", new HttpChunkAggregator(65536));
         pipeline.addLast("encoder", new HttpResponseEncoder());
