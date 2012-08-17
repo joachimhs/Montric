@@ -29,8 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class InstrumentationMenuChannelHandler extends EurekaJGenericChannelHandler {
-	private static final Logger log = Logger.getLogger(InstrumentationMenuChannelHandler.class);
+public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
+	private static final Logger log = Logger.getLogger(MainMenuChannelHandler.class);
 	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
@@ -40,9 +40,11 @@ public class InstrumentationMenuChannelHandler extends EurekaJGenericChannelHand
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
             log.debug("Accepted JSON: \n" + jsonObject);
 
-            jsonResponse = buildInstrumentationMenu(jsonResponse, jsonObject);
-            jsonResponse = buildInstrumentationMenuNode(jsonResponse,jsonObject);
-            deleteInstrumentationMenuNode(jsonObject);
+            jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("menuID",
+    	            getBerkeleyTreeMenuService().getTreeMenu(),
+    	            getBerkeleyTreeMenuService().getAlerts(),
+    	            getBerkeleyTreeMenuService().getGroupedStatistics(),
+    	            0, 15, true, null).toString();
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
@@ -53,6 +55,16 @@ public class InstrumentationMenuChannelHandler extends EurekaJGenericChannelHand
         
         writeContentsToBuffer(ctx, jsonResponse);
 	}
+	
+	
+    /*{
+        "id": "Alerts",
+        "name": "Alerts",
+        "nodeType": "parent",
+        "parentPath": null,
+        "children": ["Alerts:EurekaJ Heap", "Alerts:JSFlot Heap"]
+    }]";*/
+	
 	
 	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject) throws JSONException {
 		if (jsonObject.has("getInstrumentationMenuNode")) {

@@ -14,17 +14,13 @@ body {
 
 }
 
+i {
+    margin-right: 5px;
+}
 #headerArea {
     text-align: left;
     font-size: 1.3em;
-    position: absolute;
-    right: 10px;
-    left: 10px;
-    top: 10px;
-    height: 45px;
     background: #E9EBDD;
-    padding-top: 12px;
-    padding-left: 10px;
 }
 
 #menuArea {

@@ -10,7 +10,7 @@ import org.eurekaj.manager.server.handlers.AlertChannelHandler;
 import org.eurekaj.manager.server.handlers.ChartChannelHandler;
 import org.eurekaj.manager.server.handlers.EmailChannelHandler;
 import org.eurekaj.manager.server.handlers.InstrumentationGroupChannelHandler;
-import org.eurekaj.manager.server.handlers.InstrumentationMenuChannelHandler;
+import org.eurekaj.manager.server.handlers.MainMenuChannelHandler;
 import org.eurekaj.manager.server.handlers.LiveStatisticsChannelHandler;
 import org.eurekaj.manager.server.handlers.UserChannelhandler;
 import org.jboss.netty.channel.ChannelHandler;
@@ -22,16 +22,16 @@ import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
 import org.jboss.netty.handler.stream.ChunkedWriteHandler;
 
-public class EurekaJNetyPipeline implements ChannelPipelineFactory {
-	private static Logger logger = Logger.getLogger(EurekaJNetyPipeline.class.getName());
+public class EurekaJNettyPipeline implements ChannelPipelineFactory {
+	private static Logger logger = Logger.getLogger(EurekaJNettyPipeline.class.getName());
 	
-	public EurekaJNetyPipeline() {
+	public EurekaJNettyPipeline() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public ChannelPipeline getPipeline() throws Exception {
-		logger.info("Getting pipeline from: " + EurekaJNetyPipeline.class.getName());
+		logger.info("Getting pipeline from: " + EurekaJNettyPipeline.class.getName());
 		
 		ChannelPipeline pipeline = Channels.pipeline();
         pipeline.addLast("decoder", new HttpRequestDecoder());
@@ -40,7 +40,7 @@ public class EurekaJNetyPipeline implements ChannelPipelineFactory {
         pipeline.addLast("chunkedWriter", new ChunkedWriteHandler());
 
         LinkedHashMap<String, ChannelHandler> routes = new LinkedHashMap<String, ChannelHandler>();
-        routes.put("equals:/instrumentationMenu", new InstrumentationMenuChannelHandler());
+        routes.put("equals:/mainMenu.json", new MainMenuChannelHandler());
         routes.put("equals:/chart", new ChartChannelHandler());
         routes.put("equals:/alert", new AlertChannelHandler());
         routes.put("equals:/email", new EmailChannelHandler());
@@ -48,8 +48,8 @@ public class EurekaJNetyPipeline implements ChannelPipelineFactory {
         routes.put("equals:/liveStatistics", new LiveStatisticsChannelHandler());
         routes.put("equals:/user", new UserChannelhandler());
         
-        String webappDir = System.getProperty("basedir") + File.separatorChar + "tmp";
-        pipeline.addLast("handler_routeHandler", new RouterHandler(routes, false, new CacheableFileServerHandler(webappDir, 60)));
+        String webappDir = System.getProperty("basedir");
+        pipeline.addLast("handler_routeHandler", new RouterHandler(routes, false, new CacheableFileServerHandler(webappDir, 0)));
         return pipeline;
 	}
 

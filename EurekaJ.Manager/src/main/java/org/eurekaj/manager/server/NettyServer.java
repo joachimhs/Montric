@@ -21,7 +21,7 @@ public class NettyServer extends EurekaJWebappPluginService {
                         Executors.newCachedThreadPool()));
 
         // Set up the event pipeline factory          .
-        bootstrap.setPipelineFactory(new EurekaJNetyPipeline());
+        bootstrap.setPipelineFactory(new EurekaJNettyPipeline());
 
         Integer port = IntegerParser.parseIntegerFromString(System.getProperty("org.eurekaj.port"), 8080);
         // Bind and start to accept incoming connections.
@@ -41,4 +41,12 @@ public class NettyServer extends EurekaJWebappPluginService {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static void main(String[] args) {
+		NettyServer nettyServer = new NettyServer();
+		
+		System.setProperty("basedir", "/Users/joahaa/Projects/eurekaj/EurekaJ.View/src/main/webapp");
+		System.setProperty("log4j.configuration", "/srv/netty-webserver/log4j.xml");
+		nettyServer.start();
 	}
+}

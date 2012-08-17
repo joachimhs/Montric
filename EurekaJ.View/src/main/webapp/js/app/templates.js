@@ -22,8 +22,18 @@ Ember.TEMPLATES['chart'] = Ember.Handlebars.compile('' +
 );
 
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
-    'EurekaJ:Live'
+    '<div class="navbar-inner">' +
+        '<div class="container">' +
+            '<span class="navbar-text">EurekaJ:Live</span>' +
+            '<span class="divider-vertical"></span>' +
+
+            '{{view EurekaJ.BootstrapButton classNames="btn-info btn-mini pull-right" content="Administration" iconName="icon-cog"}}' +
+            '{{view EurekaJ.BootstrapButton classNames="btn-info btn-mini pull-right" content="Chart Options"}}' +
+
+        '</div>' +
+    '</div>'
 );
+
 Ember.TEMPLATES['main'] = Ember.Handlebars.compile('' +
     '{{#each controller}}' +
         '{{view EurekaJ.ChartView contentBinding="this"}}<br />' +

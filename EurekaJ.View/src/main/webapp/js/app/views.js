@@ -20,7 +20,9 @@ EurekaJ.MenuView = Ember.View.extend({
 
 EurekaJ.HeaderView = Ember.View.extend({
     elementId: 'headerArea',
-    templateName: 'header'
+    templateName: 'header',
+    tagName: 'div',
+    classNames: ['navbar',  'navbar-fixed-top']
 });
 
 /** tree views **/
@@ -121,3 +123,13 @@ EurekaJ.ChartView = Ember.View.extend({
         }
     }
 });
+
+/** Bootstrap Views **/
+
+EurekaJ.BootstrapButton = Ember.View.extend({
+    tagName: 'button',
+    classNames: ['btn'],
+    template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
+});
+
+//** //Bootstrap Views **/

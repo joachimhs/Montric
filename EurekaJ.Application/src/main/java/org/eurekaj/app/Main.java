@@ -41,10 +41,7 @@ public class Main {
 		String webappFilepath = downloadJarFromUrl(version.getWebappJarUrl(), webappDir);
 		JarUtils.unjar(webappFilepath, new File(webappDir + File.separatorChar + "tmp"));
 		
-		
 		loadPluginsFromDir(pluginsDir);
-		
-		
 		
 		AppWebappPluginService webappPluginService = new AppWebappPluginService();
 	}
