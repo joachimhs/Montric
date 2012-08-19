@@ -1,12 +1,23 @@
 Ember.TEMPLATES['application'] = Ember.Handlebars.compile('' +
     '{{outlet}}' +
     '{{outlet header}}' +
-    '{{outlet main}}'
+    '{{view Ember.View templateName="chartOptionsModal"}}'
+);
+
+Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
+    '<div id="chartOptionsModal" class="modal fade hide">' +
+        '<div class="modal-header centerAlign">' +
+            '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
+            '<h1 class="centerAlign">Chart Options</h1>' +
+        '</div>' +
+        '<div class="modal-body">Modal Contents</div>' +
+        '<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes"}}</div>' +
+    '</div>'
 );
 
 Ember.TEMPLATES['login-page'] = Ember.Handlebars.compile('' +
     '<div class="loginBox well">' +
-        '<h1>Login Page</h1> ' +
+        '<h1>EurekaJ Login</h1> ' +
         'Username: <br />' +
         '{{view Ember.TextField elementId="usernameInput" value=""}}<br />' +
         'Password: <br />' +
@@ -21,27 +32,36 @@ Ember.TEMPLATES['chart'] = Ember.Handlebars.compile('' +
     //'<svg> </svg>'
 );
 
+Ember.TEMPLATES['admin'] = Ember.Handlebars.compile('' +
+    '{{#view EurekaJ.TabView}}' +
+        '{{#each tab in EurekaJ.adminTabBarController.content}}' +
+            '{{view EurekaJ.TabItemView tabBinding="tab"}}' +
+        '{{/each}}' +
+    '{{/view}}' +
+    '{{outlet adminTabContent}}'
+);
+
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
-    '<div class="navbar-inner">' +
-        '<div class="container">' +
-            '<span class="navbar-text">EurekaJ:Live</span>' +
-            '<span class="divider-vertical"></span>' +
-
-            '{{view EurekaJ.BootstrapButton classNames="btn-info btn-mini pull-right" content="Administration" iconName="icon-cog"}}' +
-            '{{view EurekaJ.BootstrapButton classNames="btn-info btn-mini pull-right" content="Chart Options"}}' +
-
-        '</div>' +
-    '</div>'
+    '<span class="headerText"><a {{action doHome}} href="#">EurekaJ:Live</a></span>' +
+    '{{view EurekaJ.AdministrationButton target="EurekaJ.router" action="doAdmin" classNames="btn-info btn-mini pull-right" content="Administration" iconName="icon-cog"}}' +
+    '{{view EurekaJ.ChartOptionsButton classNames="btn-info btn-mini pull-right" content="Chart Options"}}'
 );
 
 Ember.TEMPLATES['main'] = Ember.Handlebars.compile('' +
-    '{{#each controller}}' +
+    '{{view EurekaJ.MenuView controllerBinding="controller"}}' +
+    '<div id="chartsArea">{{#each controller}}' +
         '{{view EurekaJ.ChartView contentBinding="this"}}<br />' +
-    '{{/each}}'
+    '{{/each}}</div>'
+
+    /*'<div class="modal hide fade eurekaJModal" id="administrationModal">' +
+        '<div class="modal-header centerAlign"><button type="button" class="close" data-dismiss="modal">×</button><h1>Administration</h1></div>' +
+        '<div class="modal-body"><div style="width: 900px;"><p>Modal Body</p></div></div>' +
+        '<div class="modal-footer"><p><a href="#" class="btn" data-dismiss="modal">Close</a></p></div>' +
+    '</div>'*/
 );
 
 Ember.TEMPLATES['main-menu'] = Ember.Handlebars.compile('' +
-        '<h1>Main Menu</h1>' +
+    '<h1>Main Menu</h1>' +
         '{{#each controller}}' +
             '{{view EurekaJ.NodeView contentBinding="this"}}' +
         '{{/each}}' +

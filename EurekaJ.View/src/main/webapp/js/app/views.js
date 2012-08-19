@@ -25,6 +25,35 @@ EurekaJ.HeaderView = Ember.View.extend({
     classNames: ['navbar',  'navbar-fixed-top']
 });
 
+EurekaJ.AdminView = Ember.View.extend({
+    elementId: 'adminArea',
+    templateName: 'admin'
+});
+
+EurekaJ.AdminTabContentView = Ember.View.extend({
+    elementId: 'adminTabContentArea',
+    templateName: 'adminTabContent'
+});
+
+EurekaJ.AlertTabView = Ember.View.extend({
+    elementId: 'alertTabView',
+    template: Ember.Handlebars.compile('AlertTabView')
+});
+
+EurekaJ.ChartGroupTabView = Ember.View.extend({
+    elementId: 'chartGroupTabView',
+    template: Ember.Handlebars.compile('ChartGroupTabView')
+});
+
+EurekaJ.EmailRecipientsTabView = Ember.View.extend({
+    elementId: 'emailRecipientsTabView',
+    template: Ember.Handlebars.compile('EmailRecipientsTabView')
+});
+
+EurekaJ.MenuAdminTabView = Ember.View.extend({
+    elementId: 'menuAdminTabView',
+    template: Ember.Handlebars.compile('MenuAdminTabView')
+});
 /** tree views **/
 EurekaJ.NodeView = Ember.View.extend({
     templateName: 'tree-node',
@@ -54,6 +83,36 @@ EurekaJ.NodeArrowView = Ember.View.extend({
     }
 });
 /** //Tree views **/
+
+/** Tab views **/
+EurekaJ.TabView = Ember.View.extend({
+    tagName: 'ul',
+    classNames: ['tabrow'],
+    click: function() {
+        this.rerender();
+    }
+});
+
+EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
+    content: null,
+    tagName: 'li',
+
+    classNameBindings: "isSelected",
+
+    isSelected: function() {
+        return EurekaJ.adminTabBarController.get('selectedTabId') == this.get('tab').get('tabId');
+    }.property('EurekaJ.AdminTabBarController.selectedTabName'),
+
+    click: function() {
+        console.log('selecting tab: ' + this.get('tab').get('tabState'));
+        EurekaJ.adminTabBarController.set('selectedTabId', this.get('tab').get('tabId'));
+        EurekaJ.router.transitionTo(this.get('tab').get('tabState'));
+
+    },
+
+    template: Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
+});
+//** //Tab View **/
 
 EurekaJ.ChartView = Ember.View.extend({
     templateName: 'chart',
@@ -125,11 +184,23 @@ EurekaJ.ChartView = Ember.View.extend({
 });
 
 /** Bootstrap Views **/
-
-EurekaJ.BootstrapButton = Ember.View.extend({
+EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'button',
     classNames: ['btn'],
     template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
+});
+
+EurekaJ.ChartOptionsButton = EurekaJ.BootstrapButton.extend({
+    click: function() {
+        $("#chartOptionsModal").modal({show: true});
+    }
+})
+
+EurekaJ.AdministrationButton = EurekaJ.BootstrapButton.extend({
+    click: function() {
+        console.log('EurekaJ.AdministrationButton');
+        EurekaJ.get('router').send('doAdmin')
+    }
 });
 
 //** //Bootstrap Views **/

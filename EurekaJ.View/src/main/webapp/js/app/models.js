@@ -32,3 +32,9 @@ EurekaJ.ChartModel = DS.Model.extend({
 EurekaJ.ChartModel.reopenClass({
     url: 'cumulativeLineData.json'
 })
+
+EurekaJ.AdminTabModel = Ember.Object.extend({
+    tabId: null,
+    tabName: null,
+    tabState: null
+})

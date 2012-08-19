@@ -17,20 +17,32 @@ body {
 i {
     margin-right: 5px;
 }
+
 #headerArea {
     text-align: left;
     font-size: 1.3em;
-    background: #E9EBDD;
+    background: #494d83;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+}
+
+#headerArea a {
+    color: #fff;
+}
+
+#headerArea a:hover {
+    color: #d8d8d8;
 }
 
 #menuArea {
     background: aliceBlue;
     border-bottom-left-radius: 8px;
     position: absolute;
-    left: 10px;
+    left: 0px;
     width: 305px;
-    top: 67px;
-    bottom:10px;
+    top: 0px;
+    bottom:0px;
     overflow: scroll;
 }
 
@@ -42,14 +54,40 @@ i {
     color: #333333;
 }
 
+#chartsArea {
+    background: white;
+    border-bottom-left-radius: 8px;
+    position: absolute;
+    left: 310px;
+    right: 0px;
+    top: 0px;
+    bottom: 0;
+    bottom:0px;
+    overflow: scroll;
+}
+
 #mainContentArea {
     background: white;
     position: absolute;
-    right: 10px;
-    left: 320px;
-    top: 67px;
+    right: 0px;
+    left: 0px;
+    top: 40px;
     bottom: 10px;
     overflow: scroll;
+}
+
+#adminArea {
+    background: white;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: 55px;
+    bottom: 0px;
+    overflow: scroll;
+}
+
+.eurekaJModal {
+    width: 800px;
 }
 
 div.loginBox {
@@ -62,6 +100,7 @@ div.loginBox {
     left: 50%;
     margin-top: -150px;
     margin-left: -150px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
 }
 
 div.loginBox h1 {
@@ -134,8 +173,20 @@ div.treeView h1 {
 	float: left;
 }
 
+.floatRight {
+    float: right;
+}
+
+.floatNone {
+    float: none;
+}
+
 .centerAlign {
     text-align: center;
+}
+
+.fillWidth {
+    width: 100%;
 }
 
 .smallMarginRight {
@@ -147,32 +198,6 @@ div.treeView h1 {
 	height: 100%;
 }
 
-.rightarrow {
-    content: '';
-    float: left;
-    width: 0;
-    height: 0;
-    margin-left: 5px;
-    margin-right: 11px;
-    margin-top: 3px;
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
-    border-left: 6px solid black;
-}
-
-.downarrow {
-    content: '';
-    float: left;
-    width: 0;
-    height: 0;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid black;
-}
-
 .treeMenuCheckbox {
     padding-right: 10px;
 }
@@ -180,3 +205,96 @@ div.treeView h1 {
 .treeMenuText {
     margin-left: 5px;
 }
+
+.headerText {
+    margin-bottom: 0;
+    line-height: 40px;
+}
+
+ul.tabrow {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+ul.tabrow li {
+    border: 1px solid #AAA;
+    background: #D1D1D1;
+    background: -o-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    background: -ms-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    background: -moz-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    background: -webkit-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+    text-shadow: 0 1px #FFF;
+    margin: 0px -5px;
+    padding: 2px 20px;
+    cursor: pointer;
+}
+
+ul.tabrow li .featureTabTop {
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid rgba(0,0,0,.25);
+}
+
+ul.tabrow li.is-selected {
+    background: #FFF;
+    color: #333;
+    z-index: 2;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 7px;
+    border-bottom-color: #FFF;
+}
+
+ul.tabrow li.is-selected .featureTabTop {
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #ff0504;
+}
+
+ul.tabrow:before {
+    position: absolute;
+    content: " ";
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid #AAA;
+    z-index: 1;
+}
+ul.tabrow li:before,
+ul.tabrow li:after {
+    border: 1px solid #AAA;
+    position: absolute;
+    bottom: -1px;
+    width: 5px;
+    height: 5px;
+    content: " ";
+}
+ul.tabrow li:before {
+    left: -6px;
+    border-bottom-right-radius: 6px;
+    border-width: 0 1px 1px 0;
+    box-shadow: 2px 2px 0 #D1D1D1;
+}
+ul.tabrow li:after {
+    right: -6px;
+    border-bottom-left-radius: 6px;
+    border-width: 0 0 1px 1px;
+    box-shadow: -2px 2px 0 #D1D1D1;
+}
+ul.tabrow li.is-selected:before {
+    box-shadow: 2px 2px 0 #FFF;
+}
+ul.tabrow li.is-selected:after {
+    box-shadow: -2px 2px 0 #FFF;
+}
+
