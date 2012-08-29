@@ -5,14 +5,32 @@ Ember.TEMPLATES['application'] = Ember.Handlebars.compile('' +
 );
 
 Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
-    '<div id="chartOptionsModal" class="modal fade hide">' +
+    '<div id="chartOptionsModal" class="modal hide">' +
         '<div class="modal-header centerAlign">' +
             '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
             '<h1 class="centerAlign">Chart Options</h1>' +
         '</div>' +
-        '<div class="modal-body">Modal Contents</div>' +
+        '<div class="modal-body">' +
+            '{{view EurekaJ.TabView controllerBinding="EurekaJ.chartOptionsTabBarController"}}' +
+            //'{{view EurekaJ.LiveChartOptionsView}}' +
+        '</div>' +
         '<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes"}}</div>' +
     '</div>'
+);
+
+Ember.TEMPLATES['live-chart-options'] = Ember.Handlebars.compile('' +
+    '<table>' +
+    '<tr>' +
+        '<td>Timezone: </td>' +
+        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="EurekaJ.appValuesController.selectedTimezone" prompt="Select Timezone"}}</td>' +
+    '</tr><tr>' +
+        '<td>Timespan: </td>' +
+        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="EurekaJ.appValuesController.selectedChartTimespan" prompt="Select Timespan"}}</td>' +
+    '</tr><tr>' +
+        '<td>Resolution: </td>' +
+        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="EurekaJ.appValuesController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
+    '</tr>' +
+    '</table>'
 );
 
 Ember.TEMPLATES['login-page'] = Ember.Handlebars.compile('' +
@@ -33,11 +51,7 @@ Ember.TEMPLATES['chart'] = Ember.Handlebars.compile('' +
 );
 
 Ember.TEMPLATES['admin'] = Ember.Handlebars.compile('' +
-    '{{#view EurekaJ.TabView}}' +
-        '{{#each tab in EurekaJ.adminTabBarController.content}}' +
-            '{{view EurekaJ.TabItemView tabBinding="tab"}}' +
-        '{{/each}}' +
-    '{{/view}}' +
+    '{{view EurekaJ.TabView controllerBinding="EurekaJ.adminTabBarController"}}' +
     '{{outlet adminTabContent}}'
 );
 
@@ -48,7 +62,7 @@ Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
 );
 
 Ember.TEMPLATES['main'] = Ember.Handlebars.compile('' +
-    '{{view EurekaJ.MenuView controllerBinding="controller"}}' +
+    '{{view EurekaJ.MenuView controllerBinding="EurekaJ.router.menuController"}}' +
     '<div id="chartsArea">{{#each controller}}' +
         '{{view EurekaJ.ChartView contentBinding="this"}}<br />' +
     '{{/each}}</div>'

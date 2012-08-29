@@ -25,7 +25,8 @@ EurekaJ.router = Ember.Router.create({
                     if (data.get('parentPath') === null) { return true; }
                 });
 
-                router.get('applicationController').connectOutlet('main', mainMenu);
+                router.get('applicationController').connectOutlet('main');
+                router.get('menuController').set('content', mainMenu);
                 router.get('applicationController').connectOutlet('header', 'header');
             },
             exit: function() {
@@ -39,7 +40,9 @@ EurekaJ.router = Ember.Router.create({
             doAlerts: Ember.Router.transitionTo('alerts'),
             doChartGroups: Ember.Router.transitionTo('chartGroups'),
             doEmailRecipients: Ember.Router.transitionTo('emailRecipients'),
-            doMenuAdmin: Ember.Router.transitionTo('menuAdmin'),
+            doMenuAdmin: function() {
+                Ember.Router.transitionTo('alerts')
+            },
 
             connectOutlets: function(router) {
                 console.log('connecting outlets for admin');
@@ -55,7 +58,7 @@ EurekaJ.router = Ember.Router.create({
             alerts: Ember.Route.extend({
                 route: '/alerts',
                 enter: function() {
-                    EurekaJ.adminTabBarController.set('selectedTabId', 'alerts');
+                    EurekaJ.adminTabBarController.selectTabWithId('alerts');
                 },
                 connectOutlets: function(router) {
                     console.log('connecting outlets for Alerts');
@@ -70,7 +73,7 @@ EurekaJ.router = Ember.Router.create({
             chartGroups: Ember.Route.extend({
                 route: '/chartGroups',
                 enter: function() {
-                    EurekaJ.adminTabBarController.set('selectedTabId', 'chartGroups');
+                    EurekaJ.adminTabBarController.selectTabWithId('chartGroups');
                 },
                 connectOutlets: function(router) {
                     console.log('connecting outlets for chartGroups');
@@ -84,7 +87,7 @@ EurekaJ.router = Ember.Router.create({
             emailRecipients: Ember.Route.extend({
                 route: '/emailRecipients',
                 enter: function() {
-                    EurekaJ.adminTabBarController.set('selectedTabId', 'emailRecipients');
+                    EurekaJ.adminTabBarController.selectTabWithId('emailRecipients');
                 },
                 connectOutlets: function(router) {
                     console.log('connecting outlets for emailRecipients');
@@ -98,7 +101,7 @@ EurekaJ.router = Ember.Router.create({
             menuAdmin: Ember.Route.extend({
                 route: '/menuAdmin',
                 enter: function() {
-                    EurekaJ.adminTabBarController.set('selectedTabId', 'menuAdmin');
+                    EurekaJ.adminTabBarController.selectTabWithId('menuAdmin');
                 },connectOutlets: function(router) {
                     console.log('connecting outlets for menuAdmin');
                     router.get('adminController').connectOutlet({

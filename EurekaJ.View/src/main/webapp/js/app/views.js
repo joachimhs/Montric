@@ -86,11 +86,15 @@ EurekaJ.NodeArrowView = Ember.View.extend({
 
 /** Tab views **/
 EurekaJ.TabView = Ember.View.extend({
-    tagName: 'ul',
-    classNames: ['tabrow'],
-    click: function() {
+    tagName: 'div',
+    controller: null,
+
+    selectedTabObserver: function() {
+        console.log(this.get('controller').get('selectedTab').get('tabId'));
         this.rerender();
-    }
+    }.observes('controller.selectedTab'),
+
+    template: Ember.Handlebars.compile('<ul class="tabrow">{{#each tab in content}}{{view EurekaJ.TabItemView tabBinding="tab"}}{{/each}}</ul>{{#if controller.selectedTab.hasView}}{{view controller.selectedTab.tabView}}{{/if}}')
 });
 
 EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
@@ -100,19 +104,24 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
     classNameBindings: "isSelected",
 
     isSelected: function() {
-        return EurekaJ.adminTabBarController.get('selectedTabId') == this.get('tab').get('tabId');
-    }.property('EurekaJ.AdminTabBarController.selectedTabName'),
+        return this.get('controller').get('selectedTab').get('tabId') == this.get('tab').get('tabId');
+    }.property('controller.selectedTab'),
 
     click: function() {
-        console.log('selecting tab: ' + this.get('tab').get('tabState'));
-        EurekaJ.adminTabBarController.set('selectedTabId', this.get('tab').get('tabId'));
-        EurekaJ.router.transitionTo(this.get('tab').get('tabState'));
+        this.get('controller').set('selectedTab', this.get('tab'));
+        if (this.get('tab').get('tabState')) {
+            EurekaJ.router.transitionTo(this.get('tab').get('tabState'));
+        }
 
     },
 
     template: Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
 });
 //** //Tab View **/
+
+EurekaJ.LiveChartOptionsView = Ember.View.extend({
+    templateName: 'live-chart-options'
+})
 
 EurekaJ.ChartView = Ember.View.extend({
     templateName: 'chart',
@@ -137,7 +146,7 @@ EurekaJ.ChartView = Ember.View.extend({
 
     contentObserver: function() {
         this.rerender();
-    }.observes('content.chart.value'),
+    }.observes('content.chart.chartValue'),
 
     numChartsObserver: function() {
         this.rerender();
@@ -151,7 +160,14 @@ EurekaJ.ChartView = Ember.View.extend({
             var width = this.$().width();
 
             var elementId = this.get('elementId');
-            var data = jQuery.parseJSON(this.get('content').get('chart').get('value'));
+            var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
+
+            console.log('data for chart:');
+            console.log(data);
+            console.log(this.get('content'));
+            console.log(this.get('content').get('chart'));
+            console.log(this.get('content').get('chart').get('chartValue'));
+            console.log(this.get('content').get('chart').get('id'));
 
             var view = this;
 

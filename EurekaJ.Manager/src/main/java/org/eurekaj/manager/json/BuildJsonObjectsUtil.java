@@ -65,7 +65,7 @@ public class BuildJsonObjectsUtil {
 		return jsonRequestObject;
 	}
 
-    public static JSONObject buildTreeTypeMenuJsonObject(String treeId,
+    public static JSONArray buildTreeTypeMenuJsonObject(String treeId,
                                                          List<TreeMenuNode> nodeList,
                                                          List<Alert> alertList,
                                                          List<GroupedStatistics> groupedStatisticsList,
@@ -100,7 +100,7 @@ public class BuildJsonObjectsUtil {
 
         parentObject.put(treeId, treeArray);
 
-        return parentObject;
+        return treeArray;
     }
 
     private static void buildTreeMenuNode(List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
@@ -167,25 +167,22 @@ public class BuildJsonObjectsUtil {
 
     private static JSONObject buildTreeNode(String guiPath, HashMap<String, JSONObject> nodesBuilt, String type) throws JSONException {
         JSONObject treeJson = new JSONObject();
-        treeJson.put("isSelected", false);
-        treeJson.put("guiPath", guiPath);
-        treeJson.put("treeItemIsExpanded", false);
+        treeJson.put("id", guiPath);
         treeJson.put("name", guiPath);
         treeJson.put("parentPath", JSONObject.NULL);
-        treeJson.put("hasChildren", false);
         treeJson.put("nodeType", type);
-        treeJson.put("childrenNodes", new JSONArray());
+        treeJson.put("children", new JSONArray());
 
-        JSONArray chartGridArray = new JSONArray();
+        String chartId = "";
         if (type.equalsIgnoreCase("chart")) {
-            chartGridArray.put(guiPath);
+            chartId = guiPath;
         } else if (type.equalsIgnoreCase("alert")) {
-            chartGridArray.put("_alert_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length()));
+        	chartId = "_alert_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
         } else if (type.equals("groupedStatistics")) {
-            chartGridArray.put("_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length()));
+        	chartId = "_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
         }
 
-        treeJson.put("chartGrid", chartGridArray);
+        treeJson.put("chart", chartId);
 
         if (guiPath.contains(":")) {
             //Split GUI Path into name and parent
@@ -196,8 +193,7 @@ public class BuildJsonObjectsUtil {
             //Mark parent objects as having children nodes
             if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
                 JSONObject parentNode = nodesBuilt.get(parentPath);
-                parentNode.put("hasChildren", true);
-                JSONArray childrenArray = parentNode.getJSONArray("childrenNodes");
+                JSONArray childrenArray = parentNode.getJSONArray("children");
                 childrenArray.put(guiPath);
             }
         }
@@ -253,10 +249,10 @@ public class BuildJsonObjectsUtil {
 
         //[{"label":"set1", "data":[[1,1],[2,2],[3,3]]} ]
 
-        dataArraySB.append("{\"chart\": [ ");
+        dataArraySB.append("{\"id\": \"" + chartId + "\", \"chartValue\": \"[ ");
         int collectionIndex = 0;
         for (XYDataList list : xyCollection.getDataList()) {
-            dataArraySB.append("{\"label\": \"").append(list.getLabel()).append("\", \"data\": [");
+            dataArraySB.append("{\\\"key\\\": \\\"").append(list.getLabel()).append("\\\", \\\"values\\\": [");
             for (int i = 0; i < list.size() - 1; i++) {
                 XYDataPoint p = list.get(i);
                 String pointLabel = "";
@@ -298,8 +294,7 @@ public class BuildJsonObjectsUtil {
                 dataArraySB.append(",");
             }
         }
-        dataArraySB.append("]");
-        dataArraySB.append(",\"instrumentationNode\":\""+ chartId + "\"");
+        dataArraySB.append("]\"");
 
         dataArraySB.append("}");
 

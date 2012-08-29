@@ -4,7 +4,7 @@ EurekaJ.MainMenuModel = DS.Model.extend({
     nodeType: DS.attr('string'),
     parentPath: DS.belongsTo('EurekaJ.MainMenuModel'),
     isSelected: false,
-    isExpanded: true,
+    isExpanded: false,
     children: DS.hasMany('EurekaJ.MainMenuModel'),
     chart: DS.belongsTo('EurekaJ.ChartModel'),
 
@@ -26,15 +26,23 @@ EurekaJ.MainMenuModel.reopenClass({
 });
 
 EurekaJ.ChartModel = DS.Model.extend({
-    value: DS.attr('string')
+    chartValue: DS.attr('string')
 });
 
 EurekaJ.ChartModel.reopenClass({
-    url: 'cumulativeLineData.json'
+    url: 'chart.json'
+    //url: 'cumulativeLineData.json'
 })
 
-EurekaJ.AdminTabModel = Ember.Object.extend({
+EurekaJ.TabModel = Ember.Object.extend({
     tabId: null,
     tabName: null,
-    tabState: null
-})
+    tabState: null,
+    tabView: null,
+
+    hasView: function() {
+        console.log('tabView: ' + this.get('tabId'));
+        console.log(this.get('tabView'));
+        return this.get('tabView') != null;
+    }.property('tabView').cacheable()
+});

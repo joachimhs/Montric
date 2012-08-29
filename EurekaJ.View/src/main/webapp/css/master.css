@@ -218,15 +218,16 @@ ul.tabrow {
     margin: 0;
     overflow: hidden;
     position: relative;
+    margin-bottom: 15px
 }
 ul.tabrow li {
     border: 1px solid #AAA;
-    background: #D1D1D1;
-    background: -o-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
-    background: -ms-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
-    background: -moz-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
-    background: -webkit-linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
-    background: linear-gradient(top, #ECECEC 50%, #D1D1D1 100%);
+    background: #c3c2e1;//#D1D1D1;
+    background: -o-linear-gradient(top, #c3c2e1 25%, #D1D1D1 100%);
+    background: -ms-linear-gradient(top, #c3c2e1 25%, #D1D1D1 100%);
+    background: -moz-linear-gradient(top, #c3c2e1 25%, #D1D1D1 100%);
+    background: -webkit-linear-gradient(top, #c3c2e1 25%, #D1D1D1 100%);
+    background: linear-gradient(top, #c3c2e1 25%, #D1D1D1 100%);
     display: inline-block;
     position: relative;
     z-index: 0;
@@ -240,9 +241,12 @@ ul.tabrow li {
 }
 
 ul.tabrow li .featureTabTop {
-    width: 100%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 1px;
     height: 1px;
-    border-top: 1px solid rgba(0,0,0,.25);
+    border-top: 1px solid rgba(105, 105, 105, 0.24);
 }
 
 ul.tabrow li.is-selected {
@@ -256,7 +260,10 @@ ul.tabrow li.is-selected {
 }
 
 ul.tabrow li.is-selected .featureTabTop {
-    width: 100%;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 1px;
     height: 1px;
     border-top: 1px solid #ff0504;
 }

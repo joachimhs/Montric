@@ -19,6 +19,7 @@
 package org.eurekaj.manager.server.handlers;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -34,10 +35,13 @@ import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataSetCollection;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Created by IntelliJ IDEA.
@@ -117,13 +121,20 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         String jsonResponse = "";
 
+        HttpRequest request = (HttpRequest)e.getMessage();
+        String uri = request.getUri();
+        String decoded = URLDecoder.decode(uri.substring(uri.lastIndexOf('?')+1, uri.length()), "UTF-8");
+        JSONObject keyObject = new JSONObject(new JSONTokener(decoded));
+        String id = null;
+        if (keyObject.has("id")) {
+        	id = keyObject.get("id").toString();
+        }
+        
         try {
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
-            
-            if (jsonObject.has("getInstrumentationChartData")) {
-                JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationChartData");
-                String chartId = keyObject.getString("id");
-                String pathFromClient = keyObject.getString("path");
+
+            if (id != null) {
+                String chartId = id;
+                String pathFromClient = id;
                 String chartPath = null;
 
                 int chartTimespan = getChartTimeSpan(keyObject);

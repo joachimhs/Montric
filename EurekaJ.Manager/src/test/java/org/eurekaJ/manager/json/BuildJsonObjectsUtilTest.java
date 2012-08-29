@@ -29,6 +29,7 @@ import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Ignore;
@@ -42,9 +43,9 @@ public class BuildJsonObjectsUtilTest {
     public void test_that_an_empty_array_creates_empty_json_object() throws JSONException {
         List<TreeMenuNode> emptyList = new ArrayList<TreeMenuNode>();
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", emptyList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", emptyList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
         String actual = jsonObject.toString();
-        assertEquals("{\"treeMenuID\":[]}", actual);
+        assertEquals("[]", actual);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class BuildJsonObjectsUtilTest {
         List<TreeMenuNode> nodeList = new ArrayList<TreeMenuNode>();
         nodeList.add(new ManagerTreeMenuNode("A", "Y"));
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
         assertEquals("{\"treeMenuID\":[{\"chartGrid\":[\"A\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"A\",\"treeItemIsExpanded\":false,\"guiPath\":\"A\",\"nodeType\":\"chart\",\"parentPath\":null}]}", jsonObject.toString());
     }
 
@@ -69,7 +70,7 @@ public class BuildJsonObjectsUtilTest {
         expected.append("{\"chartGrid\":[\"B\"],\"hasChildren\":false,\"childrenNodes\":[],\"isSelected\":false,\"name\":\"B\",\"treeItemIsExpanded\":false,\"guiPath\":\"B\",\"nodeType\":\"chart\",\"parentPath\":null}");
         expected.append("]}");
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(), 0, 20, false, "chart");
         assertEquals(expected.toString(), jsonObject.toString());
     }
 
@@ -89,7 +90,7 @@ public class BuildJsonObjectsUtilTest {
         //expected.append("{\"guid\":\"A:C\",\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C\",\"parentPath\":\"A\"}");
         expected.append("]}");
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
         assertEquals(expected.toString(), jsonObject.toString());
     }
 
@@ -113,7 +114,7 @@ public class BuildJsonObjectsUtilTest {
         //expected.append("{\"guid\":4,\"isSelected\":false,\"name\":\"D\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:C:D\",\"parentPath\":\"A:C\"}");
         expected.append("]}");
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
         assertEquals(expected.toString(), jsonObject.toString());
     }
 
@@ -131,7 +132,7 @@ public class BuildJsonObjectsUtilTest {
         //expected.append("{\"guid\":3,\"isSelected\":false,\"name\":\"C\",\"treeItemIsExpanded\":false,\"guiPath\":\"A:B:C\",\"parentPath\":\"A:B\"}");
         expected.append("]}");
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
         assertEquals(expected.toString(), jsonObject.toString());
     }
 
@@ -153,7 +154,7 @@ public class BuildJsonObjectsUtilTest {
         //expected.append("{\"guid\":\"\",\"isSelected\":false,\"name\":\"Max Selftime\",\"treeItemIsExpanded\":false,\"guiPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>:Max Selftime\",\"parentPath\":\"JSFlotJAgent:Custom:org.jsflot.components.BubbleDataPointComponent:<init>\"}");
         expected.append("]}");
 
-        JSONObject jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
+        JSONArray jsonObject = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("treeMenuID", nodeList, new ArrayList<Alert>(), new ArrayList<GroupedStatistics>(),  0, 20, false, "chart");
         assertEquals(expected.toString(), jsonObject.toString());
     }
 

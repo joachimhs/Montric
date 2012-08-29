@@ -41,7 +41,7 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
 
         LinkedHashMap<String, ChannelHandler> routes = new LinkedHashMap<String, ChannelHandler>();
         routes.put("equals:/mainMenu.json", new MainMenuChannelHandler());
-        routes.put("equals:/chart", new ChartChannelHandler());
+        routes.put("startsWith:/chart.json", new ChartChannelHandler());
         routes.put("equals:/alert", new AlertChannelHandler());
         routes.put("equals:/email", new EmailChannelHandler());
         routes.put("equals:/instrumentationGroup", new InstrumentationGroupChannelHandler());

@@ -21,7 +21,7 @@ EurekaJ.Adapter = DS.Adapter.create({
         	  type: 'GET',
         	  url: url,
         	  contentType: 'application/json',
-        	  success: function(data) { console.log(data); EurekaJ.store.loadMany(type, data); }
+        	  success: function(data) {  EurekaJ.store.loadMany(type, data); }
         	});
     },
     
@@ -30,7 +30,6 @@ EurekaJ.Adapter = DS.Adapter.create({
 
         var requestStringJson = {};
         requestStringJson.id = id;
-        requestStringJson.path = id;
         
         console.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
         
@@ -39,7 +38,7 @@ EurekaJ.Adapter = DS.Adapter.create({
       	  url: url,
       	  data: JSON.stringify(requestStringJson, null, '\t'),
       	  contentType: 'application/json',
-      	  success: function(data) { EurekaJ.store.load(type, id, data); }
+      	  success: function(data) { console.log(data); EurekaJ.store.load(type, data); }
       	});
     },
 
