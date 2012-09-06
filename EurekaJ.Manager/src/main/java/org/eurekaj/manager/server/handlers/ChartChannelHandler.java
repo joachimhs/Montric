@@ -193,6 +193,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
                 }
 
+                
                 log.debug("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {

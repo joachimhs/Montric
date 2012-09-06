@@ -43,7 +43,6 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
     public String getHttpMessageContent(MessageEvent e) {
 		String requestContent = null;
 		HttpRequest request = (HttpRequest) e.getMessage();
-		
 		ChannelBuffer content = request.getContent();
         if (content.readable()) {
         	requestContent = content.toString(CharsetUtil.UTF_8);

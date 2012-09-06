@@ -1,4 +1,7 @@
-var EurekaJ = Ember.Application.create();
+Ember.ENV.RAISE_ON_DEPRECATION = true;
+
+var EurekaJ = Ember.Application.create({
+});
 
 //Removing the Camelcase-to-dash convention from Ember Data
 DS.Model.reopen({
@@ -12,6 +15,17 @@ DS.Model.reopen({
         }
     }
 });
+
+DS.Model.reopen({
+    reload: function() {
+        if (!this.get('isDirty') && this.get('isLoaded')) {
+            var store = this.get('store'),
+                adapter = store.get('adapter');
+
+            adapter.find(store, this.constructor, this.get('id'));
+        }
+    }
+})
 
 EurekaJ.Adapter = DS.Adapter.create({
     findAll: function(store, type) {
@@ -38,7 +52,7 @@ EurekaJ.Adapter = DS.Adapter.create({
       	  url: url,
       	  data: JSON.stringify(requestStringJson, null, '\t'),
       	  contentType: 'application/json',
-      	  success: function(data) { console.log(data); EurekaJ.store.load(type, data); }
+      	  success: function(data) { EurekaJ.store.load(type, data); }
       	});
     },
 

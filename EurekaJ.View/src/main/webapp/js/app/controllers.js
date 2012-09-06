@@ -7,6 +7,7 @@ EurekaJ.ApplicationController = Ember.Controller.extend({
 
 EurekaJ.MainController = Ember.ArrayController.extend({
     content: [],
+    chartTimerId: null,
 
     selectNode: function(node) {
         if (this.get('content').indexOf(node) === -1) {
@@ -23,6 +24,23 @@ EurekaJ.MainController = Ember.ArrayController.extend({
 
     contentObserver: function() {
         console.log('MainController: selected nodes: length: ' + this.get('content').get('length'));
+        var content = this.get('content');
+        if (content.get('length') > 0 && this.get('chartTimerId') == null) {
+            //start timer
+            var intervalId = setInterval(function() {
+                content.forEach(function (node) {
+                    console.log('refresh-time!!');
+                    node.get('chart').reload();
+                }) }, 15000);
+            this.set('chartTimerId', intervalId);
+        } else if (content.get('length') == 0) {
+            //stop timer if started
+            if (this.get('chartTimerId') != null) {
+                console.log('stopping timer');
+                clearInterval(this.get('chartTimerId'));
+                this.set('chartTimerId', null);
+            }
+        }
     }.observes('content.length')
 });
 

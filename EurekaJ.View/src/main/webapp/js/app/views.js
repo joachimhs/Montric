@@ -128,8 +128,9 @@ EurekaJ.ChartView = Ember.View.extend({
     classNames: ['eurekajChart'],
     resizeHandler: null,
     content: null,
+    nvd3Chart: null,
 
-    init: function() {
+    /*init: function() {
         var view = this;
 
         var resizeHandler = function() {
@@ -142,10 +143,16 @@ EurekaJ.ChartView = Ember.View.extend({
 
     willDestroy: function() {
         $(window).unbind('resize', this.get('resizeHandler'));
-    },
+    },*/
 
     contentObserver: function() {
-        this.rerender();
+        var elementId = this.get('elementId');
+        var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
+        var chart = this.get('nvd3Chart');
+        d3.select('#' + elementId + ' svg')
+            .datum(data)
+            .transition().duration(500)
+            .call(chart);
     }.observes('content.chart.chartValue'),
 
     numChartsObserver: function() {
@@ -155,6 +162,7 @@ EurekaJ.ChartView = Ember.View.extend({
     didInsertElement : function() {
         if (this.get('content').get('chart') != null) {
 
+            var thisView = this;
             var numCharts = EurekaJ.router.get('mainController').get('content').get('length');
             var height = (this.$().height() / numCharts) - (numCharts * 8) - 18;
             var width = this.$().width();
@@ -162,28 +170,43 @@ EurekaJ.ChartView = Ember.View.extend({
             var elementId = this.get('elementId');
             var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
 
-            console.log('data for chart:');
-            console.log(data);
-            console.log(this.get('content'));
-            console.log(this.get('content').get('chart'));
-            console.log(this.get('content').get('chart').get('chartValue'));
-            console.log(this.get('content').get('chart').get('id'));
-
             var view = this;
 
             nv.addGraph(function() {
-                var chart = nv.models.cumulativeLineChart()
+                var chart = nv.models.lineChart()
                     .x(function(d) { return d[0] })
-                    .y(function(d) { return d[1]/100 })// //adjusting, 100% is 1.00, not 100 as it is in the data
-                    .color(d3.scale.category10().range());
+                    .y(function(d) { return d[1] })// //adjusting, 100% is 1.00, not 100 as it is in the data
+                    .color(d3.scale.category10().range())
+                    .forceY(0);
 
                 chart.xAxis
                     .tickFormat(function(d) {
-                        return d3.time.format('%x')(new Date(d))
+                        return d3.time.format('%d/%m %H:%M:%S')(new Date(d))
                     });
 
-                chart.yAxis
-                    .tickFormat(d3.format(',.1%'));
+                chart.yAxis.tickFormat(function(yValue) {
+                    var retVal = Math.round(yValue*1000)/1000;
+                    if (yValue >= 1000 && yValue < 1000000) {
+                        retVal = yValue / 1000;
+                        retVal = retVal + "k";
+                    }
+                    if (yValue >= 1000000 && yValue < 1000000000) {
+                        retVal = yValue / 1000000;
+                        retVal = retVal + "m";
+                    }
+                    if (yValue >= 1000000000 && yValue < 1000000000000) {
+                        retVal = yValue / 1000000000;
+                        retVal = retVal + "g";
+                    }
+                    if (yValue >= 1000000000000 && yValue < 1000000000000000) {
+                        retVal = yValue / 1000000000000;
+                        retVal = retVal + "t";
+                    }
+                    return retVal;
+                });
+
+                chart.yAxis.showMaxMin(false);
+                chart.xAxis.showMaxMin(false);
 
                 $("#" + elementId).css('height', height + 'px');
                 $("#" + elementId).css('width', width + 'px');
@@ -192,6 +215,7 @@ EurekaJ.ChartView = Ember.View.extend({
                     .datum(data)
                     .call(chart);
 
+                thisView.set('nvd3Chart', chart);
                 //TODO: Figure out a good way to do this automatically
                 //nv.utils.windowResize(chart.update);
             });

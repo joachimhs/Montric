@@ -46,10 +46,12 @@ public class NettyServer extends EurekaJWebappPluginService {
 		NettyServer nettyServer = new NettyServer();
 		
 		System.setProperty("basedir", "/Users/joahaa/Projects/eurekaj/EurekaJ.View/src/main/webapp");
+		//System.setProperty("basedir", "/Users/joahaa/Projects/HaagenSoftwareWeb");
 		System.setProperty("log4j.configuration", "/srv/netty-webserver/log4j.xml");
 		System.setProperty("eurekaj.db.absPath", "/srv/eurekaj/eurekajData");
 		System.setProperty("org.eurekaj.deleteStatsOlderThanDays", "180");
 		System.setProperty("eurekaj.db.type", "BerkeleyHour");
+		System.setProperty("org.eurekaj.port", "8081");
 		
 		nettyServer.start();
 	}

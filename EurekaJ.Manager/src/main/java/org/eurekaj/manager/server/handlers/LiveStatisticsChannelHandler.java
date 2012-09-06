@@ -48,8 +48,9 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         String jsonResponse = "";
         boolean errorRaised = false;
+        String messageContent = getHttpMessageContent(e);
         try {
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(messageContent);
 
             if (jsonObject.has("storeLiveStatistics") && statisticsHasValidToken(jsonObject)) {
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
@@ -67,6 +68,7 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
             	write401ToBuffer(ctx);
             }
         } catch (JSONException jsonException) {
+        	log.info(messageContent);
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
