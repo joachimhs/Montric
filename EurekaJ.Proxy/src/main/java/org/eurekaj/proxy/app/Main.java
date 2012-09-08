@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eurekaj.proxy.FileMatcher;
 import org.eurekaj.proxy.http.handlers.PlainTextProtocolHandler;
+import org.eurekaj.proxy.http.handlers.PlainTextThread;
 import org.eurekaj.proxy.parser.ParseStatistics;
 
 public class Main {
@@ -56,7 +57,8 @@ public class Main {
 
         gzipClient = new ClientGZipContentCompression(endpointUrl, username, password);
      
-        String enablePTP = System.getProperty("org.eurekaj.proxy.enablePTP", "false");
+        String enablePTP = System.getProperty("org.eurekaj.proxy.enablePTP", "true");
+        log.info("org.eurekaj.proxy.enablePTP: " + enablePTP);
         if (enablePTP.equalsIgnoreCase("true")) {
         	setupHttpServer();
         }
@@ -65,18 +67,9 @@ public class Main {
     }
     
     private void setupHttpServer() {
-    	Integer ptpPortInt = PlainTextProtocolHandler.parseInteger(System.getProperty("org.eurekaj.proxy.PTPPort"), new Integer(8108));
-    	Server server = new Server(ptpPortInt);
-        try {
-        	server.setHandler(new PlainTextProtocolHandler(gzipClient));
-			server.start();
-			server.join();
-        } catch (Exception e) {
-			log.error("Unable to start PTP listener on port " + ptpPortInt);
-			e.printStackTrace();
-		}
-        
-        log.info("Started PTP listener or port: "+ ptpPortInt);
+    	PlainTextThread ptt = new PlainTextThread(gzipClient);
+    	new Thread(ptt).start();
+    	
     }
 
     private void parseAndSendBtraceScripts(String scriptPath) {
