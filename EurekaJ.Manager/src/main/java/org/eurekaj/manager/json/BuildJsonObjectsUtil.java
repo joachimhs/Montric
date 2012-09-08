@@ -286,9 +286,9 @@ public class BuildJsonObjectsUtil {
 
             collectionIndex++;
             dataArraySB.append("]");
-            if (list.getColor() != null && list.getColor().length() >= 6) {
+            /*if (list.getColor() != null && list.getColor().length() >= 6) {
                 dataArraySB.append(", \"color\" : \"" + list.getColor() + "\"");
-            }
+            }*/
             dataArraySB.append("}");
             if (collectionIndex < xyCollection.getDataList().size()) {
                 dataArraySB.append(",");

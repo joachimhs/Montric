@@ -71,11 +71,11 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
     }
 
     private boolean isAlertChart(JSONObject jsonRequest) throws JSONException {
-        return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_alert_:");
+        return jsonRequest.has("id") && jsonRequest.getString("id").startsWith("_alert_:");
     }
 
     private boolean isGroupedStatisticsChart(JSONObject jsonRequest) throws JSONException {
-        return jsonRequest.has("path") && jsonRequest.getString("path").startsWith("_gs_:");
+        return jsonRequest.has("id") && jsonRequest.getString("id").startsWith("_gs_:");
     }
 
     protected Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
@@ -187,8 +187,8 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                 }
 
                 TreeMenuNode treeMenuNode = getBerkeleyTreeMenuService().getTreeMenu(chartPath);
-                if (treeMenuNode != null || isGroupedStatisticsChart(keyObject)) {
-                    jsonResponse = BuildJsonObjectsUtil.generateChartData(seriesLabel, chartPath, valueCollection, chartoffset);
+                if (treeMenuNode != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
+                    jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection, chartoffset);
                 } else {
                     jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
                 }

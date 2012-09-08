@@ -1,6 +1,6 @@
 EurekaJ.router = Ember.Router.create({
     enableLogging: true,
-    location: 'history',
+    //location: 'history',
     root: Ember.Route.extend({
         doHome: Ember.Route.transitionTo('home'),
         doAdmin: Ember.Route.transitionTo('admin.alerts'),

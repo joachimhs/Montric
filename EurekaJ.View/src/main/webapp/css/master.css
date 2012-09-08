@@ -21,7 +21,8 @@ i {
 #headerArea {
     text-align: left;
     font-size: 1.3em;
-    background: #494d83;
+    background: #03005e;
+    border-bottom: 3px solid #8f0003;
     padding-left: 15px;
     padding-right: 15px;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
