@@ -136,6 +136,20 @@ EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'li',
     classNameBindings: 'isSelected',
 
+    liShortLabel: function() {
+        var numCharacters = 16;
+        if (this.get('item') != null && this.get('item.id').length > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
+
+        return this.get('item.id');
+    }.property('item.id'),
+
+    liLongLabel: function() {
+        var numCharacters = 28;
+        if (this.get('item') != null && this.get('item.id').length > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
+
+        return this.get('item.id');
+    }.property('item.id'),
+
     isSelected: function() {
         return this.get('controller.selectedItem.id') == this.get('item').get('id');
     }.property('controller.selectedItem').cacheable(),
@@ -144,7 +158,7 @@ EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
         this.get('controller').set('selectedItem', this.get('item'));
     },
 
-    template: Ember.Handlebars.compile('{{id}}')
+    template: Ember.Handlebars.compile('{{#if view.isSelected}}{{view.liShortLabel}} <button {{action deleteSelectedAlert}} class="btn btn-danger btn-mini floatRight">Delete</button>{{else}}{{view.liLongLabel}}{{/if}}')
 });
 /** //SelectableListView **/
 

@@ -373,6 +373,14 @@ ul.selectableList {
 ul.selectableList li {
     list-style: none;
     cursor: pointer;
+    line-height: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+ul.selectableList li button {
+    margin-top: 2px;
+    margin-right: 2px;
 }
 
 ul.selectableList li.is-selected {

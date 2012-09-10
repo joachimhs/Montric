@@ -101,6 +101,11 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
     content: [],
     newAlertName: '',
     selectedItem: null,
+    alertTypes: [ {"key": "gt", "value": "Greater than"},
+        {"key": "lt", "value": "Less than"},
+        {"key": "eq", "value": "Equal to"}
+    ],
+
     sortAscending: true,
     sortProperties: ['alertName'],
 

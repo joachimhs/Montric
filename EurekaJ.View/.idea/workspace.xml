@@ -22,10 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="master.css" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
+      <file leaf-file-name="alerts.json" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="99" column="17" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.2553419">
+            <state line="18" column="60" selection-start="475" selection-end="475" vertical-scroll-proportion="0.28846154">
               <folding />
             </state>
           </provider>
@@ -41,7 +41,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/main.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/css/master.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/mainMenu.jsons" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/nv.d3.css" />
@@ -49,14 +48,15 @@
         <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/cumulativeLineData.json" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/alerts.json" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/views.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/templates.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/master.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/views.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/alerts.json" />
       </list>
     </option>
   </component>
@@ -368,11 +368,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-data-2012-08-22.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3906" column="23" selection-start="111247" selection-end="111247" vertical-scroll-proportion="0.016722407" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/nv.d3.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="10" selection-start="154" selection-end="163" vertical-scroll-proportion="0.2724359" />
@@ -383,21 +378,9 @@
         <state line="7507" column="122" selection-start="230141" selection-end="230150" vertical-scroll-proportion="0.29988852" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="35" selection-start="0" selection-end="35" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/target/classes/js/scripts/ember-1.0.pre.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8087" column="0" selection-start="239436" selection-end="239436" vertical-scroll-proportion="0.12113055">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="51" selection-start="780" selection-end="780" vertical-scroll-proportion="0.2628205">
           <folding />
         </state>
       </provider>
@@ -409,48 +392,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="33" selection-start="1376" selection-end="1879" vertical-scroll-proportion="0.82371795">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="140" selection-start="3223" selection-end="3223" vertical-scroll-proportion="0.13461539">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="34" selection-start="3307" selection-end="3307" vertical-scroll-proportion="0.30448717">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="40" selection-start="4167" selection-end="4167" vertical-scroll-proportion="0.45503792">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20325" column="0" selection-start="606864" selection-end="606864" vertical-scroll-proportion="0.016722407">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="23" selection-start="52" selection-end="66" vertical-scroll-proportion="0.048076924">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1526" column="9" selection-start="24625" selection-end="24627" vertical-scroll-proportion="0.08125677">
@@ -458,16 +399,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-bootstrap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="139" selection-start="3030" selection-end="3046" vertical-scroll-proportion="0.016251354">
+        <state line="251" column="0" selection-start="6444" selection-end="6444" vertical-scroll-proportion="0.41538462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="51" selection-start="780" selection-end="780" vertical-scroll-proportion="0.52884614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="5" selection-start="62" selection-end="139" vertical-scroll-proportion="0.048076924">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="33" selection-start="1376" selection-end="1879" vertical-scroll-proportion="0.82371795">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="35" selection-start="0" selection-end="35" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20456" column="4" selection-start="610305" selection-end="610305" vertical-scroll-proportion="0.61755145">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="35" selection-start="2850" selection-end="2869" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="17" selection-start="1654" selection-end="1654" vertical-scroll-proportion="0.2553419">
+        <state line="377" column="24" selection-start="6534" selection-end="6534" vertical-scroll-proportion="0.5352564">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="57" selection-start="33" selection-end="57" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="146" column="30" selection-start="4188" selection-end="4188" vertical-scroll-proportion="0.34127843">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="60" selection-start="475" selection-end="475" vertical-scroll-proportion="0.28846154">
           <folding />
         </state>
       </provider>

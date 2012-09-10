@@ -100,7 +100,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
             '</tr>' +
             '<tr>' +
                 '<td>Alert Type:</td>' +
-                '<td>{{view Ember.Select classNames="input-medium"}}</td>' +
+                '<td>{{view Ember.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>' +
                 '<td>Alert Delay:</td>' +
                 '<td>{{view Ember.TextField valueBinding="selectedItem.alertDelay" classNames="input-mini"}}</td>' +
             '</tr>' +

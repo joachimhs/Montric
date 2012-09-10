@@ -69,6 +69,10 @@ EurekaJ.router = Ember.Router.create({
                     }
                 },
 
+                deleteSelectedAlert: function() {
+                    console.log('deleteSelectedAlert');
+                },
+
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('alerts');
                 },
