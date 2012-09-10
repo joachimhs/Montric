@@ -1,6 +1,9 @@
 Ember.ENV.RAISE_ON_DEPRECATION = true;
 
 var EurekaJ = Ember.Application.create({
+    log: function(message) {
+        if (window.console) console.log(message);
+    }
 });
 
 //Removing the Camelcase-to-dash convention from Ember Data
@@ -31,13 +34,13 @@ EurekaJ.Adapter = DS.Adapter.create({
     findAll: function(store, type) {
         var url = type.url;
 
-        console.log('finding all: type: ' + type + ' url: ' + url);
+        EurekaJ.log('finding all: type: ' + type + ' url: ' + url);
 
         $.ajax({
         	  type: 'GET',
         	  url: url,
         	  contentType: 'application/json',
-        	  success: function(data) { console.log(data); EurekaJ.store.loadMany(type, data); }
+        	  success: function(data) { EurekaJ.log(data); EurekaJ.store.loadMany(type, data); }
         	});
     },
     
@@ -47,7 +50,7 @@ EurekaJ.Adapter = DS.Adapter.create({
         var requestStringJson = {};
         requestStringJson.id = id;
         
-        console.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
+        EurekaJ.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
         
         $.ajax({
       	  type: 'GET',
@@ -59,9 +62,9 @@ EurekaJ.Adapter = DS.Adapter.create({
     },
 
     findQuery: function(store, type, query, modelArray) {
-        console.log('FINDQUERY');
-        console.log(query);
-        console.log(modelArray);
+        EurekaJ.log('FINDQUERY');
+        EurekaJ.log(query);
+        EurekaJ.log(modelArray);
     }
 });
 

@@ -62,7 +62,8 @@ EurekaJ.NodeView = Ember.View.extend({
 
 EurekaJ.NodeContentView = Ember.View.extend({
     templateName: 'tree-node-content',
-    tagName: 'span'
+    tagName: 'span',
+    classNames: ['pointer']
 });
 
 EurekaJ.NodeTextView = Ember.View.extend({
@@ -70,7 +71,11 @@ EurekaJ.NodeTextView = Ember.View.extend({
     tagName: 'span',
 
     click: function(evt) {
-        this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
+        if(this.get('content.hasChildren')) {
+            this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
+        } else {
+            this.get('content').set('isSelected', !this.get('content').get('isSelected'));
+        }
     }
 });
 
@@ -90,7 +95,7 @@ EurekaJ.TabView = Ember.View.extend({
     controller: null,
 
     selectedTabObserver: function() {
-        console.log(this.get('controller').get('selectedTab').get('tabId'));
+        EurekaJ.log(this.get('controller').get('selectedTab').get('tabId'));
         this.rerender();
     }.observes('controller.selectedTab'),
 
@@ -125,16 +130,13 @@ EurekaJ.SelectableListView = Ember.View.extend({
     controller: null,
     classNames: ['selectableList'],
 
-    selectedTabObserver: function() {
-        console.log(this.get('controller').get('selectedItem').get('id'));
-    }.observes('controller.selectedItem'),
-
-    template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableListItem itemBinding="this"}}{{/each}}')
+    template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableListItem itemBinding="this" deleteActionBinding="view.deleteAction"}}{{/each}}')
 });
 
 EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'li',
     classNameBindings: 'isSelected',
+    deleteAction: null,
 
     liShortLabel: function() {
         var numCharacters = 16;
@@ -158,7 +160,15 @@ EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
         this.get('controller').set('selectedItem', this.get('item'));
     },
 
-    template: Ember.Handlebars.compile('{{#if view.isSelected}}{{view.liShortLabel}} <button {{action deleteSelectedAlert}} class="btn btn-danger btn-mini floatRight">Delete</button>{{else}}{{view.liLongLabel}}{{/if}}')
+    template: Ember.Handlebars.compile('' +
+        '{{#if view.isSelected}}' +
+            '{{view.liShortLabel}}' +
+            '{{#if view.deleteAction}}' +
+                '{{#view EurekaJ.BootstrapButton actionBinding="view.deleteAction" target="EurekaJ.router" classNames="btn btn-danger btn-mini floatRight"}}Delete{{/view}}' +
+            '{{/if}}' +
+        '{{else}}' +
+            '{{view.liLongLabel}}' +
+        '{{/if}}')
 });
 /** //SelectableListView **/
 
@@ -270,6 +280,14 @@ EurekaJ.ChartView = Ember.View.extend({
 EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'button',
     classNames: ['button'],
+    disabled: false,
+
+    click: function() {
+        if (!this.get('disabled')) {
+            this.triggerAction();
+        }
+    },
+
     template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
 });
 
@@ -281,7 +299,7 @@ EurekaJ.ChartOptionsButton = EurekaJ.BootstrapButton.extend({
 
 EurekaJ.AdministrationButton = EurekaJ.BootstrapButton.extend({
     click: function() {
-        console.log('EurekaJ.AdministrationButton');
+        EurekaJ.log('EurekaJ.AdministrationButton');
         EurekaJ.get('router').send('doAdmin')
     }
 });

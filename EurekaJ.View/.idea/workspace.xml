@@ -22,10 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="alerts.json" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
+      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="60" selection-start="475" selection-end="475" vertical-scroll-proportion="0.28846154">
+            <state line="4" column="35" selection-start="145" selection-end="145" vertical-scroll-proportion="0.07936508">
               <folding />
             </state>
           </provider>
@@ -48,23 +48,23 @@
         <option value="$PROJECT_DIR$/src/main/webapp/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/cumulativeLineData.json" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/alerts.json" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/templates.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/master.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/views.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/alerts.json" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="42" />
+    <option name="x" value="38" />
     <option name="y" value="22" />
-    <option name="width" value="1878" />
-    <option name="height" value="1058" />
+    <option name="width" value="1402" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -290,13 +290,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="42" y="22" width="1878" height="1058" extended-state="6" />
+    <frame x="38" y="22" width="1402" height="878" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17304583" sideWeight="0.9434365" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23277737" sideWeight="0.9434365" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -378,13 +378,6 @@
         <state line="7507" column="122" selection-start="230141" selection-end="230150" vertical-scroll-proportion="0.29988852" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/js/scripts/ember-1.0.pre.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8087" column="0" selection-start="239436" selection-end="239436" vertical-scroll-proportion="0.12113055">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/mainMenu.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -406,23 +399,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="51" selection-start="780" selection-end="780" vertical-scroll-proportion="0.52884614">
+        <state line="14" column="24" selection-start="375" selection-end="375" vertical-scroll-proportion="0.2777778">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20044" column="2" selection-start="599489" selection-end="599489" vertical-scroll-proportion="0.10094213">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/js/scripts/ember-1.0.pre.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8105" column="0" selection-start="239913" selection-end="239913" vertical-scroll-proportion="0.36339167">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="274" column="20" selection-start="4207" selection-end="4207" vertical-scroll-proportion="0.5068493">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="5" selection-start="62" selection-end="139" vertical-scroll-proportion="0.048076924">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="33" selection-start="1376" selection-end="1879" vertical-scroll-proportion="0.82371795">
+        <state line="10" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.21802326">
           <folding />
         </state>
       </provider>
@@ -432,44 +439,37 @@
         <state line="0" column="35" selection-start="0" selection-end="35" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20456" column="4" selection-start="610305" selection-end="610305" vertical-scroll-proportion="0.61755145">
+        <state line="44" column="19" selection-start="1194" selection-end="1194" vertical-scroll-proportion="0.75606275">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="35" selection-start="2850" selection-end="2869" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="377" column="24" selection-start="6534" selection-end="6534" vertical-scroll-proportion="0.5352564">
+        <state line="120" column="31" selection-start="5012" selection-end="5012" vertical-scroll-proportion="0.9447674">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="57" selection-start="33" selection-end="57" vertical-scroll-proportion="0.0">
+        <state line="102" column="108" selection-start="5386" selection-end="5389" vertical-scroll-proportion="0.33284885">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="30" selection-start="4188" selection-end="4188" vertical-scroll-proportion="0.34127843">
+        <state line="278" column="23" selection-start="8950" selection-end="8950" vertical-scroll-proportion="0.25872093">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/alerts.json">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="60" selection-start="475" selection-end="475" vertical-scroll-proportion="0.28846154">
+        <state line="4" column="35" selection-start="145" selection-end="145" vertical-scroll-proportion="0.07936508">
           <folding />
         </state>
       </provider>

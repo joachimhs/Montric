@@ -1,6 +1,6 @@
 EurekaJ.ApplicationController = Ember.Controller.extend({
     init: function() {
-        console.log('Application Controller: init');
+        EurekaJ.log('Application Controller: init');
     }
 
 });
@@ -23,20 +23,20 @@ EurekaJ.MainController = Ember.ArrayController.extend({
     },
 
     contentObserver: function() {
-        console.log('MainController: selected nodes: length: ' + this.get('content').get('length'));
+        EurekaJ.log('MainController: selected nodes: length: ' + this.get('content').get('length'));
         var content = this.get('content');
         if (content.get('length') > 0 && this.get('chartTimerId') == null) {
             //start timer
             var intervalId = setInterval(function() {
                 content.forEach(function (node) {
-                    console.log('refresh-time!!');
+                    EurekaJ.log('refresh-time!!');
                     node.get('chart').reload();
                 }) }, 15000);
             this.set('chartTimerId', intervalId);
         } else if (content.get('length') == 0) {
             //stop timer if started
             if (this.get('chartTimerId') != null) {
-                console.log('stopping timer');
+                EurekaJ.log('stopping timer');
                 clearInterval(this.get('chartTimerId'));
                 this.set('chartTimerId', null);
             }
@@ -49,7 +49,7 @@ EurekaJ.MenuController = Ember.ArrayController.extend({
     content: [],
 
     contentObserver: function() {
-        console.log('MenuController: selected nodes: length: ' + this.get('content').get('length'));
+        EurekaJ.log('MenuController: selected nodes: length: ' + this.get('content').get('length'));
     }.observes('content.length')
 });
 
@@ -121,10 +121,6 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
 
         return unique && newNameIsValid;
     },
-
-    selectedItemObserver: function() {
-        console.log('selectedItemObserver: ' + this.get('selectedItem'));
-    }.observes('selectedItem')
 });
 
 EurekaJ.chartOptionsTabBarController = EurekaJ.TabBarController.create({

@@ -41,8 +41,8 @@ EurekaJ.TabModel = Ember.Object.extend({
     tabView: null,
 
     hasView: function() {
-        console.log('tabView: ' + this.get('tabId'));
-        console.log(this.get('tabView'));
+        EurekaJ.log('tabView: ' + this.get('tabId'));
+        EurekaJ.log(this.get('tabView'));
         return this.get('tabView') != null;
     }.property('tabView').cacheable()
 });

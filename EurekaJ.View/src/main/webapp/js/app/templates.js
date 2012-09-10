@@ -82,7 +82,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewAlert}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView controllerBinding="controller"}}' +
+        '{{view EurekaJ.SelectableListView controllerBinding="controller" deleteAction="deleteSelectedAlert"}}' +
     '</div>' +
 
     '<div id="adminTabRightContent">{{#if selectedItem}}' +

@@ -31,7 +31,7 @@ EurekaJ.router = Ember.Router.create({
                 router.get('applicationController').connectOutlet('header', 'header');
             },
             exit: function() {
-                console.log('exit Home');
+                EurekaJ.log('exit Home');
             }
         }),
         admin: Ember.Route.extend({
@@ -46,7 +46,7 @@ EurekaJ.router = Ember.Router.create({
             },
 
             connectOutlets: function(router) {
-                console.log('connecting outlets for admin');
+                EurekaJ.log('connecting outlets for admin');
                 router.get('applicationController').connectOutlet('admin');
                 router.get('applicationController').connectOutlet('header', 'header');
             },
@@ -60,24 +60,27 @@ EurekaJ.router = Ember.Router.create({
                 route: '/alerts',
 
                 createNewAlert: function() {
-                    console.log('createNewAlert router action');
+                    EurekaJ.log('createNewAlert router action');
                     if (EurekaJ.router.get('adminAlertController').newAlertIsValid()) {
                         EurekaJ.store.createRecord(EurekaJ.AlertModel, {alertName: EurekaJ.router.get('adminAlertController.newAlertName')});
                         EurekaJ.router.get('adminAlertController').set('newAlertName', '');
                     } else {
-                        console.log('New Alert Name Not Valid!');
+                        EurekaJ.log('New Alert Name Not Valid!');
                     }
                 },
 
                 deleteSelectedAlert: function() {
-                    console.log('deleteSelectedAlert');
+                    var selectedItem = EurekaJ.router.get('adminAlertController.selectedItem');
+                    if (selectedItem) {
+                        selectedItem.deleteRecord();
+                    }
                 },
 
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('alerts');
                 },
                 connectOutlets: function(router) {
-                    console.log('connecting outlets for Alerts');
+                    EurekaJ.log('connecting outlets for Alerts');
                     router.get('adminController').connectOutlet('adminTabContent', 'adminAlert', EurekaJ.store.findAll(EurekaJ.AlertModel));
                 }
             }),
@@ -88,7 +91,7 @@ EurekaJ.router = Ember.Router.create({
                     EurekaJ.adminTabBarController.selectTabWithId('chartGroups');
                 },
                 connectOutlets: function(router) {
-                    console.log('connecting outlets for chartGroups');
+                    EurekaJ.log('connecting outlets for chartGroups');
                     router.get('adminController').connectOutlet({
                         viewClass: EurekaJ.ChartGroupTabView,
                         outletName: 'adminTabContent'
@@ -102,7 +105,7 @@ EurekaJ.router = Ember.Router.create({
                     EurekaJ.adminTabBarController.selectTabWithId('emailRecipients');
                 },
                 connectOutlets: function(router) {
-                    console.log('connecting outlets for emailRecipients');
+                    EurekaJ.log('connecting outlets for emailRecipients');
                     router.get('adminController').connectOutlet({
                         viewClass: EurekaJ.EmailRecipientsTabView,
                         outletName: 'adminTabContent'
@@ -115,7 +118,7 @@ EurekaJ.router = Ember.Router.create({
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('menuAdmin');
                 },connectOutlets: function(router) {
-                    console.log('connecting outlets for menuAdmin');
+                    EurekaJ.log('connecting outlets for menuAdmin');
                     router.get('adminController').connectOutlet({
                         viewClass: EurekaJ.MenuAdminTabView,
                         outletName: 'adminTabContent'
