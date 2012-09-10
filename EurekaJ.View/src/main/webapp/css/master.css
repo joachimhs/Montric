@@ -26,6 +26,11 @@ i {
     padding-left: 15px;
     padding-right: 15px;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 35px;
 }
 
 #headerArea a {
@@ -85,6 +90,47 @@ i {
     top: 55px;
     bottom: 0px;
     overflow: scroll;
+}
+
+#adminTabLeftMenu {
+    background: aliceBlue;
+    border-bottom-left-radius: 8px;
+    position: absolute;
+    left: 0px;
+    width: 230px;
+    top: 30px;
+    bottom:0px;
+    overflow: scroll;
+    padding-left: 10px;
+}
+
+#adminTabRightContent {
+    background: #fff;
+    position: absolute;
+    left: 250px;
+    right: 10px;
+    top: 40px;
+    border: 1px solid #cdd0d4;
+    border-radius: 5px;
+}
+
+#adminTabRightContent h1{
+    text-align: center;
+    padding: 10px;
+    background: #F1EFEF;
+}
+
+#adminTabRightContent .footer {
+    padding: 0px;
+    margin: 0px;
+}
+
+#adminTabRightContent .table {
+    margin-bottom: 0px;
+}
+
+#adminTabRightContent .table td {
+    margin-bottom: 0px;
 }
 
 .eurekaJModal {
@@ -182,6 +228,15 @@ div.treeView h1 {
     float: none;
 }
 
+.mediumTopPadding {
+    margin-top: 9px;
+    margin-right: 9px;
+}
+
+.smallTopPadding {
+    margin-top: 5px;
+    margin-right: 5px;
+}
 .centerAlign {
     text-align: center;
 }
@@ -210,6 +265,10 @@ div.treeView h1 {
 .headerText {
     margin-bottom: 0;
     line-height: 40px;
+}
+
+.noBorderTop {
+    border-top: none;
 }
 
 ul.tabrow {
@@ -306,3 +365,32 @@ ul.tabrow li.is-selected:after {
     box-shadow: -2px 2px 0 #FFF;
 }
 
+ul.selectableList {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+ul.selectableList li {
+    list-style: none;
+    cursor: pointer;
+}
+
+ul.selectableList li.is-selected {
+    background: #03005e;
+    color: #fff;
+    padding: 2px;
+    padding-left: 5px;
+}
+
+ul.selectableList li.is-selected:before {
+    content: '';
+    float: left;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 3px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid white;
+}

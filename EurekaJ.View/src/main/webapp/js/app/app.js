@@ -31,11 +31,13 @@ EurekaJ.Adapter = DS.Adapter.create({
     findAll: function(store, type) {
         var url = type.url;
 
+        console.log('finding all: type: ' + type + ' url: ' + url);
+
         $.ajax({
         	  type: 'GET',
         	  url: url,
         	  contentType: 'application/json',
-        	  success: function(data) {  EurekaJ.store.loadMany(type, data); }
+        	  success: function(data) { console.log(data); EurekaJ.store.loadMany(type, data); }
         	});
     },
     
@@ -52,7 +54,7 @@ EurekaJ.Adapter = DS.Adapter.create({
       	  url: url,
       	  data: JSON.stringify(requestStringJson, null, '\t'),
       	  contentType: 'application/json',
-      	  success: function(data) { console.log(data); EurekaJ.store.load(type, data); }
+      	  success: function(data) { EurekaJ.store.load(type, data); }
       	});
     },
 

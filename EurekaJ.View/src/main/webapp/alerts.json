@@ -1,0 +1,10 @@
+[
+    {
+        "alertName": "Test Alert",
+        "alertActivated": true,
+        "alertWarningValue": 90,
+        "alertErrorValue": 70,
+        "alertType": "alertType",
+        "alertDelay": 5
+    }
+]

@@ -35,9 +35,9 @@ EurekaJ.AdminTabContentView = Ember.View.extend({
     templateName: 'adminTabContent'
 });
 
-EurekaJ.AlertTabView = Ember.View.extend({
+EurekaJ.AdminAlertView = Ember.View.extend({
     elementId: 'alertTabView',
-    template: Ember.Handlebars.compile('AlertTabView')
+    templateName: 'alertTabContent'
 });
 
 EurekaJ.ChartGroupTabView = Ember.View.extend({
@@ -119,9 +119,38 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
 });
 //** //Tab View **/
 
+/** SelectableListView **/
+EurekaJ.SelectableListView = Ember.View.extend({
+    tagName: 'ul',
+    controller: null,
+    classNames: ['selectableList'],
+
+    selectedTabObserver: function() {
+        console.log(this.get('controller').get('selectedItem').get('id'));
+    }.observes('controller.selectedItem'),
+
+    template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableListItem itemBinding="this"}}{{/each}}')
+});
+
+EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
+    tagName: 'li',
+    classNameBindings: 'isSelected',
+
+    isSelected: function() {
+        return this.get('controller.selectedItem.id') == this.get('item').get('id');
+    }.property('controller.selectedItem').cacheable(),
+
+    click: function() {
+        this.get('controller').set('selectedItem', this.get('item'));
+    },
+
+    template: Ember.Handlebars.compile('{{id}}')
+});
+/** //SelectableListView **/
+
 EurekaJ.LiveChartOptionsView = Ember.View.extend({
     templateName: 'live-chart-options'
-})
+});
 
 EurekaJ.ChartView = Ember.View.extend({
     templateName: 'chart',
@@ -226,7 +255,7 @@ EurekaJ.ChartView = Ember.View.extend({
 /** Bootstrap Views **/
 EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'button',
-    classNames: ['btn'],
+    classNames: ['button'],
     template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
 });
 

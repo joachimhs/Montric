@@ -58,16 +58,23 @@ EurekaJ.router = Ember.Router.create({
 
             alerts: Ember.Route.extend({
                 route: '/alerts',
+
+                createNewAlert: function() {
+                    console.log('createNewAlert router action');
+                    if (EurekaJ.router.get('adminAlertController').newAlertIsValid()) {
+                        EurekaJ.store.createRecord(EurekaJ.AlertModel, {alertName: EurekaJ.router.get('adminAlertController.newAlertName')});
+                        EurekaJ.router.get('adminAlertController').set('newAlertName', '');
+                    } else {
+                        console.log('New Alert Name Not Valid!');
+                    }
+                },
+
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('alerts');
                 },
                 connectOutlets: function(router) {
                     console.log('connecting outlets for Alerts');
-                    router.get('adminController').connectOutlet({
-                        viewClass: EurekaJ.AlertTabView,
-                        outletName: 'adminTabContent'
-                        //controller: newsView.view.controller.content,
-                    });
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminAlert', EurekaJ.store.findAll(EurekaJ.AlertModel));
                 }
             }),
 

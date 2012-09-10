@@ -57,8 +57,8 @@ Ember.TEMPLATES['admin'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
     '<span class="headerText"><a {{action doHome}} href="#">EurekaJ:Live</a></span>' +
-    '{{view EurekaJ.AdministrationButton target="EurekaJ.router" action="doAdmin" classNames="btn-info btn-mini pull-right" content="Administration" iconName="icon-cog"}}' +
-    '{{view EurekaJ.ChartOptionsButton classNames="btn-info btn-mini pull-right" content="Chart Options"}}'
+    '{{view EurekaJ.AdministrationButton target="EurekaJ.router" action="doAdmin" classNames="btn-info btn-mini pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
+    '{{view EurekaJ.ChartOptionsButton classNames="btn-info btn-mini pull-right mediumTopPadding" content="Chart Options"}}'
 );
 
 Ember.TEMPLATES['main'] = Ember.Handlebars.compile('' +
@@ -73,6 +73,53 @@ Ember.TEMPLATES['main'] = Ember.Handlebars.compile('' +
         '<div class="modal-footer"><p><a href="#" class="btn" data-dismiss="modal">Close</a></p></div>' +
     '</div>'*/
 );
+
+Ember.TEMPLATES['alertTabContent'] = Ember.Handlebars.compile('' +
+    '{{view Ember.View templateName="adminAlertLeftMenu"}}'
+);
+
+Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
+    '<div id="adminTabLeftMenu">' +
+        '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '<button class="btn" {{action createNewAlert}}>Add</button>' +
+        '{{view EurekaJ.SelectableListView controllerBinding="controller"}}' +
+    '</div>' +
+
+    '<div id="adminTabRightContent">{{#if selectedItem}}' +
+        '<h1>{{selectedItem.alertName}}</h1>' +
+        '<table class="table">' +
+            '<tr>' +
+                '<td>Activated:</td>' +
+                '<td colspan="3">{{view Ember.Checkbox checkedBinding="selectedItem.alertActivated"}}</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td>Error Value:</td>' +
+                '<td>{{view Ember.TextField valueBinding="selectedItem.alertErrorValue" classNames="input-mini"}}</td>' +
+                '<td>Warning Value:</td>' +
+                '<td>{{view Ember.TextField valueBinding="selectedItem.alertWarningValue" classNames="input-mini"}}</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td>Alert Type:</td>' +
+                '<td>{{view Ember.Select classNames="input-medium"}}</td>' +
+                '<td>Alert Delay:</td>' +
+                '<td>{{view Ember.TextField valueBinding="selectedItem.alertDelay" classNames="input-mini"}}</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td>Alert Source:</td>' +
+                '<td colspan="3">__List of alerts__</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td>Email Notification:</td>' +
+                '<td>_List of notifications_</td>' +
+                '<td>Plugin Notification:</td>' +
+                '<td>_List of pluigns_</td>' +
+            '</tr>' +
+            '<tr class="footer">' +
+                '<td colspan="4"><button class="btn" style="width: 100%;">Save Alert</button></td>' +
+            '</tr>' +
+        '</table>' +
+    '</div>{{/if}}'
+)
 
 Ember.TEMPLATES['main-menu'] = Ember.Handlebars.compile('' +
     '<h1>Main Menu</h1>' +

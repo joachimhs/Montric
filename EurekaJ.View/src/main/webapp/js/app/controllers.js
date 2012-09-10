@@ -97,6 +97,31 @@ EurekaJ.adminTabBarController = EurekaJ.TabBarController.create({
     }
 });
 
+EurekaJ.AdminAlertController = Ember.ArrayController.extend({
+    content: [],
+    newAlertName: '',
+    selectedItem: null,
+    sortAscending: true,
+    sortProperties: ['alertName'],
+
+    newAlertIsValid: function() {
+        var newNameIsValid = (this.get('newAlertName') && this.get('newAlertName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(alert) {
+            if (alert.get('alertName') == this.get('newAlertName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    },
+
+    selectedItemObserver: function() {
+        console.log('selectedItemObserver: ' + this.get('selectedItem'));
+    }.observes('selectedItem')
+});
+
 EurekaJ.chartOptionsTabBarController = EurekaJ.TabBarController.create({
     content: [],
     selectedTab: null,
