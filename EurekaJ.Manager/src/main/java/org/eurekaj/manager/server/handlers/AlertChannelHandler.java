@@ -51,38 +51,32 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            if (jsonObject.has("getAlerts")) {
-                jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
-                log.debug("Got Alerts:\n" + jsonResponse);
-
-            }
-            
             if (jsonObject.has("getAlertPlugins")) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
                 log.debug("Got Alert Plugins:\n" + jsonResponse);
-
-            }
-
-            if (jsonObject.has("alertInstrumentationNode")) {
+            } else if (isPut(e)) {
                 Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
 
                 }
-            }
-
-            if (jsonObject.has("getTriggeredAlerts")) {
+            } else if (jsonObject.has("getTriggeredAlerts")) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
                 List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
                 log.debug("Got Triggered Alerts:\n" + jsonResponse);
-            }
-            
-            if (jsonObject.has("deleteAlert")) {
+            } else if (jsonObject.has("deleteAlert")) {
                 String alertName = jsonObject.getString("deleteAlert");
                 getBerkeleyTreeMenuService().deleteAlert(alertName);
                 log.debug("Successfully deleted Alert with name:\n" + alertName);
+            } else {
+            	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
+                log.debug("Got Alerts:\n" + jsonResponse);
+            }
+            
+            if (jsonResponse.length() == 0 && isGet(e)) {
+            	jsonResponse = "{}";
             }
 
         } catch (JSONException jsonException) {

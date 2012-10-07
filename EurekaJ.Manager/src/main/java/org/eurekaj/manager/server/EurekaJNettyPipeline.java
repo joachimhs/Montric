@@ -44,7 +44,7 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
         routes.put("startsWith:/chart.json", new ChartChannelHandler());
         routes.put("equals:/alert", new AlertChannelHandler());
         routes.put("equals:/email", new EmailChannelHandler());
-        routes.put("equals:/instrumentationGroup", new InstrumentationGroupChannelHandler());
+        routes.put("equals:/chartGroup", new InstrumentationGroupChannelHandler());
         routes.put("equals:/liveStatistics", new LiveStatisticsChannelHandler());
         routes.put("equals:/user", new UserChannelhandler());
         

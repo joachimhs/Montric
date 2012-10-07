@@ -17,6 +17,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
+import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.util.CharsetUtil;
@@ -38,6 +39,24 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
             berkeleyTreeMenuService = new TreeMenuServiceImpl();
         }
         return berkeleyTreeMenuService;
+    }
+    
+    public boolean isPut(MessageEvent e) {
+    	HttpRequest request = (HttpRequest) e.getMessage();
+		HttpMethod method = request.getMethod();
+		return method == HttpMethod.PUT;
+    }
+    
+    public boolean isGet(MessageEvent e) {
+    	HttpRequest request = (HttpRequest) e.getMessage();
+		HttpMethod method = request.getMethod();
+		return method == HttpMethod.GET;
+    }
+    
+    public boolean isDelete(MessageEvent e) {
+    	HttpRequest request = (HttpRequest) e.getMessage();
+		HttpMethod method = request.getMethod();
+		return method == HttpMethod.DELETE;
     }
     
     public String getHttpMessageContent(MessageEvent e) {

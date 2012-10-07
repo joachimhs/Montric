@@ -1,6 +1,6 @@
 Ember.TEMPLATES['application'] = Ember.Handlebars.compile('' +
-    '{{outlet}}' +
     '{{outlet header}}' +
+    '{{outlet}}' +
     '{{view Ember.View templateName="chartOptionsModal"}}'
 );
 
@@ -22,13 +22,13 @@ Ember.TEMPLATES['live-chart-options'] = Ember.Handlebars.compile('' +
     '<table>' +
     '<tr>' +
         '<td>Timezone: </td>' +
-        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="EurekaJ.appValuesController.selectedTimezone" prompt="Select Timezone"}}</td>' +
+        '<td>{{view EurekaJ.Select contentBinding="EurekaJ.appValuesController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="EurekaJ.appValuesController.selectedTimezone" prompt="Select Timezone"}}</td>' +
     '</tr><tr>' +
         '<td>Timespan: </td>' +
-        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="EurekaJ.appValuesController.selectedChartTimespan" prompt="Select Timespan"}}</td>' +
+        '<td>{{view EurekaJ.Select contentBinding="EurekaJ.appValuesController.chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="EurekaJ.appValuesController.selectedChartTimespan" prompt="Select Timespan"}}</td>' +
     '</tr><tr>' +
         '<td>Resolution: </td>' +
-        '<td>{{view Ember.Select contentBinding="EurekaJ.appValuesController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="EurekaJ.appValuesController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
+        '<td>{{view EurekaJ.Select contentBinding="EurekaJ.appValuesController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="EurekaJ.appValuesController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
     '</tr>' +
     '</table>'
 );
@@ -56,7 +56,7 @@ Ember.TEMPLATES['admin'] = Ember.Handlebars.compile('' +
 );
 
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
-    '<span class="headerText"><a {{action doHome}} href="#">EurekaJ:Live</a></span>' +
+    '<span class="headerText"><a {{action doHome}} href="#"><img src="/img/logo-small.png" /></a></span>' +
     '{{view EurekaJ.AdministrationButton target="EurekaJ.router" action="doAdmin" classNames="btn-info btn-mini pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
     '{{view EurekaJ.ChartOptionsButton classNames="btn-info btn-mini pull-right mediumTopPadding" content="Chart Options"}}'
 );
@@ -85,9 +85,9 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
         '{{view EurekaJ.SelectableListView controllerBinding="controller" deleteAction="deleteSelectedAlert"}}' +
     '</div>' +
 
-    '<div id="adminTabRightContent">{{#if selectedItem}}' +
+    '{{#if selectedItem}}<div id="adminTabRightContent">' +
         '<h1>{{selectedItem.alertName}}</h1>' +
-        '<table class="table">' +
+        '<table class="table adminTable">' +
             '<tr>' +
                 '<td>Activated:</td>' +
                 '<td colspan="3">{{view Ember.Checkbox checkedBinding="selectedItem.alertActivated"}}</td>' +
@@ -100,13 +100,17 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
             '</tr>' +
             '<tr>' +
                 '<td>Alert Type:</td>' +
-                '<td>{{view Ember.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>' +
+                '<td>{{view EurekaJ.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>' +
                 '<td>Alert Delay:</td>' +
                 '<td>{{view Ember.TextField valueBinding="selectedItem.alertDelay" classNames="input-mini"}}</td>' +
             '</tr>' +
             '<tr>' +
                 '<td>Alert Source:</td>' +
-                '<td colspan="3">__List of alerts__</td>' +
+                '<td colspan="3">' +
+                    //'{{view EurekaJ.TreeView controllerBinding="adminMenuController"}}' +
+                    '<div>{{#if selectedItem.alertSource.id}}{{selectedItem.alertSource.id}}{{else}}None Selected{{/if}}</div>' +
+                    '<div style="max-height: 250px; overflow: scroll;" class="azureBlueBackground azureBlueBorderThin">{{view EurekaJ.SelectableLeafTreeView controllerBinding="adminMenuController" selectedItemBinding="selectedItem.alertSource"}}</div>' +
+                '</td>' +
             '</tr>' +
             '<tr>' +
                 '<td>Email Notification:</td>' +
@@ -115,18 +119,48 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
                 '<td>_List of pluigns_</td>' +
             '</tr>' +
             '<tr class="footer">' +
-                '<td colspan="4"><button class="btn" style="width: 100%;">Save Alert</button></td>' +
+                '<td colspan="4"><button {{action doCommitAlert}} class="btn" style="width: 100%;">Save Alert</button></td>' +
             '</tr>' +
         '</table>' +
     '</div>{{/if}}'
-)
+);
+
+Ember.TEMPLATES['chartGroupTabContent'] = Ember.Handlebars.compile('' +
+    '<div id="adminTabLeftMenu">' +
+        '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '<button class="btn" {{action createNewChartGroup}}>Add</button>' +
+        '{{view EurekaJ.SelectableListView controllerBinding="controller" deleteAction="deleteSelectedChartGroup"}}' +
+    '</div>' +
+
+    '{{#if selectedItem}}<div id="adminTabRightContent">' +
+        '<h1>{{selectedItem.chartGroupName}}</h1>' +
+        '<table class="table adminTable">' +
+        '<tr>' +
+            '<td style="width: 150px;">Select nodes:</td>' +
+            '<td>' +
+                '<div style="max-height: 250px; min-height: 250px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
+                    '{{view EurekaJ.TreeView controllerBinding="controller.adminMenuController"}}' +
+                '</div>' +
+                '<button {{action doAddCheckedNodes}} class="btn" style="width: 100%;">Add selected Charts to Chart Group</button>' +
+            '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td style="width: 150px;">Selected Nodes:</td>' +
+            '<td>' +
+                '<div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
+                    '{{view EurekaJ.SelectableListView controllerBinding="controller.selectedChartGroupController.selectedChartGroupPathController" maxCharacters="120"}}' +
+                '</div>' +
+            '</td>' +
+        '</tr>' +
+    '</div>{{/if}}'
+);
 
 Ember.TEMPLATES['main-menu'] = Ember.Handlebars.compile('' +
     '<h1>Main Menu</h1>' +
-        '{{#each controller}}' +
+        /*'{{#each controller}}' +
             '{{view EurekaJ.NodeView contentBinding="this"}}' +
-        '{{/each}}' +
-    '</ul>'
+        '{{/each}}' +*/
+    '{{view EurekaJ.TreeView contentBinding="controller.content"}}'
 );
 
 /** Tree Menu Templates **/
@@ -166,3 +200,24 @@ Ember.TEMPLATES['tree-node-arrow'] = Ember.Handlebars.compile('' +
     '{{/if}}'
 );
 /** //Tree Menu Templates **/
+
+/** Browser Templates **/
+Ember.TEMPLATES['browser-template'] = Ember.Handlebars.compile('' +
+    'browser{{content}}{{#each content}}' +
+        '{{view EurekaJ.BrowserListView contentBinding="this"}}' +
+    '{{/each}}'
+);
+
+Ember.TEMPLATES['browser-list-template'] = Ember.Handlebars.compile('' +
+    '{{view EurekaJ.BrowserItemView contentBinding="this"}}' +
+
+    '{{#if isExpanded}}' +
+        '{{children}}{{view EurekaJ.BrowserView contentBinding="children"}}' +
+    '{{/if}}'
+);
+
+Ember.TEMPLATES['browser-item-template'] = Ember.Handlebars.compile('' +
+    '{{name}}'
+);
+
+/** //Browser Templates **/

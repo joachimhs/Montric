@@ -30,7 +30,8 @@ i {
     left: 0px;
     right: 0px;
     top: 0px;
-    height: 35px;
+    height: 45px;
+    vertical-align: top;
 }
 
 #headerArea a {
@@ -77,8 +78,8 @@ i {
     position: absolute;
     right: 0px;
     left: 0px;
-    top: 40px;
-    bottom: 10px;
+    top: 50px;
+    bottom: 0px;
     overflow: scroll;
 }
 
@@ -131,6 +132,11 @@ i {
 
 #adminTabRightContent .table td {
     margin-bottom: 0px;
+}
+
+.adminTable td {
+    max-height: 150px;
+    overflow: scroll;
 }
 
 .eurekaJModal {
@@ -273,6 +279,22 @@ div.treeView h1 {
 
 .pointer {
     cursor: pointer;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.azureBlueBackground {
+    background-color: #F0F8FF;
+}
+
+.azureBlueBorderThin {
+    border: 1px solid #CEDFED;
+}
+
+.treeItemMarginLeft {
+    margin-left: 22px;
 }
 
 ul.tabrow {

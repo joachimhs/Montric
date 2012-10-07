@@ -25,6 +25,25 @@ EurekaJ.MainMenuModel.reopenClass({
     url: 'mainMenu.json'
 });
 
+EurekaJ.AdminMenuModel = DS.Model.extend({
+    path: DS.attr('string'),
+    name: DS.attr('string'),
+    nodeType: DS.attr('string'),
+    parentPath: DS.belongsTo('EurekaJ.AdminMenuModel'),
+    isSelected: false,
+    isExpanded: false,
+    children: DS.hasMany('EurekaJ.AdminMenuModel'),
+    chart: DS.belongsTo('EurekaJ.ChartModel'),
+
+    hasChildren: function() {
+        return this.get('children').get('length') > 0;
+    }.property('children').cacheable()
+});
+
+EurekaJ.AdminMenuModel.reopenClass({
+    url: 'mainMenu.json'
+});
+
 EurekaJ.ChartModel = DS.Model.extend({
     chartValue: DS.attr('string')
 });
@@ -51,7 +70,7 @@ EurekaJ.AlertModel = DS.Model.extend({
     primaryKey: 'alertName',
     alertName: DS.attr('string'),
     alertActivated: DS.attr('boolean'),
-    //alertInstrumentationNode: SC.Record.toOne('EurekaJView.AdminstrationTreeModel', {isMaster: YES }),
+    alertSource: DS.belongsTo('EurekaJ.AdminMenuModel'),
     //alertNotifications: SC.Record.toMany('EurekaJView.EmailGroupModel', {isMaster: YES}),
     //alertPlugins: SC.Record.toMany('EurekaJView.AlertPluginModel', {isMaster: YES}),
     alertWarningValue: DS.attr('number'),
@@ -61,5 +80,15 @@ EurekaJ.AlertModel = DS.Model.extend({
 });
 
 EurekaJ.AlertModel.reopenClass({
-    url: 'alerts.json'
-})
+    url: 'alert'
+});
+
+EurekaJ.ChartGroupModel = DS.Model.extend({
+    primaryKey: 'chartGroupName',
+    chartGroupName: DS.attr('string'),
+    chartGroupPath: DS.hasMany('EurekaJ.AdminMenuModel')
+});
+
+EurekaJ.ChartGroupModel.reopenClass({
+    url: 'chartGroup'
+});

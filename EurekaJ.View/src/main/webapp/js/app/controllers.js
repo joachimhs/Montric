@@ -53,6 +53,35 @@ EurekaJ.MenuController = Ember.ArrayController.extend({
     }.observes('content.length')
 });
 
+EurekaJ.AdminMenuController = Ember.ArrayController.extend({
+    content: [],
+
+    revealNodeAndCloseOthers: function(id) {
+        console.log('start');
+        var item = EurekaJ.store.find(EurekaJ.AdminMenuModel, id);
+        console.log('item');
+        console.log(item);
+        var reversedItems = [];
+
+        if (item != null) {
+            reversedItems.pushObject(item);
+            var parentNode = item.get('parentPath');
+
+            while (parentNode) {
+                reversedItems.pushObject(parentNode);
+                parentNode = parentNode.get('parentPath');
+            }
+        }
+
+        console.log('reversing nodes');
+        reversedItems.forEach(function (node) {
+            node.set('isExpanded', true);
+        });
+
+        console.log('finished');
+    }
+});
+
 
 EurekaJ.HeaderController = Ember.Controller.extend({
     content: null
@@ -99,11 +128,12 @@ EurekaJ.adminTabBarController = EurekaJ.TabBarController.create({
 
 EurekaJ.AdminAlertController = Ember.ArrayController.extend({
     content: [],
+    adminMenuController: null,
     newAlertName: '',
     selectedItem: null,
-    alertTypes: [ {"key": "gt", "value": "Greater than"},
-        {"key": "lt", "value": "Less than"},
-        {"key": "eq", "value": "Equal to"}
+    alertTypes: [ {"key": "greater_than", "value": "Greater than"},
+        {"key": "less_than", "value": "Less than"},
+        {"key": "equals", "value": "Equal to"}
     ],
 
     sortAscending: true,
@@ -120,7 +150,38 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
         }, this);
 
         return unique && newNameIsValid;
-    },
+    }
+});
+
+EurekaJ.AdminChartGroupController = Ember.ArrayController.extend({
+    content: [],
+    newChartGroupName: '',
+    adminMenuController: null,
+    selectedChartGroupController: null,
+
+    newChartGroupIsValid: function() {
+        var newNameIsValid = (this.get('newChartGroupName') && this.get('newChartGroupName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(chartGroup) {
+            if (chartGroup.get('chartGroupName') == this.get('newChartGroupName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    }
+});
+
+EurekaJ.SelectedChartGroupController = Ember.ObjectController.extend({
+    contentBinding: 'adminChartGroupController.selectedItem',
+    adminChartGroupController: null,
+    selectedChartGroupPathController: null
+});
+
+EurekaJ.SelectedChartGroupPathController = Ember.ArrayController.extend({
+    contentBinding: 'selectedChartGroupController.chartGroupPath',
+    selectedChartGroupController: null
 });
 
 EurekaJ.chartOptionsTabBarController = EurekaJ.TabBarController.create({

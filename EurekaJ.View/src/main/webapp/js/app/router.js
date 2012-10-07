@@ -49,6 +49,16 @@ EurekaJ.router = Ember.Router.create({
                 EurekaJ.log('connecting outlets for admin');
                 router.get('applicationController').connectOutlet('admin');
                 router.get('applicationController').connectOutlet('header', 'header');
+
+                router.get('adminAlertController').connectControllers('adminMenu');
+                router.get('adminChartGroupController').connectControllers('adminMenu');
+
+                EurekaJ.store.findAll(EurekaJ.AdminMenuModel);
+                var mainMenu = EurekaJ.store.filter(EurekaJ.AdminMenuModel, function(data) {
+                    if (data.get('parentPath') === null) { return true; }
+                });
+
+                router.get('adminMenuController').set('content', mainMenu);
             },
 
             index: Ember.Route.extend({
@@ -58,6 +68,10 @@ EurekaJ.router = Ember.Router.create({
 
             alerts: Ember.Route.extend({
                 route: '/alerts',
+
+                doCommitAlert: function() {
+                    EurekaJ.store.commit();
+                },
 
                 createNewAlert: function() {
                     EurekaJ.log('createNewAlert router action');
@@ -90,12 +104,44 @@ EurekaJ.router = Ember.Router.create({
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('chartGroups');
                 },
+
+                createNewChartGroup: function() {
+                    EurekaJ.log('createNewChartGroup router action');
+                    if (EurekaJ.router.get('adminChartGroupController').newChartGroupIsValid()) {
+                        EurekaJ.store.createRecord(EurekaJ.ChartGroupModel, {chartGroupName: EurekaJ.router.get('adminChartGroupController.newChartGroupName')});
+                        EurekaJ.router.get('adminChartGroupController').set('newChartGroupName', '');
+                    } else {
+                        EurekaJ.log('New Chart Group Not Valid!');
+                    }
+                },
+
+                doAddCheckedNodes: function() {
+                    var adminNodes = EurekaJ.store.findAll(EurekaJ.AdminMenuModel);
+                    var selectedNodes = adminNodes.filter(function(node) { return node.get('isSelected'); });
+
+                    var selectedChartGroup = EurekaJ.router.get('adminChartGroupController.selectedItem');
+                    if (selectedChartGroup) {
+                        console.log(selectedChartGroup.get('chartGroupPath'));
+                        selectedChartGroup.get('chartGroupPath').pushObjects(selectedNodes);
+                    } else {
+                        console.log('NO SELECTED CHART GROUP');
+                    }
+
+                    selectedNodes.forEach(function(node) {
+                        console.log(node.get('id'));
+                        node.set('isSelected', false);
+                    });
+                },
+
+
                 connectOutlets: function(router) {
                     EurekaJ.log('connecting outlets for chartGroups');
-                    router.get('adminController').connectOutlet({
-                        viewClass: EurekaJ.ChartGroupTabView,
-                        outletName: 'adminTabContent'
-                    });
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminChartGroup', EurekaJ.store.findAll(EurekaJ.ChartGroupModel));
+                    router.get('adminChartGroupController').connectControllers('selectedChartGroup');
+                    router.get('selectedChartGroupController').connectControllers('adminChartGroup');
+                    router.get('selectedChartGroupPathController').connectControllers('selectedChartGroup');
+                    router.get('selectedChartGroupController').connectControllers('selectedChartGroupPath');
+
                 }
             }),
 
@@ -124,7 +170,6 @@ EurekaJ.router = Ember.Router.create({
                         outletName: 'adminTabContent'
                     });
                 }
-
             })
         })
 

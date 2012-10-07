@@ -133,7 +133,7 @@ public class BuildJsonObjectsUtil {
         for (Alert alert : alertList) {
             String currPath = alert.getGuiPath();
             //Strip away last node (the alert chart) and add the alert name instead
-            if (currPath.contains(":")) {
+            if (currPath != null && currPath.contains(":")) {
                 currPath = currPath.substring(0, currPath.lastIndexOf(":"));
             }
             currPath += ":" + alert.getAlertName();
@@ -302,15 +302,13 @@ public class BuildJsonObjectsUtil {
     }
 
     public static String generateAlertsJson(List<Alert> alerts) throws JSONException {
-        JSONObject alertsObject = new JSONObject();
-
         JSONArray alertArray = new JSONArray();
         for (Alert alert : alerts) {
             JSONObject alertObject = new JSONObject();
             alertObject.put("alertName", alert.getAlertName());
             alertObject.put("alertWarningValue", alert.getWarningValue());
             alertObject.put("alertErrorValue", alert.getErrorValue());
-            alertObject.put("alertInstrumentationNode", alert.getGuiPath());
+            alertObject.put("alertSource", alert.getGuiPath());
             alertObject.put("alertDelay", alert.getAlertDelay());
             alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
             alertObject.put("alertActivated", alert.isActivated());
@@ -329,10 +327,8 @@ public class BuildJsonObjectsUtil {
 
             alertArray.put(alertObject);
         }
-
-        alertsObject.put("alerts", alertArray);
-
-        return alertsObject.toString();
+        
+        return alertArray.toString();
     }
     
     public static String generateAlertPluginsJson(List<String> loadedPlugins) throws JSONException {
@@ -373,24 +369,20 @@ public class BuildJsonObjectsUtil {
     }
 
     public static String generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
-        JSONObject igObject = new JSONObject();
-
         JSONArray igArray = new JSONArray();
         for (GroupedStatistics gs : groupedStatisticsList) {
             JSONObject ig = new JSONObject();
-            ig.put("instrumentaionGroupName", gs.getName());
+            ig.put("chartGroupName", gs.getName());
             JSONArray groupsArray = new JSONArray();
             for (String group : gs.getGroupedPathList()) {
                 groupsArray.put(group);
             }
-            ig.put("instrumentationGroupPath", groupsArray);
+            ig.put("chartGroupPath", groupsArray);
 
             igArray.put(ig);
         }
 
-        igObject.put("instrumentationGroups", igArray);
-
-        return igObject.toString();
+        return igArray.toString();
     }
 
     public static String generateEmailGroupsJson(List<EmailRecipientGroup> emailRecipientGroupList) throws JSONException {

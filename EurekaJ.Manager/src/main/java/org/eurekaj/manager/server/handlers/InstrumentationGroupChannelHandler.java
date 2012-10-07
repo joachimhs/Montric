@@ -46,21 +46,16 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            if (jsonObject.has("instrumentaionGroupName")) {
-                GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
+            if (isPut(e)) {
+            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
                 if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0 && groupedStatistics.getGroupedPathList().size() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
-            }
-
-            if (jsonObject.has("getInstrumentationGroups")) {
-                jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
+            } else if (isGet(e)) {
+            	jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);
-
-            }
-            
-            if (jsonObject.has("deleteChartGroup")) {
-                String groupName = jsonObject.getString("deleteChartGroup");
+            } else if (isDelete(e)) {
+            	String groupName = jsonObject.getString("deleteChartGroup");
                 getBerkeleyTreeMenuService().deleteChartGroup(groupName);
             }
 

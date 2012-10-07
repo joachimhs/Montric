@@ -40,7 +40,7 @@ EurekaJ.Adapter = DS.Adapter.create({
         	  type: 'GET',
         	  url: url,
         	  contentType: 'application/json',
-        	  success: function(data) { EurekaJ.log(data); EurekaJ.store.loadMany(type, data); }
+        	  success: function(data) { EurekaJ.store.loadMany(type, data); }
         	});
     },
     
@@ -49,9 +49,9 @@ EurekaJ.Adapter = DS.Adapter.create({
 
         var requestStringJson = {};
         requestStringJson.id = id;
-        
+
         EurekaJ.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
-        
+
         $.ajax({
       	  type: 'GET',
       	  url: url,
@@ -65,6 +65,26 @@ EurekaJ.Adapter = DS.Adapter.create({
         EurekaJ.log('FINDQUERY');
         EurekaJ.log(query);
         EurekaJ.log(modelArray);
+    },
+
+    updateRecord: function(store, type, model) {
+        var url = type.url;
+
+        EurekaJ.log('updating record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
+        EurekaJ.log('json: ' + JSON.stringify(model));
+
+        jQuery.ajax({
+            url: url,
+            data: JSON.stringify(model),
+            dataType: 'json',
+            type: 'PUT',
+
+            success: function(data) {
+                // data is a hash of key/value pairs representing the record
+                // in its current state on the server.
+                store.didUpdateRecord(model, data);
+            }
+        });
     }
 });
 

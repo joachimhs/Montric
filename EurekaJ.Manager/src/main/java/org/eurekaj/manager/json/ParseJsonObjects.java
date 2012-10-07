@@ -45,12 +45,15 @@ public class ParseJsonObjects {
     public static Alert parseAlertJson(JSONObject jsonAlert) {
         ManagerAlert parsedAlert = null;
 
+        /*
+         * {"alertWarningValue":15,"alertDelay":5,"alertType":null,"alertErrorValue":12,"alertActivated":true,"alertName":"Test"}
+         */
         if (jsonAlert.has("alertName")) {
             parsedAlert = new ManagerAlert();
             parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "alertName"));
             parsedAlert.setWarningValue(parseIntegerFromJson(jsonAlert, "alertWarningValue").doubleValue());
             parsedAlert.setErrorValue(parseIntegerFromJson(jsonAlert, "alertErrorValue").doubleValue());
-            parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertInstrumentationNode"));
+            parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertSource"));
             parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
             parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(jsonAlert, "alertType")));
