@@ -1,5 +1,4 @@
 EurekaJ.MainMenuModel = DS.Model.extend({
-    path: DS.attr('string'),
     name: DS.attr('string'),
     nodeType: DS.attr('string'),
     parentPath: DS.belongsTo('EurekaJ.MainMenuModel'),
@@ -10,6 +9,10 @@ EurekaJ.MainMenuModel = DS.Model.extend({
 
     hasChildren: function() {
         return this.get('children').get('length') > 0;
+    }.property('children').cacheable(),
+
+    isLeaf: function() {
+        return this.get('children').get('length') == 0;
     }.property('children').cacheable(),
 
     selectedObserver: function() {
@@ -26,7 +29,6 @@ EurekaJ.MainMenuModel.reopenClass({
 });
 
 EurekaJ.AdminMenuModel = DS.Model.extend({
-    path: DS.attr('string'),
     name: DS.attr('string'),
     nodeType: DS.attr('string'),
     parentPath: DS.belongsTo('EurekaJ.AdminMenuModel'),
@@ -35,9 +37,18 @@ EurekaJ.AdminMenuModel = DS.Model.extend({
     children: DS.hasMany('EurekaJ.AdminMenuModel'),
     chart: DS.belongsTo('EurekaJ.ChartModel'),
 
+
     hasChildren: function() {
         return this.get('children').get('length') > 0;
-    }.property('children').cacheable()
+    }.property('children').cacheable(),
+
+    selectedObserver: function() {
+        if (this.get('isSelected') === true) {
+            EurekaJ.router.get('adminMenuController').selectNode(this);
+        } else {
+            EurekaJ.router.get('adminMenuController').deselectNode(this);
+        }
+    }.observes('isSelected')
 });
 
 EurekaJ.AdminMenuModel.reopenClass({
@@ -67,8 +78,6 @@ EurekaJ.TabModel = Ember.Object.extend({
 });
 
 EurekaJ.AlertModel = DS.Model.extend({
-    primaryKey: 'alertName',
-    alertName: DS.attr('string'),
     alertActivated: DS.attr('boolean'),
     alertSource: DS.belongsTo('EurekaJ.AdminMenuModel'),
     //alertNotifications: SC.Record.toMany('EurekaJView.EmailGroupModel', {isMaster: YES}),
@@ -84,11 +93,57 @@ EurekaJ.AlertModel.reopenClass({
 });
 
 EurekaJ.ChartGroupModel = DS.Model.extend({
-    primaryKey: 'chartGroupName',
-    chartGroupName: DS.attr('string'),
-    chartGroupPath: DS.hasMany('EurekaJ.AdminMenuModel')
+    chartGroupPath: DS.attr('string'),
+    chartGroups: function() {
+        var groups = [];
+        var returnGroups = [];
+
+        if (this.get('chartGroupPath') && this.get('chartGroupPath').length >= 2) {
+            groups = jQuery.parseJSON(this.get('chartGroupPath'));
+        }
+
+        console.log(groups);
+        groups.forEach(function(group) {
+            returnGroups.pushObject(Ember.Object.create({id: group}))
+        });
+
+        return returnGroups;
+    }.property('chartGroupPath').cacheable()
 });
 
 EurekaJ.ChartGroupModel.reopenClass({
     url: 'chartGroup'
 });
+
+EurekaJ.EmailGroupModel = DS.Model.extend({
+    emailGroupName: DS.attr('string'),
+    smtpHost: DS.attr('string'),
+    smtpUsername: DS.attr('string'),
+    smtpPassword: DS.attr('string'),
+    smtpPort: DS.attr('number'),
+    smtpUseSSL: DS.attr('boolean'),
+    emailAddresses: DS.attr('string'),
+
+    emailRecipients: function(key, value) {
+        var addresses = [];
+        var returnAddresses = [];
+
+        if (this.get('emailAddresses').length >= 2) {
+            addresses = jQuery.parseJSON(this.get('emailAddresses'));
+        }
+
+        addresses.forEach(function(address) {
+            returnAddresses.pushObject(Ember.Object.create({id: address}));
+        });
+
+        return returnAddresses;
+    }.property('emailAddresses').cacheable()
+});
+
+EurekaJ.EmailGroupModel.reopenClass({
+    url: 'email'
+});
+
+/*EurekaJ.EmailRecipientModel = DS.Model.extend({
+    emailAddress: DS.attr('string')
+});*/

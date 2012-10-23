@@ -46,16 +46,19 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            if (isPut(e)) {
+            log.info("got chartGroup JSON" + jsonObject.toString());
+            
+            if (isPut(e) || isPost(e)) {
             	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
-                if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0 && groupedStatistics.getGroupedPathList().size() > 0) {
+                if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
+                jsonResponse = BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics).toString();
             } else if (isGet(e)) {
             	jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);
             } else if (isDelete(e)) {
-            	String groupName = jsonObject.getString("deleteChartGroup");
+            	String groupName = jsonObject.getString("id");
                 getBerkeleyTreeMenuService().deleteChartGroup(groupName);
             }
 
@@ -63,6 +66,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
+        log.info("Returning JSON from chartGroupHandler: '" + jsonResponse + "'");
         writeContentsToBuffer(ctx, jsonResponse);
 	}
 	

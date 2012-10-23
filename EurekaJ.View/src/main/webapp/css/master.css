@@ -251,6 +251,10 @@ div.treeView h1 {
     width: 100%;
 }
 
+.almostFillWidth {
+    width: 98%;
+}
+
 .smallMarginRight {
 	margin-right: 5px;
 }

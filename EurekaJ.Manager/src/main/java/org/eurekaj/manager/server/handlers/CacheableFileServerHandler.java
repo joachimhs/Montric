@@ -79,7 +79,7 @@ public class CacheableFileServerHandler extends FileServerHandler {
         	System.out.println("Getting value for key: " + path + " from cache. Expires in: " + (ce.getExpires() - System.currentTimeMillis()));
             cb = ce.getChannelBuffer();
         } else {
-        	System.out.println("Getting value for key: " + path + " from filesystem");
+        	System.out.println("Getting value for key: " + path + " from disk/database");
         	cb = super.getFileContent(path);
         	if (getCacheMaxAge() > 0) {
                 cache.put(path, new CachedChannelBuffer(cb, System.currentTimeMillis() + getCacheMaxAge() * 1000));

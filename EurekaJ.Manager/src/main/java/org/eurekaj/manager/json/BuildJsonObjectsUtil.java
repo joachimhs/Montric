@@ -305,7 +305,7 @@ public class BuildJsonObjectsUtil {
         JSONArray alertArray = new JSONArray();
         for (Alert alert : alerts) {
             JSONObject alertObject = new JSONObject();
-            alertObject.put("alertName", alert.getAlertName());
+            alertObject.put("id", alert.getAlertName());
             alertObject.put("alertWarningValue", alert.getWarningValue());
             alertObject.put("alertErrorValue", alert.getErrorValue());
             alertObject.put("alertSource", alert.getGuiPath());
@@ -371,27 +371,29 @@ public class BuildJsonObjectsUtil {
     public static String generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
         JSONArray igArray = new JSONArray();
         for (GroupedStatistics gs : groupedStatisticsList) {
-            JSONObject ig = new JSONObject();
-            ig.put("chartGroupName", gs.getName());
-            JSONArray groupsArray = new JSONArray();
-            for (String group : gs.getGroupedPathList()) {
-                groupsArray.put(group);
-            }
-            ig.put("chartGroupPath", groupsArray);
-
-            igArray.put(ig);
+            igArray.put(generateChartGroupJson(gs));
         }
 
         return igArray.toString();
     }
+    
+    public static JSONObject generateChartGroupJson(GroupedStatistics groupedStatistics) throws JSONException {
+    	JSONObject ig = new JSONObject();
+        ig.put("id", groupedStatistics.getName());
+        JSONArray groupsArray = new JSONArray();
+        for (String group : groupedStatistics.getGroupedPathList()) {
+            groupsArray.put(group);
+        }
+        ig.put("chartGroupPath", groupsArray.toString());
+        
+        return ig;
+    }
 
     public static String generateEmailGroupsJson(List<EmailRecipientGroup> emailRecipientGroupList) throws JSONException {
-        JSONObject emailObjectContainer = new JSONObject();
-
-        JSONArray emailArray = new JSONArray();
+    	JSONArray emailArray = new JSONArray();
         for (EmailRecipientGroup emailGroup : emailRecipientGroupList) {
             JSONObject emailObject = new JSONObject();
-            emailObject.put("emailGroupName", emailGroup.getEmailRecipientGroupName());
+            emailObject.put("id", emailGroup.getEmailRecipientGroupName());
             emailObject.put("smtpHost", emailGroup.getSmtpServerhost());
             emailObject.put("smtpUsername", emailGroup.getSmtpUsername());
 
@@ -406,14 +408,12 @@ public class BuildJsonObjectsUtil {
                 emailRecipientArray.put(emailAddress);
             }
 
-            emailObject.put("emailAddresses", emailRecipientArray);
+            emailObject.put("emailAddresses", emailRecipientArray.toString());
 
             emailArray.put(emailObject);
         }
 
-        emailObjectContainer.put("emailGroups", emailArray);
-
-        return emailObjectContainer.toString();
+        return emailArray.toString();
     }
 
     public static String buildUserData(String username, String userRole) throws JSONException {

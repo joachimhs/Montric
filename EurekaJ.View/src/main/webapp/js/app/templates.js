@@ -45,10 +45,7 @@ Ember.TEMPLATES['login-page'] = Ember.Handlebars.compile('' +
     '</div>'
 );
 
-Ember.TEMPLATES['chart'] = Ember.Handlebars.compile('' +
-    '<h1>{{name}}</h1>'
-    //'<svg> </svg>'
-);
+Ember.TEMPLATES['chart'] = Ember.Handlebars.compile('<h1>{{name}}</h1>');
 
 Ember.TEMPLATES['admin'] = Ember.Handlebars.compile('' +
     '{{view EurekaJ.TabView controllerBinding="EurekaJ.adminTabBarController"}}' +
@@ -82,11 +79,11 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewAlert}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView controllerBinding="controller" deleteAction="deleteSelectedAlert"}}' +
+        '{{view EurekaJ.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
-        '<h1>{{selectedItem.alertName}}</h1>' +
+        '<h1>{{selectedItem.id}}</h1>' +
         '<table class="table adminTable">' +
             '<tr>' +
                 '<td>Activated:</td>' +
@@ -129,11 +126,11 @@ Ember.TEMPLATES['chartGroupTabContent'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewChartGroup}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView controllerBinding="controller" deleteAction="deleteSelectedChartGroup"}}' +
+        '{{view EurekaJ.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
-        '<h1>{{selectedItem.chartGroupName}}</h1>' +
+        '<h1>{{selectedItem.id}}</h1>' +
         '<table class="table adminTable">' +
         '<tr>' +
             '<td style="width: 150px;">Select nodes:</td>' +
@@ -148,9 +145,56 @@ Ember.TEMPLATES['chartGroupTabContent'] = Ember.Handlebars.compile('' +
             '<td style="width: 150px;">Selected Nodes:</td>' +
             '<td>' +
                 '<div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
-                    '{{view EurekaJ.SelectableListView controllerBinding="controller.selectedChartGroupController.selectedChartGroupPathController" maxCharacters="120"}}' +
+                    '{{view EurekaJ.SelectableListView listItemsBinding="selectedItem.chartGroups" deleteAction="deleteSelectedChartPathGroup" maxCharacters="120" selectedItemBinding="controller.selectedChartGroupPath"}}' +
                 '</div>' +
             '</td>' +
+        '</tr>' +
+        '<tr class="footer">' +
+            '<td colspan="2"><button {{action doCommitChartGroup}} class="btn" style="width: 100%;">Save Chart Group</button></td>' +
+        '</tr>' +
+    '</div>{{/if}}'
+);
+
+Ember.TEMPLATES['emailRecipientsTabContent'] = Ember.Handlebars.compile('' +
+    '<div id="adminTabLeftMenu">' +
+        '{{view Ember.TextField valueBinding="newEmailGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '<button class="btn" {{action createNewEmailGroup}}>Add</button>' +
+        '{{view EurekaJ.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedEmailGroup" selectedItemBinding="controller.selectedItem"}}' +
+    '</div>' +
+
+    '{{#if selectedItem}}<div id="adminTabRightContent">' +
+        '<h1>{{selectedItem.id}}</h1>' +
+        '<table class="table adminTable">' +
+        '<tr>' +
+            '<td style="width: 150px;">SMTP Host:</td>' +
+            '<td colspan="3">{{view Ember.TextField valueBinding="selectedItem.smtpHost" classNames="almostFillWidth"}}</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td style="width: 150px;">SMTP Username</td>' +
+            '<td>{{view Ember.TextField valueBinding="selectedItem.smtpUsername" classNames="almostFillWidth"}}</td>' +
+            '<td style="width: 150px;">SMTP Password</td>' +
+            '<td>{{view Ember.TextField valueBinding="selectedItem.smtpPassword" classNames="almostFillWidth"}}</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td style="width: 150px;">SMTP Port</td>' +
+            '<td>{{view Ember.TextField valueBinding="selectedItem.smtpPort" classNames="almostFillWidth"}}</td>' +
+            '<td style="width: 150px;">SMTP Use SSL ?</td>' +
+            '<td>{{view Ember.Checkbox checkedBinding="selectedItem.smtpUseSSL"}}</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td>Email Recipients:</td>' +
+            '<td colspan="2">{{view Ember.TextField valueBinding="controller.newEmailRecipient" classNames="almostFillWidth"}}</td>' +
+            '<td><button class="btn" style="width: 100%;" {{action doAddEmailRecipient}}>Add</button></td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td colspan="4">' +
+            '<div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
+                '{{view EurekaJ.SelectableListView listItemsBinding="selectedItem.emailRecipients" deleteAction="deleteSelectedEmailRecipient" maxCharacters="120" selectedItemBinding="controller.selectedEmailRecipient"}}' +
+            '</div>' +
+            '</td>' +
+        '</tr>' +
+        '<tr class="footer">' +
+            '<td colspan="4"><button {{action doCommitEmailGroup}} class="btn" style="width: 100%;">Save Email Group</button></td>' +
         '</tr>' +
     '</div>{{/if}}'
 );
@@ -162,44 +206,6 @@ Ember.TEMPLATES['main-menu'] = Ember.Handlebars.compile('' +
         '{{/each}}' +*/
     '{{view EurekaJ.TreeView contentBinding="controller.content"}}'
 );
-
-/** Tree Menu Templates **/
-Ember.TEMPLATES['tree-node'] = Ember.Handlebars.compile('' +
-        '{{view EurekaJ.NodeContentView contentBinding="node"}}' +
-
-        '{{#if this.isExpanded}}' +
-            '<div style="width: 500px;">' +
-            '{{#each this.children}}' +
-                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView contentBinding="this"}}</div>' +
-            '{{/each}}' +
-            '</div>' +
-        '{{/if}}'
-);
-
-Ember.TEMPLATES['tree-node-text'] = Ember.Handlebars.compile('' +
-    '{{name}}'
-);
-
-Ember.TEMPLATES['tree-node-content'] = Ember.Handlebars.compile('' +
-    '{{#unless hasChildren}}' +
-        '<span style="margin-right: 7px;">&nbsp;</span>' +
-        '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
-    '{{/unless}}' +
-
-    '{{view EurekaJ.NodeArrowView contentBinding="this"}}' +
-    '{{view EurekaJ.NodeTextView contentBinding="this" classNames="treeMenuText"}}'
-);
-
-Ember.TEMPLATES['tree-node-arrow'] = Ember.Handlebars.compile('' +
-    '{{#if hasChildren}}' +
-        '{{#if isExpanded}}' +
-            '<span class="downarrow"></span>' +
-        '{{else}}' +
-            '<span class="rightarrow"></span>' +
-        '{{/if}}' +
-    '{{/if}}'
-);
-/** //Tree Menu Templates **/
 
 /** Browser Templates **/
 Ember.TEMPLATES['browser-template'] = Ember.Handlebars.compile('' +

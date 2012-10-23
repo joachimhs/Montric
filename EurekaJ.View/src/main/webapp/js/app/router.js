@@ -52,6 +52,7 @@ EurekaJ.router = Ember.Router.create({
 
                 router.get('adminAlertController').connectControllers('adminMenu');
                 router.get('adminChartGroupController').connectControllers('adminMenu');
+                router.get('adminEmailGroupController').connectControllers('adminMenu');
 
                 EurekaJ.store.findAll(EurekaJ.AdminMenuModel);
                 var mainMenu = EurekaJ.store.filter(EurekaJ.AdminMenuModel, function(data) {
@@ -74,13 +75,7 @@ EurekaJ.router = Ember.Router.create({
                 },
 
                 createNewAlert: function() {
-                    EurekaJ.log('createNewAlert router action');
-                    if (EurekaJ.router.get('adminAlertController').newAlertIsValid()) {
-                        EurekaJ.store.createRecord(EurekaJ.AlertModel, {alertName: EurekaJ.router.get('adminAlertController.newAlertName')});
-                        EurekaJ.router.get('adminAlertController').set('newAlertName', '');
-                    } else {
-                        EurekaJ.log('New Alert Name Not Valid!');
-                    }
+                    EurekaJ.router.get('adminAlertController').createNewAlert();
                 },
 
                 deleteSelectedAlert: function() {
@@ -88,6 +83,7 @@ EurekaJ.router = Ember.Router.create({
                     if (selectedItem) {
                         selectedItem.deleteRecord();
                     }
+                    EurekaJ.store.commit();
                 },
 
                 enter: function() {
@@ -106,56 +102,66 @@ EurekaJ.router = Ember.Router.create({
                 },
 
                 createNewChartGroup: function() {
-                    EurekaJ.log('createNewChartGroup router action');
-                    if (EurekaJ.router.get('adminChartGroupController').newChartGroupIsValid()) {
-                        EurekaJ.store.createRecord(EurekaJ.ChartGroupModel, {chartGroupName: EurekaJ.router.get('adminChartGroupController.newChartGroupName')});
-                        EurekaJ.router.get('adminChartGroupController').set('newChartGroupName', '');
-                    } else {
-                        EurekaJ.log('New Chart Group Not Valid!');
-                    }
+                    EurekaJ.router.get('adminChartGroupController').createNewChartGroup();
+                },
+
+                doCommitChartGroup: function() {
+                    EurekaJ.store.commit();
                 },
 
                 doAddCheckedNodes: function() {
-                    var adminNodes = EurekaJ.store.findAll(EurekaJ.AdminMenuModel);
-                    var selectedNodes = adminNodes.filter(function(node) { return node.get('isSelected'); });
-
-                    var selectedChartGroup = EurekaJ.router.get('adminChartGroupController.selectedItem');
-                    if (selectedChartGroup) {
-                        console.log(selectedChartGroup.get('chartGroupPath'));
-                        selectedChartGroup.get('chartGroupPath').pushObjects(selectedNodes);
-                    } else {
-                        console.log('NO SELECTED CHART GROUP');
-                    }
-
-                    selectedNodes.forEach(function(node) {
-                        console.log(node.get('id'));
-                        node.set('isSelected', false);
-                    });
+                    EurekaJ.router.get('adminChartGroupController').doAddCheckedNodes();
                 },
 
+                deleteSelectedChartGroup: function() {
+                    var selectedItem = EurekaJ.router.get('adminChartGroupController.selectedItem');
+                    if (selectedItem) {
+                        selectedItem.deleteRecord();
+                    }
+                    EurekaJ.store.commit();
+                },
+
+                deleteSelectedChartPathGroup: function() {
+                    EurekaJ.router.get('adminChartGroupController').deleteSelectedChartPathGroup();
+                },
 
                 connectOutlets: function(router) {
                     EurekaJ.log('connecting outlets for chartGroups');
                     router.get('adminController').connectOutlet('adminTabContent', 'adminChartGroup', EurekaJ.store.findAll(EurekaJ.ChartGroupModel));
-                    router.get('adminChartGroupController').connectControllers('selectedChartGroup');
                     router.get('selectedChartGroupController').connectControllers('adminChartGroup');
-                    router.get('selectedChartGroupPathController').connectControllers('selectedChartGroup');
-                    router.get('selectedChartGroupController').connectControllers('selectedChartGroupPath');
-
                 }
             }),
 
             emailRecipients: Ember.Route.extend({
                 route: '/emailRecipients',
+
+                createNewEmailGroup: function() {
+                    EurekaJ.router.get('adminEmailGroupController').createNewEmailGroup();
+                },
+
+                deleteSelectedEmailGroup: function() {
+                    EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailGroup();
+                },
+
+                deleteSelectedEmailRecipient: function() {
+                    EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailRecipient();
+                },
+
+                doCommitEmailGroup: function() {
+                    EurekaJ.store.commit();
+                },
+
+                doAddEmailRecipient: function() {
+                    EurekaJ.router.get('adminEmailGroupController').doAddEmailRecipient();
+                },
+
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('emailRecipients');
                 },
+
                 connectOutlets: function(router) {
                     EurekaJ.log('connecting outlets for emailRecipients');
-                    router.get('adminController').connectOutlet({
-                        viewClass: EurekaJ.EmailRecipientsTabView,
-                        outletName: 'adminTabContent'
-                    });
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminEmailGroup', EurekaJ.store.findAll(EurekaJ.EmailGroupModel));
                 }
             }),
 

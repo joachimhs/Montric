@@ -44,9 +44,9 @@ EurekaJ.AdminChartGroupView = Ember.View.extend({
     templateName: 'chartGroupTabContent'
 });
 
-EurekaJ.EmailRecipientsTabView = Ember.View.extend({
+EurekaJ.AdminEmailGroupView = Ember.View.extend({
     elementId: 'emailRecipientsTabView',
-    template: Ember.Handlebars.compile('EmailRecipientsTabView')
+    templateName: 'emailRecipientsTabContent'
 });
 
 EurekaJ.MenuAdminTabView = Ember.View.extend({

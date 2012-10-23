@@ -55,6 +55,30 @@ EurekaJ.MenuController = Ember.ArrayController.extend({
 
 EurekaJ.AdminMenuController = Ember.ArrayController.extend({
     content: [],
+    selectedNodes: [],
+
+    selectNode: function(node) {
+        if (this.get('selectedNodes').indexOf(node) === -1) {
+            this.get('selectedNodes').pushObject(node);
+        }
+    },
+
+    deselectNode: function(node) {
+        var index = this.get('selectedNodes').indexOf(node);
+        if (index >= 0) {
+            this.get('selectedNodes').removeObject(node);
+        }
+    },
+
+    deselectAllNodes: function() {
+        //Implemented as a WHILE loop, as nopt all nodes become unchecked
+        //during first pass, for unknown reasons
+        while (this.get('selectedNodes').get('length') > 0) {
+            this.get('selectedNodes').forEach(function(node) {
+                node.set('isSelected', false);
+            });
+        }
+    },
 
     revealNodeAndCloseOthers: function(id) {
         console.log('start');
@@ -144,12 +168,21 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
 
         var unique = true;
         this.get('content').forEach(function(alert) {
-            if (alert.get('alertName') == this.get('newAlertName')) {
+            if (alert.get('alertName') === this.get('newAlertName')) {
                 unique = false;
             }
         }, this);
 
         return unique && newNameIsValid;
+    },
+
+    createNewAlert: function() {
+        if (this.newAlertIsValid()) {
+            EurekaJ.store.createRecord(EurekaJ.AlertModel, {id: this.get('newAlertName')});
+            this.set('newAlertName', '');
+        } else {
+            EurekaJ.log('New Alert Name Not Valid!');
+        }
     }
 });
 
@@ -157,31 +190,148 @@ EurekaJ.AdminChartGroupController = Ember.ArrayController.extend({
     content: [],
     newChartGroupName: '',
     adminMenuController: null,
-    selectedChartGroupController: null,
 
     newChartGroupIsValid: function() {
         var newNameIsValid = (this.get('newChartGroupName') && this.get('newChartGroupName').length >= 1);
 
         var unique = true;
         this.get('content').forEach(function(chartGroup) {
-            if (chartGroup.get('chartGroupName') == this.get('newChartGroupName')) {
+            if (chartGroup.get('id') === this.get('newChartGroupName')) {
                 unique = false;
             }
         }, this);
 
         return unique && newNameIsValid;
+    },
+
+    createNewChartGroup: function() {
+        if (this.newChartGroupIsValid()) {
+            EurekaJ.store.createRecord(EurekaJ.ChartGroupModel, {"id": this.get('newChartGroupName')});
+            EurekaJ.store.commit();
+            this.set('newChartGroupName', '');
+        } else {
+            EurekaJ.log('New Chart Group Not Valid!');
+        }
+    },
+
+    doAddCheckedNodes: function() {
+        console.log('doAddCheckedNodes');
+        var selectedChartGroup = this.get('selectedItem');
+        var chartGroups = [];
+
+        var selectedNodes = this.get('adminMenuController.selectedNodes');
+        if (selectedChartGroup) {
+            chartGroups.pushObjects(selectedChartGroup.get('chartGroups'));
+
+            selectedNodes.forEach(function(node) {
+                var addGroup = true;
+                chartGroups.forEach(function(existingGroup) {
+                    if (existingGroup.get('id') === node.get('id')) addGroup = false;
+                });
+                if (addGroup)
+                    chartGroups.pushObject(Ember.Object.create({id: node.get('id')} ));
+            });
+
+            selectedChartGroup.set('chartGroupPath', '["' + chartGroups.getEach('id').join('","') + '"]');
+        } else {
+            console.log('NO SELECTED CHART GROUP');
+        }
+
+        this.get('adminMenuController').deselectAllNodes();
+
+        selectedNodes.setEach('isSelected', true);
+    },
+
+    deleteSelectedChartPathGroup: function() {
+        console.log('deleteSelectedChartPathGroup');
+        var selectedChartGroup = this.get('selectedItem');
+
+        var selectedChartGroupPath = this.get('selectedChartGroupPath');
+        if (selectedChartGroupPath) {
+            console.log('selectedChartGroupPath: ' + selectedChartGroupPath);
+            selectedChartGroup.get('chartGroups').removeObject(selectedChartGroupPath);
+            selectedChartGroup.set('chartGroupPath', '["' + selectedChartGroup.get('chartGroups').getEach('id').join('","') + '"]');
+        }
+    }
+});
+
+EurekaJ.AdminEmailGroupController = Ember.ArrayController.extend({
+    content: [],
+    newEmailGroupName: '',
+    newEmailRecipient: '',
+    adminMenuController: null,
+
+    newEmailGroupIsValid: function() {
+        var newNameIsValid = (this.get('newEmailGroupName') && this.get('newEmailGroupName').length >= 1);
+
+        var unique = true;
+        this.get('content').forEach(function(chartGroup) {
+            if (chartGroup.get('id') === this.get('newEmailGroupName')) {
+                unique = false;
+            }
+        }, this);
+
+        return unique && newNameIsValid;
+    },
+
+    createNewEmailGroup: function() {
+        if (this.newEmailGroupIsValid()) {
+            EurekaJ.store.createRecord(EurekaJ.EmailGroupModel, {"id": this.get('newEmailGroupName')});
+            //EurekaJ.store.commit();
+            this.set('newEmailGroupName', '');
+        } else {
+            EurekaJ.log('New Email Group Not Valid!');
+        }
+    },
+
+    deleteSelectedEmailGroup: function() {
+        var selectedEmailGroup = this.get('selectedItem');
+        if (selectedEmailGroup) {
+            selectedEmailGroup.deleteRecord();
+        }
+        EurekaJ.store.commit();
+    },
+
+    doAddEmailRecipient: function() {
+        console.log('doAddEmailRecipient');
+        var emailRecipient = this.get('newEmailRecipient');
+        var selectedEmailGroup = this.get('selectedItem');
+
+        var oldEmailAddresses = selectedEmailGroup.get('emailRecipients');
+        oldEmailAddresses.pushObject(Ember.Object.create({id: emailRecipient}));
+
+        var newAddresses = [];
+
+        oldEmailAddresses.forEach(function(address) {
+            newAddresses.pushObject(address.get('id'));
+        });
+
+        selectedEmailGroup.set('emailAddresses', '["' + newAddresses.join('","') + '"]');
+
+        console.log(newAddresses);
+
+        this.set('newEmailRecipient', '');
+    },
+
+    deleteSelectedEmailRecipient: function() {
+        var newAddresses = [];
+
+        var selectedEmailRecipient = this.get('selectedEmailRecipient');
+        if (selectedEmailRecipient) {
+            this.get('selectedItem.emailRecipients').forEach(function(emailRecipient) {
+                if (emailRecipient.get('id') !== selectedEmailRecipient.get('id')) {
+                    newAddresses.pushObject(emailRecipient.get('id'));
+                }
+            });
+        }
+
+        this.get('selectedItem').set('emailAddresses', '["' + newAddresses.join('","') + '"]');
     }
 });
 
 EurekaJ.SelectedChartGroupController = Ember.ObjectController.extend({
     contentBinding: 'adminChartGroupController.selectedItem',
-    adminChartGroupController: null,
-    selectedChartGroupPathController: null
-});
-
-EurekaJ.SelectedChartGroupPathController = Ember.ArrayController.extend({
-    contentBinding: 'selectedChartGroupController.chartGroupPath',
-    selectedChartGroupController: null
+    adminChartGroupController: null
 });
 
 EurekaJ.chartOptionsTabBarController = EurekaJ.TabBarController.create({

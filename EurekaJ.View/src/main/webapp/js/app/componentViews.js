@@ -12,18 +12,34 @@ EurekaJ.TreeView = Ember.View.extend({
 });
 
 EurekaJ.NodeView = Ember.View.extend({
-    templateName: 'tree-node',
+    template: Ember.Handlebars.compile('' +
+        '{{view EurekaJ.NodeContentView contentBinding="node"}}' +
+
+        '{{#if this.isExpanded}}' +
+            '<div style="width: 500px;">' +
+            '{{#each this.children}}' +
+                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView contentBinding="this"}}</div>' +
+            '{{/each}}' +
+            '</div>' +
+        '{{/if}}'),
     tagName: 'div'
 });
 
 EurekaJ.NodeContentView = Ember.View.extend({
-    templateName: 'tree-node-content',
+    template: Ember.Handlebars.compile('' +
+        '{{#unless hasChildren}} ' +
+            '<span style="margin-right: 7px;">&nbsp;</span>' +
+            '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
+        '{{/unless}}' +
+
+        '{{view EurekaJ.NodeArrowView contentBinding="this"}}' +
+        '{{view EurekaJ.NodeTextView contentBinding="this" classNames="treeMenuText"}}'),
     tagName: 'span',
     classNames: ['pointer']
 });
 
 EurekaJ.NodeTextView = Ember.View.extend({
-    templateName: 'tree-node-text',
+    template: Ember.Handlebars.compile('{{name}}'),
     tagName: 'span',
 
     click: function(evt) {
@@ -36,7 +52,15 @@ EurekaJ.NodeTextView = Ember.View.extend({
 });
 
 EurekaJ.NodeArrowView = Ember.View.extend({
-    templateName: 'tree-node-arrow',
+    template: Ember.Handlebars.compile('' +
+        '{{#if hasChildren}}' +
+            '{{#if isExpanded}}' +
+                '<span class="downarrow"></span>' +
+            '{{else}}' +
+                '<span class="rightarrow"></span>' +
+            '{{/if}}' +
+        '{{/if}}'),
+
     tagName: 'span',
 
     click: function(evt) {
@@ -83,17 +107,19 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
 /** SelectableListView **/
 EurekaJ.SelectableListView = Ember.View.extend({
     tagName: 'ul',
-    controller: null,
     classNames: ['selectableList'],
     maxCharacters: 28,
+    selectedItem: null,
+    listItems: null,
 
-    template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableListItem itemBinding="this" deleteActionBinding="view.deleteAction" maxCharactersBinding="maxCharacters"}}{{/each}}')
+    template: Ember.Handlebars.compile('{{#each view.listItems}}{{view EurekaJ.SelectableListItemView itemBinding="this" deleteActionBinding="view.deleteAction" maxCharactersBinding="maxCharacters" selectedItemBinding="view.selectedItem"}}{{/each}}')
 });
 
-EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
+EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'li',
     classNameBindings: 'isSelected',
     deleteAction: null,
+    selectedItem: null,
 
     liShortLabel: function() {
         var numCharacters = this.get('maxCharacters') - 12;
@@ -110,11 +136,11 @@ EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
     }.property('item.id'),
 
     isSelected: function() {
-        return this.get('controller.selectedItem.id') == this.get('item').get('id');
-    }.property('controller.selectedItem').cacheable(),
+        return this.get('selectedItem.id') === this.get('item').get('id');
+    }.property('selectedItem').cacheable(),
 
     click: function() {
-        this.get('controller').set('selectedItem', this.get('item'));
+        this.set('selectedItem', this.get('item'));
     },
 
     template: Ember.Handlebars.compile('' +
@@ -131,27 +157,29 @@ EurekaJ.SelectableListItem = Ember.View.extend(Ember.TargetActionSupport, {
 
 /** SelectableLeafTree **/
 EurekaJ.SelectableLeafTreeView = Ember.View.extend({
-    tagName: 'ul',
+    tagName: 'div',
     controller: null,
     classNames: ['selectableList'],
+    selectedItem: null,
 
     template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}{{/each}}')
 });
 
 EurekaJ.SelectableLeafItemView = Ember.View.extend({
-    tagName: 'li',
+    tagName: 'div',
     classNameBindings: 'isSelected',
     classNames: ['treeItemMarginLeft'],
+    selectedItem: null,
 
     isSelected: function() {
-        return this.get('selectedItem.id') == this.get('item').get('id');
+        return this.get('selectedItem.id') == this.get('item.id');
     }.property('selectedItem').cacheable(),
 
     template: Ember.Handlebars.compile('' +
         '{{view EurekaJ.SelectableLeafItemContentView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
-        '{{#if this.isExpanded}}' +
-            '{{#each this.children}}' +
-              '{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedNodeBinding="selectedNode" selectedItemBinding="view.selectedItem"}}' +
+        '{{#if isExpanded}}' +
+            '{{#each children}}' +
+              '{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
             '{{/each}}' +
         '{{/if}}'
     )
@@ -160,8 +188,18 @@ EurekaJ.SelectableLeafItemView = Ember.View.extend({
 EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
     tagName: 'div',
     classNames: ['fullWidth'],
+    selectedItem: null,
 
-    template: Ember.Handlebars.compile('{{view Ember.View templateName="tree-node-arrow"}}{{name}}'),
+    template: Ember.Handlebars.compile('' +
+        '{{#if hasChildren}}' +
+            '{{#if isExpanded}}' +
+                '<span class="downarrow"></span>' +
+            '{{else}}' +
+                '<span class="rightarrow"></span>' +
+            '{{/if}}' +
+        '{{/if}}' +
+        '{{name}}'
+    ),
 
     click: function() {
         if (this.get('item.children.length') && this.get('item.children.length') > 0) {
@@ -169,6 +207,8 @@ EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
             this.get('item').set('isExpanded', !this.get('item.isExpanded'));
         } else {
             //leaf node
+            console.log(this.get('selectedItem'));
+            console.log(this.get('item'));
             this.set('selectedItem', this.get('item'));
         }
     }
@@ -202,10 +242,15 @@ EurekaJ.ChartView = Ember.View.extend({
         var elementId = this.get('elementId');
         var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
         var chart = this.get('nvd3Chart');
-        d3.select('#' + elementId + ' svg')
-            .datum(data)
-            .transition().duration(500)
-            .call(chart);
+
+        console.log('data');
+        console.log(data);
+
+        if (chart) {
+            d3.select('#' + elementId + ' svg')
+                .datum(data)
+                .call(chart);
+        }
     }.observes('content.chart.chartValue'),
 
     numChartsObserver: function() {
@@ -213,19 +258,24 @@ EurekaJ.ChartView = Ember.View.extend({
     }.observes('EurekaJ.router.mainController.content.length'),
 
     didInsertElement : function() {
+        console.log('ChartView didInsertElement');
         if (this.get('content').get('chart') != null) {
-
+            console.log(this.get('content.chart.chartValue'));
             var thisView = this;
             var numCharts = EurekaJ.router.get('mainController').get('content').get('length');
-            var height = (this.$().height() / numCharts) - (numCharts * 8) - 18;
+            var height = (this.$().height() / numCharts) - (numCharts * 6);
             var width = this.$().width();
 
             var elementId = this.get('elementId');
             var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
 
+            console.log('data');
+            console.log(data);
+
             var view = this;
 
             nv.addGraph(function() {
+                console.log('nv.addGraph');
                 var chart = nv.models.lineChart()
                     .x(function(d) { return d[0] })
                     .y(function(d) { return d[1] })// //adjusting, 100% is 1.00, not 100 as it is in the data
@@ -266,6 +316,7 @@ EurekaJ.ChartView = Ember.View.extend({
 
                 d3.select('#' + elementId).append('svg')
                     .datum(data)
+                    .transition().duration(500)
                     .call(chart);
 
                 thisView.set('nvd3Chart', chart);

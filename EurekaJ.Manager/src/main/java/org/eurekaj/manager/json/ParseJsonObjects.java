@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.json;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.GroupedStatistics;
@@ -41,16 +42,17 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class ParseJsonObjects {
-
+	private static Logger log = Logger.getLogger(ParseJsonObjects.class.getName());
+	
     public static Alert parseAlertJson(JSONObject jsonAlert) {
         ManagerAlert parsedAlert = null;
 
         /*
          * {"alertWarningValue":15,"alertDelay":5,"alertType":null,"alertErrorValue":12,"alertActivated":true,"alertName":"Test"}
          */
-        if (jsonAlert.has("alertName")) {
+        if (jsonAlert.has("id")) {
             parsedAlert = new ManagerAlert();
-            parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "alertName"));
+            parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "id"));
             parsedAlert.setWarningValue(parseIntegerFromJson(jsonAlert, "alertWarningValue").doubleValue());
             parsedAlert.setErrorValue(parseIntegerFromJson(jsonAlert, "alertErrorValue").doubleValue());
             parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertSource"));
@@ -66,10 +68,10 @@ public class ParseJsonObjects {
     public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup) {
         ManagerGroupedStatistics groupedStatistics = null;
 
-        if (jsonGroup.has("instrumentaionGroupName") && jsonGroup.has("instrumentationGroupPath")) {
+        if (jsonGroup.has("id")) {
             groupedStatistics = new ManagerGroupedStatistics();
-            groupedStatistics.setName(parseStringFromJson(jsonGroup, "instrumentaionGroupName"));
-            groupedStatistics.setGroupedPathList(getStringArrayFromJson(jsonGroup, "instrumentationGroupPath"));
+            groupedStatistics.setName(parseStringFromJson(jsonGroup, "id"));
+            groupedStatistics.setGroupedPathList(getStringArrayFromJson(jsonGroup, "chartGroupPath"));
         }
 
         return groupedStatistics;
@@ -93,7 +95,7 @@ public class ParseJsonObjects {
     public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup) {
         ManagerEmailRecipientGroup emailRecipientGroup = new ManagerEmailRecipientGroup();
 
-        emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(jsonEmailGroup, "emailGroupName"));
+        emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(jsonEmailGroup, "id"));
         emailRecipientGroup.setPort(parseIntegerFromJson(jsonEmailGroup, "smtpPort"));
         emailRecipientGroup.setUseSSL(parseBooleanFromJson(jsonEmailGroup, "smtpUseSSL"));
         emailRecipientGroup.setSmtpServerhost(parseStringFromJson(jsonEmailGroup, "smtpHost"));
@@ -117,14 +119,31 @@ public class ParseJsonObjects {
     }
 
     public static List<String> getStringArrayFromJson(JSONObject json, String key) {
-        List<String> groupList = new ArrayList<String>();
+    	List<String> groupList = new ArrayList<String>();
+    	JSONArray groupJsonArray = null;
         try {
-            JSONArray groupJsonArray = json.getJSONArray(key);
+        	log.info("Parsing JSON Array into String Array");
+            groupJsonArray = json.getJSONArray(key);
             for (int index = 0; index < groupJsonArray.length(); index++) {
                 groupList.add(groupJsonArray.getString(index));
             }
         } catch (JSONException e) {
-            //Nothing really
+            log.info("json array exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        if (groupJsonArray == null) {
+        	log.info("Object not JSON Array. Creating new Array");
+        	try {
+        		groupJsonArray = new JSONArray(json.getString(key));
+        		log.info("Array Created: " + groupJsonArray.toString());
+        		for (int index = 0; index < groupJsonArray.length(); index++) {
+                    groupList.add(groupJsonArray.getString(index));
+                }
+            } catch (JSONException e) {
+                log.info("json array exception: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
 
         return groupList;

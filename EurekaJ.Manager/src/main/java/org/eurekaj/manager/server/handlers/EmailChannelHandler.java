@@ -46,27 +46,21 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            if (jsonObject.has("emailGroupName")) {
-                EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
+            if (isPut(e) || isPost(e)) {
+            	EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
                 if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
                     getAdministrationService().persistEmailRecipientGroup(emailRecipientGroup);
                 }
-            }
-
-
-            if (jsonObject.has("getEmailGroups")) {
-                jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
+            } else if (isGet(e)) {
+            	jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
                 log.debug("Got Email Groups:\n" + jsonResponse);
-
-            }
-
-            if ((jsonObject.has("getEmailRecipient"))) {
-                jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
+            } else if (isDelete(e)) {
+            	String groupName = jsonObject.getString("id");
+                getAdministrationService().deleteEmailRecipientGroup(groupName);
             }
             
-            if ((jsonObject.has("deleteEmailGroup"))) {
-                String groupName = jsonObject.getString("deleteEmailGroup");
-                getAdministrationService().deleteEmailRecipientGroup(groupName);
+            if ((jsonObject.has("getEmailRecipient"))) {
+                jsonResponse = BuildJsonObjectsUtil.generateEmailRecipientJson(jsonObject.getString("getEmailRecipient"));
             }
             
         } catch (JSONException jsonException) {

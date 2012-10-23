@@ -47,6 +47,12 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 		return method == HttpMethod.PUT;
     }
     
+    public boolean isPost(MessageEvent e) {
+    	HttpRequest request = (HttpRequest) e.getMessage();
+		HttpMethod method = request.getMethod();
+		return method == HttpMethod.POST;
+    }
+    
     public boolean isGet(MessageEvent e) {
     	HttpRequest request = (HttpRequest) e.getMessage();
 		HttpMethod method = request.getMethod();

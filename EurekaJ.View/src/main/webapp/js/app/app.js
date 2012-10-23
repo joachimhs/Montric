@@ -28,9 +28,21 @@ DS.Model.reopen({
             adapter.find(store, this.constructor, this.get('id'));
         }
     }
-})
+});
+
+EurekaJ.Serializer = DS.Serializer.extend({
+    addBelongsTo: function(hash, record, key, relationship) {
+        hash[key] = record.get(key + ".id");
+    },
+
+    addHasMany: function(hash, record, key, relationship) {
+        hash[key] = record.get(key).getEach('id');
+    }
+}),
 
 EurekaJ.Adapter = DS.Adapter.create({
+    serializer: EurekaJ.Serializer.create(),
+
     findAll: function(store, type) {
         var url = type.url;
 
@@ -55,7 +67,7 @@ EurekaJ.Adapter = DS.Adapter.create({
         $.ajax({
       	  type: 'GET',
       	  url: url,
-      	  data: JSON.stringify(requestStringJson, null, '\t'),
+      	  data: JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'),
       	  contentType: 'application/json',
       	  success: function(data) { EurekaJ.store.load(type, data); }
       	});
@@ -71,22 +83,63 @@ EurekaJ.Adapter = DS.Adapter.create({
         var url = type.url;
 
         EurekaJ.log('updating record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
-        EurekaJ.log('json: ' + JSON.stringify(model));
+        EurekaJ.log('json: ' + JSON.stringify(model.toJSON({ includeId: true })));
 
         jQuery.ajax({
             url: url,
-            data: JSON.stringify(model),
+            data: JSON.stringify(model.toJSON({ includeId: true })),
             dataType: 'json',
             type: 'PUT',
 
             success: function(data) {
                 // data is a hash of key/value pairs representing the record
                 // in its current state on the server.
-                store.didUpdateRecord(model, data);
+                store.didSaveRecord(model, data);
+            }
+        });
+    },
+
+    createRecord: function(store, type, model) {
+        var url = type.url;
+
+        EurekaJ.log('updating record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
+        EurekaJ.log('json: ' + JSON.stringify(model.toJSON({ includeId: true })));
+
+        jQuery.ajax({
+            url: url,
+            data: JSON.stringify(model.toJSON({ includeId: true })),
+            dataType: 'json',
+            type: 'POST',
+
+            success: function(data) {
+                // data is a hash of key/value pairs representing the record.
+                // In general, this hash will contain a new id, which the
+                // store will now use to index the record. Future calls to
+                // store.find(type, id) will find this record.
+                store.didCreateRecord(model, data);
+            }
+        });
+    },
+
+    deleteRecord: function(store, type, model) {
+        var url = type.url;
+
+        jQuery.ajax({
+            url: url,
+            dataType: 'json',
+            data: JSON.stringify(model.toJSON({ includeId: true })),
+            type: 'DELETE',
+
+            success: function() {
+                store.didDeleteRecord(model);
             }
         });
     }
 });
+
+//EurekaJ.Adapter.map('EurekaJ.AlertModel', { primaryKey: 'alertName' });
+//EurekaJ.Adapter.map('EurekaJ.ChartGroupModel', {primaryKey: 'chartGroupName'});
+
 
 EurekaJ.ajaxSuccess = function(data) {
 	EurekaJ.Store.loadMany(type, data);
@@ -95,5 +148,5 @@ EurekaJ.ajaxSuccess = function(data) {
 EurekaJ.store = DS.Store.create({
     adapter: EurekaJ.Adapter,
     //adapter:  DS.RESTAdapter.create({ bulkCommit: false }),
-    revision: 4
+    revision: 6
 });
