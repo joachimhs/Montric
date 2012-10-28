@@ -286,7 +286,7 @@ div.treeView h1 {
 }
 
 .fullWidth {
-    width: 100%;
+    width: 95%;
 }
 
 .azureBlueBackground {
@@ -395,32 +395,33 @@ ul.tabrow li.is-selected:after {
     box-shadow: -2px 2px 0 #FFF;
 }
 
-ul.selectableList {
+div.selectableList {
     margin-left: 0px;
     margin-right: 10px;
 }
 
-ul.selectableList li {
+div.selectableList div {
     list-style: none;
     cursor: pointer;
-    line-height: 25px;
+    line-height: 20px;
     overflow: hidden;
     white-space: nowrap;
 }
 
-ul.selectableList li button {
+div.selectableList div button {
     margin-top: 2px;
     margin-right: 2px;
 }
 
-ul.selectableList li.is-selected {
+div.selectableList div.is-selected {
     background: #03005e;
     color: #fff;
     padding: 2px;
     padding-left: 5px;
+    white-space: nowrap;
 }
 
-ul.selectableList li.is-selected:before {
+div.selectableList div.is-selected:before {
     content: '';
     float: left;
     width: 0;

@@ -20,6 +20,21 @@ EurekaJ.router = Ember.Router.create({
         home: Ember.Route.extend({
             route: '/home',
 
+            applyChartOptionsChanges: function(router) {
+                if(!EurekaJ.appValuesController.get('showLiveCharts')) {
+                    EurekaJ.appValuesController.updateChartDates();
+                }
+                router.get('mainController').reloadCharts();
+            },
+
+            historicalChartsSelected: function(router) {
+                EurekaJ.appValuesController.set('showLiveCharts', false);
+            },
+
+            liveChartsSelected: function(router) {
+                EurekaJ.appValuesController.set('showLiveCharts', true);
+            },
+
             connectOutlets: function (router) {
                 EurekaJ.store.findAll(EurekaJ.MainMenuModel);
                 var mainMenu = EurekaJ.store.filter(EurekaJ.MainMenuModel, function(data) {
@@ -29,6 +44,7 @@ EurekaJ.router = Ember.Router.create({
                 router.get('applicationController').connectOutlet('main');
                 router.get('menuController').set('content', mainMenu);
                 router.get('applicationController').connectOutlet('header', 'header');
+
             },
             exit: function() {
                 EurekaJ.log('exit Home');

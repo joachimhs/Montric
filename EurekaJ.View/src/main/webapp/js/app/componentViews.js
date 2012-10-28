@@ -79,7 +79,7 @@ EurekaJ.TabView = Ember.View.extend({
         this.rerender();
     }.observes('controller.selectedTab'),
 
-    template: Ember.Handlebars.compile('<ul class="tabrow">{{#each tab in content}}{{view EurekaJ.TabItemView tabBinding="tab"}}{{/each}}</ul>{{#if controller.selectedTab.hasView}}{{view controller.selectedTab.tabView}}{{/if}}')
+    template: Ember.Handlebars.compile('<ul class="tabrow">{{#each tab in content}}{{view EurekaJ.TabItemView tabBinding="tab" targetBinding="tab.target" actionBinding="tab.action"}}{{/each}}</ul>{{#if controller.selectedTab.hasView}}{{view controller.selectedTab.tabView}}{{/if}}')
 });
 
 EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
@@ -93,11 +93,12 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
     }.property('controller.selectedTab'),
 
     click: function() {
+        this.triggerAction();
+
         this.get('controller').set('selectedTab', this.get('tab'));
         if (this.get('tab').get('tabState')) {
             EurekaJ.router.transitionTo(this.get('tab').get('tabState'));
         }
-
     },
 
     template: Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
@@ -106,24 +107,27 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
 
 /** SelectableListView **/
 EurekaJ.SelectableListView = Ember.View.extend({
-    tagName: 'ul',
+    tagName: 'div',
     classNames: ['selectableList'],
     maxCharacters: 28,
     selectedItem: null,
     listItems: null,
 
-    template: Ember.Handlebars.compile('{{#each view.listItems}}{{view EurekaJ.SelectableListItemView itemBinding="this" deleteActionBinding="view.deleteAction" maxCharactersBinding="maxCharacters" selectedItemBinding="view.selectedItem"}}{{/each}}')
+    template: Ember.Handlebars.compile('{{#each view.listItems}}{{view EurekaJ.SelectableListItemView itemBinding="this" deleteActionBinding="view.deleteAction" maxCharactersBinding="view.maxCharacters" selectedItemBinding="view.selectedItem"}}{{/each}}')
 });
 
 EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
-    tagName: 'li',
+    tagName: 'div',
     classNameBindings: 'isSelected',
     deleteAction: null,
     selectedItem: null,
 
     liShortLabel: function() {
-        var numCharacters = this.get('maxCharacters') - 12;
-        if (this.get('item.id') && this.get('item').get('id').length > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
+        var numCharacters = this.get('maxCharacters') - 10;
+
+        if (this.get('item.id.length') > numCharacters) {
+            return this.get('item.id').substr(0, numCharacters) + '...';
+        }
 
         return this.get('item.id');
     }.property('item.id'),
@@ -168,11 +172,15 @@ EurekaJ.SelectableLeafTreeView = Ember.View.extend({
 EurekaJ.SelectableLeafItemView = Ember.View.extend({
     tagName: 'div',
     classNameBindings: 'isSelected',
-    classNames: ['treeItemMarginLeft'],
+    classNames: ['treeItemMarginLeft', 'pointer'],
     selectedItem: null,
 
     isSelected: function() {
-        return this.get('selectedItem.id') == this.get('item.id');
+        if (this.get('item.id')) {
+            return this.get('selectedItem') === this.get('item.id');
+        } else {
+            return this.get('selectedItem') === this.get('item');
+        }
     }.property('selectedItem').cacheable(),
 
     template: Ember.Handlebars.compile('' +
@@ -209,7 +217,11 @@ EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
             //leaf node
             console.log(this.get('selectedItem'));
             console.log(this.get('item'));
-            this.set('selectedItem', this.get('item'));
+            if (this.get('item.id')) {
+                this.set('selectedItem', this.get('item.id'));
+            } else {
+                this.set('selectedItem', this.get('item'));
+            }
         }
     }
 });

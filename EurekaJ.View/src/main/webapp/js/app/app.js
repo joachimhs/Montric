@@ -59,10 +59,21 @@ EurekaJ.Adapter = DS.Adapter.create({
     find: function(store, type, id) {
     	var url = type.url;
 
-        var requestStringJson = {};
-        requestStringJson.id = id;
+        var requestStringJson = {
+            id: id
+        };
 
-        EurekaJ.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url);
+        if (type === EurekaJ.ChartModel) {
+            if (EurekaJ.appValuesController.get('showLiveCharts')) {
+                requestStringJson.ts = EurekaJ.appValuesController.get('selectedChartTimespan.timespanValue');
+                requestStringJson.rs = EurekaJ.appValuesController.get('selectedChartResolution.chartResolutionValue');
+            } else {
+                requestStringJson.chartFrom = EurekaJ.appValuesController.get('selectedChartFrom').getTime();
+                requestStringJson.chartTo = EurekaJ.appValuesController.get('selectedChartTo').getTime();
+            }
+        }
+
+        EurekaJ.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url + ' requestString: ' + JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'));
 
         $.ajax({
       	  type: 'GET',
@@ -148,5 +159,5 @@ EurekaJ.ajaxSuccess = function(data) {
 EurekaJ.store = DS.Store.create({
     adapter: EurekaJ.Adapter,
     //adapter:  DS.RESTAdapter.create({ bulkCommit: false }),
-    revision: 6
+    revision: 7
 });

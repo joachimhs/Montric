@@ -28,10 +28,13 @@ EurekaJ.MainController = Ember.ArrayController.extend({
         if (content.get('length') > 0 && this.get('chartTimerId') == null) {
             //start timer
             var intervalId = setInterval(function() {
-                content.forEach(function (node) {
-                    EurekaJ.log('refresh-time!!');
-                    node.get('chart').reload();
-                }) }, 15000);
+                if (EurekaJ.appValuesController.get('showLiveCharts')) {
+                    content.forEach(function (node) {
+                        node.get('chart').reload();
+                    });
+                }
+            }, 15000);
+
             this.set('chartTimerId', intervalId);
         } else if (content.get('length') == 0) {
             //stop timer if started
@@ -41,7 +44,13 @@ EurekaJ.MainController = Ember.ArrayController.extend({
                 this.set('chartTimerId', null);
             }
         }
-    }.observes('content.length')
+    }.observes('content.length'),
+
+    reloadCharts: function() {
+        this.get('content').forEach(function (node) {
+            node.get('chart').reload();
+        });
+    }
 });
 
 
@@ -180,6 +189,7 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
         if (this.newAlertIsValid()) {
             EurekaJ.store.createRecord(EurekaJ.AlertModel, {id: this.get('newAlertName')});
             this.set('newAlertName', '');
+            EurekaJ.store.commit();
         } else {
             EurekaJ.log('New Alert Name Not Valid!');
         }
@@ -336,11 +346,10 @@ EurekaJ.SelectedChartGroupController = Ember.ObjectController.extend({
 
 EurekaJ.chartOptionsTabBarController = EurekaJ.TabBarController.create({
     content: [],
-    selectedTab: null,
 
     init: function() {
-        this.get('content').pushObject(EurekaJ.TabModel.create({tabId: 'live', tabName: 'Live', tabState: null, tabView: EurekaJ.LiveChartOptionsView}));
-        this.get('content').pushObject(EurekaJ.TabModel.create({tabId: 'historical', tabName: 'Historical', tabState: null}));
+        this.get('content').pushObject(EurekaJ.TabModel.create({tabId: 'live', tabName: 'Live', tabState: null, tabView: EurekaJ.LiveChartOptionsView, target: "EurekaJ.router", action: "liveChartsSelected"}));
+        this.get('content').pushObject(EurekaJ.TabModel.create({tabId: 'historical', tabName: 'Historical', tabView: EurekaJ.HistoricalChartOptionsView, target: "EurekaJ.router", action: "historicalChartsSelected"}));
 
         this.resetSelectedTab();
     }
@@ -353,8 +362,20 @@ EurekaJ.appValuesController = Ember.Controller.create({
     selectedChartTimespan: null,
     chartResolutions: [],
     selectedChartResolution: null,
+    selectedChartFromString: null,
+    selectedChartToString: null,
+    selectedChartFrom: new Date(new Date().getTime() - (10 * 60 * 1000)),
+    selectedChartTo: new Date(),
+    dateFormat: 'dd.mm.yy HH:MM',
+    showLiveCharts: true,
 
     init: function() {
+        var fromDate = new Date(this.get('selectedChartTo') - (10 * 60 * 1000));
+        if (fromDate) {
+            this.set('selectedChartFrom', fromDate);
+        }
+        this.generateChartStrings();
+
         this.get('timezones').pushObject(Ember.Object.create({timezoneValue: '-12', timezoneName: 'UTC-12'}))
         this.get('timezones').pushObject(Ember.Object.create({timezoneValue: '-11', timezoneName: 'UTC-11'}))
         this.get('timezones').pushObject(Ember.Object.create({timezoneValue: '-10', timezoneName: 'UTC-10'}))
@@ -406,6 +427,25 @@ EurekaJ.appValuesController = Ember.Controller.create({
         this.get('chartResolutions').pushObject(Ember.Object.create({chartResolutionName: '40 minutes', chartResolutionValue: '2400'}))
 
         this.set('selectedChartResolution', this.get('chartResolutions').objectAt(0));
+    },
 
+    updateChartDates: function() {
+        this.set('selectedChartFrom', Date.fromString(this.get('selectedChartFromString')));
+        this.set('selectedChartTo', Date.fromString(this.get('selectedChartToString')));
+    },
+
+    generateChartStrings: function() {
+        this.set('selectedChartFromString', this.generateChartString(this.get('selectedChartFrom')));
+        this.set('selectedChartToString', this.generateChartString(this.get('selectedChartTo')));
+    },
+
+    generateChartString: function(date) {
+        var fmt = this.get('dateFormat') || 'dd.mm.yy';
+
+
+        var dateString = date ? dateFormat(date, fmt) : "";
+        return dateString;
     }
+
+
 });

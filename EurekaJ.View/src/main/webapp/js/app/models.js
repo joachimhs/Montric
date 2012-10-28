@@ -69,17 +69,17 @@ EurekaJ.TabModel = Ember.Object.extend({
     tabName: null,
     tabState: null,
     tabView: null,
+    tabClickedAction: null,
 
     hasView: function() {
-        EurekaJ.log('tabView: ' + this.get('tabId'));
-        EurekaJ.log(this.get('tabView'));
         return this.get('tabView') != null;
     }.property('tabView').cacheable()
 });
 
 EurekaJ.AlertModel = DS.Model.extend({
     alertActivated: DS.attr('boolean'),
-    alertSource: DS.belongsTo('EurekaJ.AdminMenuModel'),
+    //alertSource: DS.belongsTo('EurekaJ.AdminMenuModel'),
+    alertSource: DS.attr('string'),
     //alertNotifications: SC.Record.toMany('EurekaJView.EmailGroupModel', {isMaster: YES}),
     //alertPlugins: SC.Record.toMany('EurekaJView.AlertPluginModel', {isMaster: YES}),
     alertWarningValue: DS.attr('number'),

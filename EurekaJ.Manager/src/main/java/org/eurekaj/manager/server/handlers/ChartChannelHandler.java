@@ -57,6 +57,8 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         int chartTimespan = 10;
         if (jsonRequest.has("chartTimespan")) {
             chartTimespan = jsonRequest.getInt("chartTimespan");
+        } else if (jsonRequest.has("ts")) {
+            chartTimespan = jsonRequest.getInt("ts");
         }
 
         return chartTimespan;
@@ -66,6 +68,8 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         int chartResolution = 15;
         if (jsonRequest.has("chartResolution")) {
             chartResolution = jsonRequest.getInt("chartResolution");
+        } else if (jsonRequest.has("rs")) {
+            chartResolution = jsonRequest.getInt("rs");
         }
         return chartResolution;
     }
@@ -126,9 +130,13 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         String decoded = URLDecoder.decode(uri.substring(uri.lastIndexOf('?')+1, uri.length()), "UTF-8");
         JSONObject keyObject = new JSONObject(new JSONTokener(decoded));
         String id = null;
+        
         if (keyObject.has("id")) {
         	id = keyObject.get("id").toString();
         }
+        
+        log.info("ChartChannelHandler received JSON: " + keyObject.toString());
+        
         
         try {
 

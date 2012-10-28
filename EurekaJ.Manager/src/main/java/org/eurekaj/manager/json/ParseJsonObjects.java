@@ -53,8 +53,8 @@ public class ParseJsonObjects {
         if (jsonAlert.has("id")) {
             parsedAlert = new ManagerAlert();
             parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "id"));
-            parsedAlert.setWarningValue(parseIntegerFromJson(jsonAlert, "alertWarningValue").doubleValue());
-            parsedAlert.setErrorValue(parseIntegerFromJson(jsonAlert, "alertErrorValue").doubleValue());
+            parsedAlert.setWarningValue(parseDoubleFromJson(jsonAlert, "alertWarningValue"));
+            parsedAlert.setErrorValue(parseDoubleFromJson(jsonAlert, "alertErrorValue"));
             parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertSource"));
             parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));

@@ -68,11 +68,20 @@ EurekaJ.BrowserItemView = Ember.View.extend({
 });
 
 
-EurekaJ.LiveChartOptionsView = Ember.View.extend({
-    templateName: 'live-chart-options'
+EurekaJ.LiveChartOptionsView = Ember.View.extend(Ember.TargetActionSupport, {
+    templateName: 'live-chart-options',
+    click: function() {
+        this.triggerAction();
+    }
 });
 
+EurekaJ.HistoricalChartOptionsView = Ember.View.extend(Ember.TargetActionSupport, {
+    templateName: 'historical-chart-options',
+    click: function() {
+        this.triggerAction();
+    }
 
+});
 
 /** Bootstrap Views **/
 EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {

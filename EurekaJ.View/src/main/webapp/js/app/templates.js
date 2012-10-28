@@ -12,9 +12,8 @@ Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
         '</div>' +
         '<div class="modal-body">' +
             '{{view EurekaJ.TabView controllerBinding="EurekaJ.chartOptionsTabBarController"}}' +
-            //'{{view EurekaJ.LiveChartOptionsView}}' +
         '</div>' +
-        '<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes"}}</div>' +
+        '<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes" action="applyChartOptionsChanges" target="EurekaJ.router"}}</div>' +
     '</div>'
 );
 
@@ -29,6 +28,21 @@ Ember.TEMPLATES['live-chart-options'] = Ember.Handlebars.compile('' +
     '</tr><tr>' +
         '<td>Resolution: </td>' +
         '<td>{{view EurekaJ.Select contentBinding="EurekaJ.appValuesController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="EurekaJ.appValuesController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
+    '</tr>' +
+    '</table>'
+);
+
+Ember.TEMPLATES['historical-chart-options'] = Ember.Handlebars.compile('' +
+    '<table>' +
+    '<tr>' +
+        '<td>Timezone: </td>' +
+        '<td>{{view EurekaJ.Select contentBinding="EurekaJ.appValuesController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="EurekaJ.appValuesController.selectedTimezone" prompt="Select Timezone"}}</td>' +
+    '</tr><tr>' +
+        '<td>From: </td>' +
+        '<td>{{view Ember.TextField valueBinding="EurekaJ.appValuesController.selectedChartFromString"}}</td>' +
+    '</tr><tr>' +
+        '<td>To: </td>' +
+        '<td>{{view Ember.TextField valueBinding="EurekaJ.appValuesController.selectedChartToString"}}</td>' +
     '</tr>' +
     '</table>'
 );
@@ -105,7 +119,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
                 '<td>Alert Source:</td>' +
                 '<td colspan="3">' +
                     //'{{view EurekaJ.TreeView controllerBinding="adminMenuController"}}' +
-                    '<div>{{#if selectedItem.alertSource.id}}{{selectedItem.alertSource.id}}{{else}}None Selected{{/if}}</div>' +
+                    '<div>{{#if selectedItem.alertSource}}{{selectedItem.alertSource}}{{else}}None Selected{{/if}}</div>' +
                     '<div style="max-height: 250px; overflow: scroll;" class="azureBlueBackground azureBlueBorderThin">{{view EurekaJ.SelectableLeafTreeView controllerBinding="adminMenuController" selectedItemBinding="selectedItem.alertSource"}}</div>' +
                 '</td>' +
             '</tr>' +
