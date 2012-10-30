@@ -398,6 +398,7 @@ ul.tabrow li.is-selected:after {
 div.selectableList {
     margin-left: 0px;
     margin-right: 10px;
+    margin-bottom: 15px;
 }
 
 div.selectableList div {

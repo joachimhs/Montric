@@ -35,7 +35,7 @@ EurekaJ.AdminMenuModel = DS.Model.extend({
     isSelected: false,
     isExpanded: false,
     children: DS.hasMany('EurekaJ.AdminMenuModel'),
-    chart: DS.belongsTo('EurekaJ.ChartModel'),
+
 
 
     hasChildren: function() {

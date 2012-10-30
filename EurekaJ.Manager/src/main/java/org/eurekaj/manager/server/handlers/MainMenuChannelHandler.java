@@ -19,15 +19,18 @@
 package org.eurekaj.manager.server.handlers;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.TreeMenuNode;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 	private static final Logger log = Logger.getLogger(MainMenuChannelHandler.class);
@@ -36,23 +39,46 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		String jsonResponse = "";
         
-        try {
+        try {        	
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
             log.debug("Accepted JSON: \n" + jsonObject);
 
-            jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("menuID",
+            if (isDelete(e) && jsonObject.has("id")) {
+            	getBerkeleyTreeMenuService().deleteTreeMenuNode(jsonObject.getString("id"));
+            	
+            	log.info("Deleting Main Menu Item with id: " + jsonObject.getString("id"));
+            	
+            } else if (isGet(e)) {
+            	HttpRequest request = (HttpRequest)e.getMessage();
+            	String uri = request.getUri();
+            	String decoded = "{}";
+            	if (uri.contains("?") && uri.contains("{") && uri.contains("}")) {
+            		decoded = URLDecoder.decode(uri.substring(uri.lastIndexOf('?')+1, uri.length()), "UTF-8");
+            	}
+            	log.info("Decoded: " + decoded);
+            	
+            	
+                JSONObject keyObject = new JSONObject(new JSONTokener(decoded));
+                
+                String filterChartType = null;
+                if (keyObject.has("filterChartType")) {
+                	filterChartType = keyObject.getString("filterChartType");
+                }
+                
+            	jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("menuID",
     	            getBerkeleyTreeMenuService().getTreeMenu(),
     	            getBerkeleyTreeMenuService().getAlerts(),
     	            getBerkeleyTreeMenuService().getGroupedStatistics(),
-    	            0, 15, true, null).toString();
+    	            0, 15, true, filterChartType).toString();
+            	
+            	if (jsonResponse.length() <= 2) {
+                    jsonResponse = "{}";
+                }
+            }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
-        if (jsonResponse.length() <= 2) {
-            jsonResponse = "{}";
-        }
-        
         writeContentsToBuffer(ctx, jsonResponse);
 	}
 	

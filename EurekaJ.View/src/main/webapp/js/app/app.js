@@ -48,12 +48,28 @@ EurekaJ.Adapter = DS.Adapter.create({
 
         EurekaJ.log('finding all: type: ' + type + ' url: ' + url);
 
-        $.ajax({
-        	  type: 'GET',
-        	  url: url,
-        	  contentType: 'application/json',
-        	  success: function(data) { EurekaJ.store.loadMany(type, data); }
-        	});
+        requestStringJson = null;
+        if (type === EurekaJ.AdminMenuModel) {
+            requestStringJson = {filterChartType: 'chart'};
+        }
+
+        if (requestStringJson) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'),
+                contentType: 'application/json',
+                success: function(data) { EurekaJ.store.loadMany(type, data); }
+            });
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: 'application/json',
+                success: function(data) { EurekaJ.store.loadMany(type, data); }
+            });
+        }
+
     },
     
     find: function(store, type, id) {
@@ -127,6 +143,7 @@ EurekaJ.Adapter = DS.Adapter.create({
                 // In general, this hash will contain a new id, which the
                 // store will now use to index the record. Future calls to
                 // store.find(type, id) will find this record.
+                EurekaJ.log('got back from createRecord type: ' + type + " id: " + model.get('id') + " ::" + JSON.stringify(data));
                 store.didCreateRecord(model, data);
             }
         });
@@ -135,10 +152,17 @@ EurekaJ.Adapter = DS.Adapter.create({
     deleteRecord: function(store, type, model) {
         var url = type.url;
 
+        var requestStringJson = {
+            id: model.get('id')
+        };
+
+        EurekaJ.log('delting record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
+        EurekaJ.log('json: ' + JSON.stringify(requestStringJson));
+
         jQuery.ajax({
             url: url,
             dataType: 'json',
-            data: JSON.stringify(model.toJSON({ includeId: true })),
+            data: JSON.stringify(requestStringJson),
             type: 'DELETE',
 
             success: function() {

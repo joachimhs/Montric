@@ -58,7 +58,8 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                 Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
-                }                
+                }    
+                jsonResponse = BuildJsonObjectsUtil.generateAlertJSON(parsedAlert).toString();
             } else if (jsonObject.has("getTriggeredAlerts")) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);

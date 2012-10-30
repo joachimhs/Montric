@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f5f7d6-376e-4ca6-a6a0-cbf396dbc541" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/handlers/ChartChannelHandler.java" afterPath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/handlers/ChartChannelHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/img/logo-small.png" afterPath="$PROJECT_DIR$/src/main/webapp/img/logo-small.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/master.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/master.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
@@ -35,10 +34,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="33" selection-start="641" selection-end="641" vertical-scroll-proportion="0.21903051">
+            <state line="303" column="10" selection-start="9788" selection-end="9788" vertical-scroll-proportion="0.18048128">
               <folding />
             </state>
           </provider>
@@ -66,21 +65,21 @@
         <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/scripts/date.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/views.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/master.css" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/app/templates.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/templates.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="37" />
+    <option name="x" value="41" />
     <option name="y" value="22" />
-    <option name="width" value="1403" />
-    <option name="height" value="878" />
+    <option name="width" value="1879" />
+    <option name="height" value="1058" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -307,14 +306,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="37" y="22" width="1403" height="878" extended-state="0" />
+    <frame x="41" y="22" width="1879" height="1058" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23117569" sideWeight="0.98167115" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18676628" sideWeight="0.74515086" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2514493" sideWeight="0.7688243" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1869612" sideWeight="0.81323373" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -442,84 +441,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="96" selection-start="1989" selection-end="2006" vertical-scroll-proportion="0.28263795">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="4" selection-start="2375" selection-end="2377" vertical-scroll-proportion="0.6657534">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="67" selection-start="3657" selection-end="3657" vertical-scroll-proportion="0.35425383">
-          <folding>
-            <marker date="1351419500000" expanded="true" signature="7230:7316" placeholder="{&quot;outletName&quot;: 'adminTabContent'...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="15" selection-start="2261" selection-end="2272" vertical-scroll-proportion="0.8261618">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="12" selection-start="5889" selection-end="5912" vertical-scroll-proportion="0.02640845">
+        <state line="13" column="33" selection-start="641" selection-end="641" vertical-scroll-proportion="0.21903051">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/master.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="288" column="13" selection-start="4364" selection-end="4364" vertical-scroll-proportion="0.3889845">
+        <state line="400" column="24" selection-start="6777" selection-end="6777" vertical-scroll-proportion="0.6643718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="69" selection-start="243" selection-end="243" vertical-scroll-proportion="0.15845071">
+          <folding>
+            <marker date="1351585513000" expanded="true" signature="810:823" placeholder="..." />
+            <marker date="1351585513000" expanded="true" signature="898:916" placeholder="..." />
+            <marker date="1351585513000" expanded="true" signature="1333:1351" placeholder="..." />
+            <marker date="1351585513000" expanded="true" signature="1541:1559" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="33" selection-start="2204" selection-end="2204" vertical-scroll-proportion="0.50722736">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="166" selection-start="8030" selection-end="8030" vertical-scroll-proportion="0.9471831">
+        <state line="257" column="140" selection-start="16137" selection-end="16160" vertical-scroll-proportion="0.27807486">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="194" column="77" selection-start="7807" selection-end="7807" vertical-scroll-proportion="0.37450722">
           <folding>
-            <marker date="1351423891000" expanded="false" signature="6812:6848" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="8239:8252" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="8326:8393" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="8790:8803" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="8879:8946" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="10189:10202" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="10410:10423" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="10591:10604" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="10807:10820" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="10980:10993" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="11365:11377" placeholder="..." />
-            <marker date="1351423891000" expanded="false" signature="11524:11591" placeholder="..." />
+            <marker date="1351593779000" expanded="true" signature="9064:9150" placeholder="{&quot;outletName&quot;: 'adminTabContent'...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="57" selection-start="4330" selection-end="4330" vertical-scroll-proportion="0.4753521">
-          <folding>
-            <marker date="1351424481000" expanded="true" signature="606:619" placeholder="..." />
-            <marker date="1351424481000" expanded="true" signature="694:712" placeholder="..." />
-            <marker date="1351424481000" expanded="true" signature="1017:1035" placeholder="..." />
-          </folding>
+        <state line="124" column="38" selection-start="3385" selection-end="3562" vertical-scroll-proportion="0.4086728">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="33" selection-start="641" selection-end="641" vertical-scroll-proportion="0.21903051">
+        <state line="67" column="15" selection-start="1815" selection-end="1815" vertical-scroll-proportion="0.2956636">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="303" column="10" selection-start="9788" selection-end="9788" vertical-scroll-proportion="0.18048128">
           <folding />
         </state>
       </provider>

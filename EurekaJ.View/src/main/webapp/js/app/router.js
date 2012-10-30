@@ -95,11 +95,21 @@ EurekaJ.router = Ember.Router.create({
                 },
 
                 deleteSelectedAlert: function() {
+                    $("#adminAlertConfirmDialog").modal({show: true});
+                },
+
+                doCancelAlertDeletion: function(router) {
+                    $("#adminAlertConfirmDialog").modal('hide');
+                },
+
+                doConfirmDeletion: function(router) {
+                    console.log('doConfirmDeletion');
                     var selectedItem = EurekaJ.router.get('adminAlertController.selectedItem');
                     if (selectedItem) {
                         selectedItem.deleteRecord();
                     }
                     EurekaJ.store.commit();
+                    $("#adminAlertConfirmDialog").modal('hide');
                 },
 
                 enter: function() {
@@ -130,15 +140,33 @@ EurekaJ.router = Ember.Router.create({
                 },
 
                 deleteSelectedChartGroup: function() {
-                    var selectedItem = EurekaJ.router.get('adminChartGroupController.selectedItem');
+                    $("#chartGroupConfirmDialog").modal({show: true});
+                },
+
+                doCancelDeletion: function(router) {
+                    $("#chartGroupConfirmDialog").modal('hide');
+                },
+
+                doConfirmDeletion: function(router) {
+                    var selectedItem = router.get('adminChartGroupController.selectedItem');
                     if (selectedItem) {
                         selectedItem.deleteRecord();
                     }
                     EurekaJ.store.commit();
+                    $("#chartGroupConfirmDialog").modal('hide');
                 },
 
                 deleteSelectedChartPathGroup: function() {
+                    $("#chartGroupPathsConfirmDialog").modal({show: true});
+                },
+
+                doCancelPathDeletion: function(router) {
+                    $("#chartGroupPathsConfirmDialog").modal('hide');
+                },
+
+                doConfirmPathDeletion: function(router) {
                     EurekaJ.router.get('adminChartGroupController').deleteSelectedChartPathGroup();
+                    $("#chartGroupPathsConfirmDialog").modal('hide');
                 },
 
                 connectOutlets: function(router) {
@@ -156,11 +184,29 @@ EurekaJ.router = Ember.Router.create({
                 },
 
                 deleteSelectedEmailGroup: function() {
+                    $("#emailGroupConfirmDialog").modal({show: true});
+                },
+
+                doCancelDeletion: function(router) {
+                    $("#emailGroupConfirmDialog").modal('hide');
+                },
+
+                doConfirmDeletion: function(router) {
                     EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailGroup();
+                    $("#emailGroupConfirmDialog").modal('hide');
                 },
 
                 deleteSelectedEmailRecipient: function() {
+                    $("#emailAddressConfirmDialog").modal({show: true});
+                },
+
+                doCancelAddressDeletion: function(router) {
+                    $("#emailAddressConfirmDialog").modal('hide');
+                },
+
+                doConfirmAddressDeletion: function(router) {
                     EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailRecipient();
+                    $("#emailAddressConfirmDialog").modal('hide');
                 },
 
                 doCommitEmailGroup: function() {
@@ -185,12 +231,30 @@ EurekaJ.router = Ember.Router.create({
                 route: '/menuAdmin',
                 enter: function() {
                     EurekaJ.adminTabBarController.selectTabWithId('menuAdmin');
-                },connectOutlets: function(router) {
+                },
+
+                doCommitMenu: function(router) {
+                    $("#menuAdminConfirmDialog").modal({show: true});
+                },
+
+                doCancelDeletion: function(router) {
+                    $("#menuAdminConfirmDialog").modal('hide');
+                },
+
+                doConfirmDeletion: function(router) {
+                    var selectedNodes = router.get('adminMenuController.selectedNodes');
+                    selectedNodes.forEach(function(node) {
+                        node.deleteRecord();
+                    })
+                    router.get('adminMenuController').deselectAllNodes();
+                    EurekaJ.store.commit();
+                    $("#menuAdminConfirmDialog").modal('hide');
+                },
+
+                connectOutlets: function(router) {
                     EurekaJ.log('connecting outlets for menuAdmin');
-                    router.get('adminController').connectOutlet({
-                        viewClass: EurekaJ.MenuAdminTabView,
-                        outletName: 'adminTabContent'
-                    });
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminTabContent');
+                    router.get('adminTabContentController').connectControllers('adminMenu');
                 }
             })
         })

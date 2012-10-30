@@ -17,6 +17,25 @@ Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
     '</div>'
 );
 
+Ember.TEMPLATES['confirmDialog'] = Ember.Handlebars.compile(
+    '<div class="modal-header centerAlign">' +
+        '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
+        '<h1 class="centerAlign">{{view.header}}</h1>' +
+    '</div>' +
+    '<div class="modal-body">' +
+        '{{view.message}}' +
+    '</div>' +
+    '<div class="modal-footer">' +
+        '{{#if view.cancelAction}}' +
+            '{{view EurekaJ.BootstrapButton contentBinding="view.cancelButtonLabel" actionBinding="view.cancelAction" targetBinding="view.target"}}' +
+        '{{/if}}' +
+        '{{#if view.okAction}}' +
+            '{{view EurekaJ.BootstrapButton contentBinding="view.okButtonLabel" actionBinding="view.okAction" targetBinding="view.target"}}' +
+        '{{/if}}' +
+    '</div>'
+    //'<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes" action="applyChartOptionsChanges" target="EurekaJ.router"}}</div>' +
+);
+
 Ember.TEMPLATES['live-chart-options'] = Ember.Handlebars.compile('' +
     '<table>' +
     '<tr>' +
@@ -120,7 +139,9 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
                 '<td colspan="3">' +
                     //'{{view EurekaJ.TreeView controllerBinding="adminMenuController"}}' +
                     '<div>{{#if selectedItem.alertSource}}{{selectedItem.alertSource}}{{else}}None Selected{{/if}}</div>' +
-                    '<div style="max-height: 250px; overflow: scroll;" class="azureBlueBackground azureBlueBorderThin">{{view EurekaJ.SelectableLeafTreeView controllerBinding="adminMenuController" selectedItemBinding="selectedItem.alertSource"}}</div>' +
+                    '<div style="max-height: 250px; overflow: scroll; margin-bottom: 15px;" class="azureBlueBackground azureBlueBorderThin">' +
+                        '{{view EurekaJ.SelectableLeafTreeView controllerBinding="adminMenuController" selectedItemBinding="selectedItem.alertSource"}}' +
+                    '</div>' +
                 '</td>' +
             '</tr>' +
             '<tr>' +
@@ -133,7 +154,27 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
                 '<td colspan="4"><button {{action doCommitAlert}} class="btn" style="width: 100%;">Save Alert</button></td>' +
             '</tr>' +
         '</table>' +
-    '</div>{{/if}}'
+    '</div>{{/if}}' +
+    '{{view EurekaJ.ConfirmDialogView elementId="adminAlertConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAlertDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="EurekaJ.router" header="Delete Alert?" message="Are you sure you want to delete the selected alert? This action will permanently remove the alert from the system. This action cannot be undone!"}}'
+);
+
+Ember.TEMPLATES['menuAdminTabContent'] = Ember.Handlebars.compile('' +
+    '<div class="fullWidth">' +
+        '<h1>Delete Menu Items</h1>' +
+        '<table class="table adminTable">' +
+        '<tr>' +
+            '<td style="width: 150px;">Main Menu:</td>' +
+            '<td><div style="max-height: 350px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
+                '{{view EurekaJ.TreeView controllerBinding="controller.adminMenuController" allowSelectionOfNonLeafNodes="true"}}' +
+            '</div></td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td colspan="2"><button {{action doCommitMenu}} class="btn" style="width: 100%;">Delete Selected Menu Items</button></td>' +
+        '</tr>' +
+        '</table>'+
+    '</div>' +
+    '{{view EurekaJ.ConfirmDialogView elementId="menuAdminConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="EurekaJ.router" header="Delete Tree Menu Items?" message="Are you sure you want to delete the selected items? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
+
 );
 
 Ember.TEMPLATES['chartGroupTabContent'] = Ember.Handlebars.compile('' +
@@ -166,7 +207,9 @@ Ember.TEMPLATES['chartGroupTabContent'] = Ember.Handlebars.compile('' +
         '<tr class="footer">' +
             '<td colspan="2"><button {{action doCommitChartGroup}} class="btn" style="width: 100%;">Save Chart Group</button></td>' +
         '</tr>' +
-    '</div>{{/if}}'
+    '</div>{{/if}}' +
+    '{{view EurekaJ.ConfirmDialogView elementId="chartGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="EurekaJ.router" header="Delete Chart Group?" message="Are you sure you want to delete the selected chart group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
+    '{{view EurekaJ.ConfirmDialogView elementId="chartGroupPathsConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelPathDeletion" okButtonLabel="Delete" okAction="doConfirmPathDeletion" target="EurekaJ.router" header="Delete Chart Group Path?" message="Are you sure you want to delete the selected chart group path? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
 );
 
 Ember.TEMPLATES['emailRecipientsTabContent'] = Ember.Handlebars.compile('' +
@@ -210,7 +253,9 @@ Ember.TEMPLATES['emailRecipientsTabContent'] = Ember.Handlebars.compile('' +
         '<tr class="footer">' +
             '<td colspan="4"><button {{action doCommitEmailGroup}} class="btn" style="width: 100%;">Save Email Group</button></td>' +
         '</tr>' +
-    '</div>{{/if}}'
+    '</div>{{/if}}' +
+    '{{view EurekaJ.ConfirmDialogView elementId="emailGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="EurekaJ.router" header="Delete Email Group?" message="Are you sure you want to delete the selected email group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
+    '{{view EurekaJ.ConfirmDialogView elementId="emailAddressConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAddressDeletion" okButtonLabel="Delete" okAction="doConfirmAddressDeletion" target="EurekaJ.router" header="Delete Email Address?" message="Are you sure you want to delete the selected email address? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
 );
 
 Ember.TEMPLATES['main-menu'] = Ember.Handlebars.compile('' +

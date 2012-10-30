@@ -3,8 +3,9 @@ EurekaJ.TreeView = Ember.View.extend({
     tagName: 'div',
     content: null,
     allowMultipleSelections: true,
+    allowSelectionOfNonLeafNodes: false,
 
-    template: Ember.Handlebars.compile('{{#each content}}{{view EurekaJ.NodeView contentBinding="this"}}{{/each}}'),
+    template: Ember.Handlebars.compile('{{#each content}}{{#if name}}{{view EurekaJ.NodeView contentBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}{{/if}}{{/each}}'),
 
     isSelectedObserver: function() {
         console.log('isSelectedObserver');
@@ -13,12 +14,12 @@ EurekaJ.TreeView = Ember.View.extend({
 
 EurekaJ.NodeView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
-        '{{view EurekaJ.NodeContentView contentBinding="node"}}' +
+        '{{view EurekaJ.NodeContentView contentBinding="node" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}' +
 
         '{{#if this.isExpanded}}' +
             '<div style="width: 500px;">' +
             '{{#each this.children}}' +
-                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView contentBinding="this"}}</div>' +
+                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView contentBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}</div>' +
             '{{/each}}' +
             '</div>' +
         '{{/if}}'),
@@ -27,10 +28,15 @@ EurekaJ.NodeView = Ember.View.extend({
 
 EurekaJ.NodeContentView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
-        '{{#unless hasChildren}} ' +
-            '<span style="margin-right: 7px;">&nbsp;</span>' +
+        '{{#if view.allowSelectionOfNonLeafNodes}}' +
+            '{{#unless hasChildren}}<span style="margin-left: 12px;">&nbsp;</span>{{/unless}}' +
             '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
-        '{{/unless}}' +
+        '{{else}}' +
+            '{{#unless hasChildren}} ' +
+                '<span style="margin-right: 7px;">&nbsp;</span>' +
+                '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
+            '{{/unless}}' +
+        '{{/if}}' +
 
         '{{view EurekaJ.NodeArrowView contentBinding="this"}}' +
         '{{view EurekaJ.NodeTextView contentBinding="this" classNames="treeMenuText"}}'),
@@ -134,7 +140,7 @@ EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
 
     liLongLabel: function() {
         var numCharacters = this.get('maxCharacters');
-        if (this.get('item') != null && this.get('item.id').length > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
+        if (this.get('item') != null && this.get('item.id.length') > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
 
         return this.get('item.id');
     }.property('item.id'),
@@ -353,3 +359,8 @@ EurekaJ.Select = Ember.Select.extend({
         this._change();
     }
 });
+
+EurekaJ.ConfirmDialogView = Ember.View.extend({
+    templateName: 'confirmDialog',
+    classNames: ['modal', 'hide']
+})

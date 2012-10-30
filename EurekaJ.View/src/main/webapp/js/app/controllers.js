@@ -187,8 +187,7 @@ EurekaJ.AdminAlertController = Ember.ArrayController.extend({
 
     createNewAlert: function() {
         if (this.newAlertIsValid()) {
-            EurekaJ.store.createRecord(EurekaJ.AlertModel, {id: this.get('newAlertName')});
-            this.set('newAlertName', '');
+            var newAlert = EurekaJ.store.createRecord(EurekaJ.AlertModel, {id: this.get('newAlertName')});
             EurekaJ.store.commit();
         } else {
             EurekaJ.log('New Alert Name Not Valid!');
@@ -253,7 +252,6 @@ EurekaJ.AdminChartGroupController = Ember.ArrayController.extend({
     },
 
     deleteSelectedChartPathGroup: function() {
-        console.log('deleteSelectedChartPathGroup');
         var selectedChartGroup = this.get('selectedItem');
 
         var selectedChartGroupPath = this.get('selectedChartGroupPath');
@@ -263,6 +261,11 @@ EurekaJ.AdminChartGroupController = Ember.ArrayController.extend({
             selectedChartGroup.set('chartGroupPath', '["' + selectedChartGroup.get('chartGroups').getEach('id').join('","') + '"]');
         }
     }
+});
+
+EurekaJ.AdminTabContentController = Ember.ArrayController.extend({
+    contentBinding: 'adminMenuController.content',
+    adminMenuController: null
 });
 
 EurekaJ.AdminEmailGroupController = Ember.ArrayController.extend({
@@ -286,12 +289,19 @@ EurekaJ.AdminEmailGroupController = Ember.ArrayController.extend({
 
     createNewEmailGroup: function() {
         if (this.newEmailGroupIsValid()) {
-            EurekaJ.store.createRecord(EurekaJ.EmailGroupModel, {"id": this.get('newEmailGroupName')});
-            //EurekaJ.store.commit();
+            EurekaJ.store.createRecord(EurekaJ.EmailGroupModel, {
+                "id": this.get('newEmailGroupName'),
+                "smtpHost": "",
+                "smtpUsername": "",
+                "smtpPassword": "",
+                "smtpPort": 465,
+                "smtpUseSSL": true,
+                "emailAddresses": "[]"});
             this.set('newEmailGroupName', '');
         } else {
             EurekaJ.log('New Email Group Not Valid!');
         }
+        //EurekaJ.store.commit();
     },
 
     deleteSelectedEmailGroup: function() {
@@ -300,6 +310,7 @@ EurekaJ.AdminEmailGroupController = Ember.ArrayController.extend({
             selectedEmailGroup.deleteRecord();
         }
         EurekaJ.store.commit();
+        this.set('selectedItem', null);
     },
 
     doAddEmailRecipient: function() {

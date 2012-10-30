@@ -56,7 +56,11 @@ public class ParseJsonObjects {
             parsedAlert.setWarningValue(parseDoubleFromJson(jsonAlert, "alertWarningValue"));
             parsedAlert.setErrorValue(parseDoubleFromJson(jsonAlert, "alertErrorValue"));
             parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertSource"));
-            parsedAlert.setAlertDelay(parseIntegerFromJson(jsonAlert, "alertDelay"));
+            
+            Integer alertDelay = parseIntegerFromJson(jsonAlert, "alertDelay");
+            if (alertDelay == null) { alertDelay = 0; }
+            parsedAlert.setAlertDelay(alertDelay.longValue());
+            
             parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
             parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(jsonAlert, "alertType")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
@@ -152,7 +156,9 @@ public class ParseJsonObjects {
     public static Integer parseIntegerFromJson(JSONObject json, String key) {
         Integer intValue = null;
         try {
-            intValue = Integer.parseInt(parseStringFromJson(json, key));
+        	String stringVal = parseStringFromJson(json, key);
+        	if (stringVal != null)
+        		intValue = Integer.parseInt(stringVal);
         } catch (NumberFormatException nfe) {
             intValue = null;
         }
@@ -163,7 +169,9 @@ public class ParseJsonObjects {
     public static Long parseLongFromJson(JSONObject json, String key) {
         Long longValue = null;
         try {
-            longValue = Long.parseLong(parseStringFromJson(json, key));
+        	String stringVal = parseStringFromJson(json, key);
+        	if (stringVal != null)
+        		longValue = Long.parseLong(stringVal);
         } catch (NumberFormatException nfe) {
             longValue = null;
         }
@@ -174,7 +182,9 @@ public class ParseJsonObjects {
     public static Double parseDoubleFromJson(JSONObject json, String key) {
         Double doubleValue = null;
         try {
-            doubleValue = Double.parseDouble(parseStringFromJson(json, key));
+        	String stringVal = parseStringFromJson(json, key);
+        	if (stringVal != null)
+        		doubleValue = Double.parseDouble(parseStringFromJson(json, key));
         } catch (NumberFormatException nfe) {
             doubleValue = null;
         }

@@ -304,32 +304,37 @@ public class BuildJsonObjectsUtil {
     public static String generateAlertsJson(List<Alert> alerts) throws JSONException {
         JSONArray alertArray = new JSONArray();
         for (Alert alert : alerts) {
-            JSONObject alertObject = new JSONObject();
-            alertObject.put("id", alert.getAlertName());
-            alertObject.put("alertWarningValue", alert.getWarningValue());
-            alertObject.put("alertErrorValue", alert.getErrorValue());
-            alertObject.put("alertSource", alert.getGuiPath());
-            alertObject.put("alertDelay", alert.getAlertDelay());
-            alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
-            alertObject.put("alertActivated", alert.isActivated());
-
-            JSONArray emailGroupArray = new JSONArray();
-            for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
-                emailGroupArray.put(emailRecipientGroup);
-            }
-            alertObject.put("alertNotifications", emailGroupArray);
-            
-            JSONArray selectedPluginsArray = new JSONArray();
-            for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
-            	selectedPluginsArray.put(selectedPlugin);
-            }
-            alertObject.put("alertPlugins", selectedPluginsArray);
+            JSONObject alertObject = generateAlertJSON(alert);
 
             alertArray.put(alertObject);
         }
         
         return alertArray.toString();
     }
+
+	public static JSONObject generateAlertJSON(Alert alert) throws JSONException {
+		JSONObject alertObject = new JSONObject();
+		alertObject.put("id", alert.getAlertName());
+		alertObject.put("alertWarningValue", alert.getWarningValue());
+		alertObject.put("alertErrorValue", alert.getErrorValue());
+		alertObject.put("alertSource", alert.getGuiPath());
+		alertObject.put("alertDelay", alert.getAlertDelay());
+		alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
+		alertObject.put("alertActivated", alert.isActivated());
+
+		JSONArray emailGroupArray = new JSONArray();
+		for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
+		    emailGroupArray.put(emailRecipientGroup);
+		}
+		alertObject.put("alertNotifications", emailGroupArray);
+		
+		JSONArray selectedPluginsArray = new JSONArray();
+		for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
+			selectedPluginsArray.put(selectedPlugin);
+		}
+		alertObject.put("alertPlugins", selectedPluginsArray);
+		return alertObject;
+	}
     
     public static String generateAlertPluginsJson(List<String> loadedPlugins) throws JSONException {
     	JSONObject alertPluginsObject = new JSONObject();
@@ -392,29 +397,39 @@ public class BuildJsonObjectsUtil {
     public static String generateEmailGroupsJson(List<EmailRecipientGroup> emailRecipientGroupList) throws JSONException {
     	JSONArray emailArray = new JSONArray();
         for (EmailRecipientGroup emailGroup : emailRecipientGroupList) {
-            JSONObject emailObject = new JSONObject();
-            emailObject.put("id", emailGroup.getEmailRecipientGroupName());
-            emailObject.put("smtpHost", emailGroup.getSmtpServerhost());
-            emailObject.put("smtpUsername", emailGroup.getSmtpUsername());
-
-            //For Security reasons the password is never returned to the server after being set
-            //emailObject.put("smtpPassword", emailGroup.getSmtpPassword());
-
-            emailObject.put("smtpPort", emailGroup.getPort());
-            emailObject.put("smtpUseSSL", emailGroup.isUseSSL());
-
-            JSONArray emailRecipientArray = new JSONArray();
-            for (String emailAddress : emailGroup.getEmailRecipientList()) {
-                emailRecipientArray.put(emailAddress);
-            }
-
-            emailObject.put("emailAddresses", emailRecipientArray.toString());
+            JSONObject emailObject = generateEmailGroup(emailGroup);
 
             emailArray.put(emailObject);
         }
 
         return emailArray.toString();
     }
+
+	public static JSONObject generateEmailGroup(EmailRecipientGroup emailGroup)throws JSONException {
+		JSONObject emailObject = new JSONObject();
+		emailObject.put("id", emailGroup.getEmailRecipientGroupName());
+		emailObject.put("smtpHost", emailGroup.getSmtpServerhost() == null ? "" : emailGroup.getSmtpServerhost());
+		emailObject.put("smtpUsername", emailGroup.getSmtpUsername() == null ? "" : emailGroup.getSmtpUsername());
+
+		//For Security reasons the password is never returned to the server after being set
+		//emailObject.put("smtpPassword", emailGroup.getSmtpPassword());
+
+		emailObject.put("smtpPort", emailGroup.getPort() == null ? "" : emailGroup.getPort());
+		emailObject.put("smtpUseSSL", emailGroup.isUseSSL());
+
+		JSONArray emailRecipientArray = new JSONArray();
+		for (String emailAddress : emailGroup.getEmailRecipientList()) {
+		    emailRecipientArray.put(emailAddress);
+		}
+
+		if (emailGroup.getEmailRecipientList().size() == 0) {
+			emailObject.put("emailAddresses", "[]");
+		} else {
+			emailObject.put("emailAddresses", emailRecipientArray.toString());
+		}
+		
+		return emailObject;
+	}
 
     public static String buildUserData(String username, String userRole) throws JSONException {
         JSONObject userObject = new JSONObject();

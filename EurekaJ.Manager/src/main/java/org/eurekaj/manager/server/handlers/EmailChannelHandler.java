@@ -51,6 +51,7 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
                 if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
                     getAdministrationService().persistEmailRecipientGroup(emailRecipientGroup);
                 }
+                jsonResponse = BuildJsonObjectsUtil.generateEmailGroup(getAdministrationService().getEmailRecipientGroup(emailRecipientGroup.getEmailRecipientGroupName())).toString();
             } else if (isGet(e)) {
             	jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
                 log.debug("Got Email Groups:\n" + jsonResponse);
@@ -67,6 +68,7 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
+        log.info("returning email group: " + jsonResponse);
         writeContentsToBuffer(ctx, jsonResponse);
     }
 }
