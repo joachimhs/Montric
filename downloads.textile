@@ -7,19 +7,19 @@ title: Downloads By File
 EurekaJ Zip<br />
 <ul>
 <li>1.0.zip - 23 downloads</li>
-<li>1.0.1.zip - 75 downloads</li>
-<li>1.0.2.zip - 313 downloads</li>
-<li>1.0.3.zip - 3701 downloads</li>
+<li>1.0.1.zip - 76 downloads</li>
+<li>1.0.2.zip - 318 downloads</li>
+<li>1.0.3.zip - 3704 downloads</li>
 <li>1.0.4.zip - 34 downloads</li>
-<li>1.0.5.zip - 2076 downloads</li>
+<li>1.0.5.zip - 2319 downloads</li>
 </ul>
 EurekaJ Proxy Jar<br />
 <ul>
 <li>1.0-jar-with-dependencies.jar - 21 downloads</li>
-<li>1.0.1.-jar-with-dependencies.jar - 61 downloads</li>
-<li>1.0.2-jar-with-dependencies.jar - 39 downloads</li>
+<li>1.0.1.-jar-with-dependencies.jar - 62 downloads</li>
+<li>1.0.2-jar-with-dependencies.jar - 40 downloads</li>
 <li>1.0.3-jar-with-dependencies.jar - 396 downloads</li>
 <li>1.0.4-jar-with-dependencies.jar - 24 downloads</li>
-<li>1.0.5-jar-with-dependencies.jar - 290 downloads</li>
+<li>1.0.5-jar-with-dependencies.jar - 386 downloads</li>
 </ul>
 </div>
