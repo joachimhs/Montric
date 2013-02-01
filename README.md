@@ -1,6 +1,37 @@
 EurekaJ Profiler
 ======================================
- 
+
+# Moving towards 1.5
+EurekaJ is currently under heavy reconstruction. The Server side is migrating from Jetty to Netty, while the frontend 
+is migrating away from SproutCore towards Ember.js. Release 1.5 is an exciting release of EurekaJ and will include a number
+of new features that will make EurekaJ a lot more useable and approachable moving forward. 
+
+Sadly, most of the API calls will change slighty. So if you are passing in statistics to EurekaJ without using EurekaJ Proxy,
+you will have to update your methods. On the positive side the APIs in version 1.5 is a LOT cleaner and consistent. The
+method in which you send in statisitcs will also be simplified a lot in verison 1.5, making it possible to pass in 
+statistics from any source that can send text via HTTP (i.e. curl). 
+
+Haagen Software will also be hosting a live verison of EurekaJ, offered in a Software as a Service manner to make it easier 
+for you to get going if you don't want to operate your own installation of EurekaJ. 
+
+Version 1.5 will introduce the concepts of accounts, so that you can use a single installation of EurekaJ to monitor 
+multiple systems that you don't want to share data between. All users will be authenticated via Mozilla Persona. 
+
+##Screenshots
+Below you will find a few screenshots of what the current 1.5 development version looks like.
+
+###Viewing Statistics
+![Viewing Statistics] (http://stuff.haagen.name/ej1.png)
+
+###Configuring Charts
+![Configuring Charts] (http://stuff.haagen.name/ej2.png)
+
+###Administrering your account
+![Administrering your account] (http://stuff.haagen.name/ej3.png)
+
+###Disabling lines inside the charts
+![Disabling lines inside the charts] (http://stuff.haagen.name/ej4.png)
+
 EurekaJ is an Open Source, Standards based profiler tool for Java applications. 
 The project will develop a complete Java Profiler solution (EurekaJ Profiler) consisting 
 of an agent that can be installed and started together with the application that monitoring 
