@@ -163,7 +163,7 @@
 			<artifactId>netty</artifactId>
 			<version>3.5.8.Final</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.4</version>
@@ -172,6 +172,6 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.4</version>
-		</dependency>
+		</dependency-->
 	</dependencies>
 </project>

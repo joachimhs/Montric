@@ -1,7 +1,27 @@
+/*EurekaJ.ChartModel = DS.Model.extend({
+    series: DS.hasMany('EurekaJ.ChartSeriesModel'),
+    mainMenu: DS.belongsTo('EurekaJ.MainMenuModel')
+});
+
+EurekaJ.ChartSeriesModel = DS.Model.extend({
+    name: DS.attr('string'),
+    seriesValues: DS.hasMany('EurekaJ.ChartSeriesValueModel'),
+    chart: DS.belongsTo('EurekaJ.ChartModel')
+});
+
+EurekaJ.ChartSeriesValueModel = DS.Model.extend({
+    x: DS.attr('number'),
+    y: DS.attr('number')
+});*/
+
+EurekaJ.ChartModel = DS.Model.extend({
+    chartValue: DS.attr('string')
+});
+
 EurekaJ.MainMenuModel = DS.Model.extend({
     name: DS.attr('string'),
     nodeType: DS.attr('string'),
-    parentPath: DS.belongsTo('EurekaJ.MainMenuModel'),
+    parent_id: DS.attr('string'),//DS.belongsTo('EurekaJ.MainMenuModel'),
     isSelected: false,
     isExpanded: false,
     children: DS.hasMany('EurekaJ.MainMenuModel'),
@@ -13,56 +33,30 @@ EurekaJ.MainMenuModel = DS.Model.extend({
 
     isLeaf: function() {
         return this.get('children').get('length') == 0;
-    }.property('children').cacheable(),
-
-    selectedObserver: function() {
-        if (this.get('isSelected') === true) {
-            EurekaJ.router.get('mainController').selectNode(this);
-        } else {
-            EurekaJ.router.get('mainController').deselectNode(this);
-        }
-    }.observes('isSelected')
-});
-
-EurekaJ.MainMenuModel.reopenClass({
-    url: 'mainMenu.json'
+    }.property('children').cacheable()
 });
 
 EurekaJ.AdminMenuModel = DS.Model.extend({
     name: DS.attr('string'),
     nodeType: DS.attr('string'),
-    parentPath: DS.belongsTo('EurekaJ.AdminMenuModel'),
+    parent_id: DS.attr('string'),//DS.belongsTo('EurekaJ.MainMenuModel'),
     isSelected: false,
     isExpanded: false,
     children: DS.hasMany('EurekaJ.AdminMenuModel'),
-
-
+    chart: DS.belongsTo('EurekaJ.ChartModel'),
 
     hasChildren: function() {
         return this.get('children').get('length') > 0;
     }.property('children').cacheable(),
 
-    selectedObserver: function() {
-        if (this.get('isSelected') === true) {
-            EurekaJ.router.get('adminMenuController').selectNode(this);
-        } else {
-            EurekaJ.router.get('adminMenuController').deselectNode(this);
-        }
-    }.observes('isSelected')
+    isLeaf: function() {
+        return this.get('children').get('length') == 0;
+    }.property('children').cacheable()
 });
 
 EurekaJ.AdminMenuModel.reopenClass({
     url: 'mainMenu.json'
 });
-
-EurekaJ.ChartModel = DS.Model.extend({
-    chartValue: DS.attr('string')
-});
-
-EurekaJ.ChartModel.reopenClass({
-    url: 'chart.json'
-    //url: 'cumulativeLineData.json'
-})
 
 EurekaJ.TabModel = Ember.Object.extend({
     tabId: null,
@@ -73,7 +67,7 @@ EurekaJ.TabModel = Ember.Object.extend({
 
     hasView: function() {
         return this.get('tabView') != null;
-    }.property('tabView').cacheable()
+    }.property('tabView').cacheable(),
 });
 
 EurekaJ.AlertModel = DS.Model.extend({

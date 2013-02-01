@@ -1,4 +1,79 @@
-EurekaJ.router = Ember.Router.create({
+EurekaJ.Router.map(function() {
+    this.route("login", {path: "/"});
+    this.resource("main", {path: "/main"}, function() {
+        this.route("dashboard");
+        this.route("charts");
+        this.route("chartGroups");
+        this.route("alerts");
+        this.resource("administration", {path: "/administration"}, function() {
+            this.route('alerts');
+            this.route('chartGroups');
+            this.route('emailRecipients');
+            this.route('menuAdmin');
+        });
+    });
+});
+
+EurekaJ.ApplicationRoute = Ember.Route.extend({
+    events: {
+        doAdmin: function() {
+            this.transitionTo('administration.index');
+        }
+    },
+
+    setupController: function(controller, model) {
+        this._super(controller, model);
+        var chartOptionsModalController = this.controllerFor('chartOptionsModal');
+        chartOptionsModalController.set('applicationController', controller);
+    }
+});
+
+
+EurekaJ.LoginRoute = Ember.Route.extend({
+    events: {
+        doLogin: function() {
+            console.log('logging in!');
+            this.transitionTo('main.index');
+        }
+    }
+});
+
+EurekaJ.MainIndexRoute = Ember.Route.extend({
+    redirect: function() {
+        console.log('redirecting to Dashboard!');
+        this.transitionTo('main.dashboard');
+    }
+});
+
+EurekaJ.MainDashboardRoute = Ember.Route.extend({
+
+});
+
+EurekaJ.MainChartsRoute = Ember.Route.extend({
+    model: function() {
+        return EurekaJ.MainMenuModel.find();
+    },
+
+    setupController: function(controller, model) {
+        this._super(controller, model);
+        console.log('MainChartsRoute setupController: ' + controller);
+
+        EurekaJ.MainMenuModel.find();
+        var mainMenu = EurekaJ.store.filter(EurekaJ.MainMenuModel, function(data) {
+            if (data.get('parent_id') === null) { return true; }
+        });
+
+        var chartsController = this.controllerFor('charts');
+        var chartMenuController = this.controllerFor('chartMenu');
+        chartsController.set('mainChartsController', controller);
+        chartMenuController.set('mainChartsController', controller);
+
+        controller.set('rootNodes', mainMenu);
+        controller.set('content', EurekaJ.MainMenuModel.find());
+    }
+});
+
+/*EurekaJ.router = Ember.Router.create({
     enableLogging: true,
     //location: 'history',
     root: Ember.Route.extend({
@@ -260,4 +335,4 @@ EurekaJ.router = Ember.Router.create({
         })
 
     })
-});
+});*/

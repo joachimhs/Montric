@@ -28,8 +28,10 @@ import org.eurekaj.api.datatypes.TriggeredAlert;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.plugin.ManagerAlertPluginService;
+import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,27 +51,37 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
         String jsonResponse = "";
 
         try {
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            HttpRequest request = (HttpRequest)e.getMessage();
+            String uri = request.getUri();
+            String id = UriUtil.getIdFromUri(uri, "alert_models");
 
+            if (id != null) {
+                id = id.replaceAll("\\%20", " ");
+            }
+
+            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            log.info("Got: " + jsonObject.toString());
             if (jsonObject.has("getAlertPlugins")) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
                 log.debug("Got Alert Plugins:\n" + jsonResponse);
-            } else if (isPut(e) || isPost(e)) {
-                Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject);
+            } else if ((isPut(e) || isPost(e)) && id != null) {
+                Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject, id);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
-                }    
-                jsonResponse = BuildJsonObjectsUtil.generateAlertJSON(parsedAlert).toString();
+                }
+                JSONObject alertTopObject = new JSONObject();
+                alertTopObject.put("alert_model", BuildJsonObjectsUtil.generateAlertJSON(parsedAlert));
+
+                jsonResponse = alertTopObject.toString();
             } else if (jsonObject.has("getTriggeredAlerts")) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
                 List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
                 log.debug("Got Triggered Alerts:\n" + jsonResponse);
-            } else if (isDelete(e)) {
-                String alertName = jsonObject.getString("id");
-                getBerkeleyTreeMenuService().deleteAlert(alertName);
-                log.debug("Successfully deleted Alert with name:\n" + alertName);
+            } else if (isDelete(e) && id != null) {
+                getBerkeleyTreeMenuService().deleteAlert(id);
+                log.debug("Successfully deleted Alert with name:\n" + id);
             } else {
             	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
                 log.debug("Got Alerts:\n" + jsonResponse);

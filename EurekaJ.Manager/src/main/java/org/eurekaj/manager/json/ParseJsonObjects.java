@@ -44,38 +44,52 @@ import java.util.List;
 public class ParseJsonObjects {
 	private static Logger log = Logger.getLogger(ParseJsonObjects.class.getName());
 	
-    public static Alert parseAlertJson(JSONObject jsonAlert) {
+    public static Alert parseAlertJson(JSONObject jsonAlert, String id) throws JSONException {
         ManagerAlert parsedAlert = null;
 
         /*
          * {"alertWarningValue":15,"alertDelay":5,"alertType":null,"alertErrorValue":12,"alertActivated":true,"alertName":"Test"}
          */
-        if (jsonAlert.has("id")) {
+        if (jsonAlert.has("alert_model")) {
             parsedAlert = new ManagerAlert();
-            parsedAlert.setAlertName(parseStringFromJson(jsonAlert, "id"));
-            parsedAlert.setWarningValue(parseDoubleFromJson(jsonAlert, "alertWarningValue"));
-            parsedAlert.setErrorValue(parseDoubleFromJson(jsonAlert, "alertErrorValue"));
-            parsedAlert.setGuiPath(parseStringFromJson(jsonAlert, "alertSource"));
+            JSONObject alert = jsonAlert.getJSONObject("alert_model");
+            if (id != null) {
+                parsedAlert.setAlertName(id);
+            } else {
+                parsedAlert.setAlertName(parseStringFromJson(alert, "id"));
+            }
+
+            parsedAlert.setWarningValue(parseDoubleFromJson(alert, "alert_warning_value"));
+            parsedAlert.setErrorValue(parseDoubleFromJson(alert, "alert_error_value"));
+            parsedAlert.setGuiPath(parseStringFromJson(alert, "alert_source"));
             
-            Integer alertDelay = parseIntegerFromJson(jsonAlert, "alertDelay");
+            Integer alertDelay = parseIntegerFromJson(alert, "alert_delay");
             if (alertDelay == null) { alertDelay = 0; }
             parsedAlert.setAlertDelay(alertDelay.longValue());
             
-            parsedAlert.setActivated(parseBooleanFromJson(jsonAlert, "alertActivated"));
-            parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(jsonAlert, "alertType")));
-            parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(jsonAlert, "alertNotifications"));
-            parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(jsonAlert, "alertPlugins"));
+            parsedAlert.setActivated(parseBooleanFromJson(alert, "alert_activated"));
+            parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(alert, "alert_type")));
+            parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(alert, "alert_notifications"));
+            parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alert_plugins"));
         }
         return parsedAlert;
     }
 
-    public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup) {
+    public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup, String id) throws JSONException {
         ManagerGroupedStatistics groupedStatistics = null;
 
-        if (jsonGroup.has("id")) {
+        //{"chart_group_model":{"id":"New Group","chart_group_path":null}}
+
+        if (jsonGroup.has("chart_group_model")) {
+            JSONObject chartGroupObject = jsonGroup.getJSONObject("chart_group_model");
             groupedStatistics = new ManagerGroupedStatistics();
-            groupedStatistics.setName(parseStringFromJson(jsonGroup, "id"));
-            groupedStatistics.setGroupedPathList(getStringArrayFromJson(jsonGroup, "chartGroupPath"));
+            if (id != null) {
+                groupedStatistics.setName(id);
+            } else {
+                groupedStatistics.setName(parseStringFromJson(chartGroupObject, "id"));
+            }
+
+            groupedStatistics.setGroupedPathList(getStringArrayFromJson(chartGroupObject, "chart_group_path"));
         }
 
         return groupedStatistics;
@@ -96,16 +110,24 @@ public class ParseJsonObjects {
         return liveStatistics;
     }
 
-    public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup) {
+    public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup, String id) throws JSONException {
         ManagerEmailRecipientGroup emailRecipientGroup = new ManagerEmailRecipientGroup();
 
-        emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(jsonEmailGroup, "id"));
-        emailRecipientGroup.setPort(parseIntegerFromJson(jsonEmailGroup, "smtpPort"));
-        emailRecipientGroup.setUseSSL(parseBooleanFromJson(jsonEmailGroup, "smtpUseSSL"));
-        emailRecipientGroup.setSmtpServerhost(parseStringFromJson(jsonEmailGroup, "smtpHost"));
-        emailRecipientGroup.setSmtpUsername(parseStringFromJson(jsonEmailGroup, "smtpUsername"));
-        emailRecipientGroup.setSmtpPassword(parseStringFromJson(jsonEmailGroup, "smtpPassword"));
-        emailRecipientGroup.setEmailRecipientList(getStringArrayFromJson(jsonEmailGroup, "emailAddresses"));
+        if (jsonEmailGroup.has("email_group_model")) {
+            JSONObject eg = jsonEmailGroup.getJSONObject("email_group_model");
+            if (id != null) {
+                emailRecipientGroup.setEmailRecipientGroupName(id);
+            } else {
+                emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(eg, "id"));
+            }
+
+            emailRecipientGroup.setPort(parseIntegerFromJson(eg, "smtp_port"));
+            emailRecipientGroup.setUseSSL(parseBooleanFromJson(eg, "smtp_use_ssl"));
+            emailRecipientGroup.setSmtpServerhost(parseStringFromJson(eg, "smtp_host"));
+            emailRecipientGroup.setSmtpUsername(parseStringFromJson(eg, "smtp_username"));
+            emailRecipientGroup.setSmtpPassword(parseStringFromJson(eg, "smtp_password"));
+            emailRecipientGroup.setEmailRecipientList(getStringArrayFromJson(eg, "email_addresses"));
+        }
 
         return emailRecipientGroup;
     }
@@ -133,7 +155,6 @@ public class ParseJsonObjects {
             }
         } catch (JSONException e) {
             log.info("json array exception: " + e.getMessage());
-            e.printStackTrace();
         }
         
         if (groupJsonArray == null) {
@@ -146,7 +167,6 @@ public class ParseJsonObjects {
                 }
             } catch (JSONException e) {
                 log.info("json array exception: " + e.getMessage());
-                e.printStackTrace();
             }
         }
 

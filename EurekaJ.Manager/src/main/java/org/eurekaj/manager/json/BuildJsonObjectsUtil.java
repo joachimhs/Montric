@@ -87,7 +87,7 @@ public class BuildJsonObjectsUtil {
             buildAlertNode(alertList, nodesBuilt);
         }
 
-        if (includeChartType == null || (includeChartType != null && includeChartType.equals("groupedStatistics"))) {
+        if (includeChartType == null || (includeChartType != null && includeChartType.equals("grouped_statistics"))) {
             buildGroupedStatisticNodes(groupedStatisticsList, nodesBuilt);
         }
 
@@ -155,12 +155,12 @@ public class BuildJsonObjectsUtil {
 
     private static void buildGroupedStatisticNodes(List<GroupedStatistics> groupedStatisticsList, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
         if (!groupedStatisticsList.isEmpty()) {
-        	nodesBuilt.put("Grouped Statistics", buildTreeNode("Grouped Statistics", nodesBuilt, "groupedStatistics"));
+        	nodesBuilt.put("Grouped Statistics", buildTreeNode("Grouped Statistics", nodesBuilt, "grouped_statistics"));
         }
 
         for (GroupedStatistics groupedStatistics : groupedStatisticsList) {
             String guiPath = "Grouped Statistics:" + groupedStatistics.getName();
-            JSONObject jsonNode = buildTreeNode(guiPath, nodesBuilt, "groupedStatistics");
+            JSONObject jsonNode = buildTreeNode(guiPath, nodesBuilt, "grouped_statistics");
             nodesBuilt.put(guiPath, jsonNode);
         }
     }
@@ -169,8 +169,8 @@ public class BuildJsonObjectsUtil {
         JSONObject treeJson = new JSONObject();
         treeJson.put("id", guiPath);
         treeJson.put("name", guiPath);
-        treeJson.put("parentPath", JSONObject.NULL);
-        treeJson.put("nodeType", type);
+        treeJson.put("parent_id", JSONObject.NULL);
+        treeJson.put("node_type", type);
         treeJson.put("children", new JSONArray());
 
         String chartId = "";
@@ -178,17 +178,17 @@ public class BuildJsonObjectsUtil {
             chartId = guiPath;
         } else if (type.equalsIgnoreCase("alert")) {
         	chartId = "_alert_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
-        } else if (type.equals("groupedStatistics")) {
+        } else if (type.equals("grouped_statistics")) {
         	chartId = "_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
         }
 
-        treeJson.put("chart", chartId);
+        treeJson.put("chart_id", chartId);
 
         if (guiPath.contains(":")) {
             //Split GUI Path into name and parent
             treeJson.put("name", getTreeNodeName(guiPath));
             String parentPath = getParentPath(guiPath);
-            treeJson.put("parentPath", parentPath);
+            treeJson.put("parent_id", parentPath);
 
             //Mark parent objects as having children nodes
             if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
@@ -239,6 +239,111 @@ public class BuildJsonObjectsUtil {
     }
 
     public static String generateChartData(String chartId, String label, XYDataSetCollection xyCollection, Long chartOffsetMs) throws JSONException {
+    	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        nf.setMaximumFractionDigits(3);
+        nf.setGroupingUsed(false);
+        
+    	JSONObject containerObject = new JSONObject();
+        JSONObject chartModelObject = new JSONObject();
+        chartModelObject.put("id", chartId);
+
+        JSONArray seriesArray = new JSONArray();
+        for (XYDataList series : xyCollection.getDataList()) {
+        	JSONObject seriesObject = new JSONObject();
+			seriesObject.put("id", series.getLabel());
+			seriesObject.put("name", series.getLabel());
+			JSONArray seriesValuesArray = new JSONArray();
+			for (XYDataPoint dp : series.getDataPointList()) {
+				JSONObject seriesValueObject = new JSONObject();
+				seriesValueObject.put("x", nf.format(dp.getX().longValue() + chartOffsetMs));
+				String yVal = null;
+                if (dp.getY() != null) {
+                    yVal = nf.format(dp.getY());
+                } else {
+                	yVal = new Double(Math.random() * 100d).toString();
+                }
+                
+        		seriesValueObject.put("y", yVal);
+        		seriesValueObject.put("id", series.getLabel() + "::" + nf.format(dp.getX().longValue() + chartOffsetMs));
+        		seriesValueObject.put("series", series.getLabel());
+        		
+				seriesValuesArray.put(seriesValueObject);
+			}
+			seriesObject.put("series_values", seriesValuesArray);
+			seriesObject.put("chart", chartId);
+			seriesArray.put(seriesObject);
+        }
+        chartModelObject.put("series", seriesArray);
+        containerObject.put("chart_model", chartModelObject);
+        
+        //containerObject.put("chart_series_models", generateChartSeries(chartId, label, xyCollection, chartOffsetMs));
+        //containerObject.put("chart_series_value_models", generateChartSerieValues(chartId, label, xyCollection, chartOffsetMs));
+        
+        return containerObject.toString();
+    }
+    
+    public static JSONArray generateChartSeries(String chartId, String label, XYDataSetCollection xyCollection, Long chartOffsetMs) throws JSONException {
+    	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        nf.setMaximumFractionDigits(3);
+        nf.setGroupingUsed(false);
+        
+        JSONArray seriesArray = new JSONArray();
+		for (XYDataList series : xyCollection.getDataList()) {
+			JSONObject seriesObject = new JSONObject();
+			seriesObject.put("id", series.getLabel());
+			seriesObject.put("name", series.getLabel());
+			JSONArray seriesValuesArray = new JSONArray();
+			for (XYDataPoint dp : series.getDataPointList()) {
+				JSONObject seriesValueObject = new JSONObject();
+				seriesValueObject.put("x", nf.format(dp.getX().longValue() + chartOffsetMs));
+				String yVal = null;
+                if (dp.getY() != null) {
+                    yVal = nf.format(dp.getY());
+                }
+                
+        		seriesValueObject.put("y", yVal);
+        		seriesValueObject.put("id", series.getLabel() + "::" + nf.format(dp.getX().longValue() + chartOffsetMs));
+        		
+				seriesValuesArray.put(seriesValueObject);
+			}
+			seriesObject.put("series_values", seriesValuesArray);
+			seriesObject.put("chart", chartId);
+			seriesArray.put(seriesObject);
+		}
+		
+		return seriesArray;
+    }
+    
+    public static JSONArray generateChartSerieValues(String chartId, String label, XYDataSetCollection xyCollection, Long chartOffsetMs) throws JSONException {
+    	NumberFormat nf = NumberFormat.getNumberInstance(Locale.US);
+        nf.setMaximumFractionDigits(3);
+        nf.setGroupingUsed(false);
+        
+        JSONArray seriesArray = new JSONArray();
+        
+        for (XYDataList series : xyCollection.getDataList()) {
+        	for (XYDataPoint dp : series.getDataPointList()) {
+        		JSONObject seriesValueObject = new JSONObject();
+        		seriesValueObject.put("id", series.getLabel() + "::" + nf.format(dp.getX().longValue() + chartOffsetMs));
+        		seriesValueObject.put("x", nf.format(dp.getX().longValue() + chartOffsetMs));
+        		
+        		String yVal = null;
+                if (dp.getY() != null) {
+                    yVal = nf.format(dp.getY());
+                }
+                
+        		seriesValueObject.put("y", yVal);
+        		
+        		seriesValueObject.put("series", series.getLabel());
+        		
+        		seriesArray.put(seriesValueObject);
+        	}
+        }
+        
+        return seriesArray;
+    }
+
+    public static String generateChartData2(String chartId, String label, XYDataSetCollection xyCollection, Long chartOffsetMs) throws JSONException {
         //content: [ {label: 'set1', data:[[0,0]]}, {label: 'set2', data:[[0,0]]} ],
 
         StringBuilder dataArraySB = new StringBuilder();
@@ -249,10 +354,10 @@ public class BuildJsonObjectsUtil {
 
         //[{"label":"set1", "data":[[1,1],[2,2],[3,3]]} ]
 
-        dataArraySB.append("{\"id\": \"" + chartId + "\", \"chartValue\": \"[ ");
+        dataArraySB.append("{\"chart_model\": {\"id\": \"" + chartId + "\", \"chart_value\": \"[ ");
         int collectionIndex = 0;
         for (XYDataList list : xyCollection.getDataList()) {
-            dataArraySB.append("{\\\"key\\\": \\\"").append(list.getLabel()).append("\\\", \\\"values\\\": [");
+            dataArraySB.append("{\\\"key\\\": \\\"").append(list.getLabel().replaceAll("\\%20", " ")).append("\\\", \\\"values\\\": [");
             for (int i = 0; i < list.size() - 1; i++) {
                 XYDataPoint p = list.get(i);
                 String pointLabel = "";
@@ -296,7 +401,7 @@ public class BuildJsonObjectsUtil {
         }
         dataArraySB.append("]\"");
 
-        dataArraySB.append("}");
+        dataArraySB.append("}}");
 
         return dataArraySB.toString();
     }
@@ -308,31 +413,33 @@ public class BuildJsonObjectsUtil {
 
             alertArray.put(alertObject);
         }
-        
-        return alertArray.toString();
+        JSONObject alertObject = new JSONObject();
+        alertObject.put("alert_models", alertArray);
+        return alertObject.toString();
     }
 
 	public static JSONObject generateAlertJSON(Alert alert) throws JSONException {
 		JSONObject alertObject = new JSONObject();
 		alertObject.put("id", alert.getAlertName());
-		alertObject.put("alertWarningValue", alert.getWarningValue());
-		alertObject.put("alertErrorValue", alert.getErrorValue());
-		alertObject.put("alertSource", alert.getGuiPath());
-		alertObject.put("alertDelay", alert.getAlertDelay());
-		alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
-		alertObject.put("alertActivated", alert.isActivated());
+		alertObject.put("alert_warning_value", alert.getWarningValue());
+		alertObject.put("alert_error_value", alert.getErrorValue());
+		alertObject.put("alert_source", alert.getGuiPath());
+		alertObject.put("alert_delay", alert.getAlertDelay());
+		alertObject.put("alert_type", alert.getSelectedAlertType().getTypeName());
+		alertObject.put("alert_activated", alert.isActivated());
 
 		JSONArray emailGroupArray = new JSONArray();
 		for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
 		    emailGroupArray.put(emailRecipientGroup);
 		}
-		alertObject.put("alertNotifications", emailGroupArray);
+		alertObject.put("alert_notifications", emailGroupArray);
 		
 		JSONArray selectedPluginsArray = new JSONArray();
 		for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
 			selectedPluginsArray.put(selectedPlugin);
 		}
-		alertObject.put("alertPlugins", selectedPluginsArray);
+		alertObject.put("alert_plugins", selectedPluginsArray);
+
 		return alertObject;
 	}
     
@@ -373,13 +480,13 @@ public class BuildJsonObjectsUtil {
         return triggeredAlertsObject.toString();
     }
 
-    public static String generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
+    public static JSONArray generateInstrumentationGroupsJson(List<GroupedStatistics> groupedStatisticsList) throws JSONException {
         JSONArray igArray = new JSONArray();
         for (GroupedStatistics gs : groupedStatisticsList) {
             igArray.put(generateChartGroupJson(gs));
         }
 
-        return igArray.toString();
+        return igArray;
     }
     
     public static JSONObject generateChartGroupJson(GroupedStatistics groupedStatistics) throws JSONException {
@@ -387,14 +494,20 @@ public class BuildJsonObjectsUtil {
         ig.put("id", groupedStatistics.getName());
         JSONArray groupsArray = new JSONArray();
         for (String group : groupedStatistics.getGroupedPathList()) {
+            String pathList = "";
+            for (String path : groupedStatistics.getGroupedPathList()) {
+                pathList += path + "; ";
+            }
+            log.info("GroupedStatisticsPath from DB: " + pathList);
+
             groupsArray.put(group);
         }
-        ig.put("chartGroupPath", groupsArray.toString());
-        
+        ig.put("chart_group_path", groupsArray.toString());
+
         return ig;
     }
 
-    public static String generateEmailGroupsJson(List<EmailRecipientGroup> emailRecipientGroupList) throws JSONException {
+    public static JSONArray generateEmailGroupsJson(List<EmailRecipientGroup> emailRecipientGroupList) throws JSONException {
     	JSONArray emailArray = new JSONArray();
         for (EmailRecipientGroup emailGroup : emailRecipientGroupList) {
             JSONObject emailObject = generateEmailGroup(emailGroup);
@@ -402,20 +515,20 @@ public class BuildJsonObjectsUtil {
             emailArray.put(emailObject);
         }
 
-        return emailArray.toString();
+        return emailArray;
     }
 
 	public static JSONObject generateEmailGroup(EmailRecipientGroup emailGroup)throws JSONException {
 		JSONObject emailObject = new JSONObject();
 		emailObject.put("id", emailGroup.getEmailRecipientGroupName());
-		emailObject.put("smtpHost", emailGroup.getSmtpServerhost() == null ? "" : emailGroup.getSmtpServerhost());
-		emailObject.put("smtpUsername", emailGroup.getSmtpUsername() == null ? "" : emailGroup.getSmtpUsername());
+		emailObject.put("smtp_host", emailGroup.getSmtpServerhost() == null ? "" : emailGroup.getSmtpServerhost());
+		emailObject.put("smtp_username", emailGroup.getSmtpUsername() == null ? "" : emailGroup.getSmtpUsername());
 
 		//For Security reasons the password is never returned to the server after being set
 		//emailObject.put("smtpPassword", emailGroup.getSmtpPassword());
 
-		emailObject.put("smtpPort", emailGroup.getPort() == null ? "" : emailGroup.getPort());
-		emailObject.put("smtpUseSSL", emailGroup.isUseSSL());
+		emailObject.put("smtp_port", emailGroup.getPort() == null ? "" : emailGroup.getPort());
+		emailObject.put("smtp_use_ssl", emailGroup.isUseSSL());
 
 		JSONArray emailRecipientArray = new JSONArray();
 		for (String emailAddress : emailGroup.getEmailRecipientList()) {
@@ -423,9 +536,9 @@ public class BuildJsonObjectsUtil {
 		}
 
 		if (emailGroup.getEmailRecipientList().size() == 0) {
-			emailObject.put("emailAddresses", "[]");
+			emailObject.put("email_addresses", "[]");
 		} else {
-			emailObject.put("emailAddresses", emailRecipientArray.toString());
+			emailObject.put("email_addresses", emailRecipientArray.toString());
 		}
 		
 		return emailObject;

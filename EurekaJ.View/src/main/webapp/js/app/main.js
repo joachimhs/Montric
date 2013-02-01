@@ -1,1 +1,1 @@
-EurekaJ.initialize(EurekaJ.router);
+EurekaJ.initialize();

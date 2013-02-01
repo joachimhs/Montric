@@ -1,72 +1,38 @@
-EurekaJ.ApplicationView = Ember.View.extend({
-    elementId: 'mainArea',
-    templateName: 'application'
-});
-
-EurekaJ.LoginView = Ember.View.extend({
-    elementId: 'loginArea',
-    templateName: 'login-page'
-});
-
-EurekaJ.MainView = Ember.View.extend({
-    elementId: 'mainContentArea',
-    templateName: 'main'
-});
-
-EurekaJ.MenuView = Ember.View.extend({
-    elementId: 'menuArea',
-    templateName: 'main-menu'
-});
-
 EurekaJ.HeaderView = Ember.View.extend({
-    elementId: 'headerArea',
-    templateName: 'header',
-    tagName: 'div'
+    elementId: 'headerArea'
 });
 
-EurekaJ.AdminView = Ember.View.extend({
-    elementId: 'adminArea',
-    templateName: 'admin'
+EurekaJ.MainDashboardView = Ember.View.extend({
+    elementId: 'mainContentArea'
 });
 
-EurekaJ.AdminTabContentView = Ember.View.extend({
-    elementId: 'adminTabContentArea',
-    templateName: 'adminTabContent'
+EurekaJ.ChartsView = Ember.View.extend({
+    elementId: 'chartsArea',
+    templateName: 'charts'
 });
 
-EurekaJ.AdminAlertView = Ember.View.extend({
-    elementId: 'alertTabView',
-    templateName: 'alertTabContent'
+EurekaJ.ChartMenuView = Ember.View.extend({
+    elementId: 'menuArea'
 });
 
-EurekaJ.AdminChartGroupView = Ember.View.extend({
-    elementId: 'chartGroupTabView',
-    templateName: 'chartGroupTabContent'
+EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
+    tagName: 'button',
+    classNames: ['button', 'btn-info', 'btn-mini'],
+    disabled: false,
+
+    click: function() {
+        if (!this.get('disabled')) {
+            this.triggerAction();
+        }
+    },
+
+    template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
 });
 
-EurekaJ.AdminEmailGroupView = Ember.View.extend({
-    elementId: 'emailRecipientsTabView',
-    templateName: 'emailRecipientsTabContent'
+EurekaJ.ChartOptionsModalView = Ember.View.extend({
+    elementId: "chartOptionsModal",
+    classNames: ["modal",  "hide"]
 });
-
-EurekaJ.AdminTabContentView = Ember.View.extend({
-    elementId: 'menuAdminTabView',
-    templateName: 'menuAdminTabContent'
-});
-
-
-EurekaJ.BrowserView = Ember.View.extend({
-    templateName: 'browser-template'
-});
-
-EurekaJ.BrowserListView = Ember.View.extend({
-    templateName: 'browser-list-template'
-});
-
-EurekaJ.BrowserItemView = Ember.View.extend({
-    templateName: 'browser-item-template'
-});
-
 
 EurekaJ.LiveChartOptionsView = Ember.View.extend(Ember.TargetActionSupport, {
     templateName: 'live-chart-options',
@@ -83,31 +49,17 @@ EurekaJ.HistoricalChartOptionsView = Ember.View.extend(Ember.TargetActionSupport
 
 });
 
-/** Bootstrap Views **/
-EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
-    tagName: 'button',
-    classNames: ['button'],
-    disabled: false,
+EurekaJ.Select = Ember.Select.extend({
+    //JHS: The following overrides the Ember.Select code. Fixes a bug in 1.0-pre
+    //where the selection would always be the first item in the list when the
+    //view is first rendered. This will be fixed in 1.0-final
+    _triggerChange: function() {
+        var selection = this.get('selection');
+        var value = this.get('value');
 
-    click: function() {
-        if (!this.get('disabled')) {
-            this.triggerAction();
-        }
-    },
+        if (selection) { this.selectionDidChange(); }
+        if (value) { this.valueDidChange(); }
 
-    template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
-});
-
-EurekaJ.ChartOptionsButton = EurekaJ.BootstrapButton.extend({
-    click: function() {
-        $("#chartOptionsModal").modal({show: true});
-    }
-})
-
-EurekaJ.AdministrationButton = EurekaJ.BootstrapButton.extend({
-    click: function() {
-        EurekaJ.log('EurekaJ.AdministrationButton');
-        EurekaJ.get('router').send('doAdmin')
+        this._change();
     }
 });
-//** //Bootstrap Views **/

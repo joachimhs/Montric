@@ -33,6 +33,7 @@ import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.util.ChartUtil;
+import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -74,12 +75,12 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         return chartResolution;
     }
 
-    private boolean isAlertChart(JSONObject jsonRequest) throws JSONException {
-        return jsonRequest.has("id") && jsonRequest.getString("id").startsWith("_alert_:");
+    private boolean isAlertChart(String id) throws JSONException {
+        return id.startsWith("_alert_:");
     }
 
-    private boolean isGroupedStatisticsChart(JSONObject jsonRequest) throws JSONException {
-        return jsonRequest.has("id") && jsonRequest.getString("id").startsWith("_gs_:");
+    private boolean isGroupedStatisticsChart(String id) throws JSONException {
+        return id.startsWith("_gs_:");
     }
 
     protected Long getFromPeriod(int chartTimespan, JSONObject jsonRequest) {
@@ -114,11 +115,30 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
     protected Long getChartOffset(JSONObject jsonRequest) throws JSONException {
         long chartOffset = 0;
-        if (jsonRequest.has("chartOffsetMs")) {
-            chartOffset = jsonRequest.getLong("chartOffsetMs");
+        if (jsonRequest.has("tz")) {
+            chartOffset = jsonRequest.getLong("tz") * 60 * 60 * 1000;
         }
 
         return chartOffset;
+    }
+
+    private JSONObject getKeyObjectFromQueryString(String queryString) throws JSONException {
+        JSONObject keyObject = new JSONObject();
+
+        if (queryString != null && queryString.contains("=")) {
+            for (String qsPart : queryString.split("\\&")) {
+                if (qsPart.startsWith("?")) {
+                    qsPart = qsPart.substring(1);
+                }
+                log.info("Found QS Part: " + qsPart);
+                String[] keyValue = qsPart.split("=");
+                if (keyValue.length == 2) {
+                    keyObject.put(keyValue[0], keyValue[1]);
+                }
+            }
+        }
+
+        return keyObject;
     }
 
     @Override
@@ -127,17 +147,20 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
         HttpRequest request = (HttpRequest)e.getMessage();
         String uri = request.getUri();
-        String decoded = URLDecoder.decode(uri.substring(uri.lastIndexOf('?')+1, uri.length()), "UTF-8");
-        JSONObject keyObject = new JSONObject(new JSONTokener(decoded));
-        String id = null;
-        
-        if (keyObject.has("id")) {
-        	id = keyObject.get("id").toString();
+        String id = UriUtil.getIdFromUri(uri, "chart_models");
+
+
+        JSONObject keyObject = new JSONObject();
+
+        if (id != null) {
+            if (id.indexOf("?") > 0) {
+                keyObject = getKeyObjectFromQueryString(id.substring(id.indexOf("?")));
+                id = id.substring(0, id.indexOf("?"));
+            }
         }
-        
-        log.info("ChartChannelHandler received JSON: " + keyObject.toString());
-        
-        
+
+        log.info("id: " + id);
+        log.info("keyObject: " + keyObject.toString());
         try {
 
             if (id != null) {
@@ -147,7 +170,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
                 int chartTimespan = getChartTimeSpan(keyObject);
                 int chartResolution = getChartResolution(keyObject);
-                long chartoffset = getChartOffset(keyObject);
+                long chartOffset = getChartOffset(keyObject);
 
                 Long fromPeriod = getFromPeriod(chartTimespan, keyObject);
                 Long toPeriod = getToPeriod(keyObject);
@@ -159,8 +182,10 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                 XYDataSetCollection valueCollection = new XYDataSetCollection();
 
                 //TODO: This if-else code block needs refactoring. Its not DRY
-                if (isAlertChart(keyObject)) {
-                    String alertName = pathFromClient.substring(8, pathFromClient.length());
+                if (isAlertChart(id)) {
+                    id = id.replaceAll("\\%20", " ");
+                    String alertName = id.substring(8, id.length());
+                    log.info("isAlert! " + alertName);
                     alert = getBerkeleyTreeMenuService().getAlert(alertName);
                     if (alert != null) {
                         chartPath = alert.getGuiPath();
@@ -172,13 +197,21 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                     valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
                     valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.WARNING, fromPeriod * 15000, toPeriod * 15000));
-                } else if (isGroupedStatisticsChart(keyObject)) {
-                    chartPath = pathFromClient;
-                    String groupName = pathFromClient.substring(5, pathFromClient.length());
+
+                    log.info("alert: " + alert);
+                    log.info("chartPath: " + chartPath);
+                } else if (isGroupedStatisticsChart(id)) {
+                    id = id.replaceAll("\\%20", " ");
+                    chartPath = id;
+                    String groupName = id.substring(5, id.length());
+
+                    log.info("isGroupedStat! " + groupName);
                     groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName);
                     if (groupedStatistics != null) {
+                        log.info("groupedStats: " + groupedStatistics.getName() + " :. " + groupedStatistics.getGroupedPathList().size());
                         seriesLabel = "Grouped Statistics: " + groupedStatistics.getName();
                         for (String gsPath : groupedStatistics.getGroupedPathList()) {
+                            log.info("\tgroupedStats Path: " + gsPath);
                             liveList = getBerkeleyTreeMenuService().getLiveStatistics(gsPath, fromPeriod, toPeriod);
                             Collections.sort(liveList);
                             for (XYDataList dataList : ChartUtil.generateChart(liveList, gsPath, fromPeriod * 15000, toPeriod * 15000, chartResolution).getDataList()) {
@@ -187,7 +220,9 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                         }
                     }
                 } else {
-                    chartPath = pathFromClient;
+                    id = id.replaceAll("\\%20", " ");
+                    chartPath = id;
+                    log.info("ID: " + id);
                     seriesLabel = chartPath;
                     liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, fromPeriod, toPeriod);
                     Collections.sort(liveList);
@@ -195,11 +230,13 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                 }
 
                 TreeMenuNode treeMenuNode = getBerkeleyTreeMenuService().getTreeMenu(chartPath);
-                if (treeMenuNode != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
-                    jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection, chartoffset);
-                } else {
-                    jsonResponse = "{\"instrumentationNode\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
-                }
+                //if (treeMenuNode != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
+                jsonResponse = BuildJsonObjectsUtil.generateChartData2(chartId, chartPath, valueCollection, chartOffset);
+
+
+                //} else {
+                //   jsonResponse = "{\"chart_model\": \"" + seriesLabel + "\", \"table\": " + BuildJsonObjectsUtil.generateArrayOfEndNodesStartingWith(getBerkeleyTreeMenuService().getTreeMenu(), seriesLabel) + ", \"chart\": null}";
+                //}
 
                 
                 log.debug("Got Chart Data:\n" + jsonResponse);

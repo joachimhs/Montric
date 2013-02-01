@@ -24,8 +24,10 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
+import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,21 +47,32 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            HttpRequest request = (HttpRequest)e.getMessage();
+            String uri = request.getUri();
+            String id = UriUtil.getIdFromUri(uri, "chart_group_models");
+
+            if (id != null) {
+                id = id.replaceAll("\\%20", " ");
+            }
 
             log.info("got chartGroup JSON" + jsonObject.toString());
             
             if (isPut(e) || isPost(e)) {
-            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject);
+            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject, id);
                 if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
-                jsonResponse = BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics).toString();
+                JSONObject topObject = new JSONObject();
+                topObject.put("chart_group_model", BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics));
+                jsonResponse = topObject.toString();
             } else if (isGet(e)) {
-            	jsonResponse = BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics());
+                JSONObject topObject = new JSONObject();
+                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics()));
+
+            	jsonResponse = topObject.toString();
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);
-            } else if (isDelete(e)) {
-            	String groupName = jsonObject.getString("id");
-                getBerkeleyTreeMenuService().deleteChartGroup(groupName);
+            } else if (isDelete(e) && id != null) {
+                getBerkeleyTreeMenuService().deleteChartGroup(id);
             }
 
         } catch (JSONException jsonException) {
@@ -69,5 +82,4 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
         log.info("Returning JSON from chartGroupHandler: '" + jsonResponse + "'");
         writeContentsToBuffer(ctx, jsonResponse);
 	}
-	
-    }
+}

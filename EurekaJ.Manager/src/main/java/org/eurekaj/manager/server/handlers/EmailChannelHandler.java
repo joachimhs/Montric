@@ -24,8 +24,10 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
+import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,20 +46,37 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
         String jsonResponse = "";
 
         try {
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            HttpRequest request = (HttpRequest)e.getMessage();
+            String uri = request.getUri();
+            log.info(uri);
+            String id = UriUtil.getIdFromUri(uri, "email_group_models");
 
+            if (id != null) {
+                id = id.replaceAll("\\%20", " ");
+            }
+
+            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+            log.info(jsonObject.toString());
             if (isPut(e) || isPost(e)) {
-            	EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject);
+            	EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject, id);
+
+                log.info("ID:" + emailRecipientGroup.getEmailRecipientGroupName());
+
                 if (emailRecipientGroup != null && emailRecipientGroup.getEmailRecipientGroupName() != null && emailRecipientGroup.getEmailRecipientGroupName().length() > 0) {
                     getAdministrationService().persistEmailRecipientGroup(emailRecipientGroup);
                 }
-                jsonResponse = BuildJsonObjectsUtil.generateEmailGroup(getAdministrationService().getEmailRecipientGroup(emailRecipientGroup.getEmailRecipientGroupName())).toString();
+
+                JSONObject topObject = new JSONObject();
+                topObject.put("email_group_model", BuildJsonObjectsUtil.generateEmailGroup(getAdministrationService().getEmailRecipientGroup(emailRecipientGroup.getEmailRecipientGroupName())));
+
+                jsonResponse = topObject.toString();
             } else if (isGet(e)) {
-            	jsonResponse = BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups());
+                JSONObject topObject = new JSONObject();
+                topObject.put("email_group_models", BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups()));
+            	jsonResponse = topObject.toString();
                 log.debug("Got Email Groups:\n" + jsonResponse);
-            } else if (isDelete(e)) {
-            	String groupName = jsonObject.getString("id");
-                getAdministrationService().deleteEmailRecipientGroup(groupName);
+            } else if (isDelete(e) && id != null) {
+                getAdministrationService().deleteEmailRecipientGroup(id);
             }
             
             if ((jsonObject.has("getEmailRecipient"))) {

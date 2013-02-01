@@ -6,182 +6,58 @@ var EurekaJ = Ember.Application.create({
     }
 });
 
-//Removing the Camelcase-to-dash convention from Ember Data
-DS.Model.reopen({
-    namingConvention: {
-        keyToJSONKey: function(key) {
-            return key;
-        },
-
-        foreignKey: function(key) {
-            return key;
-        }
-    }
-});
-
-DS.Model.reopen({
-    reload: function() {
-        if (!this.get('isDirty') && this.get('isLoaded')) {
-            var store = this.get('store'),
-                adapter = store.get('adapter');
-
-            adapter.find(store, this.constructor, this.get('id'));
-        }
-    }
-});
-
-EurekaJ.Serializer = DS.Serializer.extend({
-    addBelongsTo: function(hash, record, key, relationship) {
-        hash[key] = record.get(key + ".id");
-    },
-
-    addHasMany: function(hash, record, key, relationship) {
-        hash[key] = record.get(key).getEach('id');
-    }
-}),
-
-EurekaJ.Adapter = DS.Adapter.create({
-    serializer: EurekaJ.Serializer.create(),
-
-    findAll: function(store, type) {
-        var url = type.url;
-
-        EurekaJ.log('finding all: type: ' + type + ' url: ' + url);
-
-        requestStringJson = null;
-        if (type === EurekaJ.AdminMenuModel) {
-            requestStringJson = {filterChartType: 'chart'};
-        }
-
-        if (requestStringJson) {
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'),
-                contentType: 'application/json',
-                success: function(data) { EurekaJ.store.loadMany(type, data); }
-            });
-        } else {
-            $.ajax({
-                type: 'GET',
-                url: url,
-                contentType: 'application/json',
-                success: function(data) { EurekaJ.store.loadMany(type, data); }
-            });
-        }
-
-    },
-    
+EurekaJ.Adapter = DS.RESTAdapter.extend({
     find: function(store, type, id) {
-    	var url = type.url;
+        var root = this.rootForType(type);
+        var queryString = "";
 
-        var requestStringJson = {
-            id: id
-        };
-
-        if (type === EurekaJ.ChartModel) {
-            if (EurekaJ.appValuesController.get('showLiveCharts')) {
-                requestStringJson.ts = EurekaJ.appValuesController.get('selectedChartTimespan.timespanValue');
-                requestStringJson.rs = EurekaJ.appValuesController.get('selectedChartResolution.chartResolutionValue');
+        if (type === EurekaJ.ChartModel){
+            queryString = "?tz=" + EurekaJ.get('selectedTimezone');
+            if (EurekaJ.get('showLiveCharts')) {
+                queryString += "&ts=" + EurekaJ.get('selectedChartTimespan');
             } else {
-                requestStringJson.chartFrom = EurekaJ.appValuesController.get('selectedChartFrom').getTime();
-                requestStringJson.chartTo = EurekaJ.appValuesController.get('selectedChartTo').getTime();
+                queryString += "&chartFrom=" + EurekaJ.get('selectedChartFromMs');
+                queryString += "&chartTo=" + EurekaJ.get('selectedChartToMs');
             }
+            queryString += "&rs=" + EurekaJ.get('selectedChartResolution');
         }
 
-        EurekaJ.log('finding: type: ' + type + ' id: ' + id + ' url: ' + url + ' requestString: ' + JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'));
-
-        $.ajax({
-      	  type: 'GET',
-      	  url: url,
-      	  data: JSON.stringify(requestStringJson, null, '\t').replace(/\%/g,'%25'),
-      	  contentType: 'application/json',
-      	  success: function(data) { EurekaJ.store.load(type, data); }
-      	});
-    },
-
-    findQuery: function(store, type, query, modelArray) {
-        EurekaJ.log('FINDQUERY');
-        EurekaJ.log(query);
-        EurekaJ.log(modelArray);
-    },
-
-    updateRecord: function(store, type, model) {
-        var url = type.url;
-
-        EurekaJ.log('updating record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
-        EurekaJ.log('json: ' + JSON.stringify(model.toJSON({ includeId: true })));
-
-        jQuery.ajax({
-            url: url,
-            data: JSON.stringify(model.toJSON({ includeId: true })),
-            dataType: 'json',
-            type: 'PUT',
-
-            success: function(data) {
-                // data is a hash of key/value pairs representing the record
-                // in its current state on the server.
-                store.didSaveRecord(model, data);
+        this.ajax(this.buildURL(root, id) + queryString, "GET", {
+            success: function(json) {
+                Ember.run(this, function(){
+                    console.log('got back: ' + json);
+                    this.didFindRecord(store, type, json, id);
+                });
             }
         });
     },
 
-    createRecord: function(store, type, model) {
-        var url = type.url;
+    findAll: function(store, type, since) {
+        var root = this.rootForType(type);
 
-        EurekaJ.log('updating record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
-        EurekaJ.log('json: ' + JSON.stringify(model.toJSON({ includeId: true })));
-
-        jQuery.ajax({
-            url: url,
-            data: JSON.stringify(model.toJSON({ includeId: true })),
-            dataType: 'json',
-            type: 'POST',
-
-            success: function(data) {
-                // data is a hash of key/value pairs representing the record.
-                // In general, this hash will contain a new id, which the
-                // store will now use to index the record. Future calls to
-                // store.find(type, id) will find this record.
-                EurekaJ.log('got back from createRecord type: ' + type + " id: " + model.get('id') + " ::" + JSON.stringify(data));
-                store.didCreateRecord(model, data);
-            }
-        });
-    },
-
-    deleteRecord: function(store, type, model) {
-        var url = type.url;
-
-        var requestStringJson = {
-            id: model.get('id')
-        };
-
-        EurekaJ.log('delting record: type: ' + type + ' id: ' + model.get('id') + ' url: ' + url);
-        EurekaJ.log('json: ' + JSON.stringify(requestStringJson));
-
-        jQuery.ajax({
-            url: url,
-            dataType: 'json',
-            data: JSON.stringify(requestStringJson),
-            type: 'DELETE',
-
-            success: function() {
-                store.didDeleteRecord(model);
+        this.ajax(this.buildURL(root), "GET", {
+            data: this.sinceQuery(since),
+            success: function(json) {
+                Ember.run(this, function(){
+                    this.didFindAll(store, type, json);
+                });
             }
         });
     }
 });
 
-//EurekaJ.Adapter.map('EurekaJ.AlertModel', { primaryKey: 'alertName' });
-//EurekaJ.Adapter.map('EurekaJ.ChartGroupModel', {primaryKey: 'chartGroupName'});
 
 
-EurekaJ.ajaxSuccess = function(data) {
-	EurekaJ.Store.loadMany(type, data);
-}
+EurekaJ.Adapter.map(EurekaJ.ChartSeriesModel, {
+    seriesValues: { embedded: 'always' }
+});
+
+EurekaJ.Adapter.map(EurekaJ.ChartModel, {
+    series: { embedded: 'always'}
+});
 
 EurekaJ.store = DS.Store.create({
-    adapter: EurekaJ.Adapter,
-    //adapter:  DS.RESTAdapter.create({ bulkCommit: false }),
-    revision: 7
+    //adapter: EurekaJ.Adapter,
+    adapter:  EurekaJ.Adapter.create({ bulkCommit: false }),
+    revision: 11
 });

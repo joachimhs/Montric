@@ -1,76 +1,79 @@
 /** tree views **/
 EurekaJ.TreeView = Ember.View.extend({
     tagName: 'div',
-    content: null,
+    items: null,
     allowMultipleSelections: true,
     allowSelectionOfNonLeafNodes: false,
 
-    template: Ember.Handlebars.compile('{{#each content}}{{#if name}}{{view EurekaJ.NodeView contentBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}{{/if}}{{/each}}'),
-
-    isSelectedObserver: function() {
-        console.log('isSelectedObserver');
-    }.observes('content.@each.children.@each.isSelected')
+    template: Ember.Handlebars.compile('{{#each view.items}}{{#if name}}{{view EurekaJ.NodeView itemBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}{{/if}}{{/each}}')
 });
 
 EurekaJ.NodeView = Ember.View.extend({
-    template: Ember.Handlebars.compile('' +
-        '{{view EurekaJ.NodeContentView contentBinding="node" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}' +
+    item: null,
 
-        '{{#if this.isExpanded}}' +
+    template: Ember.Handlebars.compile('' +
+        '{{view EurekaJ.NodeContentView itemBinding="view.item" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}' +
+
+        '{{#if view.item.isExpanded}}' +
             '<div style="width: 500px;">' +
-            '{{#each this.children}}' +
-                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView contentBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}</div>' +
+            '{{#each view.item.children}}' +
+                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView itemBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}</div>' +
             '{{/each}}' +
             '</div>' +
         '{{/if}}'),
-    tagName: 'div'
+    tagName: 'div',
+
+    isSelectedObserver: function() {
+        console.log('isSelectedObserver: ' + this.get('controller'));
+        this.get('controller').updateSelectedNodes();
+    }.observes('content.children.@each.isSelected')
 });
 
 EurekaJ.NodeContentView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
-        '{{#if view.allowSelectionOfNonLeafNodes}}' +
-            '{{#unless hasChildren}}<span style="margin-left: 12px;">&nbsp;</span>{{/unless}}' +
-            '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
+        '{{#if view.item.allowSelectionOfNonLeafNodes}}' +
+            '{{#unless view.item.hasChildren}}<span style="margin-left: 12px;">&nbsp;</span>{{/unless}}' +
+            '{{view Ember.Checkbox checkedBinding="view.item.isSelected"}}' +
         '{{else}}' +
-            '{{#unless hasChildren}} ' +
+            '{{#unless view.item.hasChildren}} ' +
                 '<span style="margin-right: 7px;">&nbsp;</span>' +
-                '{{view Ember.Checkbox checkedBinding="isSelected"}}' +
+                '{{view Ember.Checkbox checkedBinding="view.item.isSelected"}}' +
             '{{/unless}}' +
         '{{/if}}' +
 
-        '{{view EurekaJ.NodeArrowView contentBinding="this"}}' +
-        '{{view EurekaJ.NodeTextView contentBinding="this" classNames="treeMenuText"}}'),
+        '{{view EurekaJ.NodeArrowView itemBinding="view.item"}}' +
+        '{{view EurekaJ.NodeTextView itemBinding="view.item" classNames="treeMenuText"}}'),
     tagName: 'span',
     classNames: ['pointer']
 });
 
 EurekaJ.NodeTextView = Ember.View.extend({
-    template: Ember.Handlebars.compile('{{name}}'),
+    template: Ember.Handlebars.compile('{{view.item.name}}'),
     tagName: 'span',
 
     click: function(evt) {
-        if(this.get('content.hasChildren')) {
-            this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
+        if(this.get('item.hasChildren')) {
+            this.get('item').set('isExpanded', !this.get('item.isExpanded'));
         } else {
-            this.get('content').set('isSelected', !this.get('content').get('isSelected'));
+            this.get('item').set('isSelected', !this.get('item.isSelected'));
         }
     }
 });
 
 EurekaJ.NodeArrowView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
-        '{{#if hasChildren}}' +
-            '{{#if isExpanded}}' +
-                '<span class="downarrow"></span>' +
-            '{{else}}' +
-                '<span class="rightarrow"></span>' +
-            '{{/if}}' +
+        '{{#if view.item.hasChildren}}' +
+        '{{#if view.item.isExpanded}}' +
+        '<span class="downarrow"></span>' +
+        '{{else}}' +
+        '<span class="rightarrow"></span>' +
+        '{{/if}}' +
         '{{/if}}'),
 
     tagName: 'span',
 
     click: function(evt) {
-        this.get('content').set('isExpanded', !this.get('content').get('isExpanded'));
+        this.get('item').set('isExpanded', !this.get('item').get('isExpanded'));
     }
 });
 /** //Tree views **/
@@ -78,8 +81,6 @@ EurekaJ.NodeArrowView = Ember.View.extend({
 /** Tab views **/
 EurekaJ.TabView = Ember.View.extend({
     tagName: 'div',
-    controller: null,
-
     selectedTabObserver: function() {
         EurekaJ.log(this.get('controller').get('selectedTab').get('tabId'));
         this.rerender();
@@ -102,12 +103,10 @@ EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
         this.triggerAction();
 
         this.get('controller').set('selectedTab', this.get('tab'));
-        if (this.get('tab').get('tabState')) {
-            EurekaJ.router.transitionTo(this.get('tab').get('tabState'));
-        }
     },
 
     template: Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
+
 });
 //** //Tab View **/
 
@@ -155,24 +154,47 @@ EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
 
     template: Ember.Handlebars.compile('' +
         '{{#if view.isSelected}}' +
-            '{{view.liShortLabel}}' +
-            '{{#if view.deleteAction}}' +
-                '{{#view EurekaJ.BootstrapButton actionBinding="view.deleteAction" target="EurekaJ.router" classNames="btn btn-danger btn-mini floatRight"}}Delete{{/view}}' +
-            '{{/if}}' +
+        '{{view.liShortLabel}}' +
+        '{{#if view.deleteAction}}' +
+        '{{#view EurekaJ.BootstrapButton actionBinding="view.deleteAction" target="controller" classNames="btn btn-danger btn-mini floatRight"}}Delete{{/view}}' +
+        '{{/if}}' +
         '{{else}}' +
-            '{{view.liLongLabel}}' +
+        '{{view.liLongLabel}}' +
         '{{/if}}')
 });
 /** //SelectableListView **/
 
+EurekaJ.ConfirmDialogView = Ember.View.extend({
+    templateName: 'confirmDialog',
+    classNames: ['modal', 'hide']
+});
+
+Ember.TEMPLATES['confirmDialog'] = Ember.Handlebars.compile(
+    '<div class="modal-header centerAlign">' +
+        '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
+        '<h1 class="centerAlign">{{view.header}}</h1>' +
+    '</div>' +
+    '<div class="modal-body">' +
+        '{{view.message}}' +
+    '</div>' +
+    '<div class="modal-footer">' +
+        '{{#if view.cancelAction}}' +
+            '{{view EurekaJ.BootstrapButton contentBinding="view.cancelButtonLabel" actionBinding="view.cancelAction" targetBinding="view.target"}}' +
+        '{{/if}}' +
+        '{{#if view.okAction}}' +
+            '{{view EurekaJ.BootstrapButton contentBinding="view.okButtonLabel" actionBinding="view.okAction" targetBinding="view.target"}}' +
+        '{{/if}}' +
+    '</div>'
+    //'<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes" action="applyChartOptionsChanges" target="EurekaJ.router"}}</div>' +
+);
+
 /** SelectableLeafTree **/
 EurekaJ.SelectableLeafTreeView = Ember.View.extend({
     tagName: 'div',
-    controller: null,
     classNames: ['selectableList'],
     selectedItem: null,
 
-    template: Ember.Handlebars.compile('{{#each arrangedContent}}{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}{{/each}}')
+    template: Ember.Handlebars.compile('{{#each view.items}}{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}{{/each}}')
 });
 
 EurekaJ.SelectableLeafItemView = Ember.View.extend({
@@ -192,9 +214,9 @@ EurekaJ.SelectableLeafItemView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
         '{{view EurekaJ.SelectableLeafItemContentView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
         '{{#if isExpanded}}' +
-            '{{#each children}}' +
-              '{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
-            '{{/each}}' +
+        '{{#each children}}' +
+        '{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
+        '{{/each}}' +
         '{{/if}}'
     )
 });
@@ -206,11 +228,11 @@ EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
 
     template: Ember.Handlebars.compile('' +
         '{{#if hasChildren}}' +
-            '{{#if isExpanded}}' +
-                '<span class="downarrow"></span>' +
-            '{{else}}' +
-                '<span class="rightarrow"></span>' +
-            '{{/if}}' +
+        '{{#if isExpanded}}' +
+        '<span class="downarrow"></span>' +
+        '{{else}}' +
+        '<span class="rightarrow"></span>' +
+        '{{/if}}' +
         '{{/if}}' +
         '{{name}}'
     ),
@@ -235,10 +257,8 @@ EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
 /** //SelectableLeafTree **/
 
 EurekaJ.ChartView = Ember.View.extend({
-    templateName: 'chart',
     classNames: ['eurekajChart'],
     resizeHandler: null,
-    content: null,
     nvd3Chart: null,
 
     /*init: function() {
@@ -258,10 +278,10 @@ EurekaJ.ChartView = Ember.View.extend({
 
     contentObserver: function() {
         var elementId = this.get('elementId');
-        var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
+        var data = jQuery.parseJSON(this.get('chart').get('chartValue'));
         var chart = this.get('nvd3Chart');
 
-        console.log('data');
+        console.log('contentObserver data');
         console.log(data);
 
         if (chart) {
@@ -269,23 +289,26 @@ EurekaJ.ChartView = Ember.View.extend({
                 .datum(data)
                 .call(chart);
         }
-    }.observes('content.chart.chartValue'),
+        var view = this;
+        /*Ember.run.next(function() {
+            console.log('.-------<<<>>>-------.');
+            view.rerender();
+        });*/
 
-    numChartsObserver: function() {
-        this.rerender();
-    }.observes('EurekaJ.router.mainController.content.length'),
+    }.observes('chart.chartValue'),
 
     didInsertElement : function() {
         console.log('ChartView didInsertElement');
-        if (this.get('content').get('chart') != null) {
-            console.log(this.get('content.chart.chartValue'));
+        console.log(this.get('chart'));
+        if (this.get('chart') != null) {
+            console.log(this.get('content.chartValue'));
             var thisView = this;
-            var numCharts = EurekaJ.router.get('mainController').get('content').get('length');
+            var numCharts = this.get('controller').get('content').get('length');
             var height = (this.$().height() / numCharts) - (numCharts * 6);
             var width = this.$().width();
 
             var elementId = this.get('elementId');
-            var data = jQuery.parseJSON(this.get('content').get('chart').get('chartValue'));
+            var data = jQuery.parseJSON(this.get('chart').get('chartValue'));
 
             console.log('data');
             console.log(data);
@@ -344,23 +367,3 @@ EurekaJ.ChartView = Ember.View.extend({
         }
     }
 });
-
-EurekaJ.Select = Ember.Select.extend({
-    //JHS: The following overrides the Ember.Select code. Fixes a bug in 1.0-pre
-    //where the selection would always be the first item in the list when the
-    //view is first rendered. This will be fixed in 1.0-final
-    _triggerChange: function() {
-        var selection = this.get('selection');
-        var value = this.get('value');
-
-        if (selection) { this.selectionDidChange(); }
-        if (value) { this.valueDidChange(); }
-
-        this._change();
-    }
-});
-
-EurekaJ.ConfirmDialogView = Ember.View.extend({
-    templateName: 'confirmDialog',
-    classNames: ['modal', 'hide']
-})

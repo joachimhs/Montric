@@ -11,7 +11,7 @@ body {
     margin: 0px;
     padding: 0px;
     font-size: 1.1em;
-
+    margin-top: 45px;
 }
 
 i {
@@ -32,6 +32,7 @@ i {
     top: 0px;
     height: 45px;
     vertical-align: top;
+    z-index: 10;
 }
 
 #headerArea a {
@@ -48,7 +49,7 @@ i {
     position: absolute;
     left: 0px;
     width: 305px;
-    top: 0px;
+    top: 50px;
     bottom:0px;
     overflow: scroll;
 }
@@ -63,14 +64,21 @@ i {
 
 #chartsArea {
     background: white;
-    border-bottom-left-radius: 8px;
     position: absolute;
     left: 310px;
     right: 0px;
-    top: 0px;
+    top: 50px;
     bottom: 0;
     bottom:0px;
     overflow: scroll;
+}
+
+#chartsArea h1 {
+    text-align: center;
+    font-size: 1.4em;
+    text-decoration: underline;
+    letter-spacing: 0.06em;
+    color: #333333;
 }
 
 #mainContentArea {
@@ -99,7 +107,7 @@ i {
     position: absolute;
     left: 0px;
     width: 230px;
-    top: 30px;
+    top: 70px;
     bottom:0px;
     overflow: scroll;
     padding-left: 10px;
@@ -110,7 +118,7 @@ i {
     position: absolute;
     left: 250px;
     right: 10px;
-    top: 40px;
+    top: 70px;
     border: 1px solid #cdd0d4;
     border-radius: 5px;
 }

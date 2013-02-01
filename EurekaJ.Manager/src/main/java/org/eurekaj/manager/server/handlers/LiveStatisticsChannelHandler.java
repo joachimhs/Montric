@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.enumtypes.UnitType;
+import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
@@ -59,6 +61,14 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
                 for (int index = 0; index < statList.length(); index++) {
                     ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index));
                     liveStatList.add(liveStatistics);
+                    String agent = liveStatistics.getGuiPath().substring(0, liveStatistics.getGuiPath().indexOf(":"));
+                    ManagerLiveStatistics agentStats = new ManagerLiveStatistics();
+                    agentStats.setGuiPath(agent + ":Agent Statistics:API Call Count");
+                    agentStats.setTimeperiod(liveStatistics.getTimeperiod());
+                    agentStats.setUnitType(UnitType.N.value());
+                    agentStats.setValueType(ValueType.AGGREGATE.value());
+                    agentStats.setValue(1d);
+                    liveStatList.add(agentStats);
                 }
 
                 //Send to available plugins for processing
