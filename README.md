@@ -14,6 +14,9 @@ statistics from any source that can send text via HTTP (i.e. curl).
 Haagen Software will also be hosting a live verison of EurekaJ, offered in a Software as a Service manner to make it easier 
 for you to get going if you don't want to operate your own installation of EurekaJ. 
 
+EurekaJ have a pluggable backend, and Version 1.5 will include both the Berkeley DB JE plugin that it has always had, 
+as well as a plugin that supports the Cassandra data storage. 
+
 Version 1.5 will introduce the concepts of accounts, so that you can use a single installation of EurekaJ to monitor 
 multiple systems that you don't want to share data between. All users will be authenticated via Mozilla Persona. 
 
