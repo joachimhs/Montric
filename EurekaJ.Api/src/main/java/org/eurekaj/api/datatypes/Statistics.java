@@ -27,8 +27,9 @@ import java.util.Comparator;
  * Time: 9:42 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface TreeMenuNode extends Comparable<TreeMenuNode> {
+public interface Statistics extends Comparable<Statistics> {
     public String getGuiPath();
+    public String getAccountName();
     public String getNodeLive();
     public Long getOneMinuteAverageLastUpdated();
     public Long getFiveMinuteAverageLastUpdated();
@@ -38,10 +39,10 @@ public interface TreeMenuNode extends Comparable<TreeMenuNode> {
     public Long getWeeklyAverageLastUpdated();
 
 
-    public class TreeMenuNodeComparator implements Comparator<TreeMenuNode> {
+    public class TreeMenuNodeComparator implements Comparator<Statistics> {
 
         @Override
-        public int compare(TreeMenuNode thisNode, TreeMenuNode otherNode) {
+        public int compare(Statistics thisNode, Statistics otherNode) {
             if (otherNode == null || otherNode.getGuiPath() == null) {
                 return 1;
             }

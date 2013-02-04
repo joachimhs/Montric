@@ -18,7 +18,7 @@
 */
 package org.eurekaj.manager.datatypes;
 
-import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.Statistics;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +27,7 @@ import org.eurekaj.api.datatypes.TreeMenuNode;
  * Time: 10:49 AM
  * To change this template use File | Settings | File Templates.
  */
-public class ManagerTreeMenuNode implements TreeMenuNode {
+public class ManagerStatistics implements Statistics {
     String guiPath;
 	String nodeLive;
     private Long oneMinuteAverageLastUpdated;
@@ -37,13 +37,13 @@ public class ManagerTreeMenuNode implements TreeMenuNode {
     private Long dailyAverageLastUpdated;
     private Long weeklyAverageLastUpdated;
 
-    public ManagerTreeMenuNode(String guiPath, String nodeLive) {
+    public ManagerStatistics(String guiPath, String nodeLive) {
         this();
         this.guiPath = guiPath;
         this.nodeLive = nodeLive;
     }
 
-    public ManagerTreeMenuNode() {
+    public ManagerStatistics() {
         super();
         halfHourAverageLastUpdated = 0l;
         hourAverageLastUpdated = 0l;
@@ -53,10 +53,10 @@ public class ManagerTreeMenuNode implements TreeMenuNode {
         fiveMinuteAverageLastUpdated = 0l;
     }
 
-    public ManagerTreeMenuNode(TreeMenuNode treeMenuNode) {
+    public ManagerStatistics(Statistics statistics) {
         this();
-        this.guiPath = treeMenuNode.getGuiPath();
-        this.nodeLive = treeMenuNode.getNodeLive();
+        this.guiPath = statistics.getGuiPath();
+        this.nodeLive = statistics.getNodeLive();
     }
 
     public String getGuiPath() {
@@ -123,7 +123,7 @@ public class ManagerTreeMenuNode implements TreeMenuNode {
         this.nodeLive = nodeLive;
     }
 
-    public int compareTo(TreeMenuNode other) {
+    public int compareTo(Statistics other) {
 		if (other == null || other.getGuiPath() == null) {
 			return 1;
 		}
