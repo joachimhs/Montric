@@ -24,10 +24,10 @@ import org.eurekaj.api.datatypes.*;
 
 public interface TreeMenuDao {
 
-	public List<TreeMenuNode> getTreeMenu();
+	public List<Statistics> getTreeMenu();
 
-	public TreeMenuNode getTreeMenu(String guiPath);
+	public Statistics getTreeMenu(String guiPath, String accountName);
 	
-	public void deleteTreeMenu(String guiPath);
+	public void deleteTreeMenu(String guiPath, String accountName);
 
 }

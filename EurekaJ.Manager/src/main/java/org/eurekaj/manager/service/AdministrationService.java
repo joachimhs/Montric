@@ -26,12 +26,12 @@ public interface AdministrationService {
 
 	public List<EmailRecipientGroup> getEmailRecipientGroups();
 	
-	public EmailRecipientGroup getEmailRecipientGroup(String groupName);
+	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName);
 	
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 	
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 	
-	public void deleteEmailRecipientGroup(String emailRecipientGroupName);
+	public void deleteEmailRecipientGroup(String emailRecipientGroupName, String accountName);
 	
 }

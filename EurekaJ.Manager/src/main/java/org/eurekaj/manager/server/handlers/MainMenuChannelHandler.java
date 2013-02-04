@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.Statistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -58,7 +58,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
             log.debug("Accepted JSON: \n" + jsonObject);
 
             if (isDelete(e) && id != null) {
-            	getBerkeleyTreeMenuService().deleteTreeMenuNode(id);
+            	getBerkeleyTreeMenuService().deleteTreeMenuNode(id, "ACCOUNT");
             	
             	log.info("Deleting Main Menu Item with id: " + id);
             	
@@ -112,7 +112,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject) throws JSONException {
 		if (jsonObject.has("getInstrumentationMenuNode")) {
 		    String nodeId = jsonObject.getString("getInstrumentationMenuNode");
-		    TreeMenuNode node = getBerkeleyTreeMenuService().getTreeMenu(nodeId);
+		    Statistics node = getBerkeleyTreeMenuService().getTreeMenu(nodeId, "ACCOUNT");
 		    jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
 		    log.debug("Got Node: \n" + jsonResponse);
 		}
@@ -144,7 +144,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 			JSONArray nodes = jsonObject.getJSONArray("deleteInstrumentationMenuNodes");
 			for (int i = 0; i < nodes.length(); i++) {
 				String guiPath = nodes.getString(i);
-				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath);
+				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath, "ACCOUNT");
 			}
 			
 		}

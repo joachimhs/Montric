@@ -44,8 +44,8 @@ public class AdministrationServiceImpl implements AdministrationService {
 		return getDbPlugin().getSmtpDao().getEmailRecipientGroups();
 	}
 
-	public EmailRecipientGroup getEmailRecipientGroup(String groupName) {
-		return getDbPlugin().getSmtpDao().getEmailRecipientGroup(groupName);
+	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName) {
+		return getDbPlugin().getSmtpDao().getEmailRecipientGroup(groupName, accountName);
 	}
 
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
@@ -56,7 +56,7 @@ public class AdministrationServiceImpl implements AdministrationService {
 		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
 	}
 	
-	public void deleteEmailRecipientGroup(String emailRecipientGroupName) {
-		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroupName);
+	public void deleteEmailRecipientGroup(String emailRecipientGroupName, String accountName) {
+		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroupName, accountName);
 	}
 }

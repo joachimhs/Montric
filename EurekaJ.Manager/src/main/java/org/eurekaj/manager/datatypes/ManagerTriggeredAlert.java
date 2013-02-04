@@ -29,6 +29,7 @@ import org.eurekaj.api.datatypes.TriggeredAlert;
  */
 public class ManagerTriggeredAlert implements TriggeredAlert {
     private String alertName;
+    private String accountName;
     private Long timeperiod;
     private Double errorValue;
 	private Double warningValue;
@@ -37,6 +38,7 @@ public class ManagerTriggeredAlert implements TriggeredAlert {
 
     public ManagerTriggeredAlert(TriggeredAlert triggeredAlert) {
         this.alertName = triggeredAlert.getAlertName();
+        this.accountName = triggeredAlert.getAccountName();
         this.timeperiod = triggeredAlert.getTimeperiod();
         this.errorValue = triggeredAlert.getErrorValue();
         this.warningValue = triggeredAlert.getWarningValue();
@@ -44,8 +46,9 @@ public class ManagerTriggeredAlert implements TriggeredAlert {
         this.triggeredTimeperiod = triggeredAlert.getTimeperiod();
     }
 
-    public ManagerTriggeredAlert(String alertName, Long timeperiod, Double errorValue, Double warningValue, Double alertValue, Long triggeredTimeperiod) {
+    public ManagerTriggeredAlert(String alertName, String accountName, Long timeperiod, Double errorValue, Double warningValue, Double alertValue, Long triggeredTimeperiod) {
         this.alertName = alertName;
+        this.accountName = accountName;
         this.timeperiod = timeperiod;
         this.errorValue = errorValue;
         this.warningValue = warningValue;
@@ -59,6 +62,14 @@ public class ManagerTriggeredAlert implements TriggeredAlert {
 
     public void setAlertName(String alertName) {
         this.alertName = alertName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public Long getTimeperiod() {

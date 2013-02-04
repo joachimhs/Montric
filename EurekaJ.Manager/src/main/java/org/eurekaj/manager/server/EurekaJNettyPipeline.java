@@ -4,15 +4,8 @@ import java.io.File;
 import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.manager.server.handlers.CacheableFileServerHandler;
+import org.eurekaj.manager.server.handlers.*;
 import org.eurekaj.manager.server.router.RouterHandler;
-import org.eurekaj.manager.server.handlers.AlertChannelHandler;
-import org.eurekaj.manager.server.handlers.ChartChannelHandler;
-import org.eurekaj.manager.server.handlers.EmailChannelHandler;
-import org.eurekaj.manager.server.handlers.InstrumentationGroupChannelHandler;
-import org.eurekaj.manager.server.handlers.MainMenuChannelHandler;
-import org.eurekaj.manager.server.handlers.LiveStatisticsChannelHandler;
-import org.eurekaj.manager.server.handlers.UserChannelhandler;
 import org.jboss.netty.channel.ChannelHandler;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -50,7 +43,8 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
             routes.put("startsWith:/chart_group_models", new InstrumentationGroupChannelHandler());
             routes.put("equals:/liveStatistics", new LiveStatisticsChannelHandler());
             routes.put("equals:/user", new UserChannelhandler());
-            
+            routes.put("equals:/account", new AccountHandler());
+
             String webappDir = System.getProperty("basedir");
             
     		routerHandler = new RouterHandler(routes, false, new CacheableFileServerHandler(webappDir, 0));

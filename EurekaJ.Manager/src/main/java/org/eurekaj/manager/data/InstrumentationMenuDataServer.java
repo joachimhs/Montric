@@ -2,7 +2,7 @@ package org.eurekaj.manager.data;
 
 import java.io.IOException;
 
-import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.Statistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.AdministrationServiceImpl;
@@ -59,7 +59,7 @@ public class InstrumentationMenuDataServer {
 	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject) throws JSONException {
 		if (jsonObject.has("getInstrumentationMenuNode")) {
 		    String nodeId = jsonObject.getString("getInstrumentationMenuNode");
-		    TreeMenuNode node = getBerkeleyTreeMenuService().getTreeMenu(nodeId);
+		    Statistics node = getBerkeleyTreeMenuService().getTreeMenu(nodeId, "ACCOUNT");
 		    jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
 		    System.out.println("Got Node: \n" + jsonResponse);
 		}
@@ -91,7 +91,7 @@ public class InstrumentationMenuDataServer {
 			JSONArray nodes = jsonObject.getJSONArray("deleteInstrumentationMenuNodes");
 			for (int i = 0; i < nodes.length(); i++) {
 				String guiPath = nodes.getString(i);
-				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath);
+				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath, "ACCOUNT");
 			}
 			
 		}

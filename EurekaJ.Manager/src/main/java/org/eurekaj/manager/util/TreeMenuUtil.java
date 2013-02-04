@@ -18,7 +18,7 @@
 */
 package org.eurekaj.manager.util;
 
-import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.Statistics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,16 +28,16 @@ import java.util.List;
 
 public class TreeMenuUtil {
 
-	public static List<TreeMenuNode> getLeafNodes(List<TreeMenuNode> treeMenuNodeList) {
-		List<TreeMenuNode> leafNodes = new ArrayList<TreeMenuNode>();
-		Hashtable<String, TreeMenuNode> possibleLeafNodes = new Hashtable<String, TreeMenuNode>();
-		Hashtable<String, TreeMenuNode> notLeafNodes = new Hashtable<String, TreeMenuNode>();
+	public static List<Statistics> getLeafNodes(List<Statistics> statisticsList) {
+		List<Statistics> leafNodes = new ArrayList<Statistics>();
+		Hashtable<String, Statistics> possibleLeafNodes = new Hashtable<String, Statistics>();
+		Hashtable<String, Statistics> notLeafNodes = new Hashtable<String, Statistics>();
 		
-		for (TreeMenuNode node : treeMenuNodeList) {
+		for (Statistics node : statisticsList) {
 			if (node.getGuiPath().contains(":")) {
 				String prevPath = node.getGuiPath().substring(0, node.getGuiPath().lastIndexOf(":"));
 				
-				TreeMenuNode prevNode = possibleLeafNodes.get(prevPath);
+				Statistics prevNode = possibleLeafNodes.get(prevPath);
 				if (prevNode != null) {
 					//PrevPath is not a leaf. Remove it from Hash
 					possibleLeafNodes.remove(prevPath);
@@ -45,7 +45,7 @@ public class TreeMenuUtil {
 				}
 				
 				//Check if this node is a possible leaf
-				TreeMenuNode currNode = notLeafNodes.get(node.getGuiPath());
+				Statistics currNode = notLeafNodes.get(node.getGuiPath());
 				if (currNode != null) {
 					//This is not a leaf node. Skipping
 				} else {

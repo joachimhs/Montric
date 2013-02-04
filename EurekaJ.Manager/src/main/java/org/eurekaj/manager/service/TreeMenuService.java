@@ -27,39 +27,39 @@ import org.eurekaj.api.enumtypes.ValueType;
 
 public interface TreeMenuService {
 
-	public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType);
+	public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType);
 	
-	public List<TreeMenuNode> getTreeMenu();
+	public List<Statistics> getTreeMenu();
 	
-	public TreeMenuNode getTreeMenu(String guiPath);
+	public Statistics getTreeMenu(String guiPath, String accountName);
 	
-	public List<LiveStatistics> getLiveStatistics(String guiPath, Long minTimeperiod, Long maxTimeperiod);
+	public List<LiveStatistics> getLiveStatistics(String guiPath, String accountName, Long minTimeperiod, Long maxTimeperiod);
 	
 	public void persistGroupInstrumentation(GroupedStatistics groupedStatistics);
 	
-	public GroupedStatistics getGroupedStatistics(String name);
+	public GroupedStatistics getGroupedStatistics(String name, String accountName);
 	
 	public List<GroupedStatistics> getGroupedStatistics();
 	
-	public void deleteChartGroup(String groupName);
+	public void deleteChartGroup(String groupName, String accountName);
 	
 	public void persistAlert(Alert alert);
 	
-	public Alert getAlert(String alertName);
+	public Alert getAlert(String alertName, String accountName);
 	
 	public List<Alert> getAlerts();
 
-	public void deleteAlert(String alertName);
+	public void deleteAlert(String alertName, String accountName);
 	
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert);
 
-    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String accountName, Long fromTimeperiod, Long toTimeperiod);
 
-    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, String accountName, Long fromTimeperiod, Long toTimeperiod);
 
-    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts);
+    public List<TriggeredAlert> getRecentTriggeredAlerts(String accountName, int numAlerts);
 
-    public void deleteOldLiveStatistics(Date date);
+    public void deleteOldLiveStatistics(String accountName, Date date);
     
-    public void deleteTreeMenuNode(String guiPath);
+    public void deleteTreeMenuNode(String guiPath, String accountName);
 }

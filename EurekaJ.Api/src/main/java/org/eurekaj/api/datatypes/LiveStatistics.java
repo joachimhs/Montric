@@ -27,6 +27,7 @@ package org.eurekaj.api.datatypes;
  */
 public interface LiveStatistics extends Comparable<LiveStatistics> {
     public String getGuiPath();
+    public String getAccountName();
     public Long getTimeperiod();
     public Double getValue();
     public String getValueType();

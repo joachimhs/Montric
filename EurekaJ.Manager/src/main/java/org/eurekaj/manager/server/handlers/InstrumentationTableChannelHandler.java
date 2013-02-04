@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.eurekaj.api.datatypes.LiveStatistics;
-import org.eurekaj.api.datatypes.TreeMenuNode;
+import org.eurekaj.api.datatypes.Statistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
@@ -63,13 +63,13 @@ public class InstrumentationTableChannelHandler extends ChartChannelHandler {
 
                     int numNodesFound = 0;
 
-                    for (TreeMenuNode treeMenuNode : getBerkeleyTreeMenuService().getTreeMenu()) {
-                        if (treeMenuNode.getGuiPath().startsWith(startsWith)
-                                && treeMenuNode.getGuiPath().endsWith(endsWith)) {
+                    for (Statistics statistics : getBerkeleyTreeMenuService().getTreeMenu()) {
+                        if (statistics.getGuiPath().startsWith(startsWith)
+                                && statistics.getGuiPath().endsWith(endsWith)) {
 
                             numNodesFound++;
                             Double averageNodeValue = 0.0d;
-                            List<LiveStatistics> liveList = getBerkeleyTreeMenuService().getLiveStatistics(treeMenuNode.getGuiPath(), fromPeriod, toPeriod);
+                            List<LiveStatistics> liveList = getBerkeleyTreeMenuService().getLiveStatistics(statistics.getGuiPath(), "ACCOUNT", fromPeriod, toPeriod);
 
                             if (liveList.size() > 0) {
                                 Double sumValue = 0.0d;

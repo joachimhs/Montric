@@ -26,19 +26,19 @@ import java.util.List;
 public interface AlertDao {
     public void persistAlert(Alert alert);
 
-    public Alert getAlert(String alertName);
+    public Alert getAlert(String alertName, String accountName);
 
     public List<Alert> getAlerts();
     
-    public void deleteAlert(String alertName);
+    public void deleteAlert(String alertName, String accountName);
 
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert);
 
-    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String accountName, Long fromTimeperiod, Long toTimeperiod);
 
-    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, String accountName, Long fromTimeperiod, Long toTimeperiod);
 
-    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts);
+    public List<TriggeredAlert> getRecentTriggeredAlerts(String accountName, int numAlerts);
 
 
 }

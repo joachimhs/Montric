@@ -29,6 +29,7 @@ import org.eurekaj.api.datatypes.LiveStatistics;
  */
 public class ManagerLiveStatistics implements LiveStatistics {
     private String guiPath;
+    private String accountName;
     private Long timeperiod;
     private Double value;
     private String valueType;
@@ -37,14 +38,16 @@ public class ManagerLiveStatistics implements LiveStatistics {
     public ManagerLiveStatistics() {
     }
 
-    public ManagerLiveStatistics(String guiPath, Long timeperiod, Double value) {
+    public ManagerLiveStatistics(String guiPath, String accountName, Long timeperiod, Double value) {
         this.guiPath = guiPath;
+        this.accountName = accountName;
         this.timeperiod = timeperiod;
         this.value = value;
     }
 
     public ManagerLiveStatistics(LiveStatistics liveStatistics) {
         this.guiPath = liveStatistics.getGuiPath();
+        this.accountName = liveStatistics.getAccountName();
         this.timeperiod = liveStatistics.getTimeperiod();
         this.value = liveStatistics.getValue();
     }
@@ -55,6 +58,14 @@ public class ManagerLiveStatistics implements LiveStatistics {
 
     public void setGuiPath(String guiPath) {
         this.guiPath = guiPath;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public Long getTimeperiod() {

@@ -32,10 +32,10 @@ import java.util.List;
 public interface GroupedStatisticsDao {
     public void persistGroupInstrumentation(GroupedStatistics groupedStatistics);
 
-    public GroupedStatistics getGroupedStatistics(String name);
+    public GroupedStatistics getGroupedStatistics(String name, String accountName);
 
     public List<GroupedStatistics> getGroupedStatistics();
     
-    public void deleteGroupedChart(String groupName);
+    public void deleteGroupedChart(String groupName, String accountName);
 
 }

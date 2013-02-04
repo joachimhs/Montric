@@ -28,11 +28,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.Alert;
-import org.eurekaj.api.datatypes.EmailRecipientGroup;
-import org.eurekaj.api.datatypes.GroupedStatistics;
-import org.eurekaj.api.datatypes.TreeMenuNode;
-import org.eurekaj.api.datatypes.TriggeredAlert;
+import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.datatypes.Statistics;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -66,7 +63,7 @@ public class BuildJsonObjectsUtil {
 	}
 
     public static JSONArray buildTreeTypeMenuJsonObject(String treeId,
-                                                         List<TreeMenuNode> nodeList,
+                                                         List<Statistics> nodeList,
                                                          List<Alert> alertList,
                                                          List<GroupedStatistics> groupedStatisticsList,
                                                          int startLevel,
@@ -103,8 +100,8 @@ public class BuildJsonObjectsUtil {
         return treeArray;
     }
 
-    private static void buildTreeMenuNode(List<TreeMenuNode> nodeList, int startLevel, int stopLevel, boolean includeCharts, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
-        for (TreeMenuNode node : nodeList) {
+    private static void buildTreeMenuNode(List<Statistics> nodeList, int startLevel, int stopLevel, boolean includeCharts, HashMap<String, JSONObject> nodesBuilt) throws JSONException {
+        for (Statistics node : nodeList) {
             String[] splitNodePathArray = node.getGuiPath().split(":");
             int splitArrayIndex = 0;
             int maxSplitArrayIndex = splitNodePathArray.length - 1;
@@ -223,7 +220,7 @@ public class BuildJsonObjectsUtil {
         return nodeName;
     }
 
-    public static JSONObject buildInstrumentationNode(TreeMenuNode node) throws JSONException {
+    public static JSONObject buildInstrumentationNode(Statistics node) throws JSONException {
         JSONObject treeNodeJSONObject = new JSONObject();
 
         if (node != null) {
@@ -564,12 +561,12 @@ public class BuildJsonObjectsUtil {
         return emailObject.toString();
     }
 
-    public static String generateArrayOfEndNodesStartingWith(List<TreeMenuNode> treeMenuList, String startingWith) {
+    public static String generateArrayOfEndNodesStartingWith(List<Statistics> treeMenuList, String startingWith) {
         JSONArray jsonArray = new JSONArray();
 
         SortedMap<String, String> uniqueEndnodes = new TreeMap<String, String>();
 
-        for (TreeMenuNode treeNode : treeMenuList) {
+        for (Statistics treeNode : treeMenuList) {
             String nodeid = startingWith + ";" + treeNode.getGuiPath().substring(treeNode.getGuiPath().lastIndexOf(":") + 1, treeNode.getGuiPath().length());
 
             if (treeNode.getGuiPath().startsWith(startingWith)

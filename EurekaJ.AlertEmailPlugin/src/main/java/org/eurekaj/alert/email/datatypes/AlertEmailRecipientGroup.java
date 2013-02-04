@@ -9,8 +9,8 @@ import org.eurekaj.api.datatypes.EmailRecipientGroup;
 
 public class AlertEmailRecipientGroup implements EmailRecipientGroup {
 	private static final Logger log = Logger.getLogger(AlertEmailRecipientGroup.class);
-			
 	private String emailRecipientGroupName;
+    private String accountName;
 	private String smtpServerhost;
 	private String smtpUsername;
 	private String smtpPassword;
@@ -43,7 +43,15 @@ public class AlertEmailRecipientGroup implements EmailRecipientGroup {
 		this.emailRecipientGroupName = emailRecipientGroupName;
 	}
 
-	@Override
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    @Override
 	public String getSmtpServerhost() {
 		return smtpServerhost;
 	}

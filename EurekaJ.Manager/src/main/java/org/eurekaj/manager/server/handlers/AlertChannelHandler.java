@@ -76,11 +76,11 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
             } else if (jsonObject.has("getTriggeredAlerts")) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
-                List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(fromTimePeriod, toTimePeriod);
+                List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts("ACCOUNT", fromTimePeriod, toTimePeriod);
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
                 log.debug("Got Triggered Alerts:\n" + jsonResponse);
             } else if (isDelete(e) && id != null) {
-                getBerkeleyTreeMenuService().deleteAlert(id);
+                getBerkeleyTreeMenuService().deleteAlert(id, "ACCOUNT");
                 log.debug("Successfully deleted Alert with name:\n" + id);
             } else {
             	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());

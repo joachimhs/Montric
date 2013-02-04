@@ -72,7 +72,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
             	jsonResponse = topObject.toString();
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);
             } else if (isDelete(e) && id != null) {
-                getBerkeleyTreeMenuService().deleteChartGroup(id);
+                getBerkeleyTreeMenuService().deleteChartGroup(id, "ACCOUNT");
             }
 
         } catch (JSONException jsonException) {

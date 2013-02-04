@@ -34,6 +34,8 @@ public interface Alert {
 
     public String getAlertName();
 
+    public String getAccountName();
+
     public String getGuiPath();
 
     public boolean isActivated();

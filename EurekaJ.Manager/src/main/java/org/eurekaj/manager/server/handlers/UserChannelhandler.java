@@ -21,7 +21,9 @@ package org.eurekaj.manager.server.handlers;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
+import org.eurekaj.manager.json.ParseJsonObjects;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.json.JSONException;
@@ -35,7 +37,7 @@ import org.json.JSONObject;
  * To change this template use File | Settings | File Templates.
  */
 public class UserChannelhandler extends EurekaJGenericChannelHandler {
-	private static final Logger log = Logger.getLogger(UserChannelhandler.class);
+	private static final Logger logger = Logger.getLogger(UserChannelhandler.class);
 	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
@@ -43,6 +45,18 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+
+            if (isPost(e)) {
+                User user = ParseJsonObjects.parseUser(jsonObject);
+
+                logger.info("JSON:::: Username: " + user.getUserName() + " account: " + user.getAccountName() + " role: " + user.getUserRole());
+
+
+                getAccountService().persistUser(user.getUserName(), user.getAccountName(), user.getUserRole());
+                User dbUser = getAccountService().getUser(user.getUserName(), user.getAccountName());
+
+                logger.info("Username: " + dbUser.getUserName() + " account: " + dbUser.getAccountName() + " role: " + dbUser.getUserRole());
+            }
 
             /*if (jsonObject.has("getLoggedInUser") && SecurityManager.isAuthenticated() ) {
                 String username = SecurityManager.getAuthenticatedUsername();
@@ -53,6 +67,9 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
 
                 jsonResponse = BuildJsonObjectsUtil.buildUserData(username, userRole);
             }*/
+
+
+
 
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

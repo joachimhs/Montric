@@ -33,11 +33,11 @@ public interface SmtpDao {
 
     public List<EmailRecipientGroup> getEmailRecipientGroups();
 
-	public EmailRecipientGroup getEmailRecipientGroup(String groupName);
+	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName);
 
 	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 
 	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
 	
-	public void deleteEmailRecipientGroup(String groupName);
+	public void deleteEmailRecipientGroup(String groupName, String accountName);
 }

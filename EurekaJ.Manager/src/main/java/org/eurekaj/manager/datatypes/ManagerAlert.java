@@ -34,6 +34,7 @@ import java.util.List;
  */
 public class ManagerAlert implements Alert {
     private String alertName;
+    private String accountName;
     private String guiPath;
 	private boolean activated;
 	private Double errorValue;
@@ -49,6 +50,7 @@ public class ManagerAlert implements Alert {
 
     public ManagerAlert(Alert alert) {
         this.alertName = alert.getAlertName();
+        this.accountName = alert.getAccountName();
         this.guiPath = alert.getGuiPath();
         this.activated = alert.isActivated();
         this.errorValue = alert.getErrorValue();
@@ -66,6 +68,14 @@ public class ManagerAlert implements Alert {
 
     public void setAlertName(String alertName) {
         this.alertName = alertName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getGuiPath() {

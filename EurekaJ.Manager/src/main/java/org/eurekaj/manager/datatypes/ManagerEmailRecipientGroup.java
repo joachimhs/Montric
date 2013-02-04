@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class ManagerEmailRecipientGroup implements  EmailRecipientGroup{
     private String emailRecipientGroupName;
+    private String accountName;
 	private String smtpServerhost;
 	private String smtpUsername;
 	private String smtpPassword;
@@ -41,6 +42,7 @@ public class ManagerEmailRecipientGroup implements  EmailRecipientGroup{
 
     public ManagerEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
         this.emailRecipientGroupName = emailRecipientGroup.getEmailRecipientGroupName();
+        this.accountName = emailRecipientGroup.getAccountName();
         this.smtpServerhost = emailRecipientGroup.getSmtpServerhost();
         this.smtpUsername = emailRecipientGroup.getSmtpUsername();
         this.smtpPassword = emailRecipientGroup.getSmtpPassword();
@@ -59,6 +61,14 @@ public class ManagerEmailRecipientGroup implements  EmailRecipientGroup{
 
     public void setEmailRecipientGroupName(String emailRecipientGroupName) {
         this.emailRecipientGroupName = emailRecipientGroupName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getSmtpServerhost() {

@@ -19,14 +19,9 @@
 package org.eurekaj.manager.json;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.Alert;
-import org.eurekaj.api.datatypes.EmailRecipientGroup;
-import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.enumtypes.AlertType;
-import org.eurekaj.manager.datatypes.ManagerAlert;
-import org.eurekaj.manager.datatypes.ManagerEmailRecipientGroup;
-import org.eurekaj.manager.datatypes.ManagerGroupedStatistics;
-import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
+import org.eurekaj.manager.datatypes.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -73,6 +68,35 @@ public class ParseJsonObjects {
             parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alert_plugins"));
         }
         return parsedAlert;
+    }
+
+    public static Account parseAccount(JSONObject jsonObject) throws JSONException {
+        ManagerAccount account = new ManagerAccount();
+
+        if (jsonObject.has("account_name") && jsonObject.has("account_type")) {
+            account.setAccountName(jsonObject.getString("account_name"));
+            account.setAccountType(jsonObject.getString("account_type"));
+        }
+
+        return account;
+    }
+
+    public static User parseUser(JSONObject jsonObject) throws JSONException {
+        ManagerUser user = new ManagerUser();
+
+        if (jsonObject.has("user_name")) {
+            user.setUserName(jsonObject.getString("user_name"));
+        }
+
+        if (jsonObject.has("account_name")) {
+            user.setAccountName(jsonObject.getString("account_name"));
+        }
+
+        if (jsonObject.has("user_role")) {
+            user.setUserRole(jsonObject.getString("user_role"));
+        }
+
+        return user;
     }
 
     public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup, String id) throws JSONException {

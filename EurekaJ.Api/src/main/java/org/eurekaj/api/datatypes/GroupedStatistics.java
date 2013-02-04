@@ -29,5 +29,6 @@ import java.util.List;
  */
 public interface GroupedStatistics {
     public String getName();
+    public String getAccountName();
     public List<String> getGroupedPathList();
 }

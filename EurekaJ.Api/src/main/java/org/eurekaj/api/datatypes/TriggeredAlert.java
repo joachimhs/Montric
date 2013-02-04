@@ -28,6 +28,8 @@ package org.eurekaj.api.datatypes;
 public interface TriggeredAlert {
     public String getAlertName();
 
+    public String getAccountName();
+
     public Long getTimeperiod();
 
     public Double getErrorValue();

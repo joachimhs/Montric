@@ -31,10 +31,12 @@ import java.util.List;
  */
 public class ManagerGroupedStatistics implements GroupedStatistics {
     private String name;
+    private String accountName;
 	private List<String> groupedPathList;
 
     public ManagerGroupedStatistics(GroupedStatistics groupedStatistics) {
         this.name = groupedStatistics.getName();
+        this.accountName = groupedStatistics.getAccountName();
         this.groupedPathList = groupedStatistics.getGroupedPathList();
     }
 
@@ -47,6 +49,14 @@ public class ManagerGroupedStatistics implements GroupedStatistics {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public List<String> getGroupedPathList() {

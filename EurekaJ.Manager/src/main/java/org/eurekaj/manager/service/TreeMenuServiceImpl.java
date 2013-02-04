@@ -45,41 +45,41 @@ public class TreeMenuServiceImpl implements TreeMenuService {
         return dbPlugin;
     }
 
-    public void storeIncomingStatistics(String guiPath, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
-		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, timeperiod, value, valueType, unitType);
+    public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
+		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, accountName, timeperiod, value, valueType, unitType);
 	}
 	
-	public List<TreeMenuNode> getTreeMenu() {
+	public List<Statistics> getTreeMenu() {
 		return getDbPlugin().getTreeMenuDao().getTreeMenu();
 	}
 
-	public TreeMenuNode getTreeMenu(String guiPath) {
-		return getDbPlugin().getTreeMenuDao().getTreeMenu(guiPath);
+	public Statistics getTreeMenu(String guiPath, String accountName) {
+		return getDbPlugin().getTreeMenuDao().getTreeMenu(guiPath, accountName);
 	}
 
-	public List<LiveStatistics> getLiveStatistics(String guiPath,
+	public List<LiveStatistics> getLiveStatistics(String guiPath, String accountName,
                                                   Long minTimeperiod, Long maxTimeperiod) {
-		return getDbPlugin().getLiveStatissticsDao().getLiveStatistics(guiPath, minTimeperiod, maxTimeperiod);
+		return getDbPlugin().getLiveStatissticsDao().getLiveStatistics(guiPath, accountName, minTimeperiod, maxTimeperiod);
 	}
 
 	public void persistGroupInstrumentation(GroupedStatistics groupedStatistics) {
 		getDbPlugin().getGroupedStatisticsDao().persistGroupInstrumentation(groupedStatistics);
 	}
 	
-	public GroupedStatistics getGroupedStatistics(String name) {
-		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics(name);
+	public GroupedStatistics getGroupedStatistics(String name, String accountName) {
+		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics(name, accountName);
 	}
 	
 	public List<GroupedStatistics> getGroupedStatistics() {
 		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics();
 	}
 	
-	public void deleteChartGroup(String groupName) {
-		getDbPlugin().getGroupedStatisticsDao().deleteGroupedChart(groupName);
+	public void deleteChartGroup(String groupName, String accountName) {
+		getDbPlugin().getGroupedStatisticsDao().deleteGroupedChart(groupName, accountName);
 	}
 
-	public Alert getAlert(String alertName) {
-		return getDbPlugin().getAlertDao().getAlert(alertName);
+	public Alert getAlert(String alertName, String accountName) {
+		return getDbPlugin().getAlertDao().getAlert(alertName, accountName);
 	}
 
 	public void persistAlert(Alert alert) {
@@ -90,33 +90,33 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return getDbPlugin().getAlertDao().getAlerts();
 	}
 	
-	public void deleteAlert(String alertName) {
-		getDbPlugin().getAlertDao().deleteAlert(alertName);
+	public void deleteAlert(String alertName, String accountName) {
+		getDbPlugin().getAlertDao().deleteAlert(alertName, accountName);
 	}
 
     public void persistTriggeredAlert(TriggeredAlert triggeredAlert) {
         getDbPlugin().getAlertDao().persistTriggeredAlert(triggeredAlert);
     }
 
-    public List<TriggeredAlert> getTriggeredAlerts(Long fromTimeperiod, Long toTimeperiod) {
-        return getDbPlugin().getAlertDao().getTriggeredAlerts(fromTimeperiod, toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String accountName, Long fromTimeperiod, Long toTimeperiod) {
+        return getDbPlugin().getAlertDao().getTriggeredAlerts(accountName, fromTimeperiod, toTimeperiod);
     }
 
-    public List<TriggeredAlert> getTriggeredAlerts(String alertname, Long fromTimeperiod, Long toTimeperiod) {
-        return getDbPlugin().getAlertDao().getTriggeredAlerts(alertname, fromTimeperiod, toTimeperiod);
+    public List<TriggeredAlert> getTriggeredAlerts(String alertname, String accountName, Long fromTimeperiod, Long toTimeperiod) {
+        return getDbPlugin().getAlertDao().getTriggeredAlerts(alertname, accountName, fromTimeperiod, toTimeperiod);
     }
 
-    public List<TriggeredAlert> getRecentTriggeredAlerts(int numAlerts) {
-        return getDbPlugin().getAlertDao().getRecentTriggeredAlerts(numAlerts);
+    public List<TriggeredAlert> getRecentTriggeredAlerts(String accountName, int numAlerts) {
+        return getDbPlugin().getAlertDao().getRecentTriggeredAlerts(accountName, numAlerts);
     }
 
-    public void deleteOldLiveStatistics(Date date) {
+    public void deleteOldLiveStatistics(String accountName, Date date) {
         log.debug("dbplugin: " + getDbPlugin());
 
-        getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date);
+        getDbPlugin().getLiveStatissticsDao().deleteLiveStatisticsOlderThan(date, accountName);
     }
     
-    public void deleteTreeMenuNode(String guiPath) {
-    	getDbPlugin().getTreeMenuDao().deleteTreeMenu(guiPath);    	
+    public void deleteTreeMenuNode(String guiPath, String accountName) {
+    	getDbPlugin().getTreeMenuDao().deleteTreeMenu(guiPath, accountName);
     }
 }

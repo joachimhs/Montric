@@ -31,6 +31,8 @@ public interface EmailRecipientGroup {
 
     public String getEmailRecipientGroupName();
 
+    public String getAccountName();
+
 	public String getSmtpServerhost();
 
 	public String getSmtpUsername();

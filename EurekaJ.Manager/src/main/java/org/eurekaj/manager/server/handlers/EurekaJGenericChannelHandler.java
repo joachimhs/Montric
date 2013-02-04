@@ -6,10 +6,7 @@ import static org.jboss.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 import org.apache.log4j.Logger;
-import org.eurekaj.manager.service.AdministrationService;
-import org.eurekaj.manager.service.AdministrationServiceImpl;
-import org.eurekaj.manager.service.TreeMenuService;
-import org.eurekaj.manager.service.TreeMenuServiceImpl;
+import org.eurekaj.manager.service.*;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -26,6 +23,7 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 	private static Logger log = Logger.getLogger(EurekaJGenericChannelHandler.class.getName());
 	private TreeMenuService berkeleyTreeMenuService;
     private AdministrationService administrationService;
+    private AccountService accountService;
 
     public AdministrationService getAdministrationService() {
         if (administrationService == null) {
@@ -39,6 +37,14 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
             berkeleyTreeMenuService = new TreeMenuServiceImpl();
         }
         return berkeleyTreeMenuService;
+    }
+
+    public AccountService getAccountService() {
+        if (accountService == null) {
+            accountService = new ManagerAccountService();
+        }
+
+        return accountService;
     }
     
     public boolean isPut(MessageEvent e) {

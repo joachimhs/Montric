@@ -28,8 +28,9 @@ import org.eurekaj.api.datatypes.Statistics;
  * To change this template use File | Settings | File Templates.
  */
 public class ManagerStatistics implements Statistics {
-    String guiPath;
-	String nodeLive;
+    private String guiPath;
+    private String accountName;
+	private String nodeLive;
     private Long oneMinuteAverageLastUpdated;
     private Long fiveMinuteAverageLastUpdated;
     private Long halfHourAverageLastUpdated;
@@ -37,9 +38,10 @@ public class ManagerStatistics implements Statistics {
     private Long dailyAverageLastUpdated;
     private Long weeklyAverageLastUpdated;
 
-    public ManagerStatistics(String guiPath, String nodeLive) {
+    public ManagerStatistics(String guiPath, String accountName, String nodeLive) {
         this();
         this.guiPath = guiPath;
+        this.accountName = accountName;
         this.nodeLive = nodeLive;
     }
 
@@ -57,6 +59,7 @@ public class ManagerStatistics implements Statistics {
         this();
         this.guiPath = statistics.getGuiPath();
         this.nodeLive = statistics.getNodeLive();
+        this.accountName = statistics.getAccountName();
     }
 
     public String getGuiPath() {
@@ -65,6 +68,14 @@ public class ManagerStatistics implements Statistics {
 
     public void setGuiPath(String guiPath) {
         this.guiPath = guiPath;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public String getNodeLive() {

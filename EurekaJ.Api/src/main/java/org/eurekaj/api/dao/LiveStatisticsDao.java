@@ -34,13 +34,16 @@ import java.util.List;
  */
 public interface LiveStatisticsDao {
 
-    public void storeIncomingStatistics(String guiPath, Long timeperiod,
-			String value, ValueType valueType, UnitType unitType);
+    public void storeIncomingStatistics(String guiPath,
+                                        String accountName,
+                                        Long timeperiod,
+			                            String value,
+                                        ValueType valueType,
+                                        UnitType unitType);
 
-    public List<LiveStatistics> getLiveStatistics(String guiPath,
-			Long minTimeperiod, Long maxTimeperiod);
+    public List<LiveStatistics> getLiveStatistics(String guiPath, String accountName, Long minTimeperiod, Long maxTimeperiod);
 
-    public void deleteLiveStatisticsOlderThan(Date date);
+    public void deleteLiveStatisticsOlderThan(Date date, String accountName);
 
-    public void deleteLiveStatisticsBetween(String guiPath, Long fromTimeperiod, Long toTimeperiod);
+    public void deleteLiveStatisticsBetween(String guiPath, String accountName, Long fromTimeperiod, Long toTimeperiod);
 }

@@ -10,3 +10,4 @@ tmp
 *.ipr
 *.iws
 EurekaJ.Agent/dependency-reduced-pom.xml
+rebel.xml

@@ -93,6 +93,7 @@ public class AlertValidatorTask {
                     
                     ManagerTriggeredAlert managerTriggeredAlert = new ManagerTriggeredAlert(
                             alert.getAlertName(),
+                            alert.getAccountName(),
                             statList.get(statList.size() -1).getTimeperiod(),
                             alert.getErrorValue(),
                             alert.getWarningValue(),
@@ -105,7 +106,7 @@ public class AlertValidatorTask {
 
 					Calendar cal = Calendar.getInstance();
 					for (String emailGroup : alert.getSelectedEmailSenderList()) {
-						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup);
+						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup, "ACCOUNT");
 						if (emailRecipientGroup != null) {
 							log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking email plugin.");
 							//The email alert is special, as properties needs to be built up for each alert being sent. 
@@ -198,7 +199,7 @@ public class AlertValidatorTask {
 		Long millisThen = millisNow - timeperiods;
 		log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
 		
-		return treeMenuService.getLiveStatistics(guiPath, millisThen, millisNow);
+		return treeMenuService.getLiveStatistics(guiPath, "ACCOUNT", millisThen, millisNow);
 	}
 
 }
