@@ -24,7 +24,7 @@ import org.eurekaj.api.datatypes.EmailRecipientGroup;
 
 public interface AdministrationService {
 
-	public List<EmailRecipientGroup> getEmailRecipientGroups();
+	public List<EmailRecipientGroup> getEmailRecipientGroups(String accountName);
 	
 	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName);
 	

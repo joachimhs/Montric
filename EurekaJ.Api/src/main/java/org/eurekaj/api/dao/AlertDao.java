@@ -28,7 +28,7 @@ public interface AlertDao {
 
     public Alert getAlert(String alertName, String accountName);
 
-    public List<Alert> getAlerts();
+    public List<Alert> getAlerts(String accountName);
     
     public void deleteAlert(String alertName, String accountName);
 

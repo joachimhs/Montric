@@ -17,7 +17,7 @@ EurekaJ.ChartMenuView = Ember.View.extend({
 
 EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'button',
-    classNames: ['button', 'btn-info', 'btn-mini'],
+    classNames: ['btn', 'btn-info', 'btn-mini'],
     disabled: false,
 
     click: function() {
@@ -26,7 +26,12 @@ EurekaJ.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
         }
     },
 
-    template: Ember.Handlebars.compile('{{#if view.iconName}}<i {{bindAttr class="view.iconName"}}></i>{{/if}}{{view.content}}')
+    template: Ember.Handlebars.compile('' + 
+        '{{#if view.iconName}}' + 
+            '<i {{bindAttr class="view.iconName"}}></i>' + 
+        '{{/if}}' + 
+        '{{view.content}}'
+    )
 });
 
 EurekaJ.ChartOptionsModalView = Ember.View.extend({

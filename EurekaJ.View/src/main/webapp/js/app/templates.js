@@ -8,7 +8,10 @@ Ember.TEMPLATES['main'] = Ember.Handlebars.compile('{{outlet}}');
 
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
     '<span class="headerText">{{#linkTo main}}<img src="/img/logo-small.png" />{{/linkTo}}</span>' +
-    '{{view EurekaJ.BootstrapButton target="controller" action="doAdmin" classNames="pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
+    //'{{view EurekaJ.BootstrapButton target="controller" action="doAdmin" classNames="pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
+    '<button class="btn btn-info btn-mini pull-right mediumTopPadding" {{action doAdmin target="controller"}}>' + 
+        '<i class="icon-cog"></i>Administration' + 
+    '</button>' +
     '{{view EurekaJ.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}'
 );
 
@@ -33,7 +36,7 @@ Ember.TEMPLATES['charts'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['chartMenu'] = Ember.Handlebars.compile('' +
     '<h1>Charts Menu</h1>' +
-    '{{view EurekaJ.TreeView itemsBinding="content"}}'
+    '{{view EurekaJ.TreeView itemsBinding="content" allowSelectionOfNonLeafNodes=false allowMultipleSelections=true}}'
 );
 
 Ember.TEMPLATES['login'] = Ember.Handlebars.compile('' +
@@ -50,7 +53,7 @@ Ember.TEMPLATES['login'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
     '<div class="modal-header centerAlign">' +
-        '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
+        '<button type="button" class="close" data-dismiss="modal" class="floatRight">x</button>' +
         '<h1 class="centerAlign">Chart Options</h1>' +
     '</div>' +
     '<div class="modal-body">' +

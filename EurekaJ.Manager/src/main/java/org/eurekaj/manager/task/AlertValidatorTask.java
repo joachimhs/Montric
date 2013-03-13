@@ -76,7 +76,7 @@ public class AlertValidatorTask {
 	
 	public void evaluateAlerts() {
 		//Get all alerts
-		List<Alert> alertList = treeMenuService.getAlerts();
+		List<Alert> alertList = treeMenuService.getAlerts("ACCOUNT");
 		
 		//For Each active alert
 		for (Alert alert : alertList) {

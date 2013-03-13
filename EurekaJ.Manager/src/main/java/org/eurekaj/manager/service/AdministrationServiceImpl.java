@@ -40,8 +40,8 @@ public class AdministrationServiceImpl implements AdministrationService {
         return dbPlugin;
     }
 
-	public List<EmailRecipientGroup> getEmailRecipientGroups() {
-		return getDbPlugin().getSmtpDao().getEmailRecipientGroups();
+	public List<EmailRecipientGroup> getEmailRecipientGroups(String accountName) {
+		return getDbPlugin().getSmtpDao().getEmailRecipientGroups(accountName);
 	}
 
 	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName) {

@@ -34,7 +34,7 @@ public interface GroupedStatisticsDao {
 
     public GroupedStatistics getGroupedStatistics(String name, String accountName);
 
-    public List<GroupedStatistics> getGroupedStatistics();
+    public List<GroupedStatistics> getGroupedStatistics(String accountName);
     
     public void deleteGroupedChart(String groupName, String accountName);
 

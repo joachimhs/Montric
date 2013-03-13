@@ -48,10 +48,10 @@ public class ParseJsonObjects {
         if (jsonAlert.has("alert_model")) {
             parsedAlert = new ManagerAlert();
             JSONObject alert = jsonAlert.getJSONObject("alert_model");
-            if (id != null) {
-                parsedAlert.setAlertName(id);
-            } else {
+            if (id == null || id.length() == 0) {
                 parsedAlert.setAlertName(parseStringFromJson(alert, "id"));
+            } else {
+                parsedAlert.setAlertName(id);
             }
 
             parsedAlert.setWarningValue(parseDoubleFromJson(alert, "alert_warning_value"));
@@ -66,7 +66,10 @@ public class ParseJsonObjects {
             parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(alert, "alert_type")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(alert, "alert_notifications"));
             parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alert_plugins"));
+            parsedAlert.setAccountName("ACCOUNT");
         }
+
+        log.info("alertName: " + parsedAlert.getAlertName() + " account: " + parsedAlert.getAccountName());
         return parsedAlert;
     }
 
@@ -99,7 +102,7 @@ public class ParseJsonObjects {
         return user;
     }
 
-    public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup, String id) throws JSONException {
+    public static GroupedStatistics parseInstrumentationGroup(JSONObject jsonGroup, String id, String accountName) throws JSONException {
         ManagerGroupedStatistics groupedStatistics = null;
 
         //{"chart_group_model":{"id":"New Group","chart_group_path":null}}
@@ -111,6 +114,10 @@ public class ParseJsonObjects {
                 groupedStatistics.setName(id);
             } else {
                 groupedStatistics.setName(parseStringFromJson(chartGroupObject, "id"));
+            }
+
+            if (accountName != null) {
+                groupedStatistics.setAccountName(accountName);
             }
 
             groupedStatistics.setGroupedPathList(getStringArrayFromJson(chartGroupObject, "chart_group_path"));

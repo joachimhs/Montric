@@ -11,7 +11,7 @@
     </parent>
     <build>
         <plugins>
-        	<plugin>
+        	<!--plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>1.7</version>
@@ -27,13 +27,12 @@
 								<resource>
 									<directory>src/main/webapp</directory>
 									<targetPath></targetPath>
-									<!-- excludes> <exclude>**/junk/**</exclude> </excludes -->
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
         </plugins>
     </build>
 </project>

@@ -168,7 +168,7 @@ public class BuildJsonObjectsUtil {
         treeJson.put("name", guiPath);
         treeJson.put("parent_id", JSONObject.NULL);
         treeJson.put("node_type", type);
-        treeJson.put("children", new JSONArray());
+        treeJson.put("children_ids", new JSONArray());
 
         String chartId = "";
         if (type.equalsIgnoreCase("chart")) {
@@ -190,7 +190,7 @@ public class BuildJsonObjectsUtil {
             //Mark parent objects as having children nodes
             if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
                 JSONObject parentNode = nodesBuilt.get(parentPath);
-                JSONArray childrenArray = parentNode.getJSONArray("children");
+                JSONArray childrenArray = parentNode.getJSONArray("children_ids");
                 childrenArray.put(guiPath);
             }
         }

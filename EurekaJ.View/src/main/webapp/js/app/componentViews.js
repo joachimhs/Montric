@@ -1,23 +1,40 @@
 /** tree views **/
 EurekaJ.TreeView = Ember.View.extend({
-    tagName: 'div',
-    items: null,
-    allowMultipleSelections: true,
-    allowSelectionOfNonLeafNodes: false,
+	items : null,
+	allowSelectionOfNonLeafNodes: false,
+	allowMultipleSelections: true,
+	controller : Ember.Controller.create(),
 
-    template: Ember.Handlebars.compile('{{#each view.items}}{{#if name}}{{view EurekaJ.NodeView itemBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}{{/if}}{{/each}}')
+	init : function() {
+		this._super();
+		this.set('controller._allowSelectionOfNonLeafNodes', this.get('allowSelectionOfNonLeafNodes'))
+		this.set('controller._allowMultipleSelections', this.get('allowMultipleSelections'))
+	},
+
+	nonLeafSelectionObserver : function() {
+		this.set('controller._allowSelectionOfNonLeafNodes', this.get('allowSelectionOfNonLeafNodes'))
+	}.observes('allowSelectionOfNonLeafNodes'),
+
+	multipleSelectionObserver : function() {
+		this.set('controller._allowMultipleSelections', this.get('allowMultipleSelections'))
+	}.observes('allowMultipleSelections'),
+
+	template : Ember.Handlebars.compile('' +
+		'{{#each view.items}}{{#if name}}' +
+			'{{view EurekaJ.NodeView itemBinding="this"}}' + 
+		'{{/if}}{{/each}}')
 });
 
 EurekaJ.NodeView = Ember.View.extend({
     item: null,
-
+    
     template: Ember.Handlebars.compile('' +
-        '{{view EurekaJ.NodeContentView itemBinding="view.item" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}' +
+        '{{view EurekaJ.NodeContentView itemBinding="view.item"}}' +
 
         '{{#if view.item.isExpanded}}' +
             '<div style="width: 500px;">' +
             '{{#each view.item.children}}' +
-                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView itemBinding="this" allowSelectionOfNonLeafNodesBinding="view.allowSelectionOfNonLeafNodes"}}</div>' +
+                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView itemBinding="this"}}</div>' +
             '{{/each}}' +
             '</div>' +
         '{{/if}}'),
@@ -31,7 +48,7 @@ EurekaJ.NodeView = Ember.View.extend({
 
 EurekaJ.NodeContentView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
-        '{{#if view.item.allowSelectionOfNonLeafNodes}}' +
+        '{{#if controller._allowSelectionOfNonLeafNodes}}' +
             '{{#unless view.item.hasChildren}}<span style="margin-left: 12px;">&nbsp;</span>{{/unless}}' +
             '{{view Ember.Checkbox checkedBinding="view.item.isSelected"}}' +
         '{{else}}' +
@@ -63,11 +80,11 @@ EurekaJ.NodeTextView = Ember.View.extend({
 EurekaJ.NodeArrowView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
         '{{#if view.item.hasChildren}}' +
-        '{{#if view.item.isExpanded}}' +
-        '<span class="downarrow"></span>' +
-        '{{else}}' +
-        '<span class="rightarrow"></span>' +
-        '{{/if}}' +
+        	'{{#if view.item.isExpanded}}' +
+        		'<span class="downarrow"></span>' +
+        	'{{else}}' +
+        		'<span class="rightarrow"></span>' +
+        	'{{/if}}' +
         '{{/if}}'),
 
     tagName: 'span',
@@ -80,32 +97,41 @@ EurekaJ.NodeArrowView = Ember.View.extend({
 
 /** Tab views **/
 EurekaJ.TabView = Ember.View.extend({
-    tagName: 'div',
-    selectedTabObserver: function() {
-        EurekaJ.log(this.get('controller').get('selectedTab').get('tabId'));
+    selectedTabObserver : function() {
         this.rerender();
     }.observes('controller.selectedTab'),
 
-    template: Ember.Handlebars.compile('<ul class="tabrow">{{#each tab in content}}{{view EurekaJ.TabItemView tabBinding="tab" targetBinding="tab.target" actionBinding="tab.action"}}{{/each}}</ul>{{#if controller.selectedTab.hasView}}{{view controller.selectedTab.tabView}}{{/if}}')
+    template : Ember.Handlebars.compile('' + 
+        '<ul class="tabrow">{{#each tab in content}}' + 
+            '{{view EurekaJ.TabItemView ' + 
+                'tabBinding="tab" ' + 
+                'targetBinding="tab.target" ' + 
+                'actionBinding="tab.action"' + 
+            '}}' + 
+        '{{/each}}</ul>' +
+
+        '{{#if controller.selectedTab.hasView}}' + 
+            '{{view controller.selectedTab.tabView}}' + 
+        '{{/if}}'
+    )
 });
 
 EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
-    content: null,
-    tagName: 'li',
+    tagName : 'li',
 
-    classNameBindings: "isSelected",
+    classNameBindings : "isSelected",
 
-    isSelected: function() {
+    isSelected : function() {
         return this.get('controller').get('selectedTab').get('tabId') == this.get('tab').get('tabId');
     }.property('controller.selectedTab'),
 
-    click: function() {
+    click : function() {
         this.triggerAction();
 
         this.get('controller').set('selectedTab', this.get('tab'));
     },
 
-    template: Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
+    template : Ember.Handlebars.compile('<div class="featureTabTop"></div>{{tab.tabName}}')
 
 });
 //** //Tab View **/
@@ -117,15 +143,27 @@ EurekaJ.SelectableListView = Ember.View.extend({
     maxCharacters: 28,
     selectedItem: null,
     listItems: null,
+    labelPropertyName: null,
+    
 
-    template: Ember.Handlebars.compile('{{#each view.listItems}}{{view EurekaJ.SelectableListItemView itemBinding="this" deleteActionBinding="view.deleteAction" maxCharactersBinding="view.maxCharacters" selectedItemBinding="view.selectedItem"}}{{/each}}')
+    template: Ember.Handlebars.compile('' +
+        '{{#each view.listItems}}' +
+            '{{view EurekaJ.SelectableListItemView ' +
+                'itemBinding="this" ' +
+                'deleteActionBinding="view.deleteAction" ' +
+                'maxCharactersBinding="view.maxCharacters" ' +
+                'selectedItemBinding="view.selectedItem"' +
+                'labelPropertyNameBinding="view.labelPropertyName"' +
+            '}}' +
+        '{{/each}}')
 });
 
-EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
+EurekaJ.SelectableListItemView = Ember.View.extend({
     tagName: 'div',
     classNameBindings: 'isSelected',
     deleteAction: null,
     selectedItem: null,
+    labelPropertyName: null,
 
     liShortLabel: function() {
         var numCharacters = this.get('maxCharacters') - 10;
@@ -139,14 +177,15 @@ EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
 
     liLongLabel: function() {
         var numCharacters = this.get('maxCharacters');
-        if (this.get('item') != null && this.get('item.id.length') > numCharacters) return this.get('item.id').substr(0, numCharacters) + '...';
+        if (this.get('item') != null && this.get('item.id.length') > numCharacters)
+            return this.get('item.id').substr(0, numCharacters) + '...';
 
         return this.get('item.id');
     }.property('item.id'),
 
     isSelected: function() {
         return this.get('selectedItem.id') === this.get('item').get('id');
-    }.property('selectedItem').cacheable(),
+    }.property('selectedItem'),
 
     click: function() {
         this.set('selectedItem', this.get('item'));
@@ -154,13 +193,19 @@ EurekaJ.SelectableListItemView = Ember.View.extend(Ember.TargetActionSupport, {
 
     template: Ember.Handlebars.compile('' +
         '{{#if view.isSelected}}' +
-        '{{view.liShortLabel}}' +
-        '{{#if view.deleteAction}}' +
-        '{{#view EurekaJ.BootstrapButton actionBinding="view.deleteAction" target="controller" classNames="btn btn-danger btn-mini floatRight"}}Delete{{/view}}' +
-        '{{/if}}' +
+            '{{view.liShortLabel}}' +
+            '{{#if view.deleteAction}}' +
+                '{{#view EurekaJ.BootstrapButton ' +
+                    'actionBinding="view.deleteAction" ' +
+                    'target="controller" ' +
+                    'classNames="btn btn-danger btn-mini floatRight"}}' +
+                        'Delete' +
+                '{{/view}}' +
+            '{{/if}}' +
         '{{else}}' +
-        '{{view.liLongLabel}}' +
-        '{{/if}}')
+            '{{view.liLongLabel}}' +
+        '{{/if}}'
+    )
 });
 /** //SelectableListView **/
 
@@ -171,7 +216,7 @@ EurekaJ.ConfirmDialogView = Ember.View.extend({
 
 Ember.TEMPLATES['confirmDialog'] = Ember.Handlebars.compile(
     '<div class="modal-header centerAlign">' +
-        '<button type="button" class="close" data-dismiss="modal" class="floatRight">×</button>' +
+        '<button type="button" class="close" data-dismiss="modal" class="floatRight">x</button>' +
         '<h1 class="centerAlign">{{view.header}}</h1>' +
     '</div>' +
     '<div class="modal-body">' +

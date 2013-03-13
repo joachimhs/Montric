@@ -63,7 +63,7 @@ public class InstrumentationTableChannelHandler extends ChartChannelHandler {
 
                     int numNodesFound = 0;
 
-                    for (Statistics statistics : getBerkeleyTreeMenuService().getTreeMenu()) {
+                    for (Statistics statistics : getBerkeleyTreeMenuService().getTreeMenu("ACCOUNT")) {
                         if (statistics.getGuiPath().startsWith(startsWith)
                                 && statistics.getGuiPath().endsWith(endsWith)) {
 

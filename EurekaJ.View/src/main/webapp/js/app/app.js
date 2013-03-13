@@ -57,7 +57,6 @@ EurekaJ.Adapter.map(EurekaJ.ChartModel, {
 });
 
 EurekaJ.store = DS.Store.create({
-    //adapter: EurekaJ.Adapter,
     adapter:  EurekaJ.Adapter.create({ bulkCommit: false }),
     revision: 11
 });

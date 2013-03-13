@@ -60,7 +60,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
 
         EurekaJ.MainMenuModel.find();
         var mainMenu = EurekaJ.store.filter(EurekaJ.MainMenuModel, function(data) {
-            if (data.get('parent_id') === null) { return true; }
+            if (data.get('parent') === null) { return true; }
         });
 
         var chartsController = this.controllerFor('charts');

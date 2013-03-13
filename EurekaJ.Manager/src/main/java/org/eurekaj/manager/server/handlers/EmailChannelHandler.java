@@ -72,7 +72,7 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
                 jsonResponse = topObject.toString();
             } else if (isGet(e)) {
                 JSONObject topObject = new JSONObject();
-                topObject.put("email_group_models", BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups()));
+                topObject.put("email_group_models", BuildJsonObjectsUtil.generateEmailGroupsJson(getAdministrationService().getEmailRecipientGroups("Account")));
             	jsonResponse = topObject.toString();
                 log.debug("Got Email Groups:\n" + jsonResponse);
             } else if (isDelete(e) && id != null) {

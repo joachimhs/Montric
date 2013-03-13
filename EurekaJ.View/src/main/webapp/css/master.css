@@ -144,7 +144,6 @@ i {
 
 .adminTable td {
     max-height: 150px;
-    overflow: scroll;
 }
 
 .eurekaJModal {

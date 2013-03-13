@@ -78,9 +78,9 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
                 }
 
                 JSONArray menuItems = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("menuID",
-                        getBerkeleyTreeMenuService().getTreeMenu(),
-                        getBerkeleyTreeMenuService().getAlerts(),
-                        getBerkeleyTreeMenuService().getGroupedStatistics(),
+                        getBerkeleyTreeMenuService().getTreeMenu("ACCOUNT"),
+                        getBerkeleyTreeMenuService().getAlerts("ACCOUNT"),
+                        getBerkeleyTreeMenuService().getGroupedStatistics("ACCOUNT"),
                         0, 15, true, filterChartType);
 
                 JSONObject menuItemsObj = new JSONObject();
@@ -129,9 +129,9 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 		        includeChartType = jsonObject.getString("nodeType");
 		    }
 		    jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId,
-		            getBerkeleyTreeMenuService().getTreeMenu(),
-		            getBerkeleyTreeMenuService().getAlerts(),
-		            getBerkeleyTreeMenuService().getGroupedStatistics(),
+		            getBerkeleyTreeMenuService().getTreeMenu("ACCOUNT"),
+		            getBerkeleyTreeMenuService().getAlerts("ACCOUNT"),
+		            getBerkeleyTreeMenuService().getGroupedStatistics("ACCOUNT"),
 		            0, 15, includeCharts, includeChartType).toString();
 
 		    log.debug("Got Tree Type Menu:\n" + jsonResponse);

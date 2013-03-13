@@ -31,7 +31,7 @@ import java.util.List;
  */
 public interface SmtpDao {
 
-    public List<EmailRecipientGroup> getEmailRecipientGroups();
+    public List<EmailRecipientGroup> getEmailRecipientGroups(String accountName);
 
 	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName);
 

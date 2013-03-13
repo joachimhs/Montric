@@ -49,8 +49,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, accountName, timeperiod, value, valueType, unitType);
 	}
 	
-	public List<Statistics> getTreeMenu() {
-		return getDbPlugin().getTreeMenuDao().getTreeMenu();
+	public List<Statistics> getTreeMenu(String accountName) {
+		return getDbPlugin().getTreeMenuDao().getTreeMenu(accountName);
 	}
 
 	public Statistics getTreeMenu(String guiPath, String accountName) {
@@ -70,8 +70,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics(name, accountName);
 	}
 	
-	public List<GroupedStatistics> getGroupedStatistics() {
-		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics();
+	public List<GroupedStatistics> getGroupedStatistics(String accountName) {
+		return getDbPlugin().getGroupedStatisticsDao().getGroupedStatistics(accountName);
 	}
 	
 	public void deleteChartGroup(String groupName, String accountName) {
@@ -86,8 +86,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 		getDbPlugin().getAlertDao().persistAlert(alert);
 	}
 	
-	public List<Alert> getAlerts() {
-		return getDbPlugin().getAlertDao().getAlerts();
+	public List<Alert> getAlerts(String accountName) {
+		return getDbPlugin().getAlertDao().getAlerts(accountName);
 	}
 	
 	public void deleteAlert(String alertName, String accountName) {

@@ -41,9 +41,17 @@ public interface LiveStatisticsDao {
                                         ValueType valueType,
                                         UnitType unitType);
 
+    public void storeIncomingStatistics(List<LiveStatistics> liveStatisticsList);
+
     public List<LiveStatistics> getLiveStatistics(String guiPath, String accountName, Long minTimeperiod, Long maxTimeperiod);
 
     public void deleteLiveStatisticsOlderThan(Date date, String accountName);
 
     public void deleteLiveStatisticsBetween(String guiPath, String accountName, Long fromTimeperiod, Long toTimeperiod);
+
+    public void markLiveStatisticsAsCalculated(String guiPath, String accountName, String timeperiod);
+
+    public void markLiveStatisticsAsCalculated(String guiPath, String accountName, Long minTimeperiod, Long maxTimeperiod);
+
+    public void deleteMarkedLiveStatistics();
 }

@@ -32,7 +32,7 @@ EurekaJ.AdministrationRoute = Ember.Route.extend({
         var adminMenuController = this.controllerFor('administrationMenu');
         EurekaJ.AdminMenuModel.find();
         var mainMenu = EurekaJ.store.filter(EurekaJ.AdminMenuModel, function(data) {
-            if (data.get('parent_id') === null) { return true; }
+            if (data.get('parent') === null) { return true; }
         });
 
         adminMenuController.set('rootNodes', mainMenu);
@@ -430,7 +430,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewChartGroup}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
+        '{{view EurekaJ.SelectableListView labelPropertyName="id" listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
@@ -439,7 +439,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
         '<tr>' +
             '<td style="width: 150px;">Select nodes:</td>' +
             '<td>' +
-                '<div style="max-height: 250px; min-height: 250px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
+                '{{controllers.administrationMenu.length}}<div style="max-height: 250px; min-height: 250px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
                 '{{view EurekaJ.TreeView itemsBinding="controllers.administrationMenu.rootNodes"}}' +
                 '</div>' +
                 '<button {{action doAddCheckedNodes}} class="btn" style="width: 100%;">Add selected Charts to Chart Group</button>' +
@@ -534,7 +534,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
         '<h1>{{selectedItem.id}}</h1>' +
-        '<table class="table adminTable">' +
+        '<table class="table">' +
         '<tr>' +
             '<td>Activated:</td>' +
             '<td colspan="3">{{view Ember.Checkbox checkedBinding="selectedItem.alertActivated"}}</td>' +
@@ -554,7 +554,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
         '<tr>' +
             '<td>Alert Source:</td>' +
             '<td colspan="3">' +
-            //'{{view EurekaJ.TreeView controllerBinding="adminMenuController"}}' +
+
             '<div>{{#if selectedItem.alertSource}}{{selectedItem.alertSource}}{{else}}None Selected{{/if}}</div>' +
             '<div style="max-height: 250px; overflow: scroll; margin-bottom: 15px;" class="azureBlueBackground azureBlueBorderThin">' +
                 '{{view EurekaJ.SelectableLeafTreeView itemsBinding="controllers.administrationMenu.rootNodes" selectedItemBinding="selectedItem.alertSource"}}' +

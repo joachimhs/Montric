@@ -44,6 +44,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		String jsonResponse = "";
+        String accountName = "ACCOUNT";
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
@@ -58,7 +59,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
             log.info("got chartGroup JSON" + jsonObject.toString());
             
             if (isPut(e) || isPost(e)) {
-            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject, id);
+            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject, id, accountName);
                 if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
@@ -67,7 +68,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
                 jsonResponse = topObject.toString();
             } else if (isGet(e)) {
                 JSONObject topObject = new JSONObject();
-                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics()));
+                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics("ACCOUNT")));
 
             	jsonResponse = topObject.toString();
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);

@@ -29,7 +29,7 @@ public interface TreeMenuService {
 
 	public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType);
 	
-	public List<Statistics> getTreeMenu();
+	public List<Statistics> getTreeMenu(String accountName);
 	
 	public Statistics getTreeMenu(String guiPath, String accountName);
 	
@@ -39,7 +39,7 @@ public interface TreeMenuService {
 	
 	public GroupedStatistics getGroupedStatistics(String name, String accountName);
 	
-	public List<GroupedStatistics> getGroupedStatistics();
+	public List<GroupedStatistics> getGroupedStatistics(String accountName);
 	
 	public void deleteChartGroup(String groupName, String accountName);
 	
@@ -47,7 +47,7 @@ public interface TreeMenuService {
 	
 	public Alert getAlert(String alertName, String accountName);
 	
-	public List<Alert> getAlerts();
+	public List<Alert> getAlerts(String accountName);
 
 	public void deleteAlert(String alertName, String accountName);
 	

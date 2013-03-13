@@ -52,6 +52,8 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
 
         try {
             HttpRequest request = (HttpRequest)e.getMessage();
+            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+
             String uri = request.getUri();
             String id = UriUtil.getIdFromUri(uri, "alert_models");
 
@@ -59,12 +61,12 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                 id = id.replaceAll("\\%20", " ");
             }
 
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+
             log.info("Got: " + jsonObject.toString());
             if (jsonObject.has("getAlertPlugins")) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
                 log.debug("Got Alert Plugins:\n" + jsonResponse);
-            } else if ((isPut(e) || isPost(e)) && id != null) {
+            } else if ((isPut(e) || isPost(e))) {
                 Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject, id);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
@@ -83,7 +85,7 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                 getBerkeleyTreeMenuService().deleteAlert(id, "ACCOUNT");
                 log.debug("Successfully deleted Alert with name:\n" + id);
             } else {
-            	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts());
+            	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts("ACCOUNT"));
                 log.debug("Got Alerts:\n" + jsonResponse);
             }
             
