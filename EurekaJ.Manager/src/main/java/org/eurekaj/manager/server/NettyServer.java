@@ -27,6 +27,7 @@ public class NettyServer extends EurekaJWebappPluginService {
         // Bind and start to accept incoming connections.
         bootstrap.bind(new InetSocketAddress(port));
 		
+        logger.info("Using DB Plugin: " + System.getProperty("eurekaj.db.type"));
         logger.info("EurekaJ Manager loaded and listening to port: " + port);
 	}
 	
@@ -50,7 +51,7 @@ public class NettyServer extends EurekaJWebappPluginService {
 		System.setProperty("log4j.configuration", "/srv/netty-webserver/log4j.xml");
 		System.setProperty("eurekaj.db.absPath", "/srv/eurekaj/eurekajData");
 		System.setProperty("org.eurekaj.deleteStatsOlderThanDays", "180");
-		System.setProperty("eurekaj.db.type", "BerkeleyHour");
+		System.setProperty("eurekaj.db.type", "RiakPlugin");
 		System.setProperty("org.eurekaj.port", "8081");
 		
 		nettyServer.start();

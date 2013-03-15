@@ -64,6 +64,7 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
                     String agent = liveStatistics.getGuiPath().substring(0, liveStatistics.getGuiPath().indexOf(":"));
                     ManagerLiveStatistics agentStats = new ManagerLiveStatistics();
                     agentStats.setGuiPath(agent + ":Agent Statistics:API Call Count");
+                    agentStats.setAccountName("ACCOUNT");
                     agentStats.setTimeperiod(liveStatistics.getTimeperiod());
                     agentStats.setUnitType(UnitType.N.value());
                     agentStats.setValueType(ValueType.AGGREGATE.value());
@@ -73,6 +74,7 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
 
                 //Send to available plugins for processing
                 ManagerProcessIncomingStatisticsPluginService.getInstance().processStatistics(liveStatList);
+                
             } else {
             	errorRaised = true;
             	write401ToBuffer(ctx);

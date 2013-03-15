@@ -131,6 +131,7 @@ public class ParseJsonObjects {
 
         if (jsonLiveStatistics.has("guiPath")) {
             liveStatistics = new ManagerLiveStatistics();
+            liveStatistics.setAccountName("ACCOUNT");
             liveStatistics.setGuiPath(parseStringFromJson(jsonLiveStatistics, "guiPath"));
             liveStatistics.setTimeperiod(parseLongFromJson(jsonLiveStatistics, "timeperiod"));
             liveStatistics.setValue(parseDoubleFromJson(jsonLiveStatistics, "value"));

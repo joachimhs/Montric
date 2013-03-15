@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.datatypes.basic.BasicStatistics;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
@@ -47,6 +48,7 @@ public class TreeMenuServiceImpl implements TreeMenuService {
 
     public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
 		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, accountName, timeperiod, value, valueType, unitType);
+		getDbPlugin().getTreeMenuDao().persistTreeMenu(new BasicStatistics(guiPath, accountName, "Y"));
 	}
 	
 	public List<Statistics> getTreeMenu(String accountName) {

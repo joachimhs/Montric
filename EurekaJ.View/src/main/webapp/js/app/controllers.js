@@ -158,18 +158,31 @@ EurekaJ.ApplicationController = Ember.Controller.extend({
 });
 
 EurekaJ.ChartOptionsModalController = Ember.ArrayController.extend({
-    applicationController: null,
+    applicationController : null,
 
-    init: function() {
+    init : function() {
         this._super();
         var content = [];
-        content.pushObject(EurekaJ.TabModel.create({tabId: 'live', tabName: 'Live', tabState: null, tabView: EurekaJ.LiveChartOptionsView, target: "controller", action: "liveChartsSelected"}));
-        content.pushObject(EurekaJ.TabModel.create({tabId: 'historical', tabName: 'Historical', tabView: EurekaJ.HistoricalChartOptionsView, target: "controller", action: "historicalChartsSelected"}));
+        content.pushObject(EurekaJ.TabModel.create({
+            tabId : 'live',
+            tabName : 'Live',
+            tabState : null,
+            tabView : EurekaJ.LiveChartOptionsView,
+            target : "controller",
+            action : "liveChartsSelected"
+        }));
+        content.pushObject(EurekaJ.TabModel.create({
+            tabId : 'historical',
+            tabName : 'Historical',
+            tabView : EurekaJ.HistoricalChartOptionsView,
+            target : "controller",
+            action : "historicalChartsSelected"
+        }));
         this.set('content', content);
         this.resetSelectedTab();
     },
 
-    resetSelectedTab: function () {
+    resetSelectedTab : function() {
         this.set('selectedTab', this.get('content').objectAt(0));
     }
 });

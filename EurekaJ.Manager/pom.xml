@@ -109,6 +109,11 @@
 			<artifactId>berkeleyHourPlugin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eurekaJ.plugin</groupId>
+			<artifactId>riakPlugin</artifactId>
+			<version>${project.version}</version>
+		</dependency>
         <dependency>
             <groupId>com.sleepycat</groupId>
             <artifactId>je</artifactId>
