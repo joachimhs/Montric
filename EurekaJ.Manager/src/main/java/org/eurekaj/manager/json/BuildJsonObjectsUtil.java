@@ -29,7 +29,7 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
-import org.eurekaj.api.datatypes.Statistics;
+import org.eurekaj.api.util.ListToString;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataPoint;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -429,13 +429,13 @@ public class BuildJsonObjectsUtil {
 		for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
 		    emailGroupArray.put(emailRecipientGroup);
 		}
-		alertObject.put("alert_notifications", emailGroupArray);
+		alertObject.put("alert_notifications", ListToString.convertFromListToJsonString(alert.getSelectedEmailSenderList(), ","));
 		
 		JSONArray selectedPluginsArray = new JSONArray();
 		for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
 			selectedPluginsArray.put(selectedPlugin);
 		}
-		alertObject.put("alert_plugins", selectedPluginsArray);
+		alertObject.put("alert_plugin_ids", selectedPluginsArray);
 
 		return alertObject;
 	}

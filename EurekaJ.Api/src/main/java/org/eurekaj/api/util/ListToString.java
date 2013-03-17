@@ -28,6 +28,30 @@ public class ListToString {
         sb.append("]");
         return sb.toString();
     }
+    
+    public static String convertFromListToJsonString(List<String> list, String delimeter) {
+        if (list.size() == 0) {
+            return "";
+        }
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("[");
+
+        for (int i = 0; i < list.size(); i++) {
+            if (i > 0)  {
+                sb.append(delimeter);
+            }
+
+            if (list.get(i) instanceof String) {
+                sb.append("\"").append(list.get(i)).append("\"");
+            } else {
+                sb.append(list.get(i));
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 
     public static String convertToCassandraMap(Object[] array) {
         if (array.length == 0) {

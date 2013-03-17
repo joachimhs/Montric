@@ -152,7 +152,7 @@ public class ParseJsonObjects {
             } else {
                 emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(eg, "id"));
             }
-
+            emailRecipientGroup.setAccountName("ACCOUNT");
             emailRecipientGroup.setPort(parseIntegerFromJson(eg, "smtp_port"));
             emailRecipientGroup.setUseSSL(parseBooleanFromJson(eg, "smtp_use_ssl"));
             emailRecipientGroup.setSmtpServerhost(parseStringFromJson(eg, "smtp_host"));

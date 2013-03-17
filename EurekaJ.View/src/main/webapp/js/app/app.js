@@ -46,8 +46,6 @@ EurekaJ.Adapter = DS.RESTAdapter.extend({
     }
 });
 
-
-
 EurekaJ.Adapter.map(EurekaJ.ChartSeriesModel, {
     seriesValues: { embedded: 'always' }
 });

@@ -84,6 +84,8 @@ EurekaJ.AdministrationAlertsRoute = Ember.Route.extend({
         if (adminController) {
             adminController.selectTabWithId('alerts');
         }
+        
+        controller.set('emailGroups', EurekaJ.EmailGroupModel.find());
     }
 });
 
@@ -251,7 +253,7 @@ EurekaJ.AdministrationChartGroupsController = Ember.ArrayController.extend({
 });
 
 EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
-    needs: ['administrationMenu'],
+    needs: ['administrationMenu', 'administrationEmailRecipients'],
 
     newAlertName: null,
     selectedItem: null,
@@ -264,6 +266,18 @@ EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
     sortAscending: true,
     sortProperties: ['alertName'],
 
+    selectedItemsEmailGroupObserver: function() {
+        var selectedGroups = this.get('emailGroups').filter(function(emailGroup) {
+            if (emailGroup.get('isSelected')) return true;
+        });
+        
+        console.log('selectedItemsEmailGroupObserver: ' + this.get('selectedItem.alertNotifications') + " :: " + selectedGroups.get('length'));
+        if (this.get('selectedItem.alertNotifications')) {
+           // this.get('selectedItem.alertNotifications').pushObjects(selectedGroups);
+            console.log('selectedItemsEmailGroupObserver: ' + this.get('selectedItem.alertNotifications.length'));
+        }
+    }.observes('emailGroups.@each.isSelected'), 
+    
     newAlertIsValid: function () {
         var newNameIsValid = (this.get('newAlertName') && this.get('newAlertName').length >= 1);
 
@@ -305,6 +319,13 @@ EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
     },
 
     doCommitAlert: function() {
+        var selectedItem = this.get('selectedItem');
+        if (selectedItem.get('alertNotificationArray.length') > 0) {
+            selectedItem.set('alertNotifications', JSON.stringify(selectedItem.get('alertNotificationArray')))
+        } else {
+            selectedItem.set('alertNotifications', "[]");
+        }
+        
         EurekaJ.store.commit();
     }
 });
@@ -589,7 +610,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
         '</tr>' +
         '<tr>' +
             '<td>Email Notification:</td>' +
-            '<td>_List of notifications_</td>' +
+            '<td>{{view EurekaJ.MultiSelectableListView listItemsBinding="emailGroups" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>' +
             '<td>Plugin Notification:</td>' +
             '<td>_List of pluigns_</td>' +
         '</tr>' +
