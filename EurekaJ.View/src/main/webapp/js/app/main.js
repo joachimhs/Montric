@@ -1,1 +1,0 @@
-EurekaJ.initialize();
