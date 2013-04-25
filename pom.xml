@@ -16,7 +16,7 @@
 		<!-- Module Depricated! module>EurekaJ.Agent</module-->
 		<module>EurekaJ.Manager</module>
 		<module>EurekaJ.Proxy</module>
-		<module>EurekaJ.api</module>
+		<module>EurekaJ.Api</module>
 		<module>EurekaJ.AlertEmailPlugin</module>
 		<module>EurekaJ.View</module>
 		<module>EurekaJ.Scripts</module>
