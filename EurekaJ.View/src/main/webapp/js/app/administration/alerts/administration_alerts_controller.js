@@ -1,8 +1,9 @@
-EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
+Montric.AdministrationAlertsController = Ember.ArrayController.extend({
     needs: ['administrationMenu', 'administrationEmailRecipients'],
 
     newAlertName: null,
     selectedItem: null,
+    newAlert: null,
     alertTypes: [
         {"key": "greater_than", "value": "Greater than"},
         {"key": "less_than", "value": "Less than"},
@@ -38,13 +39,22 @@ EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
     },
 
     createNewAlert: function () {
+        console.log(Ember.typeOf(this.get('content')) === 'array');
+
         if (this.newAlertIsValid()) {
-            EurekaJ.AlertModel.createRecord({id: this.get('newAlertName')});
-            EurekaJ.store.commit();
+            var newAlert = Montric.AlertModel.createRecord({id: this.get('newAlertName')});
+            this.set('newAlert', newAlert);
+            Montric.store.commit();
         } else {
-            EurekaJ.log('New Alert Name Not Valid!');
+            Montric.log('New Alert Name Not Valid!');
         }
+        
+        console.log(this.get('content.length'));
     },
+    
+    contentObserver: function() {
+        console.log('contentObserver: ' + this.get('content.length'));
+    }.observes('content.length'),
 
     deleteSelectedAlert: function() {
         $("#adminAlertConfirmDialog").modal({show: true});
@@ -60,7 +70,7 @@ EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
         if (selectedItem) {
             selectedItem.deleteRecord();
         }
-        EurekaJ.store.commit();
+        Montric.store.commit();
         $("#adminAlertConfirmDialog").modal('hide');
     },
 
@@ -72,6 +82,6 @@ EurekaJ.AdministrationAlertsController = Ember.ArrayController.extend({
             selectedItem.set('alertNotifications', "[]");
         }
         
-        EurekaJ.store.commit();
+        Montric.store.commit();
     }
 });

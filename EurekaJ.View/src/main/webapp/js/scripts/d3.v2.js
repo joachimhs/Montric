@@ -183,7 +183,7 @@
     return [ a, c ];
   };
   d3.random = {
-    normal: function(µ, σ) {
+	normal: function(µ,σ) {
       var n = arguments.length;
       if (n < 2) σ = 1;
       if (n < 1) µ = 0;

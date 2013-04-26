@@ -53,6 +53,7 @@ public class NettyServer extends EurekaJWebappPluginService {
 		System.setProperty("org.eurekaj.deleteStatsOlderThanDays", "180");
 		System.setProperty("eurekaj.db.type", "RiakPlugin");
 		System.setProperty("org.eurekaj.port", "8081");
+		System.setProperty("org.eurekaj.indexCacheSeconds", "0");
 		
 		nettyServer.start();
 	}

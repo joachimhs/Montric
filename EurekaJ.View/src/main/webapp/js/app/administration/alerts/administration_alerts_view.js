@@ -1,3 +1,3 @@
-EurekaJ.AdministrationAlertsView = Ember.View.extend({
+Montric.AdministrationAlertsView = Ember.View.extend({
     elementId: 'alertTabView'
 });

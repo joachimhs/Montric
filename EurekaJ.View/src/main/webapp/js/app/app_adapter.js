@@ -1,3 +1,5 @@
+//EurekaJ.Adapter = DS.FixtureAdapter.extend();
+
 EurekaJ.Adapter = DS.RESTAdapter.extend({
     find: function(store, type, id) {
         var root = this.rootForType(type);

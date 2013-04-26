@@ -1,6 +1,6 @@
-EurekaJ.AdministrationAlertsRoute = Ember.Route.extend({
+Montric.AdministrationAlertsRoute = Ember.Route.extend({
     model: function() {
-        return EurekaJ.AlertModel.find();
+        return Montric.AlertModel.find();
     },
 
     setupController: function(controller, models) {
@@ -10,6 +10,6 @@ EurekaJ.AdministrationAlertsRoute = Ember.Route.extend({
             adminController.selectTabWithId('alerts');
         }
         
-        controller.set('emailGroups', EurekaJ.EmailGroupModel.find());
+        controller.set('emailGroups', Montric.EmailGroupModel.find());
     }
 });

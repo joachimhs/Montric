@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.util.IntegerParser;
 import org.eurekaj.manager.server.handlers.*;
 import org.eurekaj.manager.server.router.RouterHandler;
 import org.jboss.netty.channel.ChannelHandler;
@@ -46,8 +47,12 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
             routes.put("equals:/account", new AccountHandler());
 
             String webappDir = System.getProperty("basedir");
-            
-    		routerHandler = new RouterHandler(routes, false, new CacheableFileServerHandler(webappDir, 0));
+             
+    		routerHandler = new RouterHandler(routes, false, 
+    			new CacheableFileServerHandler(
+    				webappDir, 
+    				IntegerParser.parseIntegerFromString(System.getProperty("org.eurekaj.indexCacheSeconds"), 0)
+    			));
         }
         
         pipeline.addLast("handler_routeHandler", routerHandler);

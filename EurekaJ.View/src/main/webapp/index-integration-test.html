@@ -12,6 +12,12 @@
 	<link rel="stylesheet" href="/css/bootstrap.css" type="text/css" charset="utf-8">
 	<link rel="stylesheet" href="/css/qunit-1.10.0.css" type="text/css" charset="utf-8">
 	<meta name="author" content="Joachim Haagen Skeie">
+	
+	<script type="text/javascript" charset="utf-8" src="/js/scripts/qunit-1.10.0.js"></script>			
+	<script type="text/javascript" charset="utf-8" src="/js/scripts/sinon-1.6.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/scripts/sinon-server-1.6.0.js"></script>
+	
+	
 	<script src="/js/scripts/date.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/d3.v2.js" type="text/javascript" charset="utf-8"></script>
@@ -23,6 +29,10 @@
 	<script src="/js/scripts/ember-1.0.0-rc.2.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/ember-data-20130331.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/app.js"></script>
+	<script type="text/javascript">
+		EurekaJ.server = sinon.fakeServer.create();
+		console.log('Header Script');
+	</script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/app_adapter.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/router.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/templates.js"></script>
@@ -79,12 +89,13 @@
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/main_menu_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/tab_model.js"></script>
 	
-	<script type="text/javascript" charset="utf-8" src="/js/scripts/qunit-1.10.0.js"></script>			
+	
+	<script type="text/javascript" charset="utf-8" src="/js/test/fixtures.js"></script>
 </head>
 <body bgcolor="#ffffff">
-	<div id="qunit"></div>
+	<div id="qunit" style="z-index: 10000;"></div>
 	
-	<script type="text/javascript" charset="utf-8" src="/js/test/appControllerTest.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/js/test/chartsControllerTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/test/alertAdminIntegrationTest.js"></script>
+	
 </body>
 </html>

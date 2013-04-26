@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="03f5f7d6-376e-4ca6-a6a0-cbf396dbc541" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/EurekaJNettyPipeline.java" afterPath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/EurekaJNettyPipeline.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/NettyServer.java" afterPath="$PROJECT_DIR$/../EurekaJ.Manager/src/main/java/org/eurekaj/manager/server/NettyServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/models.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/models.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/router.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index-test.html" afterPath="$PROJECT_DIR$/src/main/webapp/index-test.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/index.html" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/administration/alerts/administration_alerts_controller.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/administration/alerts/administration_alerts_controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/app.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/app/app_adapter.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/app/app_adapter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/scripts/d3.v2.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/scripts/d3.v2.js" />
     </list>
     <ignored path="EurekaJ.View.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,70 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="router.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
+      <file leaf-file-name="alertAdminIntegrationTest.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/test/alertAdminIntegrationTest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="29" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.020188425">
-              <folding>
-                <marker date="1360097686000" expanded="true" signature="2361:12758" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="2560:2628" placeholder="{&quot;route&quot;: '/'...}" />
-                <marker date="1360097686000" expanded="true" signature="2665:2898" placeholder="{&quot;route&quot;: '/login'...}" />
-                <marker date="1360097686000" expanded="true" signature="2797:2888" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="2934:4187" placeholder="{&quot;route&quot;: '/home'...}" />
-                <marker date="1360097686000" expanded="true" signature="3020:3255" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="3093:3180" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="3313:3402" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="3454:3542" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="3591:4089" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="3745:3838" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="4120:4177" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="4224:12750" placeholder="{&quot;route&quot;: '/admin'...}" />
-                <marker date="1360097686000" expanded="true" signature="4531:4598" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="4646:5476" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="5290:5383" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="5517:5598" placeholder="{&quot;route&quot;: '/'...}" />
-                <marker date="1360097686000" expanded="true" signature="5641:7085" placeholder="{&quot;route&quot;: '/alerts'...}" />
-                <marker date="1360097686000" expanded="true" signature="5720:5783" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="5829:5929" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="5980:6070" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="6129:6213" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="6268:6661" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="6458:6534" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="6698:6794" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="6845:7071" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7133:9374" placeholder="{&quot;route&quot;: '/chartGroups'...}" />
-                <marker date="1360097686000" expanded="true" signature="7208:7309" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7360:7470" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7520:7583" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7632:7740" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7796:7886" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="7940:8024" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="8079:8415" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="8212:8288" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="8475:8570" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="8628:8717" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="8776:8965" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="9017:9360" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="9426:11423" placeholder="{&quot;route&quot;: '/emailRecipients'...}" />
-                <marker date="1360097686000" expanded="true" signature="9520:9630" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="9686:9776" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="9830:9914" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="9969:10149" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="10209:10301" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="10362:10448" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="10510:10696" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="10746:10809" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="10860:10970" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11007:11112" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11164:11409" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11469:12739" placeholder="{&quot;route&quot;: '/menuAdmin'...}" />
-                <marker date="1360097686000" expanded="true" signature="11542:11641" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11691:11780" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11834:11917" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="11972:12389" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="12120:12188" placeholder="{...}" />
-                <marker date="1360097686000" expanded="true" signature="12441:12725" placeholder="{...}" />
-              </folding>
+            <state line="45" column="58" selection-start="1678" selection-end="1732" vertical-scroll-proportion="0.72115386">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,7 +55,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/alerts.json" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/scripts/ember-1.0.pre.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/main.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/index-test.html" />
@@ -124,14 +70,15 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/app.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/controllers.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/app/router.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/test/alertAdminIntegrationTest.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="37" />
+    <option name="x" value="39" />
     <option name="y" value="22" />
-    <option name="width" value="1403" />
-    <option name="height" value="878" />
+    <option name="width" value="1881" />
+    <option name="height" value="1058" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -159,6 +106,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -190,12 +147,56 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EurekaJ.View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -287,16 +288,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Favorites" />
     </panes>
   </component>
@@ -307,8 +298,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Ember.js-in-Action-Source/chapter1/notes" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -358,13 +349,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="37" y="22" width="1403" height="878" extended-state="6" />
-    <editor active="false" />
+    <frame x="39" y="22" width="1881" height="1058" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2347826" sideWeight="0.98719317" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23466092" sideWeight="0.98719317" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -574,75 +565,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/mainMenu.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index-test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="11" selection-start="3041" selection-end="3041" vertical-scroll-proportion="0.7481343" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/js/app/models.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="0" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.32539684" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="35" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/date.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="284" column="0" selection-start="10475" selection-end="10475" vertical-scroll-proportion="0.95962316">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="33" selection-start="641" selection-end="641" vertical-scroll-proportion="0.26639345" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="10" selection-start="2040" selection-end="2095" vertical-scroll-proportion="0.26244953" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/models.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="27" selection-start="3635" selection-end="3635" vertical-scroll-proportion="0.4642857" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/views.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="16" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.35582012" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/componentViews.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="27" selection-start="6634" selection-end="6634" vertical-scroll-proportion="0.52489907" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="33" selection-start="1563" selection-end="1563" vertical-scroll-proportion="0.5216178" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="221" column="8" selection-start="13482" selection-end="13483" vertical-scroll-proportion="0.7587169" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="29" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.020188425">
+        <state line="66" column="29" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1360097686000" expanded="true" signature="2361:12758" placeholder="{...}" />
             <marker date="1360097686000" expanded="true" signature="2560:2628" placeholder="{&quot;route&quot;: '/'...}" />
@@ -703,6 +628,122 @@
             <marker date="1360097686000" expanded="true" signature="12120:12188" placeholder="{...}" />
             <marker date="1360097686000" expanded="true" signature="12441:12725" placeholder="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/mainMenu.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index-test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="11" selection-start="3041" selection-end="3041" vertical-scroll-proportion="0.7481343" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/scripts/date.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="284" column="0" selection-start="10475" selection-end="10475" vertical-scroll-proportion="0.95962316">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="33" selection-start="641" selection-end="641" vertical-scroll-proportion="0.26639345" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="10" selection-start="2040" selection-end="2095" vertical-scroll-proportion="0.26244953" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/templates.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="221" column="8" selection-start="13482" selection-end="13483" vertical-scroll-proportion="0.7587169" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/app/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="27" selection-start="2963" selection-end="2963" vertical-scroll-proportion="0.48076922">
+          <folding>
+            <marker date="1360097686000" expanded="true" signature="2361:12758" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="2560:2628" placeholder="{&quot;route&quot;: '/'...}" />
+            <marker date="1360097686000" expanded="true" signature="2665:2898" placeholder="{&quot;route&quot;: '/login'...}" />
+            <marker date="1360097686000" expanded="true" signature="2797:2888" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="2934:4187" placeholder="{&quot;route&quot;: '/home'...}" />
+            <marker date="1360097686000" expanded="true" signature="3020:3255" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="3093:3180" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="3313:3402" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="3454:3542" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="3591:4089" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="3745:3838" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="4120:4177" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="4224:12750" placeholder="{&quot;route&quot;: '/admin'...}" />
+            <marker date="1360097686000" expanded="true" signature="4531:4598" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="4646:5476" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="5290:5383" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="5517:5598" placeholder="{&quot;route&quot;: '/'...}" />
+            <marker date="1360097686000" expanded="true" signature="5641:7085" placeholder="{&quot;route&quot;: '/alerts'...}" />
+            <marker date="1360097686000" expanded="true" signature="5720:5783" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="5829:5929" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="5980:6070" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="6129:6213" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="6268:6661" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="6458:6534" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="6698:6794" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="6845:7071" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7133:9374" placeholder="{&quot;route&quot;: '/chartGroups'...}" />
+            <marker date="1360097686000" expanded="true" signature="7208:7309" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7360:7470" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7520:7583" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7632:7740" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7796:7886" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="7940:8024" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="8079:8415" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="8212:8288" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="8475:8570" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="8628:8717" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="8776:8965" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="9017:9360" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="9426:11423" placeholder="{&quot;route&quot;: '/emailRecipients'...}" />
+            <marker date="1360097686000" expanded="true" signature="9520:9630" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="9686:9776" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="9830:9914" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="9969:10149" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="10209:10301" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="10362:10448" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="10510:10696" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="10746:10809" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="10860:10970" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11007:11112" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11164:11409" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11469:12739" placeholder="{&quot;route&quot;: '/menuAdmin'...}" />
+            <marker date="1360097686000" expanded="true" signature="11542:11641" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11691:11780" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11834:11917" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="11972:12389" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="12120:12188" placeholder="{...}" />
+            <marker date="1360097686000" expanded="true" signature="12441:12725" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index-integration-test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="4" selection-start="1982" selection-end="2102" vertical-scroll-proportion="0.34539473">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/test/alertAdminIntegrationTest.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="58" selection-start="1678" selection-end="1732" vertical-scroll-proportion="0.72115386">
+          <folding />
         </state>
       </provider>
     </entry>
