@@ -1,4 +1,4 @@
-EurekaJ.AdministrationMenuController = Ember.ArrayController.extend({
+Montric.AdministrationMenuController = Ember.ArrayController.extend({
     isSelectedObserver: function() {
         if (this.get('content')) {
             var selectedNodes = this.get('content').filter(function(node) {

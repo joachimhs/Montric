@@ -1,6 +1,6 @@
-EurekaJ.AdministrationEmailRecipientsRoute = Ember.Route.extend({
+Montric.AdministrationEmailRecipientsRoute = Ember.Route.extend({
     model: function() {
-        return EurekaJ.EmailGroupModel.find();
+        return Montric.EmailGroupModel.find();
     },
 
     setupController: function(controller) {

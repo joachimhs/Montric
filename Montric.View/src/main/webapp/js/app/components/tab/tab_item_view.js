@@ -1,4 +1,4 @@
-EurekaJ.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
+Montric.TabItemView = Ember.View.extend(Ember.TargetActionSupport, {
     tagName : 'li',
 
     classNameBindings : "isSelected",

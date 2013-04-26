@@ -1,4 +1,4 @@
-EurekaJ.ApplicationController = Ember.Controller.extend({
+Montric.ApplicationController = Ember.Controller.extend({
     timezones: null,
     selectedTimezone: null,
     chartTimespans: null,
@@ -81,27 +81,27 @@ EurekaJ.ApplicationController = Ember.Controller.extend({
     },
 
     selectedTimezoneObserver: function() {
-        EurekaJ.set('selectedTimezone', this.get('selectedTimezone.timezoneValue'))
+        Montric.set('selectedTimezone', this.get('selectedTimezone.timezoneValue'))
     }.observes('selectedTimezone'),
 
     selectedChartTimespanObserver: function() {
-        EurekaJ.set('selectedChartTimespan', this.get('selectedChartTimespan.timespanValue'))
+        Montric.set('selectedChartTimespan', this.get('selectedChartTimespan.timespanValue'))
     }.observes('selectedChartTimespan'),
 
     selectedChartResolutionObserver: function() {
-        EurekaJ.set('selectedChartResolution', this.get('selectedChartResolution.chartResolutionValue'))
+        Montric.set('selectedChartResolution', this.get('selectedChartResolution.chartResolutionValue'))
     }.observes('selectedChartResolution'),
 
     showLiveChartsObserver: function() {
-        EurekaJ.set('showLiveCharts', this.get('showLiveCharts'))
+        Montric.set('showLiveCharts', this.get('showLiveCharts'))
     }.observes('showLiveCharts'),
 
     selectedChartFromObserver: function() {
-        EurekaJ.set('selectedChartFromMs', this.get('selectedChartFrom').getTime())
+        Montric.set('selectedChartFromMs', this.get('selectedChartFrom').getTime())
     }.observes('selectedChartFrom'),
 
     selectedChartToObserver: function() {
-        EurekaJ.set('selectedChartToMs', this.get('selectedChartTo').getTime())
+        Montric.set('selectedChartToMs', this.get('selectedChartTo').getTime())
     }.observes('selectedChartTo'),
 
     historicalChartsSelected: function() {

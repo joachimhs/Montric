@@ -1,4 +1,4 @@
-EurekaJ.AdministrationRoute = Ember.Route.extend({
+Montric.AdministrationRoute = Ember.Route.extend({
     events: {
         adminAlertsSelected: function() {
             console.log('adminAlertsSelected');
@@ -22,28 +22,28 @@ EurekaJ.AdministrationRoute = Ember.Route.extend({
         this._super(controller);
         var content = [];
 
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'alerts',
             tabName : 'Alerts',
             tabState : 'administration.alerts',
             target : "controller",
             action : "adminAlertsSelected"
         }));
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'chartGroups',
             tabName : 'Chart Group',
             tabState : 'administration.chartGroups',
             target : "controller",
             action : "adminChartGroupsSelected"
         }));
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'emailRecipients',
             tabName : 'EmailRecipients',
             tabState : 'administration.emailRecipients',
             target : "controller",
             action : "adminEmailRecipientsSelected"
         }));
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'menuAdmin',
             tabName : 'Main Menu Admin',
             tabState : 'administration.menuAdmin',
@@ -54,14 +54,14 @@ EurekaJ.AdministrationRoute = Ember.Route.extend({
         controller.resetSelectedTab();
 
         var adminMenuController = this.controllerFor('administrationMenu');
-        EurekaJ.AdminMenuModel.find();
-        var mainMenu = EurekaJ.store.filter(EurekaJ.AdminMenuModel, function(data) {
+        Montric.AdminMenuModel.find();
+        var mainMenu = Montric.store.filter(Montric.AdminMenuModel, function(data) {
             if (data.get('parent') === null) {
                 return true;
             }
         });
 
         adminMenuController.set('rootNodes', mainMenu);
-        adminMenuController.set('content', EurekaJ.AdminMenuModel.find());
+        adminMenuController.set('content', Montric.AdminMenuModel.find());
     }
 });

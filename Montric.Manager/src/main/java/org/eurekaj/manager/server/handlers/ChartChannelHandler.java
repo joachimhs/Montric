@@ -236,7 +236,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                 //}
 
                 
-                log.debug("Got Chart Data:\n" + jsonResponse);
+                log.info("Got Chart Data:\n" + jsonResponse);
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

@@ -1,6 +1,6 @@
-EurekaJ.AdministrationChartGroupsRoute = Ember.Route.extend({
+Montric.AdministrationChartGroupsRoute = Ember.Route.extend({
     model: function() {
-        return EurekaJ.ChartGroupModel.find();
+        return Montric.ChartGroupModel.find();
     },
 
     setupController: function(controller) {

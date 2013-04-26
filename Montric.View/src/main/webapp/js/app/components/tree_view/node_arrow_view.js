@@ -1,4 +1,4 @@
-EurekaJ.NodeArrowView = Ember.View.extend({
+Montric.NodeArrowView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
         '{{#if view.item.hasChildren}}' +
             '{{#if view.item.isExpanded}}' +

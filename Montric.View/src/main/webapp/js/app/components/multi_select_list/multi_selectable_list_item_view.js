@@ -1,4 +1,4 @@
-EurekaJ.MultiSelectableListItemView = Ember.View.extend({
+Montric.MultiSelectableListItemView = Ember.View.extend({
     classNameBindings: 'isSelected',
     
     isSelected: function() {

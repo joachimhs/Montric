@@ -1,3 +1,3 @@
-EurekaJ.AdministrationView = Ember.View.extend({
+Montric.AdministrationView = Ember.View.extend({
     elementId: 'mainContentArea'
 });

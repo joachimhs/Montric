@@ -35,6 +35,19 @@ public class BasicStatistics implements Statistics, Comparable<Statistics> {
         oneMinuteAverageLastUpdated = 0l;
         fiveMinuteAverageLastUpdated = 0l;
 	}
+	
+	public BasicStatistics(Statistics stat) {
+		super();
+		this.guiPath = stat.getGuiPath();
+		this.accountName = stat.getAccountName();
+		this.nodeLive = stat.getNodeLive();
+		halfHourAverageLastUpdated = stat.getHalfHourAverageLastUpdated();
+		hourAverageLastUpdated = stat.getHourAverageLastUpdated();
+		dailyAverageLastUpdated = stat.getDailyAverageLastUpdated();
+		weeklyAverageLastUpdated = stat.getWeeklyAverageLastUpdated();
+        oneMinuteAverageLastUpdated = stat.getOneMinuteAverageLastUpdated();
+        fiveMinuteAverageLastUpdated = stat.getFiveMinuteAverageLastUpdated();
+	}
 
     public String getGuiPath() {
 		return guiPath;

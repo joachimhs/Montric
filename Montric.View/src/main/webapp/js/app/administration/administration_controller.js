@@ -1,4 +1,4 @@
-EurekaJ.AdministrationController = Ember.ArrayController.extend({
+Montric.AdministrationController = Ember.ArrayController.extend({
     resetSelectedTab: function () {
         this.set('selectedTab', this.get('content').objectAt(0));
     },

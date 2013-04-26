@@ -1,4 +1,4 @@
-EurekaJ.Router.map(function() {
+Montric.Router.map(function() {
     this.route("login", {path: "/"});
     this.resource("main", {path: "/main"}, function() {
         this.route("dashboard");
@@ -14,7 +14,7 @@ EurekaJ.Router.map(function() {
     });
 });
 
-EurekaJ.ApplicationRoute = Ember.Route.extend({
+Montric.ApplicationRoute = Ember.Route.extend({
     events: {
         doAdmin: function() {
             this.transitionTo('administration.index');
@@ -29,7 +29,7 @@ EurekaJ.ApplicationRoute = Ember.Route.extend({
 });
 
 
-EurekaJ.LoginRoute = Ember.Route.extend({
+Montric.LoginRoute = Ember.Route.extend({
     events: {
         doLogin: function() {
             console.log('logging in!');
@@ -38,28 +38,28 @@ EurekaJ.LoginRoute = Ember.Route.extend({
     }
 });
 
-EurekaJ.MainIndexRoute = Ember.Route.extend({
+Montric.MainIndexRoute = Ember.Route.extend({
     redirect: function() {
         console.log('redirecting to Dashboard!');
         this.transitionTo('main.dashboard');
     }
 });
 
-EurekaJ.MainDashboardRoute = Ember.Route.extend({
+Montric.MainDashboardRoute = Ember.Route.extend({
 
 });
 
-EurekaJ.MainChartsRoute = Ember.Route.extend({
+Montric.MainChartsRoute = Ember.Route.extend({
     model: function() {
-        return EurekaJ.MainMenuModel.find();
+        return Montric.MainMenuModel.find();
     },
 
     setupController: function(controller, model) {
         this._super(controller, model);
         console.log('MainChartsRoute setupController: ' + controller);
 
-        EurekaJ.MainMenuModel.find();
-        var mainMenu = EurekaJ.store.filter(EurekaJ.MainMenuModel, function(data) {
+        Montric.MainMenuModel.find();
+        var mainMenu = Montric.store.filter(Montric.MainMenuModel, function(data) {
             if (data.get('parent') === null) { return true; }
         });
 
@@ -69,11 +69,11 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
         chartMenuController.set('mainChartsController', controller);
 
         controller.set('rootNodes', mainMenu);
-        controller.set('content', EurekaJ.MainMenuModel.find());
+        controller.set('content', Montric.MainMenuModel.find());
     }
 });
 
-/*EurekaJ.router = Ember.Router.create({
+/*Montric.router = Ember.Router.create({
     enableLogging: true,
     //location: 'history',
     root: Ember.Route.extend({
@@ -96,23 +96,23 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
             route: '/home',
 
             applyChartOptionsChanges: function(router) {
-                if(!EurekaJ.appValuesController.get('showLiveCharts')) {
-                    EurekaJ.appValuesController.updateChartDates();
+                if(!Montric.appValuesController.get('showLiveCharts')) {
+                    Montric.appValuesController.updateChartDates();
                 }
                 router.get('mainController').reloadCharts();
             },
 
             historicalChartsSelected: function(router) {
-                EurekaJ.appValuesController.set('showLiveCharts', false);
+                Montric.appValuesController.set('showLiveCharts', false);
             },
 
             liveChartsSelected: function(router) {
-                EurekaJ.appValuesController.set('showLiveCharts', true);
+                Montric.appValuesController.set('showLiveCharts', true);
             },
 
             connectOutlets: function (router) {
-                EurekaJ.store.findAll(EurekaJ.MainMenuModel);
-                var mainMenu = EurekaJ.store.filter(EurekaJ.MainMenuModel, function(data) {
+                Montric.store.findAll(Montric.MainMenuModel);
+                var mainMenu = Montric.store.filter(Montric.MainMenuModel, function(data) {
                     if (data.get('parentPath') === null) { return true; }
                 });
 
@@ -122,7 +122,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
 
             },
             exit: function() {
-                EurekaJ.log('exit Home');
+                Montric.log('exit Home');
             }
         }),
         admin: Ember.Route.extend({
@@ -137,7 +137,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
             },
 
             connectOutlets: function(router) {
-                EurekaJ.log('connecting outlets for admin');
+                Montric.log('connecting outlets for admin');
                 router.get('applicationController').connectOutlet('admin');
                 router.get('applicationController').connectOutlet('header', 'header');
 
@@ -145,8 +145,8 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 router.get('adminChartGroupController').connectControllers('adminMenu');
                 router.get('adminEmailGroupController').connectControllers('adminMenu');
 
-                EurekaJ.store.findAll(EurekaJ.AdminMenuModel);
-                var mainMenu = EurekaJ.store.filter(EurekaJ.AdminMenuModel, function(data) {
+                Montric.store.findAll(Montric.AdminMenuModel);
+                var mainMenu = Montric.store.filter(Montric.AdminMenuModel, function(data) {
                     if (data.get('parentPath') === null) { return true; }
                 });
 
@@ -162,11 +162,11 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 route: '/alerts',
 
                 doCommitAlert: function() {
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                 },
 
                 createNewAlert: function() {
-                    EurekaJ.router.get('adminAlertController').createNewAlert();
+                    Montric.router.get('adminAlertController').createNewAlert();
                 },
 
                 deleteSelectedAlert: function() {
@@ -179,39 +179,39 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
 
                 doConfirmDeletion: function(router) {
                     console.log('doConfirmDeletion');
-                    var selectedItem = EurekaJ.router.get('adminAlertController.selectedItem');
+                    var selectedItem = Montric.router.get('adminAlertController.selectedItem');
                     if (selectedItem) {
                         selectedItem.deleteRecord();
                     }
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                     $("#adminAlertConfirmDialog").modal('hide');
                 },
 
                 enter: function() {
-                    EurekaJ.adminTabBarController.selectTabWithId('alerts');
+                    Montric.adminTabBarController.selectTabWithId('alerts');
                 },
                 connectOutlets: function(router) {
-                    EurekaJ.log('connecting outlets for Alerts');
-                    router.get('adminController').connectOutlet('adminTabContent', 'adminAlert', EurekaJ.store.findAll(EurekaJ.AlertModel));
+                    Montric.log('connecting outlets for Alerts');
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminAlert', Montric.store.findAll(Montric.AlertModel));
                 }
             }),
 
             chartGroups: Ember.Route.extend({
                 route: '/chartGroups',
                 enter: function() {
-                    EurekaJ.adminTabBarController.selectTabWithId('chartGroups');
+                    Montric.adminTabBarController.selectTabWithId('chartGroups');
                 },
 
                 createNewChartGroup: function() {
-                    EurekaJ.router.get('adminChartGroupController').createNewChartGroup();
+                    Montric.router.get('adminChartGroupController').createNewChartGroup();
                 },
 
                 doCommitChartGroup: function() {
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                 },
 
                 doAddCheckedNodes: function() {
-                    EurekaJ.router.get('adminChartGroupController').doAddCheckedNodes();
+                    Montric.router.get('adminChartGroupController').doAddCheckedNodes();
                 },
 
                 deleteSelectedChartGroup: function() {
@@ -227,7 +227,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                     if (selectedItem) {
                         selectedItem.deleteRecord();
                     }
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                     $("#chartGroupConfirmDialog").modal('hide');
                 },
 
@@ -240,13 +240,13 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 },
 
                 doConfirmPathDeletion: function(router) {
-                    EurekaJ.router.get('adminChartGroupController').deleteSelectedChartPathGroup();
+                    Montric.router.get('adminChartGroupController').deleteSelectedChartPathGroup();
                     $("#chartGroupPathsConfirmDialog").modal('hide');
                 },
 
                 connectOutlets: function(router) {
-                    EurekaJ.log('connecting outlets for chartGroups');
-                    router.get('adminController').connectOutlet('adminTabContent', 'adminChartGroup', EurekaJ.store.findAll(EurekaJ.ChartGroupModel));
+                    Montric.log('connecting outlets for chartGroups');
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminChartGroup', Montric.store.findAll(Montric.ChartGroupModel));
                     router.get('selectedChartGroupController').connectControllers('adminChartGroup');
                 }
             }),
@@ -255,7 +255,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 route: '/emailRecipients',
 
                 createNewEmailGroup: function() {
-                    EurekaJ.router.get('adminEmailGroupController').createNewEmailGroup();
+                    Montric.router.get('adminEmailGroupController').createNewEmailGroup();
                 },
 
                 deleteSelectedEmailGroup: function() {
@@ -267,7 +267,7 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 },
 
                 doConfirmDeletion: function(router) {
-                    EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailGroup();
+                    Montric.router.get('adminEmailGroupController').deleteSelectedEmailGroup();
                     $("#emailGroupConfirmDialog").modal('hide');
                 },
 
@@ -280,32 +280,32 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                 },
 
                 doConfirmAddressDeletion: function(router) {
-                    EurekaJ.router.get('adminEmailGroupController').deleteSelectedEmailRecipient();
+                    Montric.router.get('adminEmailGroupController').deleteSelectedEmailRecipient();
                     $("#emailAddressConfirmDialog").modal('hide');
                 },
 
                 doCommitEmailGroup: function() {
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                 },
 
                 doAddEmailRecipient: function() {
-                    EurekaJ.router.get('adminEmailGroupController').doAddEmailRecipient();
+                    Montric.router.get('adminEmailGroupController').doAddEmailRecipient();
                 },
 
                 enter: function() {
-                    EurekaJ.adminTabBarController.selectTabWithId('emailRecipients');
+                    Montric.adminTabBarController.selectTabWithId('emailRecipients');
                 },
 
                 connectOutlets: function(router) {
-                    EurekaJ.log('connecting outlets for emailRecipients');
-                    router.get('adminController').connectOutlet('adminTabContent', 'adminEmailGroup', EurekaJ.store.findAll(EurekaJ.EmailGroupModel));
+                    Montric.log('connecting outlets for emailRecipients');
+                    router.get('adminController').connectOutlet('adminTabContent', 'adminEmailGroup', Montric.store.findAll(Montric.EmailGroupModel));
                 }
             }),
 
             menuAdmin: Ember.Route.extend({
                 route: '/menuAdmin',
                 enter: function() {
-                    EurekaJ.adminTabBarController.selectTabWithId('menuAdmin');
+                    Montric.adminTabBarController.selectTabWithId('menuAdmin');
                 },
 
                 doCommitMenu: function(router) {
@@ -322,12 +322,12 @@ EurekaJ.MainChartsRoute = Ember.Route.extend({
                         node.deleteRecord();
                     })
                     router.get('adminMenuController').deselectAllNodes();
-                    EurekaJ.store.commit();
+                    Montric.store.commit();
                     $("#menuAdminConfirmDialog").modal('hide');
                 },
 
                 connectOutlets: function(router) {
-                    EurekaJ.log('connecting outlets for menuAdmin');
+                    Montric.log('connecting outlets for menuAdmin');
                     router.get('adminController').connectOutlet('adminTabContent', 'adminTabContent');
                     router.get('adminTabContentController').connectControllers('adminMenu');
                 }

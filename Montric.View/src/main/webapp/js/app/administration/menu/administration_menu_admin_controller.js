@@ -1,4 +1,4 @@
-EurekaJ.AdministrationMenuAdminController = Ember.ArrayController.extend({
+Montric.AdministrationMenuAdminController = Ember.ArrayController.extend({
     needs: ['administrationMenu'],
 
     doCommitMenu: function(router) {
@@ -15,7 +15,7 @@ EurekaJ.AdministrationMenuAdminController = Ember.ArrayController.extend({
             node.deleteRecord();
         });
         this.get('controllers.administrationMenu').deselectAllNodes();
-        EurekaJ.store.commit();
+        Montric.store.commit();
         $("#menuAdminConfirmDialog").modal('hide');
     }
 });

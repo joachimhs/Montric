@@ -1,6 +1,6 @@
 Ember.ENV.RAISE_ON_DEPRECATION = true;
 
-var EurekaJ = Ember.Application.create({
+var Montric = Ember.Application.create({
     //rootElement: '#abc',
     
     log: function(message) {
@@ -8,8 +8,8 @@ var EurekaJ = Ember.Application.create({
     }
 });
 
-EurekaJ.store = DS.Store.create({
-    adapter:  "EurekaJ.Adapter",
+Montric.store = DS.Store.create({
+    adapter:  "Montric.Adapter",
     revision: 12
 });
 

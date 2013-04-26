@@ -1,4 +1,4 @@
-EurekaJ.AdministrationChartGroupsController = Ember.ArrayController.extend({
+Montric.AdministrationChartGroupsController = Ember.ArrayController.extend({
     needs: ['administrationMenu'],
     newChartGroupName: '',
     adminMenuController: null,
@@ -18,11 +18,11 @@ EurekaJ.AdministrationChartGroupsController = Ember.ArrayController.extend({
 
     createNewChartGroup: function () {
         if (this.newChartGroupIsValid()) {
-            EurekaJ.store.createRecord(EurekaJ.ChartGroupModel, {"id": this.get('newChartGroupName')});
-            EurekaJ.store.commit();
+            Montric.store.createRecord(Montric.ChartGroupModel, {"id": this.get('newChartGroupName')});
+            Montric.store.commit();
             this.set('newChartGroupName', '');
         } else {
-            EurekaJ.log('New Chart Group Not Valid!');
+            Montric.log('New Chart Group Not Valid!');
         }
     },
 
@@ -75,11 +75,11 @@ EurekaJ.AdministrationChartGroupsController = Ember.ArrayController.extend({
         if (selectedItem) {
             selectedItem.deleteRecord();
         }
-        EurekaJ.store.commit();
+        Montric.store.commit();
         $("#chartGroupConfirmDialog").modal('hide');
     },
 
     doCommitChartGroup: function() {
-        EurekaJ.store.commit();
+        Montric.store.commit();
     }
 });

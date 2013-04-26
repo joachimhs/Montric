@@ -1,4 +1,4 @@
-EurekaJ.SelectableListView = Ember.View.extend({
+Montric.SelectableListView = Ember.View.extend({
     tagName: 'div',
     classNames: ['selectableList'],
     maxCharacters: 28,
@@ -9,7 +9,7 @@ EurekaJ.SelectableListView = Ember.View.extend({
 
     template: Ember.Handlebars.compile('' +
         '{{#each view.listItems}}' +
-            '{{view EurekaJ.SelectableListItemView ' +
+            '{{view Montric.SelectableListItemView ' +
                 'itemBinding="this" ' +
                 'deleteActionBinding="view.deleteAction" ' +
                 'maxCharactersBinding="view.maxCharacters" ' +

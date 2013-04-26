@@ -1,3 +1,3 @@
-EurekaJ.HeaderView = Ember.View.extend({
+Montric.HeaderView = Ember.View.extend({
     elementId: 'headerArea'
 });

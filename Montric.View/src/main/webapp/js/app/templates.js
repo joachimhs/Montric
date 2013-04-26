@@ -8,11 +8,11 @@ Ember.TEMPLATES['main'] = Ember.Handlebars.compile('{{outlet}}');
 
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
     '<span class="headerText">{{#linkTo main}}<img src="/img/logo-small.png" />{{/linkTo}}</span>' +
-    //'{{view EurekaJ.BootstrapButton target="controller" action="doAdmin" classNames="pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
+    //'{{view Montric.BootstrapButton target="controller" action="doAdmin" classNames="pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
     '<button class="btn btn-info btn-mini pull-right mediumTopPadding" {{action doAdmin target="controller"}}>' + 
         '<i class="icon-cog"></i>Administration' + 
     '</button>' +
-    '{{view EurekaJ.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}'
+    '{{view Montric.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}'
 );
 
 Ember.TEMPLATES['main/dashboard'] = Ember.Handlebars.compile('' +
@@ -30,13 +30,13 @@ Ember.TEMPLATES['main/charts'] = Ember.Handlebars.compile('' +
 Ember.TEMPLATES['charts'] = Ember.Handlebars.compile('' +
     '{{#each controller}}' +
         //'<h1>{{name}}</h1>' +
-        '{{view EurekaJ.ChartView chartBinding="chart"}}<br />' +
+        '{{view Montric.ChartView chartBinding="chart"}}<br />' +
     '{{/each}}'
 );
 
 Ember.TEMPLATES['chartMenu'] = Ember.Handlebars.compile('' +
     '<h1>Charts Menu</h1>' +
-    '{{view EurekaJ.TreeView itemsBinding="content" allowSelectionOfNonLeafNodes=false allowMultipleSelections=true}}'
+    '{{view Montric.TreeView itemsBinding="content" allowSelectionOfNonLeafNodes=false allowMultipleSelections=true}}'
 );
 
 Ember.TEMPLATES['login'] = Ember.Handlebars.compile('' +
@@ -57,10 +57,10 @@ Ember.TEMPLATES['chartOptionsModal'] = Ember.Handlebars.compile('' +
         '<h1 class="centerAlign">Chart Options</h1>' +
     '</div>' +
     '<div class="modal-body">' +
-        '{{view EurekaJ.TabView controllerBinding="this"}}' +
+        '{{view Montric.TabView controllerBinding="this"}}' +
     '</div>' +
     '<div class="modal-footer">' +
-        '{{view EurekaJ.BootstrapButton content="Apply Changes" action="updateChartDates" target="controller"}}' +
+        '{{view Montric.BootstrapButton content="Apply Changes" action="updateChartDates" target="controller"}}' +
     '</div>'
 );
 
@@ -68,13 +68,13 @@ Ember.TEMPLATES['live-chart-options'] = Ember.Handlebars.compile('' +
     '<table>' +
     '<tr>' +
         '<td>Timezone: </td>' +
-        '<td>{{view EurekaJ.Select contentBinding="applicationController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="applicationController.selectedTimezone" prompt="Select Timezone"}}</td>' +
+        '<td>{{view Montric.Select contentBinding="applicationController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="applicationController.selectedTimezone" prompt="Select Timezone"}}</td>' +
     '</tr><tr>' +
         '<td>Timespan: </td>' +
-        '<td>{{view EurekaJ.Select contentBinding="applicationController.chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="applicationController.selectedChartTimespan" prompt="Select Timespan"}}</td>' +
+        '<td>{{view Montric.Select contentBinding="applicationController.chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="applicationController.selectedChartTimespan" prompt="Select Timespan"}}</td>' +
     '</tr><tr>' +
         '<td>Resolution: </td>' +
-        '<td>{{view EurekaJ.Select contentBinding="applicationController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="applicationController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
+        '<td>{{view Montric.Select contentBinding="applicationController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="applicationController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
     '</tr>' +
     '</table>'
 );
@@ -83,7 +83,7 @@ Ember.TEMPLATES['historical-chart-options'] = Ember.Handlebars.compile('' +
     '<table>' +
     '<tr>' +
         '<td>Timezone: </td>' +
-        '<td>{{view EurekaJ.Select contentBinding="applicationController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="applicationController.selectedTimezone" prompt="Select Timezone"}}</td>' +
+        '<td>{{view Montric.Select contentBinding="applicationController.timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="applicationController.selectedTimezone" prompt="Select Timezone"}}</td>' +
     '</tr><tr>' +
         '<td>From: </td>' +
         '<td>{{view Ember.TextField valueBinding="applicationController.selectedChartFromString"}}</td>' +
@@ -93,7 +93,7 @@ Ember.TEMPLATES['historical-chart-options'] = Ember.Handlebars.compile('' +
     '</tr>' +
     '</tr><tr>' +
         '<td>Resolution: </td>' +
-        '<td>{{view EurekaJ.Select contentBinding="applicationController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="applicationController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
+        '<td>{{view Montric.Select contentBinding="applicationController.chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="applicationController.selectedChartResolution" prompt="Select Resolution"}}</td>' +
     '</tr>' +
     '</table>'
 );

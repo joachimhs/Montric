@@ -1,19 +1,19 @@
-//EurekaJ.Adapter = DS.FixtureAdapter.extend();
+//Montric.Adapter = DS.FixtureAdapter.extend();
 
-EurekaJ.Adapter = DS.RESTAdapter.extend({
+Montric.Adapter = DS.RESTAdapter.extend({
     find: function(store, type, id) {
         var root = this.rootForType(type);
         var queryString = "";
 
-        if (type === EurekaJ.ChartModel){
-            queryString = "?tz=" + EurekaJ.get('selectedTimezone');
-            if (EurekaJ.get('showLiveCharts')) {
-                queryString += "&ts=" + EurekaJ.get('selectedChartTimespan');
+        if (type === Montric.ChartModel){
+            queryString = "?tz=" + Montric.get('selectedTimezone');
+            if (Montric.get('showLiveCharts')) {
+                queryString += "&ts=" + Montric.get('selectedChartTimespan');
             } else {
-                queryString += "&chartFrom=" + EurekaJ.get('selectedChartFromMs');
-                queryString += "&chartTo=" + EurekaJ.get('selectedChartToMs');
+                queryString += "&chartFrom=" + Montric.get('selectedChartFromMs');
+                queryString += "&chartTo=" + Montric.get('selectedChartToMs');
             }
-            queryString += "&rs=" + EurekaJ.get('selectedChartResolution');
+            queryString += "&rs=" + Montric.get('selectedChartResolution');
         }
 
         this.ajax(this.buildURL(root, id) + queryString, "GET", {
@@ -40,10 +40,10 @@ EurekaJ.Adapter = DS.RESTAdapter.extend({
     }
 });
 
-EurekaJ.Adapter.map(EurekaJ.ChartSeriesModel, {
+Montric.Adapter.map(Montric.ChartSeriesModel, {
     seriesValues: { embedded: 'always' }
 });
 
-EurekaJ.Adapter.map(EurekaJ.ChartModel, {
+Montric.Adapter.map(Montric.ChartModel, {
     series: { embedded: 'always'}
 });

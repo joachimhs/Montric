@@ -1,4 +1,4 @@
-EurekaJ.ChartsController = Ember.ArrayController.extend({
+Montric.ChartsController = Ember.ArrayController.extend({
     needs: 'application',
     contentBinding: 'mainChartsController.selectedNodes',
     mainChartsController: null,
@@ -33,7 +33,7 @@ EurekaJ.ChartsController = Ember.ArrayController.extend({
 
     stopTimer: function() {
         if (this.get('chartTimerId') != null) {
-            EurekaJ.log('stopping timer');
+            Montric.log('stopping timer');
             clearInterval(this.get('chartTimerId'));
             this.set('chartTimerId', null);
         }

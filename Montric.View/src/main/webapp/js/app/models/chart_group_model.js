@@ -1,4 +1,4 @@
-EurekaJ.ChartGroupModel = DS.Model.extend({
+Montric.ChartGroupModel = DS.Model.extend({
     chartGroupPath: DS.attr('string'),
     chartGroups: function() {
         var groups = [];

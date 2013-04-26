@@ -1,4 +1,4 @@
-EurekaJ.SelectableListItemView = Ember.View.extend({
+Montric.SelectableListItemView = Ember.View.extend({
     tagName: 'div',
     classNameBindings: 'isSelected',
     deleteAction: null,
@@ -35,7 +35,7 @@ EurekaJ.SelectableListItemView = Ember.View.extend({
         '{{#if view.isSelected}}' +
             '{{view.liShortLabel}}' +
             '{{#if view.deleteAction}}' +
-                '{{#view EurekaJ.BootstrapButton ' +
+                '{{#view Montric.BootstrapButton ' +
                     'actionBinding="view.deleteAction" ' +
                     'target="controller" ' +
                     'classNames="btn btn-danger btn-mini floatRight"}}' +

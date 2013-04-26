@@ -1,4 +1,4 @@
-EurekaJ.NodeTextView = Ember.View.extend({
+Montric.NodeTextView = Ember.View.extend({
     template: Ember.Handlebars.compile('{{view.item.name}}'),
     tagName: 'span',
 

@@ -1,4 +1,4 @@
-EurekaJ.ConfirmDialogView = Ember.View.extend({
+Montric.ConfirmDialogView = Ember.View.extend({
     templateName: 'confirmDialog',
     classNames: ['modal', 'hide']
 });
@@ -13,11 +13,11 @@ Ember.TEMPLATES['confirmDialog'] = Ember.Handlebars.compile(
         '</div>' +
         '<div class="modal-footer">' +
             '{{#if view.cancelAction}}' +
-                '{{view EurekaJ.BootstrapButton contentBinding="view.cancelButtonLabel" actionBinding="view.cancelAction" targetBinding="view.target"}}' +
+                '{{view Montric.BootstrapButton contentBinding="view.cancelButtonLabel" actionBinding="view.cancelAction" targetBinding="view.target"}}' +
             '{{/if}}' +
             '{{#if view.okAction}}' +
-                '{{view EurekaJ.BootstrapButton contentBinding="view.okButtonLabel" actionBinding="view.okAction" targetBinding="view.target"}}' +
+                '{{view Montric.BootstrapButton contentBinding="view.okButtonLabel" actionBinding="view.okAction" targetBinding="view.target"}}' +
             '{{/if}}' +
         '</div>'
-        //'<div class="modal-footer">{{view EurekaJ.BootstrapButton content="Apply Changes" action="applyChartOptionsChanges" target="EurekaJ.router"}}</div>' +
+        //'<div class="modal-footer">{{view Montric.BootstrapButton content="Apply Changes" action="applyChartOptionsChanges" target="Montric.router"}}</div>' +
     );

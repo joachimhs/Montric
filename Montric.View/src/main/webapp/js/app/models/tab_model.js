@@ -1,4 +1,4 @@
-EurekaJ.TabModel = Ember.Object.extend({
+Montric.TabModel = Ember.Object.extend({
     tabId: null,
     tabName: null,
     tabState: null,

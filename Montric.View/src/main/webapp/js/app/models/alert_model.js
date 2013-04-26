@@ -1,8 +1,8 @@
-EurekaJ.AlertModel = DS.Model.extend({
+Montric.AlertModel = DS.Model.extend({
     alertActivated: DS.attr('boolean'),
-    //alertSource: DS.belongsTo('EurekaJ.AdminMenuModel'),
+    //alertSource: DS.belongsTo('Montric.AdminMenuModel'),
     alertSource: DS.attr('string'),
-    //alertNotifications: DS.hasMany('EurekaJ.EmailGroupModel'),
+    //alertNotifications: DS.hasMany('Montric.EmailGroupModel'),
     alertNotifications: DS.attr('string'),
     //alertPlugins: SC.Record.toMany('EurekaJView.AlertPluginModel', {isMaster: YES}),
     alertWarningValue: DS.attr('number'),

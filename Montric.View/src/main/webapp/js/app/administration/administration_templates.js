@@ -1,6 +1,6 @@
 Ember.TEMPLATES['administration'] = Ember.Handlebars.compile('' +
     '<div><h1>EurkeaJ Administration</h1></div>' +
-    '{{view EurekaJ.TabView controllerBinding="this"}}' +
+    '{{view Montric.TabView controllerBinding="this"}}' +
     '{{outlet}}'
 );
 
@@ -12,7 +12,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewChartGroup}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView labelPropertyName="id" listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
+        '{{view Montric.SelectableListView labelPropertyName="id" listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
@@ -22,7 +22,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
             '<td style="width: 150px;">Select nodes:</td>' +
             '<td>' +
                 '{{controllers.administrationMenu.length}}<div style="max-height: 250px; min-height: 250px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
-                '{{view EurekaJ.TreeView itemsBinding="controllers.administrationMenu.rootNodes"}}' +
+                '{{view Montric.TreeView itemsBinding="controllers.administrationMenu.rootNodes"}}' +
                 '</div>' +
                 '<button {{action doAddCheckedNodes}} class="btn" style="width: 100%;">Add selected Charts to Chart Group</button>' +
             '</td>' +
@@ -31,7 +31,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
             '<td style="width: 150px;">Selected Nodes:</td>' +
             '<td>' +
                 '<div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
-                '{{view EurekaJ.SelectableListView listItemsBinding="selectedItem.chartGroups" deleteAction="deleteSelectedChartPathGroup" maxCharacters="120" selectedItemBinding="controller.selectedChartGroupPath"}}' +
+                '{{view Montric.SelectableListView listItemsBinding="selectedItem.chartGroups" deleteAction="deleteSelectedChartPathGroup" maxCharacters="120" selectedItemBinding="controller.selectedChartGroupPath"}}' +
                 '</div>' +
             '</td>' +
         '</tr>' +
@@ -39,15 +39,15 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
             '<td colspan="2"><button {{action doCommitChartGroup}} class="btn" style="width: 100%;">Save Chart Group</button></td>' +
         '</tr>' +
     '</div>{{/if}}' +
-    '{{view EurekaJ.ConfirmDialogView elementId="chartGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Chart Group?" message="Are you sure you want to delete the selected chart group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
-    '{{view EurekaJ.ConfirmDialogView elementId="chartGroupPathsConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelPathDeletion" okButtonLabel="Delete" okAction="doConfirmPathDeletion" target="controller" header="Delete Chart Group Path?" message="Are you sure you want to delete the selected chart group path? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
+    '{{view Montric.ConfirmDialogView elementId="chartGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Chart Group?" message="Are you sure you want to delete the selected chart group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
+    '{{view Montric.ConfirmDialogView elementId="chartGroupPathsConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelPathDeletion" okButtonLabel="Delete" okAction="doConfirmPathDeletion" target="controller" header="Delete Chart Group Path?" message="Are you sure you want to delete the selected chart group path? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
 );
 
 Ember.TEMPLATES['administration/emailRecipients'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newEmailGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
         '<button class="btn" {{action createNewEmailGroup}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedEmailGroup" selectedItemBinding="controller.selectedItem"}}' +
+        '{{view Montric.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedEmailGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
@@ -77,7 +77,7 @@ Ember.TEMPLATES['administration/emailRecipients'] = Ember.Handlebars.compile('' 
         '<tr>' +
             '<td colspan="4">' +
                 '<div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
-                    '{{view EurekaJ.SelectableListView listItemsBinding="selectedItem.emailRecipients" deleteAction="deleteSelectedEmailRecipient" maxCharacters="120" selectedItemBinding="controller.selectedEmailRecipient"}}' +
+                    '{{view Montric.SelectableListView listItemsBinding="selectedItem.emailRecipients" deleteAction="deleteSelectedEmailRecipient" maxCharacters="120" selectedItemBinding="controller.selectedEmailRecipient"}}' +
                 '</div>' +
             '</td>' +
         '</tr>' +
@@ -85,8 +85,8 @@ Ember.TEMPLATES['administration/emailRecipients'] = Ember.Handlebars.compile('' 
         '<td colspan="4"><button {{action doCommitEmailGroup}} class="btn" style="width: 100%;">Save Email Group</button></td>' +
         '</tr>' +
     '</div>{{/if}}' +
-    '{{view EurekaJ.ConfirmDialogView elementId="emailGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Email Group?" message="Are you sure you want to delete the selected email group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
-    '{{view EurekaJ.ConfirmDialogView elementId="emailAddressConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAddressDeletion" okButtonLabel="Delete" okAction="doConfirmAddressDeletion" target="controller" header="Delete Email Address?" message="Are you sure you want to delete the selected email address? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
+    '{{view Montric.ConfirmDialogView elementId="emailGroupConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Email Group?" message="Are you sure you want to delete the selected email group? This action will permanently remove the menu items from the system. This action cannot be undone!"}}' +
+    '{{view Montric.ConfirmDialogView elementId="emailAddressConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAddressDeletion" okButtonLabel="Delete" okAction="doConfirmAddressDeletion" target="controller" header="Delete Email Address?" message="Are you sure you want to delete the selected email address? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
 );
 
 Ember.TEMPLATES['administration/menuAdmin'] = Ember.Handlebars.compile('' +
@@ -96,7 +96,7 @@ Ember.TEMPLATES['administration/menuAdmin'] = Ember.Handlebars.compile('' +
         '<tr>' +
             '<td style="width: 150px;">Main Menu:</td>' +
             '<td><div style="max-height: 350px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">' +
-            '{{view EurekaJ.TreeView itemsBinding="controllers.administrationMenu.rootNodes" allowSelectionOfNonLeafNodes="true"}}<div>&nbsp;</div>' +
+            '{{view Montric.TreeView itemsBinding="controllers.administrationMenu.rootNodes" allowSelectionOfNonLeafNodes="true"}}<div>&nbsp;</div>' +
         '</div></td>' +
         '</tr>' +
         '<tr>' +
@@ -104,14 +104,14 @@ Ember.TEMPLATES['administration/menuAdmin'] = Ember.Handlebars.compile('' +
         '</tr>' +
         '</table>'+
     '</div>' +
-    '{{view EurekaJ.ConfirmDialogView elementId="menuAdminConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Tree Menu Items?" message="Are you sure you want to delete the selected items? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
+    '{{view Montric.ConfirmDialogView elementId="menuAdminConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Tree Menu Items?" message="Are you sure you want to delete the selected items? This action will permanently remove the menu items from the system. This action cannot be undone!"}}'
 );
 
 Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
         '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium search-query mediumTopPadding"}}' +
             '<button class="btn" {{action createNewAlert}}>Add</button>' +
-        '{{view EurekaJ.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}' +
+        '{{view Montric.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
 
     '{{#if selectedItem}}<div id="adminTabRightContent">' +
@@ -129,7 +129,7 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
         '</tr>' +
         '<tr>' +
             '<td>Alert Type:</td>' +
-            '<td>{{view EurekaJ.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>' +
+            '<td>{{view Montric.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>' +
             '<td>Alert Delay:</td>' +
             '<td>{{view Ember.TextField valueBinding="selectedItem.alertDelay" classNames="input-mini"}}</td>' +
         '</tr>' +
@@ -139,13 +139,13 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
 
             '<div>{{#if selectedItem.alertSource}}{{selectedItem.alertSource}}{{else}}None Selected{{/if}}</div>' +
             '<div style="max-height: 250px; overflow: scroll; margin-bottom: 15px;" class="azureBlueBackground azureBlueBorderThin">' +
-                '{{view EurekaJ.SelectableLeafTreeView itemsBinding="controllers.administrationMenu.rootNodes" selectedItemBinding="selectedItem.alertSource"}}' +
+                '{{view Montric.SelectableLeafTreeView itemsBinding="controllers.administrationMenu.rootNodes" selectedItemBinding="selectedItem.alertSource"}}' +
             '</div>' +
         '</td>' +
         '</tr>' +
         '<tr>' +
             '<td>Email Notification:</td>' +
-            '<td>{{view EurekaJ.MultiSelectableListView listItemsBinding="emailGroups" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>' +
+            '<td>{{view Montric.MultiSelectableListView listItemsBinding="emailGroups" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>' +
             '<td>Plugin Notification:</td>' +
             '<td>_List of pluigns_</td>' +
         '</tr>' +
@@ -154,5 +154,5 @@ Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
         '</tr>' +
         '</table>' +
     '</div>{{/if}}' +
-    '{{view EurekaJ.ConfirmDialogView elementId="adminAlertConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAlertDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Alert?" message="Are you sure you want to delete the selected alert? This action will permanently remove the alert from the system. This action cannot be undone!"}}'
+    '{{view Montric.ConfirmDialogView elementId="adminAlertConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAlertDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Alert?" message="Are you sure you want to delete the selected alert? This action will permanently remove the alert from the system. This action cannot be undone!"}}'
 );

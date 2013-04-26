@@ -1,4 +1,4 @@
-EurekaJ.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
+Montric.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
     needs: ['administrationMenu'],
     newEmailGroupName: '',
     newEmailRecipient: '',
@@ -19,7 +19,7 @@ EurekaJ.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
 
     createNewEmailGroup: function () {
         if (this.newEmailGroupIsValid()) {
-            EurekaJ.store.createRecord(EurekaJ.EmailGroupModel, {
+            Montric.store.createRecord(Montric.EmailGroupModel, {
                 "id": this.get('newEmailGroupName'),
                 "smtpHost": "",
                 "smtpUsername": "",
@@ -29,9 +29,9 @@ EurekaJ.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
                 "emailAddresses": "[]"});
             this.set('newEmailGroupName', '');
         } else {
-            EurekaJ.log('New Email Group Not Valid!');
+            Montric.log('New Email Group Not Valid!');
         }
-        //EurekaJ.store.commit();
+        //Montric.store.commit();
     },
 
     doAddEmailRecipient: function () {
@@ -68,7 +68,7 @@ EurekaJ.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
         if (selectedEmailGroup) {
             selectedEmailGroup.deleteRecord();
         }
-        EurekaJ.store.commit();
+        Montric.store.commit();
         this.set('selectedItem', null);
     },
 
@@ -97,6 +97,6 @@ EurekaJ.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
     },
 
     doCommitEmailGroup: function() {
-        EurekaJ.store.commit();
+        Montric.store.commit();
     }
 });

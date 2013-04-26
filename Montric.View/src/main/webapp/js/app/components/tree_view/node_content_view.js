@@ -1,4 +1,4 @@
-EurekaJ.NodeContentView = Ember.View.extend({
+Montric.NodeContentView = Ember.View.extend({
     template: Ember.Handlebars.compile('' +
         '{{#if controller._allowSelectionOfNonLeafNodes}}' +
             '{{#unless view.item.hasChildren}}<span style="margin-left: 12px;">&nbsp;</span>{{/unless}}' +
@@ -10,8 +10,8 @@ EurekaJ.NodeContentView = Ember.View.extend({
             '{{/unless}}' +
         '{{/if}}' +
 
-        '{{view EurekaJ.NodeArrowView itemBinding="view.item"}}' +
-        '{{view EurekaJ.NodeTextView itemBinding="view.item" classNames="treeMenuText"}}'),
+        '{{view Montric.NodeArrowView itemBinding="view.item"}}' +
+        '{{view Montric.NodeTextView itemBinding="view.item" classNames="treeMenuText"}}'),
     tagName: 'span',
     classNames: ['pointer']
 });

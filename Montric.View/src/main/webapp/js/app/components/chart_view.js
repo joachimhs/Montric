@@ -1,4 +1,4 @@
-EurekaJ.ChartView = Ember.View.extend({
+Montric.ChartView = Ember.View.extend({
     classNames: ['eurekajChart'],
     resizeHandler: null,
     nvd3Chart: null,

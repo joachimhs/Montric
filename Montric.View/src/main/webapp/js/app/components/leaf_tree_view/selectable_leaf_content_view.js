@@ -1,4 +1,4 @@
-EurekaJ.SelectableLeafItemContentView = Ember.View.extend({
+Montric.SelectableLeafItemContentView = Ember.View.extend({
     tagName: 'div',
     classNames: ['fullWidth'],
     selectedItem: null,

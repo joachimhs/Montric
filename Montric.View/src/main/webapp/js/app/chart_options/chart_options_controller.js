@@ -1,21 +1,21 @@
-EurekaJ.ChartOptionsModalController = Ember.ArrayController.extend({
+Montric.ChartOptionsModalController = Ember.ArrayController.extend({
     applicationController : null,
 
     init : function() {
         this._super();
         var content = [];
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'live',
             tabName : 'Live',
             tabState : null,
-            tabView : EurekaJ.LiveChartOptionsView,
+            tabView : Montric.LiveChartOptionsView,
             target : "controller",
             action : "liveChartsSelected"
         }));
-        content.pushObject(EurekaJ.TabModel.create({
+        content.pushObject(Montric.TabModel.create({
             tabId : 'historical',
             tabName : 'Historical',
-            tabView : EurekaJ.HistoricalChartOptionsView,
+            tabView : Montric.HistoricalChartOptionsView,
             target : "controller",
             action : "historicalChartsSelected"
         }));

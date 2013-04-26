@@ -1,4 +1,4 @@
-EurekaJ.TreeView = Ember.View.extend({
+Montric.TreeView = Ember.View.extend({
     items : null,
     allowSelectionOfNonLeafNodes: false,
     allowMultipleSelections: true,
@@ -20,6 +20,6 @@ EurekaJ.TreeView = Ember.View.extend({
 
     template : Ember.Handlebars.compile('' +
         '{{#each view.items}}{{#if name}}' +
-            '{{view EurekaJ.NodeView itemBinding="this"}}' + 
+            '{{view Montric.NodeView itemBinding="this"}}' +
         '{{/if}}{{/each}}')
 });

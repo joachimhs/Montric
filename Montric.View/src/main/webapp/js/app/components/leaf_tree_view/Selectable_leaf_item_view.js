@@ -1,4 +1,4 @@
-EurekaJ.SelectableLeafItemView = Ember.View.extend({
+Montric.SelectableLeafItemView = Ember.View.extend({
     tagName: 'div',
     classNameBindings: 'isSelected',
     classNames: ['treeItemMarginLeft', 'pointer'],
@@ -13,10 +13,10 @@ EurekaJ.SelectableLeafItemView = Ember.View.extend({
     }.property('selectedItem').cacheable(),
 
     template: Ember.Handlebars.compile('' +
-        '{{view EurekaJ.SelectableLeafItemContentView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
+        '{{view Montric.SelectableLeafItemContentView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
         '{{#if isExpanded}}' +
         '{{#each children}}' +
-        '{{view EurekaJ.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
+        '{{view Montric.SelectableLeafItemView itemBinding="this" selectedItemBinding="view.selectedItem"}}' +
         '{{/each}}' +
         '{{/if}}'
     )

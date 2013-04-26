@@ -1,13 +1,13 @@
-EurekaJ.NodeView = Ember.View.extend({
+Montric.NodeView = Ember.View.extend({
     item: null,
     
     template: Ember.Handlebars.compile('' +
-        '{{view EurekaJ.NodeContentView itemBinding="view.item"}}' +
+        '{{view Montric.NodeContentView itemBinding="view.item"}}' +
 
         '{{#if view.item.isExpanded}}' +
             '<div style="width: 500px;">' +
             '{{#each view.item.children}}' +
-                '<div style="margin-left: 22px;">{{view EurekaJ.NodeView itemBinding="this"}}</div>' +
+                '<div style="margin-left: 22px;">{{view Montric.NodeView itemBinding="this"}}</div>' +
             '{{/each}}' +
             '</div>' +
         '{{/if}}'),

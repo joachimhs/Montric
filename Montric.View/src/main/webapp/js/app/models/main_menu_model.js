@@ -1,9 +1,9 @@
-EurekaJ.MainMenuModel = DS.Model.extend({
+Montric.MainMenuModel = DS.Model.extend({
     name: DS.attr('string'),
     nodeType: DS.attr('string'),
-    parent: DS.belongsTo('EurekaJ.MainMenuModel'),
-    children: DS.hasMany('EurekaJ.MainMenuModel'),
-    chart: DS.belongsTo('EurekaJ.ChartModel'),
+    parent: DS.belongsTo('Montric.MainMenuModel'),
+    children: DS.hasMany('Montric.MainMenuModel'),
+    chart: DS.belongsTo('Montric.ChartModel'),
 
     isSelected: false,
     isExpanded: false,

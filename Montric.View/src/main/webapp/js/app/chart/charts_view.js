@@ -1,4 +1,4 @@
-EurekaJ.ChartsView = Ember.View.extend({
+Montric.ChartsView = Ember.View.extend({
     elementId: 'chartsArea',
     templateName: 'charts'
 });

@@ -1,4 +1,4 @@
-EurekaJ.AdministrationMenuAdminRoute = Ember.Route.extend({
+Montric.AdministrationMenuAdminRoute = Ember.Route.extend({
     setupController: function(controller) {
         this._super(controller);
         var adminController = this.controllerFor('administration');

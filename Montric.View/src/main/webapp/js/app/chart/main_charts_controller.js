@@ -1,4 +1,4 @@
-EurekaJ.MainChartsController = Ember.ArrayController.extend({
+Montric.MainChartsController = Ember.ArrayController.extend({
     isSelectedObserver: function() {
         if (this.get('content')) {
             var selectedNodes = this.get('content').filter(function(node) {

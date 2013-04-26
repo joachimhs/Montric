@@ -1,4 +1,4 @@
-EurekaJ.EmailGroupModel = DS.Model.extend({
+Montric.EmailGroupModel = DS.Model.extend({
     emailGroupName: DS.attr('string'),
     smtpHost: DS.attr('string'),
     smtpUsername: DS.attr('string'),

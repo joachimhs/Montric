@@ -1,3 +1,3 @@
-EurekaJ.MainDashboardView = Ember.View.extend({
+Montric.MainDashboardView = Ember.View.extend({
     elementId: 'mainContentArea'
 });
