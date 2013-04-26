@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eurekaJ</groupId>
-	<artifactId>eurekaJ.parent</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
-	<name>EurekaJ Parent</name>
+	<groupId>org.montric</groupId>
+	<artifactId>montric.parent</artifactId>
+	<version>0.9-SNAPSHOT</version>
+	<name>Montric Parent</name>
 	<packaging>pom</packaging>
 
 	<properties>
@@ -14,12 +14,13 @@
 
 	<modules>
 		<!-- Module Depricated! module>EurekaJ.Agent</module-->
-		<module>EurekaJ.Manager</module>
-		<module>EurekaJ.Proxy</module>
-		<module>EurekaJ.api</module>
-		<module>EurekaJ.AlertEmailPlugin</module>
-		<!-- >module>EurekaJ.View</module-->
-		<module>EurekaJ.Scripts</module>
+		<module>Montric.Manager</module>
+		<module>Montric.Proxy</module>
+		<module>Montric.Api</module>
+		<module>Montric.AlertEmailPlugin</module>
+		<module>Montric.View</module>
+		<module>Montric.Scripts</module>
+		<module>Montric.Application</module>
     </modules>
 
 	<build>
@@ -183,11 +184,4 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>Kantega-pluginrepo</id>
-			<url>http://opensource.kantega.no/nexus/content/groups/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
 </project>

@@ -1,0 +1,34 @@
+[
+    {
+        "alertName": "Test Alert",
+        "alertActivated": true,
+        "alertWarningValue": 90,
+        "alertErrorValue": 70,
+        "alertType": "eq",
+        "alertDelay": 5
+    },
+    {
+        "alertName": "nbvhjshdyhejdusjkidkjesfeer",
+        "alertActivated": true,
+        "alertWarningValue": 90,
+        "alertErrorValue": 70,
+        "alertType": "eq",
+        "alertDelay": 5
+    },
+    {
+        "alertName": "nbvhjshdyhejdusjkidkjesfeersfefeareare",
+        "alertActivated": true,
+        "alertWarningValue": 90,
+        "alertErrorValue": 70,
+        "alertType": "eq",
+        "alertDelay": 5
+    },
+    {
+        "alertName": "12345678901234567890",
+        "alertActivated": true,
+        "alertWarningValue": 90,
+        "alertErrorValue": 70,
+        "alertType": "eq",
+        "alertDelay": 5
+    }
+]
