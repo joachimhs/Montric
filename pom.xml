@@ -17,10 +17,11 @@
 		<module>Montric.Manager</module>
 		<module>Montric.Proxy</module>
 		<module>Montric.Api</module>
-		<module>Montric.AlertEmailPlugin</module>
 		<module>Montric.View</module>
 		<module>Montric.Scripts</module>
 		<module>Montric.Application</module>
+		<module>Montric.AlertEmailPlugin</module>
+		<module>Montric.LevelDBPlugin</module>
     </modules>
 
 	<build>
