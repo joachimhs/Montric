@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.datatypes.Statistics;
+import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
@@ -41,10 +42,12 @@ public class InstrumentationTableChannelHandler extends ChartChannelHandler {
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         String jsonResponse = "";
+        String cookieUuidToken = getCookieValue(e, "uuidToken");
+        User loggedInUser = getLoggedInUser(cookieUuidToken);
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
-            if (jsonObject.has("getInstrumentationTableData")) {
+            if (isUser(loggedInUser) && jsonObject.has("getInstrumentationTableData")) {
                 JSONObject keyObject = jsonObject.getJSONObject("getInstrumentationTableData");
                 String pathFromClient = keyObject.getString("path");
                 Double averageSum = 0.0d;
@@ -63,13 +66,13 @@ public class InstrumentationTableChannelHandler extends ChartChannelHandler {
 
                     int numNodesFound = 0;
 
-                    for (Statistics statistics : getBerkeleyTreeMenuService().getTreeMenu("ACCOUNT")) {
+                    for (Statistics statistics : getBerkeleyTreeMenuService().getTreeMenu(loggedInUser.getAccountName())) {
                         if (statistics.getGuiPath().startsWith(startsWith)
                                 && statistics.getGuiPath().endsWith(endsWith)) {
 
                             numNodesFound++;
                             Double averageNodeValue = 0.0d;
-                            List<LiveStatistics> liveList = getBerkeleyTreeMenuService().getLiveStatistics(statistics.getGuiPath(), "ACCOUNT", fromPeriod, toPeriod);
+                            List<LiveStatistics> liveList = getBerkeleyTreeMenuService().getLiveStatistics(statistics.getGuiPath(), loggedInUser.getAccountName(), fromPeriod, toPeriod);
 
                             if (liveList.size() > 0) {
                                 Double sumValue = 0.0d;

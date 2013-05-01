@@ -4,7 +4,9 @@ import java.lang.String;
 import java.util.List;
 
 import org.eurekaj.api.dao.LiveStatisticsDao;
+import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
+import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.User;
 
 /**
@@ -22,6 +24,16 @@ public interface AccountDao {
     public void persistAccount(Account account);
 
     public User getUser(String username, String accountName);
+    
+    public List<User> getUsers(String username);
 
-    public void persistUser(String username, String accountName, String role);
+    public void persistUser(User User);
+    
+    public Session getSession(String uuid);
+    
+    public void persistSession(Session session);
+    
+    public AccessToken getAccessToken(String accessToken);
+    
+    public void persistAccessToken(AccessToken accessToken);
 }

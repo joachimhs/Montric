@@ -8,10 +8,13 @@
 	
 	<title>EurekaJ</title>
 	<link rel="stylesheet" href="/css/master.css" type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/css/persona.css" type="text/css" charset="utf-8">
 	<link rel="stylesheet" href="/css/nv.d3.css" type="text/css" charset="utf-8">
 	<link rel="stylesheet" href="/css/bootstrap.css" type="text/css" charset="utf-8">
 	<meta name="author" content="Joachim Haagen Skeie">
+    <script src="https://login.persona.org/include.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/date.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/scripts/Math.uuid.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/d3.v2.js" type="text/javascript"></script>
 	<script src="/js/scripts/nv.d3.js" type="text/javascript"></script>
@@ -19,7 +22,7 @@
 	<script src="/js/scripts/bootstrap-modal.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/bootstrap-button.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/handlebars-1.0.0.rc.3.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/js/scripts/ember-1.0.0-rc.2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/scripts/ember-1.0.0-rc.3.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scripts/ember-data-20130331.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/app.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/app_adapter.js"></script>
@@ -40,6 +43,9 @@
 	<script type="text/javascript" charset="utf-8" src="/js/app/administration/menu/administration_menu_admin_controller.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/administration/menu/administration_menu_admin_route.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/administration/menu/administration_menu_controller.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/app/administration/access_tokens/access_token_route.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/app/administration/access_tokens/access_token_controller.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/js/app/administration/access_tokens/access_token_view.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/application/application_controller.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/application/confirm_dialog_view.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/application/header_view.js"></script>
@@ -70,14 +76,17 @@
 	<script type="text/javascript" charset="utf-8" src="/js/app/components/tree_view/node_view.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/components/tree_view/tree_view.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/dashboard/main_dashboard_view.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/js/app/models/admin_menu_model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/app/models/model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/app/models/access_token_model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/app/models/admin_menu_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/alert_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/chart_group_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/chart_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/email_group_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/main_menu_model.js"></script>
 	<script type="text/javascript" charset="utf-8" src="/js/app/models/tab_model.js"></script>
-	<script type="text/javascript" charset="utf-8" src="/js/test/fixtures.js"></script>		
+	<script type="text/javascript" charset="utf-8" src="/js/app/models/user_model.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/app/user.js"></script>
 </head>
 <body bgcolor="#ffffff">
 </body>

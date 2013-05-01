@@ -1,5 +1,7 @@
 package org.eurekaj.manager.datatypes;
 
+import java.util.List;
+
 import org.eurekaj.api.datatypes.Account;
 
 /**
@@ -12,6 +14,7 @@ import org.eurekaj.api.datatypes.Account;
 public class ManagerAccount implements Account {
     private String accountName;
     private String accountType;
+    private List<String> accessTokens;
 
     public ManagerAccount() {
     }
@@ -37,4 +40,13 @@ public class ManagerAccount implements Account {
     public void setAccountName(String accountName) {
         this.accountName = accountName;
     }
+    
+    @Override
+    public List<String> getAccessTokens() {
+    	return accessTokens;
+    }
+    
+    public void setAccessTokens(List<String> accessTokens) {
+		this.accessTokens = accessTokens;
+	}
 }

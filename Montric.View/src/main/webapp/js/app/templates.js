@@ -9,10 +9,14 @@ Ember.TEMPLATES['main'] = Ember.Handlebars.compile('{{outlet}}');
 Ember.TEMPLATES['header'] = Ember.Handlebars.compile('' +
     '<span class="headerText">{{#linkTo main}}<img src="/img/logo-small.png" />{{/linkTo}}</span>' +
     //'{{view Montric.BootstrapButton target="controller" action="doAdmin" classNames="pull-right mediumTopPadding" content="Administration" iconName="icon-cog"}}' +
-    '<button class="btn btn-info btn-mini pull-right mediumTopPadding" {{action doAdmin target="controller"}}>' + 
-        '<i class="icon-cog"></i>Administration' + 
-    '</button>' +
-    '{{view Montric.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}'
+    '{{#if controllers.user.isUser}}' +
+        '<button class="btn btn-primary pull-right mediumTopPadding" {{action doAdmin target="controller"}}>' +
+            '<i class="icon-cog"></i>Administration' +
+        '</button>' +
+    '{{/if}}' +
+    '{{#if controllers.user.isAdmin}}' +
+        '{{view Montric.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}' +
+    '{{/if}}'
 );
 
 Ember.TEMPLATES['main/dashboard'] = Ember.Handlebars.compile('' +
@@ -39,15 +43,17 @@ Ember.TEMPLATES['chartMenu'] = Ember.Handlebars.compile('' +
     '{{view Montric.TreeView itemsBinding="content" allowSelectionOfNonLeafNodes=false allowMultipleSelections=true}}'
 );
 
-Ember.TEMPLATES['login'] = Ember.Handlebars.compile('' +
+Ember.TEMPLATES['login'] = Ember.Handlebars.compile('{{outlet}}');
+
+Ember.TEMPLATES['login/index'] = Ember.Handlebars.compile('' +
     '<div class="loginBox well">' +
-        '<h1>EurekaJ Login</h1> ' +
-        'Username: <br />' +
-        '{{view Ember.TextField elementId="usernameInput" value=""}}<br />' +
-        'Password: <br />' +
-        '{{view Ember.TextField elementId="passwordInput" value=""}}<br />' +
-        '{{view Ember.Checkbox elementId="remeberCheck" }} Remember me<br />' +
-        '<button {{action doLogin}} class="tenPxMarginTop">Login</button>' +
+        '<h1>Montric Login</h1>' +
+        '<p>Montric is currently in Beta. You are free to register an account, but your data will only be retained for one week. Throughout the beta-period we will expand the retention. Towards the end of the beta-period we will add subscription plans with different retention lengths.</p>' +
+        '{{#if controllers.user.isLoggingIn}}' +
+            '<div style="margin-top: 20px; text-align: center;"><a href="#" class="persona-button"><span>Signing In... Please Wait</span></a></div>' +
+        '{{else}}' +
+            '<div style="margin-top: 20px; text-align: center;"><a href="#" class="persona-button" {{action doLogin}}><span>Sign in with Mozilla Persona</span></a></div>' +
+        '{{/if}}' +
     '</div>'
 );
 

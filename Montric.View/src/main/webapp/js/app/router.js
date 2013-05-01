@@ -1,5 +1,8 @@
 Montric.Router.map(function() {
-    this.route("login", {path: "/"});
+    this.resource("login", {path: "/"}, function() {
+        this.route("register", {path: "/register"});
+        this.route("selectAccount", {path: "/select_account"});
+    });
     this.resource("main", {path: "/main"}, function() {
         this.route("dashboard");
         this.route("charts");
@@ -10,6 +13,7 @@ Montric.Router.map(function() {
             this.route('chartGroups');
             this.route('emailRecipients');
             this.route('menuAdmin');
+            this.route('accessTokens');
         });
     });
 });
@@ -28,12 +32,12 @@ Montric.ApplicationRoute = Ember.Route.extend({
     }
 });
 
-
 Montric.LoginRoute = Ember.Route.extend({
     events: {
         doLogin: function() {
             console.log('logging in!');
-            this.transitionTo('main.index');
+            //this.transitionTo('main.index');
+            navigator.id.request();
         }
     }
 });

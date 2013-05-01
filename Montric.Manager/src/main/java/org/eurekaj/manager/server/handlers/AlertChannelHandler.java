@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.TriggeredAlert;
+import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.plugin.ManagerAlertPluginService;
@@ -49,7 +50,8 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		
         String jsonResponse = "";
-
+        String cookieUuidToken = getCookieValue(e, "uuidToken");
+        User loggedInUser = getLoggedInUser(cookieUuidToken);
         try {
             HttpRequest request = (HttpRequest)e.getMessage();
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
@@ -63,10 +65,10 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
 
 
             log.info("Got: " + jsonObject.toString());
-            if (jsonObject.has("getAlertPlugins")) {
+            if (isAdmin(loggedInUser) && jsonObject.has("getAlertPlugins")) {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
                 log.debug("Got Alert Plugins:\n" + jsonResponse);
-            } else if ((isPut(e) || isPost(e))) {
+            } else if (isAdmin(loggedInUser) && (isPut(e) || isPost(e))) {
                 Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject, id);
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
@@ -75,17 +77,17 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                 alertTopObject.put("alert_model", BuildJsonObjectsUtil.generateAlertJSON(parsedAlert));
 
                 jsonResponse = alertTopObject.toString();
-            } else if (jsonObject.has("getTriggeredAlerts")) {
+            } else if (isUser(loggedInUser) && jsonObject.has("getTriggeredAlerts")) {
                 Long toTimePeriod = Calendar.getInstance().getTimeInMillis() / 15000;
                 Long fromTimePeriod = toTimePeriod - (4 * 60);
-                List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts("ACCOUNT", fromTimePeriod, toTimePeriod);
+                List<TriggeredAlert> triggeredAlertList = getBerkeleyTreeMenuService().getTriggeredAlerts(loggedInUser.getAccountName(), fromTimePeriod, toTimePeriod);
                 jsonResponse = BuildJsonObjectsUtil.generateTriggeredAlertsJson(triggeredAlertList);
                 log.debug("Got Triggered Alerts:\n" + jsonResponse);
-            } else if (isDelete(e) && id != null) {
-                getBerkeleyTreeMenuService().deleteAlert(id, "ACCOUNT");
+            } else if (isAdmin(loggedInUser) && isDelete(e) && id != null) {
+                getBerkeleyTreeMenuService().deleteAlert(id, loggedInUser.getAccountName());
                 log.debug("Successfully deleted Alert with name:\n" + id);
-            } else {
-            	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts("ACCOUNT"));
+            } else if(isUser(loggedInUser)){
+            	jsonResponse = BuildJsonObjectsUtil.generateAlertsJson(getBerkeleyTreeMenuService().getAlerts(loggedInUser.getAccountName()));
                 log.debug("Got Alerts:\n" + jsonResponse);
             }
             

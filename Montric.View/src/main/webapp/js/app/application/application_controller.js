@@ -1,4 +1,6 @@
 Montric.ApplicationController = Ember.Controller.extend({
+    needs: ['charts', 'user'],
+
     timezones: null,
     selectedTimezone: null,
     chartTimespans: null,
@@ -11,10 +13,12 @@ Montric.ApplicationController = Ember.Controller.extend({
     selectedChartTo: null,
     dateFormat: 'dd mmmm yyyy HH:MM',
     showLiveCharts: null,
-    needs: ['charts'],
+
 
     init: function() {
         this._super();
+        console.log('ApplicationController init');
+        this.get('controllers.user');
         this.set('showLiveCharts', true);
         this.set('timezones', []);
         this.set('chartTimespans', []);

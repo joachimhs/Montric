@@ -20,6 +20,7 @@ package org.eurekaj.manager.json;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.datatypes.basic.BasicUser;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.manager.datatypes.*;
 import org.json.JSONArray;
@@ -84,19 +85,46 @@ public class ParseJsonObjects {
         return account;
     }
 
-    public static User parseUser(JSONObject jsonObject) throws JSONException {
-        ManagerUser user = new ManagerUser();
+    public static BasicUser parseUser(JSONObject userJsonObject) throws JSONException {
+        BasicUser user = new BasicUser();
 
-        if (jsonObject.has("user_name")) {
-            user.setUserName(jsonObject.getString("user_name"));
+        if (userJsonObject.has("accountName")) {
+            user.setAccountName(userJsonObject.getString("accountName"));
         }
 
-        if (jsonObject.has("account_name")) {
-            user.setAccountName(jsonObject.getString("account_name"));
+        if (userJsonObject.has("userRole")) {
+            user.setUserRole(userJsonObject.getString("userRole"));
         }
-
-        if (jsonObject.has("user_role")) {
-            user.setUserRole(jsonObject.getString("user_role"));
+        
+        if (userJsonObject.has("firstName")) {
+            user.setFirstName(userJsonObject.getString("firstName"));
+        }
+        
+        if (userJsonObject.has("lastName")) {
+            user.setLastName(userJsonObject.getString("lastName"));
+        }
+        
+        if (userJsonObject.has("country")) {
+            user.setCountry(userJsonObject.getString("country"));
+        }
+        
+        if (userJsonObject.has("company")) {
+            user.setCompany(userJsonObject.getString("company"));
+        }
+        
+        if (userJsonObject.has("usage")) {
+            user.setUsage(userJsonObject.getString("usage"));
+        }
+        
+        if (userJsonObject.has("uuidToken")) {
+            user.setId(userJsonObject.getString("uuidToken"));
+        }
+        
+        if (userJsonObject.has("authLevel")) {
+        	String authLevel = userJsonObject.getString("authLevel");
+        	if (authLevel != null && authLevel.equals("new")) {
+        		user.setUserRole("new");
+        	}
         }
 
         return user;

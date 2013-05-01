@@ -1,5 +1,7 @@
 package org.eurekaj.api.datatypes;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: joahaa
@@ -10,4 +12,5 @@ package org.eurekaj.api.datatypes;
 public interface Account {
     public String getAccountName();
     public String getAccountType();
+    public List<String> getAccessTokens();
 }

@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.GroupedStatistics;
+import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.util.UriUtil;
@@ -44,7 +45,8 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		String jsonResponse = "";
-        String accountName = "ACCOUNT";
+		String cookieUuidToken = getCookieValue(e, "uuidToken");
+        User loggedInUser = getLoggedInUser(cookieUuidToken);
 
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
@@ -58,22 +60,22 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
 
             log.info("got chartGroup JSON" + jsonObject.toString());
             
-            if (isPut(e) || isPost(e)) {
-            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject, id, accountName);
+            if (isAdmin(loggedInUser) && (isPut(e) || isPost(e))) {
+            	GroupedStatistics groupedStatistics = ParseJsonObjects.parseInstrumentationGroup(jsonObject, id, loggedInUser.getAccountName());
                 if (groupedStatistics != null && groupedStatistics.getName() != null && groupedStatistics.getName().length() > 0) {
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
                 JSONObject topObject = new JSONObject();
                 topObject.put("chart_group_model", BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics));
                 jsonResponse = topObject.toString();
-            } else if (isGet(e)) {
+            } else if (isAdmin(loggedInUser) && isGet(e)) {
                 JSONObject topObject = new JSONObject();
-                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics("ACCOUNT")));
+                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics(loggedInUser.getAccountName())));
 
             	jsonResponse = topObject.toString();
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);
-            } else if (isDelete(e) && id != null) {
-                getBerkeleyTreeMenuService().deleteChartGroup(id, "ACCOUNT");
+            } else if (isAdmin(loggedInUser) && isDelete(e) && id != null) {
+                getBerkeleyTreeMenuService().deleteChartGroup(id, loggedInUser.getAccountName());
             }
 
         } catch (JSONException jsonException) {

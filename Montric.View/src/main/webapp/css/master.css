@@ -21,7 +21,7 @@ i {
 #headerArea {
     text-align: left;
     font-size: 1.3em;
-    background: #03005e;
+    background: #eff0f7;
     border-bottom: 3px solid #8f0003;
     padding-left: 15px;
     padding-right: 15px;
@@ -45,6 +45,7 @@ i {
 
 #menuArea {
     background: aliceBlue;
+    //background: #eff0f7;
     border-bottom-left-radius: 8px;
     position: absolute;
     left: 0px;
@@ -164,6 +165,24 @@ div.loginBox {
 }
 
 div.loginBox h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+div.registerBox {
+    color: #000000;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -250px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+}
+
+div.registerBox h1 {
     margin-bottom: 20px;
     text-align: center;
 }

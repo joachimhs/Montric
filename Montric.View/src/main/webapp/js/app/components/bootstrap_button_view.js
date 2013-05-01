@@ -1,6 +1,6 @@
 Montric.BootstrapButton = Ember.View.extend(Ember.TargetActionSupport, {
     tagName: 'button',
-    classNames: ['btn', 'btn-info', 'btn-mini'],
+    classNames: ['btn', 'btn-primary'],
     disabled: false,
 
     click: function() {

@@ -8,7 +8,13 @@ package org.eurekaj.api.datatypes;
  * To change this template use File | Settings | File Templates.
  */
 public interface User {
-    public String getUserName();
+	public String getId();
+	public String getUserName();
     public String getAccountName();
     public String getUserRole();
-}
+    public String getFirstname();
+    public String getLastname();
+    public String getCompany();
+    public String getCountry();
+    public String getUsage();
+;}

@@ -1,6 +1,8 @@
 package org.eurekaj.manager.service;
 
+import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
+import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.User;
 
 import java.util.List;
@@ -21,6 +23,16 @@ public interface AccountService {
     public void persistAccount(Account account);
 
     public User getUser(String username, String accountName);
+    
+    public List<User> getUsers(String username);
 
-    public void persistUser(String username, String accountName, String role);
+    public void persistUser(User user);
+    
+    public Session getSession(String uuid);
+    
+    public void persistSession(Session session);
+    
+    public AccessToken getAccessToken(String accessToken);
+    
+    public void persistAccessToken(AccessToken accessToken);
 }

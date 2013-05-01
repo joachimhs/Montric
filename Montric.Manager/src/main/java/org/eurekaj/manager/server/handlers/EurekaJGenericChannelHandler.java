@@ -5,7 +5,11 @@ import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
+import org.eurekaj.api.datatypes.Session;
+import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.service.*;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -13,6 +17,8 @@ import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.handler.codec.http.Cookie;
+import org.jboss.netty.handler.codec.http.CookieDecoder;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -20,7 +26,7 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.util.CharsetUtil;
 
 public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
-	private static Logger log = Logger.getLogger(EurekaJGenericChannelHandler.class.getName());
+	private static Logger logger = Logger.getLogger(EurekaJGenericChannelHandler.class.getName());
 	private TreeMenuService berkeleyTreeMenuService;
     private AdministrationService administrationService;
     private AccountService accountService;
@@ -45,6 +51,48 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
         }
 
         return accountService;
+    }
+    
+    public String getUri(MessageEvent e) {
+    	HttpRequest request = (HttpRequest) e.getMessage();
+        return request.getUri();
+    }
+    
+    public String getCookieValue(MessageEvent e, String cookieName) {
+    	String cookieValue = null;
+    	
+    	HttpRequest request = (HttpRequest) e.getMessage();
+		String value = request.getHeader("Cookie");
+		logger.info("cookie header: \n" + value);
+		if (value != null) {
+			Set<Cookie> cookies = new CookieDecoder().decode(value);
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals(cookieName)) {
+					cookieValue = cookie.getValue();
+					break;
+				}
+			}
+		}
+    	
+    	return cookieValue;
+    }
+    
+    protected User getLoggedInUser(String cookieUuidToken) {
+		User loggedInUser = null;
+        Session session = getAccountService().getSession(cookieUuidToken);
+        if (session != null) {
+        	loggedInUser = getAccountService().getUser(session.getEmail(), session.getAccountName());
+        }
+        
+        return loggedInUser;
+	}
+    
+    protected boolean isUser(User user) {
+    	return (user != null && (user.getUserRole().equals("user") || user.getUserRole().equals("admin"))); 
+    }
+    
+    protected boolean isAdmin(User user) {
+    	return (user != null && (user.getUserRole().equals("admin"))); 
     }
     
     public boolean isPut(MessageEvent e) {
@@ -77,7 +125,7 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 		ChannelBuffer content = request.getContent();
         if (content.readable()) {
         	requestContent = content.toString(CharsetUtil.UTF_8);
-        	log.debug("InstrumentationMenu: \n" + requestContent);
+        	logger.debug("InstrumentationMenu: \n" + requestContent);
         }
 		return requestContent;
 	}

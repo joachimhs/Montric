@@ -2,15 +2,25 @@ Ember.ENV.RAISE_ON_DEPRECATION = true;
 
 var Montric = Ember.Application.create({
     //rootElement: '#abc',
-    
+
     log: function(message) {
         if (window.console) console.log(message);
     }
 });
 
+//Montric.deferReadiness();
+
 Montric.store = DS.Store.create({
     adapter:  "Montric.Adapter",
     revision: 12
+});
+
+Montric.LoginIndexController = Ember.Controller.extend({
+    needs: ['user']
+});
+
+Montric.HeaderController = Ember.Controller.extend({
+    needs: ['user']
 });
 
 /*Em.subscribe('*', {

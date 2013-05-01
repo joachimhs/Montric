@@ -1,6 +1,8 @@
 package org.eurekaj.manager.service;
 
+import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
+import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.manager.util.DatabasePluginUtil;
@@ -36,17 +38,42 @@ public class ManagerAccountService implements AccountService {
     }
 
     @Override
-    public void persistUser(String username, String accountName, String role) {
-        getDbPlugin().getAccountDao().persistUser(username, accountName, role);
+    public void persistUser(User user) {
+        getDbPlugin().getAccountDao().persistUser(user);
     }
 
     @Override
     public Account getAccount(String accountName) {
         return getDbPlugin().getAccountDao().getAccount(accountName);
     }
+    
+    @Override
+    public List<User> getUsers(String username) {
+    	return getDbPlugin().getAccountDao().getUsers(username);
+    }
 
     @Override
     public List<Account> getAccounts() {
         return getDbPlugin().getAccountDao().getAccounts();
+    }
+    
+    @Override
+    public Session getSession(String uuid) {
+    	return getDbPlugin().getAccountDao().getSession(uuid);
+    }
+    
+    @Override
+    public void persistSession(Session session) {
+    	getDbPlugin().getAccountDao().persistSession(session);
+    }
+    
+    @Override
+    public AccessToken getAccessToken(String accessToken) {
+    	return getDbPlugin().getAccountDao().getAccessToken(accessToken);
+    }
+    
+    @Override
+    public void persistAccessToken(AccessToken accessToken) {
+    	getDbPlugin().getAccountDao().persistAccessToken(accessToken);    	
     }
 }

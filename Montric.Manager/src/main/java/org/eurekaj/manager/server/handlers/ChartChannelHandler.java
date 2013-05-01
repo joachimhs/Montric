@@ -27,7 +27,10 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.GroupedStatistics;
 import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.Statistics;
+import org.eurekaj.api.datatypes.User;
+import org.eurekaj.api.datatypes.basic.BasicUser;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
@@ -145,7 +148,9 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         HttpRequest request = (HttpRequest)e.getMessage();
         String uri = request.getUri();
         String id = UriUtil.getIdFromUri(uri, "chart_models");
-
+        String cookieUuidToken = getCookieValue(e, "uuidToken");
+        
+        User loggedInUser = getLoggedInUser(cookieUuidToken);
 
         JSONObject keyObject = new JSONObject();
 
@@ -160,7 +165,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
         log.info("keyObject: " + keyObject.toString());
         try {
 
-            if (id != null) {
+            if (isUser(loggedInUser) && id != null) {
                 String chartId = id;
                 String pathFromClient = id;
                 String chartPath = null;
@@ -183,13 +188,13 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     id = id.replaceAll("\\%20", " ");
                     String alertName = id.substring(8, id.length());
                     log.info("isAlert! " + alertName);
-                    alert = getBerkeleyTreeMenuService().getAlert(alertName, "ACCOUNT");
+                    alert = getBerkeleyTreeMenuService().getAlert(alertName, loggedInUser.getAccountName());
                     if (alert != null) {
                         chartPath = alert.getGuiPath();
                         seriesLabel = "Alert: " + alert.getAlertName();
                     }
 
-                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, "ACCOUNT", fromPeriod, toPeriod);
+                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, loggedInUser.getAccountName(), fromPeriod, toPeriod);
                     Collections.sort(liveList);
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                     valueCollection.addDataList(ChartUtil.buildWarningList(alert, AlertStatus.CRITICAL, fromPeriod * 15000, toPeriod * 15000));
@@ -203,13 +208,13 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     String groupName = id.substring(5, id.length());
 
                     log.info("isGroupedStat! " + groupName);
-                    groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName, "ACCOUNT");
+                    groupedStatistics = getBerkeleyTreeMenuService().getGroupedStatistics(groupName, loggedInUser.getAccountName());
                     if (groupedStatistics != null) {
                         log.info("groupedStats: " + groupedStatistics.getName() + " :. " + groupedStatistics.getGroupedPathList().size());
                         seriesLabel = "Grouped Statistics: " + groupedStatistics.getName();
                         for (String gsPath : groupedStatistics.getGroupedPathList()) {
                             log.info("\tgroupedStats Path: " + gsPath);
-                            liveList = getBerkeleyTreeMenuService().getLiveStatistics(gsPath, "ACCOUNT", fromPeriod, toPeriod);
+                            liveList = getBerkeleyTreeMenuService().getLiveStatistics(gsPath, loggedInUser.getAccountName(), fromPeriod, toPeriod);
                             Collections.sort(liveList);
                             for (XYDataList dataList : ChartUtil.generateChart(liveList, gsPath, fromPeriod * 15000, toPeriod * 15000, chartResolution).getDataList()) {
                                 valueCollection.addDataList(dataList);
@@ -221,12 +226,12 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     chartPath = id;
                     log.info("ID: " + id);
                     seriesLabel = chartPath;
-                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, "ACCOUNT", fromPeriod, toPeriod);
+                    liveList = getBerkeleyTreeMenuService().getLiveStatistics(chartPath, loggedInUser.getAccountName(), fromPeriod, toPeriod);
                     Collections.sort(liveList);
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                 }
 
-                Statistics statistics = getBerkeleyTreeMenuService().getTreeMenu(chartPath, "ACCOUNT");
+                Statistics statistics = getBerkeleyTreeMenuService().getTreeMenu(chartPath, loggedInUser.getAccountName());
                 //if (statistics != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
                 jsonResponse = BuildJsonObjectsUtil.generateChartData2(chartId, chartPath, valueCollection, chartOffset);
 

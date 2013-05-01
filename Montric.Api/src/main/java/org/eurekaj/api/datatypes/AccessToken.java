@@ -8,6 +8,7 @@ package org.eurekaj.api.datatypes;
  * To change this template use File | Settings | File Templates.
  */
 public interface AccessToken {
-    public String getAccessToken();
+    public String getId();
     public String getAccountName();
+    public String getAccessTokenName();
 }
