@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.datatypes.AccessToken;
+import org.eurekaj.api.datatypes.Account;
 import org.eurekaj.api.datatypes.LiveStatistics;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
@@ -53,22 +55,28 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
         String messageContent = getHttpMessageContent(e);
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(messageContent);
-
-            if (jsonObject.has("storeLiveStatistics") && statisticsHasValidToken(jsonObject)) {
+            log.info("LiveStatistics: " + jsonObject);
+            String accountName = getAccountForAccessToken(jsonObject);
+            log.info("Belongs to Account: " + accountName);
+            
+            if (jsonObject.has("storeLiveStatistics") && accountName != null) {
+            	
                 JSONArray statList = jsonObject.getJSONArray("storeLiveStatistics");
                 List<LiveStatistics> liveStatList = new ArrayList<LiveStatistics>();
 
                 for (int index = 0; index < statList.length(); index++) {
-                    ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index));
+                    ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index), accountName);
                     liveStatList.add(liveStatistics);
+                    
                     String agent = liveStatistics.getGuiPath().substring(0, liveStatistics.getGuiPath().indexOf(":"));
                     ManagerLiveStatistics agentStats = new ManagerLiveStatistics();
                     agentStats.setGuiPath(agent + ":Agent Statistics:API Call Count");
-                    agentStats.setAccountName("ACCOUNT");
+                    agentStats.setAccountName(accountName);
                     agentStats.setTimeperiod(liveStatistics.getTimeperiod());
                     agentStats.setUnitType(UnitType.N.value());
                     agentStats.setValueType(ValueType.AGGREGATE.value());
                     agentStats.setValue(1d);
+                    
                     liveStatList.add(agentStats);
                 }
 
@@ -89,24 +97,16 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
         }
     }
 
-    private boolean statisticsHasValidToken(JSONObject jsonObject) {
-        boolean validToken = false;
+    private String getAccountForAccessToken(JSONObject jsonObject) throws JSONException {
+    	String accountName = null;
 
-        String liveStatisticsToken = System.getProperty("org.eurekaj.liveStatisticsToken");
-        if (liveStatisticsToken != null && liveStatisticsToken.length() > 0) {
-            try {
-                validToken = jsonObject.has("liveStatisticsToken") && jsonObject.getString("liveStatisticsToken").equals(liveStatisticsToken);
-                log.info("validToken: " + validToken);
-                log.info("liveStatisticsToken proxy: " + jsonObject.get("liveStatisticsToken"));
-                log.info("liveStatisticsToken manager: " + liveStatisticsToken);
-            } catch (JSONException e) {
-                log.error("Unable to get liveStatisticsToken from JSON Hash. Refusing to accept live statistics");
-                validToken = false;
-            }
-        } else {
-            validToken = true;
+        if (jsonObject.has("liveStatisticsToken") && jsonObject.getString("liveStatisticsToken").length() >= 16) {
+        	AccessToken accessToken = getAccountService().getAccessToken(jsonObject.getString("liveStatisticsToken"));
+        	if (accessToken != null) {
+        		accountName = accessToken.getAccountName();
+        	}
         }
-
-        return validToken;
+        
+        return accountName;
     }
 }

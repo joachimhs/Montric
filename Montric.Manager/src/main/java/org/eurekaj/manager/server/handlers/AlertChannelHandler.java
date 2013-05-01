@@ -69,7 +69,7 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                 jsonResponse = BuildJsonObjectsUtil.generateAlertPluginsJson(ManagerAlertPluginService.getInstance().getLoadedAlertPlugins());
                 log.debug("Got Alert Plugins:\n" + jsonResponse);
             } else if (isAdmin(loggedInUser) && (isPut(e) || isPost(e))) {
-                Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject, id);
+                Alert parsedAlert = ParseJsonObjects.parseAlertJson(jsonObject, id, loggedInUser.getAccountName());
                 if (parsedAlert != null && parsedAlert.getAlertName() != null && parsedAlert.getAlertName().length() > 0) {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
                 }

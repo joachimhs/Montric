@@ -25,6 +25,7 @@ import java.util.Properties;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.datatypes.Account;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.api.datatypes.LiveStatistics;
@@ -34,6 +35,7 @@ import org.eurekaj.api.util.ListToString;
 import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.datatypes.ManagerTriggeredAlert;
 import org.eurekaj.manager.plugin.ManagerAlertPluginService;
+import org.eurekaj.manager.service.AccountService;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.manager.util.PropertyUtil;
@@ -42,6 +44,7 @@ public class AlertValidatorTask {
 	private static final Logger log = Logger.getLogger(AlertValidatorTask.class);
 	private TreeMenuService treeMenuService;
 	private AdministrationService administrationService;
+	private AccountService accountService;
 	private ThreadPoolExecutor sendEmailExecutor;
 	private SimpleDateFormat dateFormat;
 	
@@ -69,83 +72,93 @@ public class AlertValidatorTask {
 		return administrationService;
 	}
 	
+	public AccountService getAccountService() {
+		return accountService;
+	}
+	
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
+	}
+	
 	public void setAdministrationService(
 			AdministrationService administrationService) {
 		this.administrationService = administrationService;
 	}
 	
 	public void evaluateAlerts() {
-		//Get all alerts
-		List<Alert> alertList = treeMenuService.getAlerts("ACCOUNT");
-		
-		//For Each active alert
-		for (Alert alert : alertList) {
-			if (alert.isActivated()) {
-				AlertStatus oldStatus = alert.getStatus();
-				List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay());
-				//Get statistics and evaluate alert condition
-				AlertStatus newStatus = evaluateStatistics(alert, statList);
-				if (oldStatus != newStatus && statList.size() >= 1) {
-                    //Status have changed, store new triggeredAlert and send email
-					ManagerAlert newAlert = new ManagerAlert(alert);
-                    newAlert.setStatus(newStatus);
-                    treeMenuService.persistAlert(newAlert);
-                    
-                    ManagerTriggeredAlert managerTriggeredAlert = new ManagerTriggeredAlert(
-                            alert.getAlertName(),
-                            alert.getAccountName(),
-                            statList.get(statList.size() -1).getTimeperiod(),
-                            alert.getErrorValue(),
-                            alert.getWarningValue(),
-                            statList.get(statList.size() - 1).getValue(),
-                            statList.get(statList.size() -1).getTimeperiod()
+		for (Account account : accountService.getAccounts()) {
+			//Get all alerts
+			List<Alert> alertList = treeMenuService.getAlerts(account.getAccountName());
+			
+			//For Each active alert
+			for (Alert alert : alertList) {
+				if (alert.isActivated()) {
+					AlertStatus oldStatus = alert.getStatus();
+					List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay(), account.getAccountName());
+					//Get statistics and evaluate alert condition
+					AlertStatus newStatus = evaluateStatistics(alert, statList);
+					if (oldStatus != newStatus && statList.size() >= 1) {
+	                    //Status have changed, store new triggeredAlert and send email
+						ManagerAlert newAlert = new ManagerAlert(alert);
+	                    newAlert.setStatus(newStatus);
+	                    treeMenuService.persistAlert(newAlert);
+	                    
+	                    ManagerTriggeredAlert managerTriggeredAlert = new ManagerTriggeredAlert(
+	                            alert.getAlertName(),
+	                            alert.getAccountName(),
+	                            statList.get(statList.size() -1).getTimeperiod(),
+	                            alert.getErrorValue(),
+	                            alert.getWarningValue(),
+	                            statList.get(statList.size() - 1).getValue(),
+	                            statList.get(statList.size() -1).getTimeperiod()
 
-                    );
+	                    );
 
-                    treeMenuService.persistTriggeredAlert(managerTriggeredAlert);
+	                    treeMenuService.persistTriggeredAlert(managerTriggeredAlert);
 
-					Calendar cal = Calendar.getInstance();
-					for (String emailGroup : alert.getSelectedEmailSenderList()) {
-						EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup, "ACCOUNT");
-						if (emailRecipientGroup != null) {
-							log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking email plugin.");
-							//The email alert is special, as properties needs to be built up for each alert being sent. 
-							Properties alertProperties = new Properties();
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.host", emailRecipientGroup.getSmtpServerhost());
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.username", emailRecipientGroup.getSmtpUsername());
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.password", emailRecipientGroup.getSmtpPassword());
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.useSSL", new Boolean(emailRecipientGroup.isUseSSL()).toString());
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.port", emailRecipientGroup.getPort().toString());
-							alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList", ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ","));
+						Calendar cal = Calendar.getInstance();
+						for (String emailGroup : alert.getSelectedEmailSenderList()) {
+							EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup, alert.getAccountName());
+							if (emailRecipientGroup != null) {
+								log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking email plugin.");
+								//The email alert is special, as properties needs to be built up for each alert being sent. 
+								Properties alertProperties = new Properties();
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.host", emailRecipientGroup.getSmtpServerhost());
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.username", emailRecipientGroup.getSmtpUsername());
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.password", emailRecipientGroup.getSmtpPassword());
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.useSSL", new Boolean(emailRecipientGroup.isUseSSL()).toString());
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.port", emailRecipientGroup.getPort().toString());
+								alertProperties.put("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList", ListToString.convertFromList(emailRecipientGroup.getEmailRecipientList(), ","));
 
-							log.debug("statList: " + statList);
-							log.debug("dateFormat: " + dateFormat);
-							log.debug("newValue: " + statList.get(statList.size() - 1));
-							
+								log.debug("statList: " + statList);
+								log.debug("dateFormat: " + dateFormat);
+								log.debug("newValue: " + statList.get(statList.size() - 1));
+								
+								double currvalue = 0d;
+								if (statList.get(statList.size() - 1).getValue() != null) {
+									currvalue = statList.get(statList.size() - 1).getValue();
+								}
+								ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
+							}
+						}
+						
+						for (String pluginName : alert.getSelectedAlertPluginList()) {
+							log.debug("\t\tAlert through plugin: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
+							//TODO: Figure out which plugin to send the alert to.
+							Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
 							double currvalue = 0d;
 							if (statList.get(statList.size() - 1).getValue() != null) {
 								currvalue = statList.get(statList.size() - 1).getValue();
 							}
-							ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
+							ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
 						}
-					}
-					
-					for (String pluginName : alert.getSelectedAlertPluginList()) {
-						log.debug("\t\tAlert through plugin: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");
-						//TODO: Figure out which plugin to send the alert to.
-						Properties alertProperties = PropertyUtil.extractPropertiesStartingWith("org.eurekaj.plugin.alert.", System.getProperties());
-						double currvalue = 0d;
-						if (statList.get(statList.size() - 1).getValue() != null) {
-							currvalue = statList.get(statList.size() - 1).getValue();
-						}
-						ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
-					}
 
-				} else {
-					log.debug("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
+					} else {
+						log.debug("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
+					}
 				}
-			}
-		}	
+			}	
+		}
 	}
 	
 	public AlertStatus evaluateStatistics(Alert alert, List<LiveStatistics> statList) {
@@ -189,7 +202,7 @@ public class AlertValidatorTask {
 		return thresholdBreached;
 	}
 	
-	public List<LiveStatistics> getStatistic(String guiPath, long timeperiods) {
+	public List<LiveStatistics> getStatistic(String guiPath, long timeperiods, String accountName) {
 		if (timeperiods <= 0) {
 			timeperiods = 1;
 		}
@@ -199,7 +212,7 @@ public class AlertValidatorTask {
 		Long millisThen = millisNow - timeperiods;
 		log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
 		
-		return treeMenuService.getLiveStatistics(guiPath, "ACCOUNT", millisThen, millisNow);
+		return treeMenuService.getLiveStatistics(guiPath, accountName, millisThen, millisNow);
 	}
 
 }

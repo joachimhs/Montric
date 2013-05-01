@@ -18,6 +18,8 @@
 */
 package org.eurekaj.manager.task;
 
+import org.eurekaj.api.datatypes.Account;
+import org.eurekaj.manager.service.AccountService;
 import org.eurekaj.manager.service.TreeMenuService;
 
 import java.util.Calendar;
@@ -26,6 +28,7 @@ public class DeleteOldStatisticsTask {
 
     private int numDaysToKeepStatistics = 35;
     private TreeMenuService treeMenuService;
+    private AccountService accountService;
 
     public DeleteOldStatisticsTask() {
         String daysStr = System.getProperty("org.eurekaj.deleteStatsOlderThanDays");
@@ -39,15 +42,21 @@ public class DeleteOldStatisticsTask {
     }
 
     public void deleteOldStats() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1 * numDaysToKeepStatistics);
-
-        if (treeMenuService != null) {
-            treeMenuService.deleteOldLiveStatistics("ACCOUNT", cal.getTime());
-        }
+    	for (Account account : accountService.getAccounts()) {
+	        Calendar cal = Calendar.getInstance();
+	        cal.add(Calendar.DATE, -1 * numDaysToKeepStatistics);
+	
+	        if (treeMenuService != null) {
+	            treeMenuService.deleteOldLiveStatistics(account.getAccountName(), cal.getTime());
+	        }
+    	}
     }
 
     public void setTreeMenuService(TreeMenuService treeMenuService) {
         this.treeMenuService = treeMenuService;
     }
+    
+    public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
+	}
 }

@@ -61,7 +61,7 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
             log.info(jsonObject.toString());
             if (isAdmin(loggedInUser) && (isPut(e) || isPost(e))) {
-            	EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject, id);
+            	EmailRecipientGroup emailRecipientGroup = ParseJsonObjects.parseEmailGroup(jsonObject, id, loggedInUser.getAccountName());
 
                 log.info("ID:" + emailRecipientGroup.getEmailRecipientGroupName());
 

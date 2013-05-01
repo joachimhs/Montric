@@ -40,7 +40,7 @@ import java.util.List;
 public class ParseJsonObjects {
 	private static Logger log = Logger.getLogger(ParseJsonObjects.class.getName());
 	
-    public static Alert parseAlertJson(JSONObject jsonAlert, String id) throws JSONException {
+    public static Alert parseAlertJson(JSONObject jsonAlert, String id, String accountName) throws JSONException {
         ManagerAlert parsedAlert = null;
 
         /*
@@ -67,7 +67,7 @@ public class ParseJsonObjects {
             parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(alert, "alert_type")));
             parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(alert, "alert_notifications"));
             parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alert_plugins"));
-            parsedAlert.setAccountName("ACCOUNT");
+            parsedAlert.setAccountName(accountName);
         }
 
         log.info("alertName: " + parsedAlert.getAlertName() + " account: " + parsedAlert.getAccountName());
@@ -154,12 +154,12 @@ public class ParseJsonObjects {
         return groupedStatistics;
     }
 
-    public static ManagerLiveStatistics parseLiveStatistics(JSONObject jsonLiveStatistics) {
+    public static ManagerLiveStatistics parseLiveStatistics(JSONObject jsonLiveStatistics, String accountName) {
         ManagerLiveStatistics liveStatistics = null;
 
         if (jsonLiveStatistics.has("guiPath")) {
             liveStatistics = new ManagerLiveStatistics();
-            liveStatistics.setAccountName("ACCOUNT");
+            liveStatistics.setAccountName(accountName);
             liveStatistics.setGuiPath(parseStringFromJson(jsonLiveStatistics, "guiPath"));
             liveStatistics.setTimeperiod(parseLongFromJson(jsonLiveStatistics, "timeperiod"));
             liveStatistics.setValue(parseDoubleFromJson(jsonLiveStatistics, "value"));
@@ -170,7 +170,7 @@ public class ParseJsonObjects {
         return liveStatistics;
     }
 
-    public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup, String id) throws JSONException {
+    public static EmailRecipientGroup parseEmailGroup(JSONObject jsonEmailGroup, String id, String accountName) throws JSONException {
         ManagerEmailRecipientGroup emailRecipientGroup = new ManagerEmailRecipientGroup();
 
         if (jsonEmailGroup.has("email_group_model")) {
@@ -180,7 +180,7 @@ public class ParseJsonObjects {
             } else {
                 emailRecipientGroup.setEmailRecipientGroupName(parseStringFromJson(eg, "id"));
             }
-            emailRecipientGroup.setAccountName("ACCOUNT");
+            emailRecipientGroup.setAccountName(accountName);
             emailRecipientGroup.setPort(parseIntegerFromJson(eg, "smtp_port"));
             emailRecipientGroup.setUseSSL(parseBooleanFromJson(eg, "smtp_use_ssl"));
             emailRecipientGroup.setSmtpServerhost(parseStringFromJson(eg, "smtp_host"));
