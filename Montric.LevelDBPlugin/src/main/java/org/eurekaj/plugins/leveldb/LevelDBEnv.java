@@ -47,9 +47,9 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 
 	@Override
 	public void setup() {
-		String dbPath = System.getProperty("eurekaj.db.absPath");
+		String dbPath = System.getProperty("montric.db.absPath");
 		if (dbPath == null) {
-			throw new RuntimeException("Property eurekaj.db.absPath is NULL.Please configure in config.properties");
+			throw new RuntimeException("Property montric.db.absPath is NULL.Please configure in config.properties");
 		}
 		
 		Options options = new Options();

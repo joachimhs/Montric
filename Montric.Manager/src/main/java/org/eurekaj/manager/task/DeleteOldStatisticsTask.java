@@ -31,7 +31,7 @@ public class DeleteOldStatisticsTask {
     private AccountService accountService;
 
     public DeleteOldStatisticsTask() {
-        String daysStr = System.getProperty("org.eurekaj.deleteStatsOlderThanDays");
+        String daysStr = System.getProperty("org.montric.deleteStatsOlderThanDays");
         if (daysStr != null) {
             try {
                 numDaysToKeepStatistics = Integer.parseInt(daysStr);

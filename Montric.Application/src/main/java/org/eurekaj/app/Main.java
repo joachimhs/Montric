@@ -28,11 +28,11 @@ public class Main {
 		eurekaJClassLoader = new PluginClassLoader(Thread.currentThread().getClass().getClassLoader());
 		
 		//-Dorg.eurekaj.webappDirectory=/srv/eurekaj/webapp -Dorg.eurekaj.pluginDirectory=/srv/eurekaj/plugins
-		String pluginsDir = System.getProperty("org.eurekaj.pluginDirectory", "/srv/eurekaj/plugins");
-		String webappDir = System.getProperty("org.eurekaj.webappDirectory", "/srv/eurekaj/webapp");
+		String pluginsDir = System.getProperty("org.montric.pluginDirectory", "/srv/eurekaj/plugins");
+		String webappDir = System.getProperty("org.montric.webappDirectory", "/srv/eurekaj/webapp");
 		System.setProperty("basedir", webappDir);
 		
-		Versions versions = getEurekaJVersions();
+		/*Versions versions = getEurekaJVersions();
 		Version version = versions.getEurekaJVersions().get(0);
 		
 		String eurekaJFilepath = downloadJarFromUrl(version.getServerJarUrl(), webappDir);
@@ -41,7 +41,7 @@ public class Main {
 		String webappFilepath = downloadJarFromUrl(version.getWebappJarUrl(), webappDir);
 		JarUtils.unjar(webappFilepath, new File(webappDir + File.separatorChar + "tmp"));
 		
-		loadPluginsFromDir(pluginsDir);
+		loadPluginsFromDir(pluginsDir);*/
 		
 		AppWebappPluginService webappPluginService = new AppWebappPluginService();
 	}
@@ -76,9 +76,9 @@ public class Main {
 			System.setProperty(property, properties.getProperty(property));
 		}
 		
-		if (System.getProperty("org.eurekaj.port") == null) {
-			System.setProperty("org.eurekaj.port", "8080");
-			logger.info(" * Property 'jetty.port' is not specified. Using default: 8080. Configure in file config.properties.");
+		if (System.getProperty("org.montric.port") == null) {
+			System.setProperty("org.montric.port", "8080");
+			logger.info(" * Property 'org.montric.port' is not specified. Using default: 8080. Configure in file config.properties.");
 		}
 		
 		if (System.getProperty("org.eurekaj.deleteStatsOlderThanDays") == null) {
@@ -86,25 +86,25 @@ public class Main {
 			logger.info(" * Property 'org.eurekaj.deleteStatsOlderThanDays' is not specified. Using default: 30 Configure in file config.properties.");
 		}
 		
-		if (System.getProperty("eurekaj.db.type") == null) {
-			System.setProperty("eurekaj.db.type", "BerkeleyHour");
-			logger.info(" * Property 'eurekaj.db.type' is not specified. Using default: 'BerkeleyHour' Configure in file config.properties.");
+		if (System.getProperty("montric.db.type") == null) {
+			System.setProperty("montric.db.type", "BerkeleyHour");
+			logger.info(" * Property 'montric.db.type' is not specified. Using default: 'BerkeleyHour' Configure in file config.properties.");
 		}
 		
 		
-		if (System.getProperty("eurekaj.db.absPath") == null) {
-			System.setProperty("eurekaj.db.absPath", "data");
-			logger.info(" * Property 'eurekaj.db.absPath' is not specified. Using default: 'data' Configure in file config.properties.");
+		if (System.getProperty("montric.db.absPath") == null) {
+			System.setProperty("montric.db.absPath", "data");
+			logger.info(" * Property 'montric.db.absPath' is not specified. Using default: 'data' Configure in file config.properties.");
 		}
 		
-		if (System.getProperty("org.eurekaj.webappDirectory") == null) {
-			System.setProperty("org.eurekaj.webappDirectory", "webapp");
-			logger.info(" * Property 'org.eurekaj.webappDirectory' is not specified. Using default: 'webapp' Configure in file config.properties.");
+		if (System.getProperty("org.montric.webappDirectory") == null) {
+			System.setProperty("org.montric.webappDirectory", "webapp");
+			logger.info(" * Property 'org.montric.webappDirectory' is not specified. Using default: 'webapp' Configure in file config.properties.");
 		}
 		
-		if (System.getProperty("org.eurekaj.pluginDirectory") == null) {
-			System.setProperty("org.eurekaj.pluginDirectory", "plugins");
-			logger.info(" * Property 'org.eurekaj.pluginDirectory' is not specified. Using default: 'plugins' Configure in file config.properties.");
+		if (System.getProperty("org.montric.pluginDirectory") == null) {
+			System.setProperty("org.montric.pluginDirectory", "plugins");
+			logger.info(" * Property 'org.montric.pluginDirectory' is not specified. Using default: 'plugins' Configure in file config.properties.");
 		}
 	}
 	

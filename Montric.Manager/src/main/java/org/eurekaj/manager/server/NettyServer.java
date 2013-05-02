@@ -23,11 +23,11 @@ public class NettyServer extends EurekaJWebappPluginService {
         // Set up the event pipeline factory          .
         bootstrap.setPipelineFactory(new EurekaJNettyPipeline());
 
-        Integer port = IntegerParser.parseIntegerFromString(System.getProperty("org.eurekaj.port"), 8080);
+        Integer port = IntegerParser.parseIntegerFromString(System.getProperty("org.montric.port"), 8080);
         // Bind and start to accept incoming connections.
         bootstrap.bind(new InetSocketAddress(port));
 		
-        logger.info("Using DB Plugin: " + System.getProperty("eurekaj.db.type"));
+        logger.info("Using DB Plugin: " + System.getProperty("montric.db.type"));
         logger.info("EurekaJ Manager loaded and listening to port: " + port);
 	}
 	
@@ -48,11 +48,11 @@ public class NettyServer extends EurekaJWebappPluginService {
 		
 		System.setProperty("basedir", "/Users/jhsmbp/Projects/Montric/Montric.View/src/main/webapp");
 		//System.setProperty("basedir", "/Users/joahaa/Projects/HaagenSoftwareWeb");
-		System.setProperty("eurekaj.db.absPath", "/srv/eurekaj/eurekajData");
-		System.setProperty("org.eurekaj.deleteStatsOlderThanDays", "180");
-		System.setProperty("eurekaj.db.type", "LevelDBPlugin");
-		System.setProperty("org.eurekaj.port", "8081");
-		System.setProperty("org.eurekaj.indexCacheSeconds", "0");
+		System.setProperty("montric.db.absPath", "/srv/eurekaj/eurekajData");
+		System.setProperty("org.montric.deleteStatsOlderThanDays", "180");
+		System.setProperty("montric.db.type", "LevelDBPlugin");
+		System.setProperty("org.montric.port", "8081");
+		System.setProperty("org.montric.indexCacheSeconds", "0");
 		
 		nettyServer.start();
 	}

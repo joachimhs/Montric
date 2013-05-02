@@ -28,8 +28,8 @@ package org.eurekaj.manager.util;
 public class DatabasePluginUtil {
 
     public static String getDatabasePluginName() {
-        String pluginName = System.getProperty("eurekaj.db.type", "Berkeley");
-        System.setProperty("eurekaj.db.type", pluginName);
+        String pluginName = System.getProperty("montric.db.type", "Berkeley");
+        System.setProperty("montric.db.type", pluginName);
 
         return pluginName;
     }
