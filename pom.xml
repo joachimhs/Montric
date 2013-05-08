@@ -22,6 +22,7 @@
 		<module>Montric.Application</module>
 		<module>Montric.AlertEmailPlugin</module>
 		<module>Montric.LevelDBPlugin</module>
+		<module>Montric.RiakPlugin</module>
     </modules>
 
 	<build>

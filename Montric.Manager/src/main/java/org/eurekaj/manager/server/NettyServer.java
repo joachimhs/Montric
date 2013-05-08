@@ -53,6 +53,8 @@ public class NettyServer extends EurekaJWebappPluginService {
 		System.setProperty("montric.db.type", "LevelDBPlugin");
 		System.setProperty("org.montric.port", "8081");
 		System.setProperty("org.montric.indexCacheSeconds", "0");
+		System.setProperty("org.montric.host", "localhost");
+		System.setProperty("org.montric.userPort", "8081");
 		
 		nettyServer.start();
 	}

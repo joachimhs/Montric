@@ -38,6 +38,7 @@ import org.eurekaj.api.datatypes.auth.MozillaPersonaCredentials;
 import org.eurekaj.api.datatypes.basic.BasicAccount;
 import org.eurekaj.api.datatypes.basic.BasicSession;
 import org.eurekaj.api.datatypes.basic.BasicUser;
+import org.eurekaj.api.util.IntegerParser;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -85,6 +86,7 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             	} else {
                 	logger.info("Logging in via Persona.");
             		String responseContent = loginViaMozillaPersona(messageContent);
+            		logger.info("Mozilla Persona Response: " + responseContent);
                 	MozillaPersonaCredentials credentials = new Gson().fromJson(responseContent, MozillaPersonaCredentials.class);
                 	expiry = credentials.getExpires();
             		email = credentials.getEmail();
@@ -101,6 +103,7 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             		newSession.setAccountName("__NEW__");
             		
             		//userHash.put(newUser.getId(), newUser);
+            		logger.info("Persisting new Session: " + new Gson().toJson(newSession));
             		getAccountService().persistSession(newSession);
             		
             		jsonResponse = "{ \"uuidToken\": \"" + newSession.getUuid() + "\", \"registered\": " + "false}";
@@ -117,7 +120,7 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             		newSession.setAccountName(user.getAccountName());
             		getAccountService().persistSession(newSession);
             		
-            		logger.info("Persisting new Session: " + new Gson().toJson(newSession));
+            		logger.info("Updating Session: " + new Gson().toJson(newSession));
             		
         			jsonResponse = "{ \"uuidToken\": \"" + newSession.getUuid() + "\", \"registered\": " + "true}";
             		
@@ -208,8 +211,11 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
 			messageContent = messageContent.substring(10, messageContent.length());
 		}
 		assertionJson.addProperty("assertion", messageContent);
-		assertionJson.addProperty("audience", "http://localhost:8081");
+		String host = System.getProperty("org.montric.host", "localhost");
+		Integer port = IntegerParser.parseIntegerFromString(System.getProperty("org.montric.userPort"), 80);
+		assertionJson.addProperty("audience", "http://" + host + ":" + port);
 		
+		//TODO: Need to handle this: Mozilla Persona Response: {"status":"failure","reason":"audience mismatch: port mismatch"}
 		int statusCode = -1;
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		
