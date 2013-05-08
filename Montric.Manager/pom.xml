@@ -94,6 +94,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.montric.plugin</groupId>
+			<artifactId>riakPlugin</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.montric.plugin</groupId>
 			<artifactId>aggregateLiveStatisticsPlugin</artifactId>
 			<version>${project.version}</version>
 		</dependency>

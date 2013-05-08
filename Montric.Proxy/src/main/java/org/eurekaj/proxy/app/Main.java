@@ -130,20 +130,20 @@ public class Main {
     }
 
     private void setProperties(Properties properties) {
-        scriptPath = (String)properties.get("eurekaj.proxy.scriptpath");
-        endpointUrl = (String)properties.get("eurekaj.proxy.endpoint");
-        password = (String)properties.get("eurekaj.proxy.password");
+        scriptPath = (String)properties.get("montric.proxy.scriptpath");
+        endpointUrl = (String)properties.get("montric.proxy.endpoint");
+        password = (String)properties.get("montric.proxy.password");
 
         if (scriptPath == null || scriptPath.length() == 1) {
-            throw new RuntimeException("The properties file 'config.properties' requires that the property 'eurekaj.proxy.scriptpath' is defined. Example: eurekaj.proxy.scriptpath=/path/to/btrace/scripts");
+            throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.scriptpath' is defined. Example: montric.proxy.scriptpath=/path/to/btrace/scripts");
         }
 
         if (endpointUrl == null || endpointUrl.length() == 1) {
-            throw new RuntimeException("The properties file 'config.properties' requires that the property 'eurekaj.proxy.endpoint' is defined. Example: eurekaj.proxy.endpoint=http://hostname:port");
+            throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.endpoint' is defined. Example: montric.proxy.endpoint=http://hostname:port");
         }
 
         if (password == null || password.length() == 1) {
-            throw new RuntimeException("The properties file 'config.properties' requires that the property 'eurekaj.proxy.scriptpath' is defined. Example: eurekaj.proxy.password=password");
+            throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.scriptpath' is defined. Example: montric.proxy.password=password");
         }
 
 	}
