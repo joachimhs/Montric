@@ -47,13 +47,13 @@ public class RiakAccountDao implements AccountDao {
 	}
 
 	@Override
-	public Account getAccount(String accountName) {
+	public Account getAccount(String id) {
 		Account account = null;
 		
 		Bucket myBucket = null;
         try {
             myBucket = riakClient.fetchBucket("Account").execute();
-        	account = myBucket.fetch(accountName, BasicAccount.class).execute();
+        	account = myBucket.fetch(id, BasicAccount.class).execute();
         } catch (RiakRetryFailedException rrfe) {
             rrfe.printStackTrace();
         } catch (RiakException e) {
@@ -68,7 +68,7 @@ public class RiakAccountDao implements AccountDao {
 		Bucket myBucket = null;
         try {
             myBucket = riakClient.fetchBucket("Account").execute();
-            myBucket.store(account.getAccountName(), account).execute();
+            myBucket.store(account.getId(), account).execute();
         } catch (RiakRetryFailedException rrfe) {
             rrfe.printStackTrace();
         }

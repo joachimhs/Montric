@@ -45,7 +45,7 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
             routes.put("startsWith:/access_token", new AccessTokenHandler());
             routes.put("equals:/liveStatistics", new LiveStatisticsChannelHandler());
             routes.put("startsWith:/user", new UserChannelhandler());
-            routes.put("equals:/account", new AccountHandler());
+            routes.put("startsWith:/account", new AccountHandler());
 
             String webappDir = System.getProperty("basedir");
              

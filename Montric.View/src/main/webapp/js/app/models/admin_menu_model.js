@@ -14,5 +14,9 @@ Montric.AdminMenuModel = DS.Model.extend({
 
     isLeaf: function() {
         return this.get('children').get('length') == 0;
-    }.property('children.length')
+    }.property('children.length'),
+
+    isAlert: function() {
+        return this.get('nodeType') === 'alert';
+    }.property('nodeType')
 });

@@ -78,7 +78,7 @@ public class ParseJsonObjects {
         ManagerAccount account = new ManagerAccount();
 
         if (jsonObject.has("account_name") && jsonObject.has("account_type")) {
-            account.setAccountName(jsonObject.getString("account_name"));
+            account.id(jsonObject.getString("account_name"));
             account.setAccountType(jsonObject.getString("account_type"));
         }
 

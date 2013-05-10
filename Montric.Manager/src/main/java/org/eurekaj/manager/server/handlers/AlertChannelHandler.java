@@ -56,13 +56,7 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
             HttpRequest request = (HttpRequest)e.getMessage();
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            String uri = request.getUri();
-            String id = UriUtil.getIdFromUri(uri, "alert_models");
-
-            if (id != null) {
-                id = id.replaceAll("\\%20", " ");
-            }
-
+            String id = getUrlId(e, "alert_models");
 
             log.info("Got: " + jsonObject.toString());
             if (isAdmin(loggedInUser) && jsonObject.has("getAlertPlugins")) {

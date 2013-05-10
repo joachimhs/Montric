@@ -47,7 +47,7 @@ public class DeleteOldStatisticsTask {
 	        cal.add(Calendar.DATE, -1 * numDaysToKeepStatistics);
 	
 	        if (treeMenuService != null) {
-	            treeMenuService.deleteOldLiveStatistics(account.getAccountName(), cal.getTime());
+	            treeMenuService.deleteOldLiveStatistics(account.getId(), cal.getTime());
 	        }
     	}
     }

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.service.*;
+import org.eurekaj.manager.util.UriUtil;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -30,8 +31,9 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 	private TreeMenuService berkeleyTreeMenuService;
     private AdministrationService administrationService;
     private AccountService accountService;
-
-    public AdministrationService getAdministrationService() {
+    private String rootUser;
+	
+	public AdministrationService getAdministrationService() {
         if (administrationService == null) {
             administrationService = new AdministrationServiceImpl();
         }
@@ -52,6 +54,14 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 
         return accountService;
     }
+    
+    public String getRootUser() {
+		if (rootUser == null) {
+			rootUser = System.getProperty("montric.rootUser");
+		}
+		
+		return rootUser;
+	}
     
     public String getUri(MessageEvent e) {
     	HttpRequest request = (HttpRequest) e.getMessage();
@@ -93,6 +103,22 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
     
     protected boolean isAdmin(User user) {
     	return (user != null && (user.getUserRole().equals("admin"))); 
+    }
+    
+    protected boolean isRoot(Session session) {
+    	return getRootUser() != null && session != null && session.getEmail().equals(getRootUser());
+    }
+    
+    protected String getUrlId(MessageEvent e, String urlToken) {
+    	HttpRequest request = (HttpRequest)e.getMessage();
+    	String uri = request.getUri();
+        String id = UriUtil.getIdFromUri(uri, urlToken);
+
+        if (id != null) {
+            id = id.replaceAll("\\%20", " ");
+        }
+        
+        return id;
     }
     
     public boolean isPut(MessageEvent e) {

@@ -12,15 +12,15 @@ import org.eurekaj.api.datatypes.Account;
  * To change this template use File | Settings | File Templates.
  */
 public class ManagerAccount implements Account {
-    private String accountName;
+    private String id;
     private String accountType;
     private List<String> accessTokens;
 
     public ManagerAccount() {
     }
 
-    public ManagerAccount(String accountName, String accountType) {
-        this.accountName = accountName;
+    public ManagerAccount(String id, String accountType) {
+        this.id = id;
         this.accountType = accountType;
     }
 
@@ -33,12 +33,12 @@ public class ManagerAccount implements Account {
     }
 
     @Override
-    public String getAccountName() {
-        return accountName;
+    public String getId() {
+        return id;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void id(String id) {
+        this.id = id;
     }
     
     @Override

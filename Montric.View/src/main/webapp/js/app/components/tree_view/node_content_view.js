@@ -7,7 +7,7 @@ Montric.NodeContentView = Ember.View.extend({
             '{{#unless view.item.hasChildren}} ' +
                 '<span style="margin-right: 7px;">&nbsp;</span>' +
                 '{{view Ember.Checkbox checkedBinding="view.item.isSelected"}}' +
-            '{{/unless}}' +
+    '{{/unless}}' +
         '{{/if}}' +
 
         '{{view Montric.NodeArrowView itemBinding="view.item"}}' +

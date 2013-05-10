@@ -3,6 +3,7 @@ package org.eurekaj.plugins.leveldb.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.dao.AccountDao;
 import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
@@ -21,6 +22,8 @@ import com.google.gson.GsonBuilder;
 import static org.iq80.leveldb.impl.Iq80DBFactory.*;
 
 public class LevelDBAccountDao implements AccountDao {
+	private Logger logger = Logger.getLogger(LevelDBAccountDao.class.getName());
+	
 	private DB db;
 	private static final String accountBucketKey = "account;";
 	private static final String userBucketKey = "user;";
@@ -45,20 +48,20 @@ public class LevelDBAccountDao implements AccountDao {
 	}
 
 	@Override
-	public Account getAccount(String accountName) {
-		String json = asString(db.get(bytes(accountBucketKey + accountName)));
+	public Account getAccount(String id) {
+		String json = asString(db.get(bytes(accountBucketKey + id)));
 		BasicAccount account = gson.fromJson(json, BasicAccount.class);
 		return account;
 	}
 
 	@Override
 	public void persistAccount(Account account) {
-		db.put(bytes(accountBucketKey + account.getAccountName()), bytes(gson.toJson(new BasicAccount(account))));
+		db.put(bytes(accountBucketKey + account.getId()), bytes(gson.toJson(new BasicAccount(account))));
 	}
 
 	@Override
 	public User getUser(String username, String accountName) {
-		String json = asString(db.get(bytes(userBucketKey + username + ";" + accountName)));
+		String json = asString(db.get(bytes(userBucketKey + username.replace("@", "__") + ";" + accountName)));
 		BasicUser user = gson.fromJson(json, BasicUser.class);
 		return user;
 	}
@@ -68,9 +71,12 @@ public class LevelDBAccountDao implements AccountDao {
 		List<User> userList = new ArrayList<>();
 		
 		DBIterator iterator = db.iterator();
-		iterator.seek(bytes(userBucketKey + ";" + username));
+		iterator.seek(bytes(userBucketKey + ";" + username.replace("@", "__")));
 		while (iterator.hasNext() && asString(iterator.peekNext().getKey()).startsWith(userBucketKey)) {
-			userList.add(gson.fromJson(asString(iterator.next().getValue()), BasicUser.class));
+			BasicUser user = gson.fromJson(asString(iterator.next().getValue()), BasicUser.class);
+			if (user.getUserName().equals(username)) {
+				userList.add(user);
+			}
 		}
 		
 		return userList;
@@ -78,7 +84,7 @@ public class LevelDBAccountDao implements AccountDao {
 
 	@Override
 	public void persistUser(User user) {
-		db.put(bytes(userBucketKey + user.getUserName() + ";" + user.getAccountName()), bytes(gson.toJson(new BasicUser(user))));		
+		db.put(bytes(userBucketKey + user.getUserName().replace("@", "__") + ";" + user.getAccountName()), bytes(gson.toJson(new BasicUser(user))));		
 	}
 	
 	@Override

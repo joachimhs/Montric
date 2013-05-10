@@ -1,5 +1,4 @@
 Ember.TEMPLATES['administration'] = Ember.Handlebars.compile('' +
-    '<div><h1>EurkeaJ Administration</h1></div>' +
     '{{view Montric.TabView controllerBinding="this"}}' +
     '{{outlet}}'
 );

@@ -40,7 +40,7 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
         	Account account = getAccountService().getAccount(loggedInUser.getAccountName());
         	
         	if (account != null && newAccessToken != null && newAccessToken.getId() != null && newAccessToken.getId().length() >= 16) {
-        		newAccessToken.setAccountName(account.getAccountName());
+        		newAccessToken.setAccountName(account.getId());
         		logger.info("Persisting AccessToken: " + new Gson().toJson(newAccessToken));
         		getAccountService().persistAccessToken(newAccessToken);
         		if (account.getAccessTokens() == null) {
@@ -65,7 +65,7 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
         	JsonArray accessTokenArray = new JsonArray();
         	for (String accessToken : accessTokens) {
         		AccessToken accessTokenObject = getAccountService().getAccessToken(accessToken);
-        		if (accessTokenObject != null && accessTokenObject.getAccountName().equals(account.getAccountName())) {
+        		if (accessTokenObject != null && accessTokenObject.getAccountName().equals(account.getId())) {
         			accessTokenArray.add(new Gson().toJsonTree(accessTokenObject));
         		}
         	}

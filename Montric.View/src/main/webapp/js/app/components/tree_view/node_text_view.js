@@ -1,5 +1,11 @@
 Montric.NodeTextView = Ember.View.extend({
-    template: Ember.Handlebars.compile('{{view.item.name}}'),
+    template: Ember.Handlebars.compile('' +
+        '{{#if view.item.isAlert}}' +
+            '<i class="icon-bell"></i>' +
+            //'{{view Montric.LiviconView dataName="bell" dataSize="16"}}' +
+        '{{/if}}' +
+        '{{view.item.name}}'
+    ),
     tagName: 'span',
 
     click: function(evt) {

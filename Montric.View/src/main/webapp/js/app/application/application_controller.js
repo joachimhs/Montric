@@ -1,5 +1,5 @@
 Montric.ApplicationController = Ember.Controller.extend({
-    needs: ['charts', 'user'],
+    needs: ['charts', 'user', 'account'],
 
     timezones: null,
     selectedTimezone: null,
@@ -17,6 +17,7 @@ Montric.ApplicationController = Ember.Controller.extend({
 
     init: function() {
         this._super();
+
         console.log('ApplicationController init');
         this.get('controllers.user');
         this.set('showLiveCharts', true);

@@ -58,8 +58,15 @@ import com.google.gson.JsonObject;
  */
 public class UserChannelhandler extends EurekaJGenericChannelHandler {
 	private static final Logger logger = Logger.getLogger(UserChannelhandler.class);
-	//private Hashtable<String, BasicUser> userHash = new Hashtable<>(); 
+	private String rootUser;
 	
+	public String getRootUser() {
+		if (rootUser == null) {
+			rootUser = System.getProperty("montric.rootUser");
+		}
+		
+		return rootUser;
+	}
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         String jsonResponse = "";
@@ -79,8 +86,9 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             	String email = null;
             	Session session = getAccountService().getSession(cookieUuidToken);
             	if (session != null) {
-            		logger.info("logging in via session");
+            		logger.info("logging in via session for: " + session.getEmail());
             		userList = getAccountService().getUsers(session.getEmail());
+            		logger.info("found session for: " + userList.size() + " accounts");
             		expiry = session.getExpiry();
             		email = session.getEmail();
             	} else {
@@ -151,7 +159,7 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             		logger.info("persisted user: " + new Gson().toJson(newUser));
             		
             		BasicAccount newAccount = new BasicAccount();
-            		newAccount.setAccountName(httpUser.getAccountName());
+            		newAccount.setId(httpUser.getAccountName());
             		newAccount.setAccountType("new");
             		
             		getAccountService().persistAccount(newAccount);
@@ -169,7 +177,12 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             	if (cookieSession != null && cookieSession.getEmail() != null) {
             		User sessionUser = getAccountService().getUser(cookieSession.getEmail(), cookieSession.getAccountName());
             		logger.info("sessionUser: " + new Gson().toJson(sessionUser));
-            		if (sessionUser != null) {
+            		if (getRootUser() != null && sessionUser != null && sessionUser.getUserName().equals(getRootUser())) {
+            			BasicUser rootUser = new BasicUser(sessionUser);
+            			rootUser.setUserRole("root");
+            			jsonResponse = "{\"user\": " + new Gson().toJson(rootUser) + "}";
+                		logger.info("Returning user: " + jsonResponse);
+            		} else if (sessionUser != null ) {
             			jsonResponse = "{\"user\": " + new Gson().toJson(sessionUser) + "}";
                 		logger.info("Returning user: " + jsonResponse);
             		} else {
@@ -180,6 +193,8 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             		logger.info("User not Authenticated!");
             		jsonResponse = "{\"error\": \"user_not_authenticated\"}";
             	}
+            } else if (isGet(e) && cookieUuidToken == null) {
+            	jsonResponse = "{\"error\": \"user_not_authenticated\"}";
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

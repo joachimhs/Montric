@@ -19,12 +19,19 @@ Montric.AdministrationRoute = Ember.Route.extend({
         accessTokensSelected: function() {
             console.log('accessTokensSelected');
             this.transitionTo('administration.accessTokens');
+        },
+        accountsSelected: function() {
+            console.log('accountsSelected');
+            this.transitionTo('administration.accounts');
         }
     },
 
     setupController : function(controller) {
         this._super(controller);
-        var content = [];
+        var content = this.get('content');
+        if (!content) {
+            content = [];
+        }
 
         content.pushObject(Montric.TabModel.create({
             tabId : 'alerts',
@@ -61,7 +68,9 @@ Montric.AdministrationRoute = Ember.Route.extend({
             target : "controller",
             action : "accessTokensSelected"
         }));
+
         controller.set('content', content);
+        controller.addRootTabs();
         controller.resetSelectedTab();
 
         var adminMenuController = this.controllerFor('administrationMenu');

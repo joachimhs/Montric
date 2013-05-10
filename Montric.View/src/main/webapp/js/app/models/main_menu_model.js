@@ -14,5 +14,9 @@ Montric.MainMenuModel = DS.Model.extend({
 
     isLeaf: function() {
         return this.get('children').get('length') == 0;
-    }.property('children').cacheable()
+    }.property('children').cacheable(),
+
+    isAlert: function() {
+        return this.get('nodeType') === 'alert';
+    }.property('nodeType')
 });

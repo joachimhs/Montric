@@ -6,7 +6,7 @@ import java.util.List;
 import org.eurekaj.api.datatypes.Account;
 
 public class BasicAccount implements Account {
-	private String accountName;
+	private String id;
     private String accountType;
     private List<String> accessTokens;
 
@@ -15,24 +15,24 @@ public class BasicAccount implements Account {
     }
 
     public BasicAccount(Account account) {
-        this.accountName = account.getAccountName();
+        this.id = account.getId();
         this.accountType = account.getAccountType();
         this.accessTokens = account.getAccessTokens();
     }
 
     public BasicAccount(String accountName, String accountType) {
-        this.accountName = accountName;
+        this.id = accountName;
         this.accountType = accountType;
         accessTokens = new ArrayList<>();
     }
 
     @Override
-    public String getAccountName() {
-        return accountName;
+    public String getId() {
+        return id;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

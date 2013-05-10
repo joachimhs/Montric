@@ -88,13 +88,13 @@ public class AlertValidatorTask {
 	public void evaluateAlerts() {
 		for (Account account : accountService.getAccounts()) {
 			//Get all alerts
-			List<Alert> alertList = treeMenuService.getAlerts(account.getAccountName());
+			List<Alert> alertList = treeMenuService.getAlerts(account.getId());
 			
 			//For Each active alert
 			for (Alert alert : alertList) {
 				if (alert.isActivated()) {
 					AlertStatus oldStatus = alert.getStatus();
-					List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay(), account.getAccountName());
+					List<LiveStatistics> statList = getStatistic(alert.getGuiPath(), alert.getAlertDelay(), account.getId());
 					//Get statistics and evaluate alert condition
 					AlertStatus newStatus = evaluateStatistics(alert, statList);
 					if (oldStatus != newStatus && statList.size() >= 1) {

@@ -10,7 +10,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface Account {
-    public String getAccountName();
+    public String getId();
     public String getAccountType();
     public List<String> getAccessTokens();
 }
