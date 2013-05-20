@@ -72,6 +72,11 @@ public class FileServerHandler extends SimpleChannelUpstreamHandler {
 		return cacheMaxAge;
 	}
     
+    public String getRootPath() {
+		return rootPath;
+	}
+
+    
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         HttpRequest request = (HttpRequest) e.getMessage();

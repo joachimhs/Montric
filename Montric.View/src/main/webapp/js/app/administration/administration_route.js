@@ -23,6 +23,10 @@ Montric.AdministrationRoute = Ember.Route.extend({
         accountsSelected: function() {
             console.log('accountsSelected');
             this.transitionTo('administration.accounts');
+        },
+        alertPluginsSelected: function() {
+            console.log('alertPluginsSelected');
+            this.transitionTo('administration.alertPlugins');
         }
     },
 
@@ -53,6 +57,13 @@ Montric.AdministrationRoute = Ember.Route.extend({
             tabState : 'administration.emailRecipients',
             target : "controller",
             action : "adminEmailRecipientsSelected"
+        }));
+        content.pushObject(Montric.TabModel.create({
+            tabId : 'alertPluginsAdmin',
+            tabName : 'Alert Recipients',
+            tabState : 'administration.alertPlugins',
+            target : "controller",
+            action : "alertPluginsSelected"
         }));
         content.pushObject(Montric.TabModel.create({
             tabId : 'menuAdmin',

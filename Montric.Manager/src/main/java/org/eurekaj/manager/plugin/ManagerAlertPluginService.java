@@ -32,13 +32,13 @@ public class ManagerAlertPluginService {
 		return pluginService;
 	}
 	
-	public void sendAlert(String pluginName, Properties alertProperties, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
+	public void sendAlert(String pluginName, List<String> recipients, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
 		log.debug("Finding an alert plugin to send the alert");
 		
 		for (EurekaJAlertPluginService pluginService : loader) {
 			if (pluginService.getAlertPluginName().equals(pluginName)) {
 				log.debug("Sending alert through plugin: " + pluginService.getAlertPluginName());
-				pluginService.getAlertService().sendAlert(alertProperties, alert, oldStatus, currValue, timeString);
+				pluginService.getAlertService().sendAlert(recipients, alert, oldStatus, currValue, timeString);
 			}
 		}
 	}
@@ -50,9 +50,8 @@ public class ManagerAlertPluginService {
 		
 		for (EurekaJAlertPluginService pluginService : loader) {			
 			log.debug("Loaded Plugin: " + pluginService.getAlertPluginName());
-			if (!pluginService.getAlertPluginName().equals("alertEmailPlugin")) {
-				pluginList.add(pluginService.getAlertPluginName());
-			}
+			pluginService.getAlertService().configure();
+			pluginList.add(pluginService.getAlertPluginName());
 		} 
 		
 		return pluginList;

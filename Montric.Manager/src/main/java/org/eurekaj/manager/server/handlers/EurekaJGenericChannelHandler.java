@@ -5,6 +5,14 @@ import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -24,6 +32,8 @@ import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
+import org.jboss.netty.handler.codec.http.HttpResponseStatus;
+import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 import org.jboss.netty.util.CharsetUtil;
 
 public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
@@ -156,9 +166,9 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 		return requestContent;
 	}
     
-    public void writeContentsToBuffer(ChannelHandlerContext ctx, String responseText) {
+    public void writeContentsToBuffer(ChannelHandlerContext ctx, String responseText, String contentType) {
 		HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
-        response.setHeader(CONTENT_TYPE, "text/json; charset=UTF-8");
+        response.setHeader(CONTENT_TYPE, contentType + "; charset=UTF-8");
         response.setContent(ChannelBuffers.copiedBuffer(responseText + "\r\n", CharsetUtil.UTF_8));
         
         // Close the connection as soon as the error message is sent.
@@ -168,5 +178,78 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
     public void write401ToBuffer(ChannelHandlerContext ctx) {
     	HttpResponse response = new DefaultHttpResponse(HTTP_1_1, NOT_FOUND);
     	ctx.getChannel().write(response).addListener(ChannelFutureListener.CLOSE);
+    }
+    
+    protected void sendError(ChannelHandlerContext ctx, HttpResponseStatus status) {
+        HttpResponse response = new DefaultHttpResponse(HTTP_1_1, status);
+        response.setHeader(CONTENT_TYPE, "text/plain; charset=UTF-8");
+        response.setContent(ChannelBuffers.copiedBuffer(
+                "Failure: " + status.toString() + "\r\n",
+                CharsetUtil.UTF_8));
+
+        // Close the connection as soon as the error message is sent.
+        ctx.getChannel().write(response).addListener(ChannelFutureListener.CLOSE);
+    }
+    
+    protected ChannelBuffer getFileContent(String rootPath, String path) {
+        InputStream is;
+        try {
+            is = new FileInputStream(rootPath + path);
+
+            if (is == null) {
+                return null;
+            }
+            
+            final int maxSize = 512 * 1024;
+            ByteArrayOutputStream out = new ByteArrayOutputStream(maxSize);
+            byte[] bytes = new byte[maxSize];
+
+            while (true) {
+                int r = is.read(bytes);
+                if (r == -1) break;
+
+                out.write(bytes, 0, r);
+            }
+
+            ChannelBuffer cb = ChannelBuffers.copiedBuffer(out.toByteArray());
+            out.close();
+            is.close();
+            return cb;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    protected String sanitizeUri(String uri) throws URISyntaxException {
+        // Decode the path.
+        try {
+            uri = URLDecoder.decode(uri, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            try {
+                uri = URLDecoder.decode(uri, "ISO-8859-1");
+            } catch (UnsupportedEncodingException e1) {
+                throw new Error();
+            }
+        }
+
+        // Convert file separators.
+        uri = uri.replace(File.separatorChar, '/');
+
+        // Simplistic dumb security check.
+        // You will have to do something serious in the production environment.
+        if (uri.contains(File.separator + ".") ||
+            uri.contains("." + File.separator) ||
+            uri.startsWith(".") || uri.endsWith(".")) {
+            return null;
+        }
+
+        QueryStringDecoder decoder = new QueryStringDecoder(uri);
+        uri = decoder.getPath();
+
+        if (uri.endsWith("/")) {
+            uri += "index.html";
+        }
+
+        return uri;
     }
 }

@@ -18,20 +18,7 @@ public class AlertEmailRecipientGroup implements EmailRecipientGroup {
 	private Integer port = 25;
 	private List<String> emailRecipientList = new ArrayList<String>();
 	
-	public AlertEmailRecipientGroup(Properties emailProperties) {
-		this.emailRecipientGroupName = emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.emailGroupName");
-        this.smtpServerhost = emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.host");
-        this.smtpUsername = emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.username");
-        this.smtpPassword = emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.password");
-        this.useSSL = new Boolean(emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.useSSL"));
-        this.port = Integer.parseInt(emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.port"));
-
-        String emailRecipientListString = emailProperties.getProperty("org.eurekaj.plugin.alert.emailAlertPlugin.recipientList");
-        String[] emails = emailRecipientListString.split(",");
-        this.emailRecipientList = new ArrayList<String>();
-        for (String email : emails) {
-        	emailRecipientList.add(email);
-        }
+	public AlertEmailRecipientGroup() {
 	}
 
 	@Override

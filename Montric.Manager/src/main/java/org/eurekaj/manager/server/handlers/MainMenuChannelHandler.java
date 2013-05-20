@@ -99,7 +99,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
         if (jsonResponse.length() <= 2) {
             jsonResponse = "{}";
         }
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
 	}
 	
 	

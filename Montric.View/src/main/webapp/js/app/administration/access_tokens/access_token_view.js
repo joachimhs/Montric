@@ -8,7 +8,7 @@ Ember.TEMPLATES['administration/accessTokens'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['adminAccessTokensLeftMenu'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
-        '{{view Ember.TextField valueBinding="newAccessTokenName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '{{view Ember.TextField valueBinding="newAccessTokenName" classNames="input-medium mediumTopPadding"}}' +
         '<button class="btn" {{action createNewAccessToken}}>Add</button>' +
         '{{view Montric.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +

@@ -91,6 +91,6 @@ public class EmailChannelHandler extends EurekaJGenericChannelHandler {
         }
 
         log.info("returning email group: " + jsonResponse);
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
     }
 }

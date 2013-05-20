@@ -83,6 +83,6 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
         }
 
         log.info("Returning JSON from chartGroupHandler: '" + jsonResponse + "'");
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
 	}
 }

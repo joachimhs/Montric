@@ -93,7 +93,7 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
         }
 
         if (!errorRaised) {
-        	writeContentsToBuffer(ctx, jsonResponse);
+        	writeContentsToBuffer(ctx, jsonResponse, "text/json");
         }
     }
 

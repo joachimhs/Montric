@@ -9,7 +9,7 @@ Ember.TEMPLATES['administration/alerts'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
-        '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '{{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium mediumTopPadding"}}' +
         '<button class="btn" {{action createNewChartGroup}}>Add</button>' +
         '{{view Montric.SelectableListView labelPropertyName="id" listItemsBinding="controller.content" deleteAction="deleteSelectedChartGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
@@ -44,7 +44,7 @@ Ember.TEMPLATES['administration/chartGroups'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['administration/emailRecipients'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
-        '{{view Ember.TextField valueBinding="newEmailGroupName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '{{view Ember.TextField valueBinding="newEmailGroupName" classNames="input-medium mediumTopPadding"}}' +
         '<button class="btn" {{action createNewEmailGroup}}>Add</button>' +
         '{{view Montric.SelectableListView listItemsBinding="controller.content" deleteAction="deleteSelectedEmailGroup" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +
@@ -108,7 +108,7 @@ Ember.TEMPLATES['administration/menuAdmin'] = Ember.Handlebars.compile('' +
 
 Ember.TEMPLATES['adminAlertLeftMenu'] = Ember.Handlebars.compile('' +
     '<div id="adminTabLeftMenu">' +
-        '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium search-query mediumTopPadding"}}' +
+        '{{view Ember.TextField valueBinding="newAlertName" classNames="input-medium mediumTopPadding"}}' +
             '<button class="btn" {{action createNewAlert}}>Add</button>' +
         '{{view Montric.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}' +
     '</div>' +

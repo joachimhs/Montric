@@ -247,6 +247,6 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
             throw new IOException("Unable to process JSON Request", jsonException);
         }
 
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
     }
 }

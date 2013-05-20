@@ -201,7 +201,7 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
         }
 
         logger.info("jsonResponse: " + jsonResponse);
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
     }
 	
 	private BasicUser getUnregisteredUserWith(String username) {

@@ -1,5 +1,5 @@
 Ember.TEMPLATES['administration/accounts'] = Ember.Handlebars.compile('' +
-    '{{controller}} - <table class="table table-striped table-hover">' +
+    '<table class="table table-striped table-hover">' +
     '<thead><tr style="font-weight: 600;"><td>Account Name</td><td>Account Type</td><td>Action</td></tr></thead>' +
     '<tbody>' +
     '{{#each controller}}' +

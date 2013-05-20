@@ -100,7 +100,7 @@ public class InstrumentationTableChannelHandler extends ChartChannelHandler {
                 jsonResponse = jsonResponseObj.toString();
             }
 
-            writeContentsToBuffer(ctx, jsonResponse);
+            writeContentsToBuffer(ctx, jsonResponse, "text/json");
 
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

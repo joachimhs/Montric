@@ -26,6 +26,9 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
 	
 	@Override
 	public ChannelPipeline getPipeline() throws Exception {
+		String webappDir = System.getProperty("basedir");
+		Integer cacheSeconds = IntegerParser.parseIntegerFromString(System.getProperty("org.eurekaj.indexCacheSeconds"), 0);
+		
 		ChannelPipeline pipeline = Channels.pipeline();
         pipeline.addLast("decoder", new HttpRequestDecoder());
         pipeline.addLast("aggregator", new HttpChunkAggregator(1048576));
@@ -46,8 +49,10 @@ public class EurekaJNettyPipeline implements ChannelPipelineFactory {
             routes.put("equals:/liveStatistics", new LiveStatisticsChannelHandler());
             routes.put("startsWith:/user", new UserChannelhandler());
             routes.put("startsWith:/account", new AccountHandler());
-
-            String webappDir = System.getProperty("basedir");
+            routes.put("startsWith:/alert_plugins", new AlertPluginsHandler());
+            routes.put("startsWith:/cachedScript", new CachedScriptHandler(webappDir));
+            routes.put("equals:/", new CachedIndexHandler(webappDir, cacheSeconds));
+            routes.put("equals:/index.html", new CachedIndexHandler(webappDir, cacheSeconds));
              
     		routerHandler = new RouterHandler(routes, false, 
     			new CacheableFileServerHandler(

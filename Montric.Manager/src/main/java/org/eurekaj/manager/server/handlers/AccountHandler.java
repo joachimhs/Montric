@@ -79,6 +79,6 @@ public class AccountHandler  extends EurekaJGenericChannelHandler {
         }
 
         logger.info("jsonResponse: " + jsonResponse);
-        writeContentsToBuffer(ctx, jsonResponse);
+        writeContentsToBuffer(ctx, jsonResponse, "text/json");
     }
 }
