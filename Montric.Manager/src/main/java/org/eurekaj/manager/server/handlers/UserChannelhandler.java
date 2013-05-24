@@ -80,11 +80,15 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
             if (isPost(e) && uri != null && uri.endsWith("/auth/login")) {
-            	logger.info("isPost /auth/login");
+            	logger.info("isPost /auth/login cookie: " + cookieUuidToken);
             	String messageContent = getHttpMessageContent(e);
             	Long expiry = null;
             	String email = null;
-            	Session session = getAccountService().getSession(cookieUuidToken);
+            	Session session = null;
+            	if (cookieUuidToken != null) {
+            		session = getAccountService().getSession(cookieUuidToken);
+            	}
+            	
             	if (session != null) {
             		logger.info("logging in via session for: " + session.getEmail());
             		userList = getAccountService().getUsers(session.getEmail());
@@ -98,8 +102,11 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
                 	MozillaPersonaCredentials credentials = new Gson().fromJson(responseContent, MozillaPersonaCredentials.class);
                 	expiry = credentials.getExpires();
             		email = credentials.getEmail();
-                	userList = getAccountService().getUsers(credentials.getEmail());
+            		logger.info("credentials email: " + email);
+                	userList = getAccountService().getUsers(email);
             	}
+            	
+            	logger.info("userList: " + userList.size());
             	
             	if (userList.isEmpty()) {
             		//No user, request registration
@@ -138,8 +145,12 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
             	}
             	
             } else if (isPost(e) && uri.endsWith("/auth/register") && cookieUuidToken != null) {
-            	logger.info("isPost /auth/register");
-            	Session session = getAccountService().getSession(cookieUuidToken);
+            	logger.info("isPost /auth/register. Cookie: " + cookieUuidToken);
+            	Session session = null;
+            	if (cookieUuidToken != null) {
+            		session = getAccountService().getSession(cookieUuidToken);
+            	}
+            	
             	if (session != null) {
             		BasicSession updatedSession = new BasicSession(session);
             		BasicUser httpUser = ParseJsonObjects.parseUser(jsonObject);

@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.plugin;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
@@ -31,6 +32,7 @@ import java.util.ServiceLoader;
  * To change this template use File | Settings | File Templates.
  */
 public class ManagerDbPluginService {
+	private static Logger logger = Logger.getLogger(ManagerDbPluginService.class.getName()); 
     private static ManagerDbPluginService pluginService = null;
     private ServiceLoader<EurekaJDBPluginService> loader;
 
@@ -38,16 +40,20 @@ public class ManagerDbPluginService {
         ClassPathUtil.addPluginDirectory();
         loader = ServiceLoader.load(EurekaJDBPluginService.class);
         for (EurekaJDBPluginService pluginService : loader) {
+        	logger.info("Calling setup for plugin: " + pluginService.getPluginName());
             pluginService.setup();
             pluginService.setApplicationServices(EurekaJManagerApplicationServices.getInstance());
         }
     }
 
     public static synchronized ManagerDbPluginService getInstance() {
+    	logger.info("Finding ManagerDbPluginService");
         if (pluginService == null) {
+        	logger.info("Creating new Plugin Service");
             pluginService = new ManagerDbPluginService();
         }
 
+        logger.info("Returning pluginService: " + pluginService);
         return pluginService;
     }
 

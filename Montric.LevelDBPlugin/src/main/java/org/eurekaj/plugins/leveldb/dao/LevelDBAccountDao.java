@@ -68,17 +68,20 @@ public class LevelDBAccountDao implements AccountDao {
 	
 	@Override
 	public List<User> getUsers(String username) {
+		logger.info("LevelDB: Getting Users with username: " + username);
 		List<User> userList = new ArrayList<>();
 		
 		DBIterator iterator = db.iterator();
 		iterator.seek(bytes(userBucketKey + ";" + username.replace("@", "__")));
 		while (iterator.hasNext() && asString(iterator.peekNext().getKey()).startsWith(userBucketKey)) {
 			BasicUser user = gson.fromJson(asString(iterator.next().getValue()), BasicUser.class);
+			logger.info("Got User: " + user.getUserName() + " with role: " + user.getUserRole());
 			if (user.getUserName().equals(username)) {
 				userList.add(user);
 			}
 		}
 		
+		logger.info("found: " + userList.size() + " users");
 		return userList;
 	}
 

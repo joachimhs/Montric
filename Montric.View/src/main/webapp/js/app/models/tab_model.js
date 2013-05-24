@@ -7,5 +7,5 @@ Montric.TabModel = Ember.Object.extend({
 
     hasView: function() {
         return this.get('tabView') != null;
-    }.property('tabView').cacheable(),
+    }.property('tabView')
 });

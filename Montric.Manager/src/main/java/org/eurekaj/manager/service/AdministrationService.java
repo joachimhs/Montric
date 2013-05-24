@@ -20,18 +20,19 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
+import org.eurekaj.api.datatypes.AlertRecipient;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 
 public interface AdministrationService {
 
-	public List<EmailRecipientGroup> getEmailRecipientGroups(String accountName);
+public List<AlertRecipient> getAlertRecipients(String accountName);
 	
-	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName);
+	public AlertRecipient getAlertRecipient(String accountName, String alertRecipientName);
+
+	public void persistAlertRecipient(AlertRecipient alertRecipient);
 	
-	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
-	
-	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup);
-	
-	public void deleteEmailRecipientGroup(String emailRecipientGroupName, String accountName);
+	public void deleteAlertRecipient(AlertRecipient alertRecipient);
+
+	public void deleteAlertRecipient(String accountName, String id);
 	
 }

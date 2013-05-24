@@ -20,6 +20,7 @@ package org.eurekaj.manager.service;
 
 import java.util.List;
 
+import org.eurekaj.api.datatypes.AlertRecipient;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.manager.util.DatabasePluginUtil;
@@ -40,23 +41,29 @@ public class AdministrationServiceImpl implements AdministrationService {
         return dbPlugin;
     }
 
-	public List<EmailRecipientGroup> getEmailRecipientGroups(String accountName) {
-		return getDbPlugin().getSmtpDao().getEmailRecipientGroups(accountName);
+	@Override
+	public List<AlertRecipient> getAlertRecipients(String accountName) {
+		return getDbPlugin().getAlertRecipientDao().getAlertRecipients(accountName);
 	}
 
-	public EmailRecipientGroup getEmailRecipientGroup(String groupName, String accountName) {
-		return getDbPlugin().getSmtpDao().getEmailRecipientGroup(groupName, accountName);
+	@Override
+	public AlertRecipient getAlertRecipient(String accountName, String alertRecipientName) {
+		return getDbPlugin().getAlertRecipientDao().getAlertRecipient(accountName, alertRecipientName);
 	}
 
-	public void persistEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
-		getDbPlugin().getSmtpDao().persistEmailRecipientGroup(emailRecipientGroup);
-	}
-
-	public void deleteEmailRecipientGroup(EmailRecipientGroup emailRecipientGroup) {
-		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroup);
+	@Override
+	public void persistAlertRecipient(AlertRecipient alertRecipient) {
+		getDbPlugin().getAlertRecipientDao().persistAlertRecipient(alertRecipient);		
 	}
 	
-	public void deleteEmailRecipientGroup(String emailRecipientGroupName, String accountName) {
-		getDbPlugin().getSmtpDao().deleteEmailRecipientGroup(emailRecipientGroupName, accountName);
+	@Override
+	public void deleteAlertRecipient(AlertRecipient alertRecipient) {
+		getDbPlugin().getAlertRecipientDao().deleteAlertRecipient(alertRecipient);
 	}
+	
+	@Override
+	public void deleteAlertRecipient(String accountName, String id) {
+		getDbPlugin().getAlertRecipientDao().deleteAlertRecipient(accountName, id);
+	}
+    
 }

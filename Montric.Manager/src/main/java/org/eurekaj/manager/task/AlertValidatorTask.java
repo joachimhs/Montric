@@ -117,7 +117,7 @@ public class AlertValidatorTask {
 	                    treeMenuService.persistTriggeredAlert(managerTriggeredAlert);
 
 						Calendar cal = Calendar.getInstance();
-						for (String emailGroup : alert.getSelectedEmailSenderList()) {
+						/*for (String emailGroup : alert.getSelectedEmailSenderList()) {
 							EmailRecipientGroup emailRecipientGroup = administrationService.getEmailRecipientGroup(emailGroup, alert.getAccountName());
 							if (emailRecipientGroup != null) {
 								log.debug("\t\tAlert: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking email plugin.");
@@ -133,7 +133,7 @@ public class AlertValidatorTask {
 								}
 								//ManagerAlertPluginService.getInstance().sendAlert("alertEmailPlugin", alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
 							}
-						}
+						}*/
 						
 						/*for (String pluginName : alert.getSelectedAlertPluginList()) {
 							log.debug("\t\tAlert through plugin: " + alert.getGuiPath() + " changed to status: " + alert.getStatus().getStatusName() + ". Invoking alert plugin.");

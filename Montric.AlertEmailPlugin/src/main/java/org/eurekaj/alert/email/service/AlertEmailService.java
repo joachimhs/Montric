@@ -50,7 +50,7 @@ public class AlertEmailService implements AlertService {
         this.smtpUsername = System.getProperty("montric.plugin.alert.emailAlertPlugin.username");
         this.smtpPassword = System.getProperty("montric.plugin.alert.emailAlertPlugin.password");
         this.useSSL = new Boolean(System.getProperty("montric.plugin.alert.emailAlertPlugin.useSSL"));
-        this.port = Integer.parseInt(System.getProperty("montric.plugin.alert.emailAlertPlugin.port"), -1);
+        this.port = Integer.parseInt(System.getProperty("montric.plugin.alert.emailAlertPlugin.port", "-1"));
 
         if (smtpServerhost != null && smtpPassword != null && smtpUsername != null && port != -1) {
         	configured = true;

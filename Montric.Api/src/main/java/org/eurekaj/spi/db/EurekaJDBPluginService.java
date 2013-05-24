@@ -34,7 +34,7 @@ public abstract class EurekaJDBPluginService {
 
     public abstract LiveStatisticsDao getLiveStatissticsDao();
 
-    public abstract SmtpDao getSmtpDao();
+    public abstract AlertRecipientDao getAlertRecipientDao();
 
     public abstract TreeMenuDao getTreeMenuDao();
 

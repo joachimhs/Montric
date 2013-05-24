@@ -24,7 +24,7 @@ Montric.SelectableListItemView = Ember.View.extend({
     }.property('item.id'),
 
     isSelected: function() {
-        return this.get('selectedItem.id') === this.get('item').get('id');
+        return this.get('selectedItem.id') === this.get('item.id');
     }.property('selectedItem'),
 
     click: function() {

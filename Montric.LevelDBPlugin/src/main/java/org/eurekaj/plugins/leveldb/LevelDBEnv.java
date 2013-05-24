@@ -7,15 +7,15 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.dao.AccountDao;
 import org.eurekaj.api.dao.AlertDao;
+import org.eurekaj.api.dao.AlertRecipientDao;
 import org.eurekaj.api.dao.GroupedStatisticsDao;
 import org.eurekaj.api.dao.LiveStatisticsDao;
-import org.eurekaj.api.dao.SmtpDao;
 import org.eurekaj.api.dao.TreeMenuDao;
 import org.eurekaj.api.datatypes.basic.BasicMetricHour;
 import org.eurekaj.plugins.leveldb.dao.LevelDBAccountDao;
 import org.eurekaj.plugins.leveldb.dao.LevelDBAlertDao;
+import org.eurekaj.plugins.leveldb.dao.LevelDBAlertRecipientDao;
 import org.eurekaj.plugins.leveldb.dao.LevelDBGroupedStatisticsDao;
-import org.eurekaj.plugins.leveldb.dao.LevelDBEmailRecipientGroupDao;
 import org.eurekaj.plugins.leveldb.dao.LevelDBLiveStatisticsDao;
 import org.eurekaj.plugins.leveldb.dao.LevelDBTreeMenuDao;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
@@ -33,10 +33,10 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 	
 	private LevelDBAccountDao accountDao;
 	private LevelDBAlertDao alertDao;
-	private LevelDBEmailRecipientGroupDao emailRecipientDao;
 	private LevelDBGroupedStatisticsDao groupedStatisticsDao;
 	private LevelDBLiveStatisticsDao liveStatisticsDao;
 	private LevelDBTreeMenuDao treeMenuDao;
+	private LevelDBAlertRecipientDao alertRecipientDao;
 	
 	private Cache<String, BasicMetricHour> metricHourCache;
 	
@@ -47,6 +47,7 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 
 	@Override
 	public void setup() {
+		logger.info("LevelDBPlugin Setup!");
 		String dbPath = System.getProperty("montric.db.absPath");
 		if (dbPath == null) {
 			throw new RuntimeException("Property montric.db.absPath is NULL.Please configure in config.properties");
@@ -54,13 +55,16 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 		
 		Options options = new Options();
 		options.createIfMissing(true);
+		logger.info("Creating LevelDB Factory");
 		try {
 			db = Iq80DBFactory.factory.open(new File(dbPath), options);
 		} catch (IOException e) {
+			logger.info("Unable to open LeveLDB Factory: " + e.getMessage());
 			e.printStackTrace();
 			throw new RuntimeException("Unable to initialize LevelDB at path: " + dbPath, e);
 		}
 		
+		logger.info("Creating DAOs");
 		metricHourCache = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000000l)
@@ -69,10 +73,11 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 		
 		accountDao = new LevelDBAccountDao(db);
 		alertDao = new LevelDBAlertDao(db);
-		emailRecipientDao = new LevelDBEmailRecipientGroupDao(db);
+		alertRecipientDao = new LevelDBAlertRecipientDao(db);
 		groupedStatisticsDao = new LevelDBGroupedStatisticsDao(db);
 		liveStatisticsDao = new LevelDBLiveStatisticsDao(db, metricHourCache);
 		treeMenuDao = new LevelDBTreeMenuDao(db);
+		logger.info("LevelDBPlugin setup complete");
 	}
 
 	@Override
@@ -101,8 +106,8 @@ public class LevelDBEnv extends EurekaJDBPluginService {
 	}
 
 	@Override
-	public SmtpDao getSmtpDao() {
-		return emailRecipientDao;
+	public AlertRecipientDao getAlertRecipientDao() {
+		return alertRecipientDao;
 	}
 
 	@Override

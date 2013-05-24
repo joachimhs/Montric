@@ -1,36 +1,46 @@
 package org.eurekaj.manager.server.handlers;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.eurekaj.api.datatypes.Account;
-import org.eurekaj.api.datatypes.Session;
+import org.eurekaj.api.datatypes.User;
+import org.eurekaj.manager.plugin.ManagerAlertPluginService;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 
-import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
-public class AlertPluginsHandler extends EurekaJGenericChannelHandler {
+public class AlertPluginsHandler  extends EurekaJGenericChannelHandler {
 	private Logger logger = Logger.getLogger(AlertPluginsHandler.class.getName());
 
 	@Override
-    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
+	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		String jsonResponse = "";
-        String uri = getUri(e);
-        String cookieUuidToken = getCookieValue(e, "uuidToken");
-        logger.info("cookieUuidToken: " + cookieUuidToken);
-        Session session = getAccountService().getSession(cookieUuidToken);
-        String id = getUrlId(e, "account");
-        String messageContent = getHttpMessageContent(e);
-        
-        logger.info(messageContent);
-        
-    if(isGet(e) && session != null) { //Get account for current user
-    	logger.info("Getting alert plugins for: " + session.getAccountName());
-    	
-    	
-    	jsonResponse = "{\"alert_plugins\": [] }";
-    }
-        logger.info("jsonResponse: " + jsonResponse);
-        writeContentsToBuffer(ctx, jsonResponse, "text/json");
+		String cookieUuidToken = getCookieValue(e, "uuidToken");
+		logger.info("cookieUuidToken: " + cookieUuidToken);
+		User loggedInUser = getLoggedInUser(cookieUuidToken);
+		String messageContent = getHttpMessageContent(e);
+
+		logger.info(messageContent);
+
+		if (isGet(e) && isAdmin(loggedInUser)) { // Get account for current user
+			List<String> alertPluginList = ManagerAlertPluginService.getInstance().getLoadedAlertPlugins();
+
+			JsonObject alertPlugins = new JsonObject();
+			JsonArray alertArray = new JsonArray();
+			for (String alertPlugin : alertPluginList) {
+				JsonObject pluginObject = new JsonObject();
+				pluginObject.addProperty("id", alertPlugin);
+				alertArray.add(pluginObject);
+			}
+
+			alertPlugins.add("alert_plugins", alertArray);
+			jsonResponse = alertPlugins.toString();
+		}
+		
+		logger.info("jsonResponse: " + jsonResponse);
+		writeContentsToBuffer(ctx, jsonResponse, "text/json");
 	}
 }

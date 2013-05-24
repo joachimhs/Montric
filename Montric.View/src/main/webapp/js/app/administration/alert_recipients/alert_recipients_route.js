@@ -1,6 +1,6 @@
-Montric.AdministrationAlertPluginsRoute = Ember.Route.extend({
+Montric.AdministrationAlertRecipientsRoute = Ember.Route.extend({
     model: function() {
-        return Montric.AlertPlugin.findAll();
+        return Montric.AlertRecipient.findAll();
     },
 
     setupController: function(controller, models) {

@@ -15,7 +15,7 @@ Montric.Router.map(function() {
             this.route('menuAdmin');
             this.route('accessTokens');
             this.route('accounts');
-            this.route('alertPlugins');
+            this.route('alertRecipients');
         });
     });
 });

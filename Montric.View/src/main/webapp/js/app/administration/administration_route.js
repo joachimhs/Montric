@@ -26,7 +26,7 @@ Montric.AdministrationRoute = Ember.Route.extend({
         },
         alertPluginsSelected: function() {
             console.log('alertPluginsSelected');
-            this.transitionTo('administration.alertPlugins');
+            this.transitionTo('administration.alertRecipients');
         }
     },
 

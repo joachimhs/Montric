@@ -18,8 +18,8 @@ public class ScriptCache {
 		scriptContent = "";
 		for (ScriptFile sf : scriptList) {
 			minifiedScriptContent += "//" + sf.getFileSrc() + "\r\n";
-			minifiedScriptContent += sf.getFileMinifiedContents() + "\r\n\r\n\r\n";
-			scriptContent += sf.getFileContents() + "\r\n\r\n\r\n";
+			minifiedScriptContent += sf.getFileContents() + "\r\n\r\n";
+			scriptContent += sf.getFileContents() + "\r\n\r\n";
 		}
 		
 		this.expires = expires;

@@ -1,5 +1,6 @@
 package org.eurekaj.manager.service;
 
+import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
 import org.eurekaj.api.datatypes.Session;
@@ -18,12 +19,18 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class ManagerAccountService implements AccountService {
+	private static Logger logger = Logger.getLogger(ManagerAccountService.class.getName());
+	
     EurekaJDBPluginService dbPlugin = null;
 
     private EurekaJDBPluginService getDbPlugin() {
+    	logger.info("Getting dbPlugin: " + dbPlugin);
         if (dbPlugin == null) {
+        	logger.info("Finding plugin with name: " + DatabasePluginUtil.getDatabasePluginName());
             dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
         }
+        
+        logger.info("returning plugin: " + dbPlugin);
 
         return dbPlugin;
     }
@@ -49,6 +56,7 @@ public class ManagerAccountService implements AccountService {
     
     @Override
     public List<User> getUsers(String username) {
+    	logger.info("Getting users with username: " + username);
     	return getDbPlugin().getAccountDao().getUsers(username);
     }
 
