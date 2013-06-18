@@ -19,12 +19,14 @@
 package org.eurekaj.manager.task;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.dao.AlertEvaluationQueueDao;
 import org.eurekaj.api.datatypes.Account;
 import org.eurekaj.api.datatypes.Alert;
 import org.eurekaj.api.datatypes.EmailRecipientGroup;
@@ -35,21 +37,26 @@ import org.eurekaj.api.util.ListToString;
 import org.eurekaj.manager.datatypes.ManagerAlert;
 import org.eurekaj.manager.datatypes.ManagerTriggeredAlert;
 import org.eurekaj.manager.plugin.ManagerAlertPluginService;
+import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.manager.service.AccountService;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
+import org.eurekaj.manager.util.DatabasePluginUtil;
 import org.eurekaj.manager.util.PropertyUtil;
+import org.eurekaj.spi.db.EurekaJDBPluginService;
 
-public class AlertValidatorTask {
-	private static final Logger log = Logger.getLogger(AlertValidatorTask.class);
+public class GenerateNewAlertEvaluationQueue implements Runnable {
+	private static final Logger log = Logger.getLogger(GenerateNewAlertEvaluationQueue.class);
 	private TreeMenuService treeMenuService;
 	private AdministrationService administrationService;
 	private AccountService accountService;
 	private ThreadPoolExecutor sendEmailExecutor;
 	private SimpleDateFormat dateFormat;
+	private EurekaJDBPluginService dbPlugin;
 	
-	public AlertValidatorTask() {
+	public GenerateNewAlertEvaluationQueue() {
 		dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS");
+		dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
 	}
 	
 	public TreeMenuService getTreeMenuService() {
@@ -85,7 +92,25 @@ public class AlertValidatorTask {
 		this.administrationService = administrationService;
 	}
 	
-	public void evaluateAlerts() {
+	public void run() {
+		log.info("Running GenerateNewAlertEvaluationQueue");
+		AlertEvaluationQueueDao alertEvaluationQueueDao = dbPlugin.getAlertEvaluationQueueDao();
+		
+		long evaluationThreshold = System.currentTimeMillis() - 15000;
+		
+		List<Account> accountListForEvaluation = new ArrayList<>();
+		for (Account account : dbPlugin.getAccountDao().getAccounts()) {
+			log.info("Testing to see if account " + account.getId() + " needs to be evaluated");
+			if (account.getLastEvaluatedForAlerts() == null || account.getLastEvaluatedForAlerts() < evaluationThreshold) {
+				log.info("Adding " + account.getId() + " to new queue");
+				accountListForEvaluation.add(account);
+			}
+		}		
+		
+		alertEvaluationQueueDao.addAccountsToNewQueue(accountListForEvaluation);
+	}
+	
+	/*
 		for (Account account : accountService.getAccounts()) {
 			//Get all alerts
 			List<Alert> alertList = treeMenuService.getAlerts(account.getId());
@@ -146,7 +171,7 @@ public class AlertValidatorTask {
 							
 							
 							ManagerAlertPluginService.getInstance().sendAlert(pluginName, alertProperties, newAlert, oldStatus, currvalue, dateFormat.format(cal.getTime()));
-						}*/
+						}
 
 					} else {
 						log.debug("\t\tAlert: " + alert.getGuiPath() + " Remains at status: " + alert.getStatus().getStatusName());
@@ -154,60 +179,8 @@ public class AlertValidatorTask {
 				}
 			}	
 		}
-	}
+	}*/
 	
-	public AlertStatus evaluateStatistics(Alert alert, List<LiveStatistics> statList) {
-		if (statList == null || statList.size() == 0) {
-			//Statistics is Idle == Not Reporting data to Manager
-			return AlertStatus.IDLE;
-		} else if (thresholdBreached(statList, alert.getErrorValue(), alert.getSelectedAlertType())) {
-			//Critical Threshold Breached
-			return AlertStatus.CRITICAL;
-		} else if (thresholdBreached(statList, alert.getWarningValue(), alert.getSelectedAlertType())) {
-			//Warning Threshold Breached
-			return AlertStatus.WARNING;
-		} else { 
-			//OK
-			return AlertStatus.NORMAL;
-		}
-	}
 	
-	public boolean thresholdBreached(List<LiveStatistics> statList, double threshold, AlertType alertType) {
-        boolean thresholdBreached = true;
-		for (LiveStatistics stat : statList) {
-			Double statThreshold = null;
-			Double value = stat.getValue();
-            if (value != null) {
-                statThreshold = value.doubleValue();
-            }
-
-			
-			if (alertType == AlertType.GREATER_THAN && statThreshold != null && statThreshold  <= threshold) {
-				thresholdBreached = false;
-				break;
-			} else if (alertType == AlertType.EQUALS && statThreshold != null && statThreshold == threshold) {
-				thresholdBreached = false;
-				break;
-			} else if (alertType == AlertType.LESS_THAN && statThreshold != null && statThreshold > threshold) {
-				thresholdBreached = false;
-				break;
-			}
-		}
-		
-		return thresholdBreached;
-	}
-	
-	public List<LiveStatistics> getStatistic(String guiPath, long timeperiods, String accountName) {
-		if (timeperiods <= 0) {
-			timeperiods = 1;
-		}
-		
-		Long millisNow = Calendar.getInstance().getTimeInMillis();
-		millisNow = (millisNow / 15000) -1;
-		Long millisThen = millisNow - timeperiods;
-		log.debug("Getting stats from: " + millisThen + " to: " + millisNow);
-		
-		return treeMenuService.getLiveStatistics(guiPath, accountName, millisThen, millisNow);
-	}
 
 }

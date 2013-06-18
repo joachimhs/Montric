@@ -40,6 +40,8 @@ public abstract class EurekaJDBPluginService {
 
     public abstract AccountDao getAccountDao();
     
+    public abstract AlertEvaluationQueueDao getAlertEvaluationQueueDao();
+    
     public void setApplicationServices(EurekaJApplicationServices applicationServices) {
     	//Each plugin must choose to implement this method in order to gain access to the EurekaJ Application Services 
     	return;

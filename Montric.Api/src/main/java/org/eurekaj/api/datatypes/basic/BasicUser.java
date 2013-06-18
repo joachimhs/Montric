@@ -6,8 +6,8 @@ public class BasicUser implements User {
 	private String userName;
 	private String accountName;
 	private String userRole;
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	private String company;
 	private String country;
 	private String usage;
@@ -31,14 +31,14 @@ public class BasicUser implements User {
 	}
 	
 	public BasicUser(String userName, String accountName, String userRole,
-			String firstName, String lastName, String company, String country,
+			String firstname, String lastname, String company, String country,
 			String usage, String id) {
 		super();
 		this.userName = userName;
 		this.accountName = accountName;
 		this.userRole = userRole;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.company = company;
 		this.country = country;
 		this.usage = usage;
@@ -101,20 +101,20 @@ public class BasicUser implements User {
 	
 	@Override
 	public String getFirstname() {
-		return firstName;
+		return firstname;
 	}
 	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 	
 	@Override
 	public String getLastname() {
-		return lastName;
+		return lastname;
 	}
 	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
 Montric.ChartMenuController = Ember.ArrayController.extend({
-    contentBinding: 'mainChartsController.rootNodes',
-    mainChartsController: null
+    needs: ['mainCharts'],
+    contentBinding: 'controllers.mainCharts.rootNodes',
 });

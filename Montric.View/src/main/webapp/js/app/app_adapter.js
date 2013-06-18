@@ -1,5 +1,14 @@
 //Montric.Adapter = DS.FixtureAdapter.extend();
 
+DS.RESTAdapter.registerTransform('raw', {
+    deserialize: function(serialized) {
+        return serialized;
+    },
+    serialize: function(deserialized) {
+        return deserialized;
+    }
+});
+
 Montric.Adapter = DS.RESTAdapter.extend({
     find: function(store, type, id) {
         var root = this.rootForType(type);

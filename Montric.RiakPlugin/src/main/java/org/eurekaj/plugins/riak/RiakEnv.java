@@ -36,11 +36,13 @@ import java.util.concurrent.TimeUnit;
 public class RiakEnv extends EurekaJDBPluginService {
     private static Logger logger = Logger.getLogger(RiakEnv.class.getName());
 
+    private boolean isLoadedOK = false;
     private LiveStatisticsDao liveStatisticsDao;
     private AlertDao alertDao;
     private AccountDao accountDao;
     private GroupedStatisticsDao groupedStatisticsDao;
     private TreeMenuDao treeMenuDao;
+    private AlertEvaluationQueueDao alertEvaluationQueueDao;
 
     private IRiakClient riakClient;
     private Cache<String, BasicMetricHour> metricHourCache;
@@ -82,14 +84,38 @@ public class RiakEnv extends EurekaJDBPluginService {
 
     @Override
     public void setup() {
-        try {
-            performSetup();
-        } catch (RiakException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    	if (!isLoadedOK) {
+	    	List<String> riakIps = new ArrayList<>();
+	    	
+	    	String hosts = System.getProperty("montric.db.riak.hosts");
+			
+			logger.info("Riak Hosts: " + hosts);
+			
+	    	if (hosts == null) {
+				logger.error("No Riak Hosts specified. Specify in montric.db.riak.hosts");
+				throw new RuntimeException("Property montric.db.riak.hosts is NULL. Please configure as a space separated list of IP addressesin config.properties");
+			}
+	
+			
+			if (hosts.contains(" ")) {
+				String[] riakHosts = hosts.split(" ");
+				for (String host : riakHosts) {
+					riakIps.add(host);
+				}			
+			} else {
+				riakIps.add(hosts);
+			}
+	    	
+	        try {
+	            performSetup(riakIps.toArray(new String[riakIps.size()]));
+	        } catch (RiakException e) {
+	            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+	        }
+	        isLoadedOK = true;
+    	}
     }
 
-    private void performSetup() throws RiakException {
+    private void performSetup(String[] riakIps) throws RiakException {
         metricHourCache = CacheBuilder.newBuilder()
                 .concurrencyLevel(4)
                 .maximumSize(1000000l)
@@ -100,7 +126,7 @@ public class RiakEnv extends EurekaJDBPluginService {
         // See above examples for client config options
         PBClientConfig riakClientConfig = PBClientConfig.defaults();
         //riakClusterConfig.addHosts(riakClientConfig, "192.168.1.102", "192.168.1.104", "192.168.1.105");
-        riakClusterConfig.addHosts(riakClientConfig, "127.0.0.1");
+        riakClusterConfig.addHosts(riakClientConfig, riakIps);
         riakClient = RiakFactory.newClient(riakClusterConfig);
 
         liveStatisticsDao = new RiakLiveStatisticsDao(riakClient, metricHourCache);
@@ -144,5 +170,10 @@ public class RiakEnv extends EurekaJDBPluginService {
     @Override
     public AccountDao getAccountDao() {
         return accountDao;
+    }
+    
+    @Override
+    public AlertEvaluationQueueDao getAlertEvaluationQueueDao() {
+    	return alertEvaluationQueueDao;
     }
 }

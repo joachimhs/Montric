@@ -13,4 +13,5 @@ public interface Account {
     public String getId();
     public String getAccountType();
     public List<String> getAccessTokens();
+    public Long getLastEvaluatedForAlerts();
 }

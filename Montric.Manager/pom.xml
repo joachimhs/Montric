@@ -87,11 +87,11 @@
 			<artifactId>alertEmailPlugin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.montric.plugin</groupId>
 			<artifactId>levelDBPlugin</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>org.montric.plugin</groupId>
 			<artifactId>riakPlugin</artifactId>

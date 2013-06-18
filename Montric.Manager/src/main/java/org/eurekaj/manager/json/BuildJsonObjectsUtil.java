@@ -38,6 +38,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import com.google.gson.JsonObject;
+
 public class BuildJsonObjectsUtil {
 	private static final Logger log = Logger.getLogger(BuildJsonObjectsUtil.class);
 
@@ -245,10 +247,39 @@ public class BuildJsonObjectsUtil {
         chartModelObject.put("id", chartId);
 
         JSONArray seriesArray = new JSONArray();
+        
         for (XYDataList series : xyCollection.getDataList()) {
         	JSONObject seriesObject = new JSONObject();
-			seriesObject.put("id", series.getLabel());
-			seriesObject.put("name", series.getLabel());
+        	seriesObject.put("name", series.getLabel());
+        	JSONArray seriesDataArray = new JSONArray();
+        	
+        	for (XYDataPoint dp : series.getDataPointList()) {
+        		JSONObject seriesValueObject = new JSONObject();
+				seriesValueObject.put("x", dp.getX().longValue() + chartOffsetMs);
+				Number yVal = dp.getY();
+                
+        		seriesValueObject.put("y", yVal);
+        		seriesDataArray.put(seriesValueObject);
+        	}
+        	seriesObject.put("data", seriesDataArray);
+        	
+        	if (series.getLabel().equals("Warning Value")) {
+        		seriesObject.put("color", "#E1DBAB");
+        	}
+        	
+        	if (series.getLabel().equals("Error Value")) {
+        		seriesObject.put("color", "#782E54");
+        	}
+        	
+        	seriesArray.put(seriesObject);
+        	chartModelObject.put("series", seriesArray);
+        	chartModelObject.put("name", label);
+            containerObject.put("chart_model", chartModelObject);
+        }
+        
+        
+        /*for (XYDataList series : xyCollection.getDataList()) {
+        	JSONObject seriesObject = new JSONObject();
 			JSONArray seriesValuesArray = new JSONArray();
 			for (XYDataPoint dp : series.getDataPointList()) {
 				JSONObject seriesValueObject = new JSONObject();
@@ -261,8 +292,7 @@ public class BuildJsonObjectsUtil {
                 }
                 
         		seriesValueObject.put("y", yVal);
-        		seriesValueObject.put("id", series.getLabel() + "::" + nf.format(dp.getX().longValue() + chartOffsetMs));
-        		seriesValueObject.put("series", series.getLabel());
+        		seriesValueObject.put("name", series.getLabel());
         		
 				seriesValuesArray.put(seriesValueObject);
 			}
@@ -271,7 +301,7 @@ public class BuildJsonObjectsUtil {
 			seriesArray.put(seriesObject);
         }
         chartModelObject.put("series", seriesArray);
-        containerObject.put("chart_model", chartModelObject);
+        //containerObject.put("chart_model", chartModelObject);*/
         
         //containerObject.put("chart_series_models", generateChartSeries(chartId, label, xyCollection, chartOffsetMs));
         //containerObject.put("chart_series_value_models", generateChartSerieValues(chartId, label, xyCollection, chartOffsetMs));

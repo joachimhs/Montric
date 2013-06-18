@@ -24,13 +24,10 @@ public class ManagerAccountService implements AccountService {
     EurekaJDBPluginService dbPlugin = null;
 
     private EurekaJDBPluginService getDbPlugin() {
-    	logger.info("Getting dbPlugin: " + dbPlugin);
         if (dbPlugin == null) {
         	logger.info("Finding plugin with name: " + DatabasePluginUtil.getDatabasePluginName());
             dbPlugin = ManagerDbPluginService.getInstance().getPluginServiceWithName(DatabasePluginUtil.getDatabasePluginName());
         }
-        
-        logger.info("returning plugin: " + dbPlugin);
 
         return dbPlugin;
     }

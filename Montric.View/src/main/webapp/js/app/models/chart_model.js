@@ -1,3 +1,4 @@
 Montric.ChartModel = DS.Model.extend({
-    chartValue: DS.attr('string')
+    name: DS.attr('string'),
+    series: DS.attr('raw')
 });

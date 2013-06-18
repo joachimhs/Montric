@@ -9,6 +9,7 @@ public class BasicAccount implements Account {
 	private String id;
     private String accountType;
     private List<String> accessTokens;
+    private Long lastEvaluatedForAlerts;
 
     public BasicAccount() {
     	accessTokens = new ArrayList<>();
@@ -18,6 +19,7 @@ public class BasicAccount implements Account {
         this.id = account.getId();
         this.accountType = account.getAccountType();
         this.accessTokens = account.getAccessTokens();
+        this.lastEvaluatedForAlerts = account.getLastEvaluatedForAlerts();
     }
 
     public BasicAccount(String accountName, String accountType) {
@@ -53,4 +55,12 @@ public class BasicAccount implements Account {
 		this.accessTokens = accessTokens;
 	}
 
+    @Override
+    public Long getLastEvaluatedForAlerts() {
+    	return lastEvaluatedForAlerts;
+    }
+    
+    public void setLastEvaluatedForAlerts(Long lastEvaluatedForAlerts) {
+		this.lastEvaluatedForAlerts = lastEvaluatedForAlerts;
+	}
 }

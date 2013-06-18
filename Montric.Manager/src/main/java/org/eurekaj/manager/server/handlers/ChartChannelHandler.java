@@ -233,7 +233,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
                 Statistics statistics = getBerkeleyTreeMenuService().getTreeMenu(chartPath, loggedInUser.getAccountName());
                 //if (statistics != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
-                jsonResponse = BuildJsonObjectsUtil.generateChartData2(chartId, chartPath, valueCollection, chartOffset);
+                jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection, chartOffset);
 
 
                 //} else {

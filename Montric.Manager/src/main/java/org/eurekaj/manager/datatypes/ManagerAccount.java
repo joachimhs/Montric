@@ -15,6 +15,7 @@ public class ManagerAccount implements Account {
     private String id;
     private String accountType;
     private List<String> accessTokens;
+    private Long lastEvaluatedForAlerts;
 
     public ManagerAccount() {
     }
@@ -48,5 +49,14 @@ public class ManagerAccount implements Account {
     
     public void setAccessTokens(List<String> accessTokens) {
 		this.accessTokens = accessTokens;
+	}
+    
+    @Override
+    public Long getLastEvaluatedForAlerts() {
+    	return lastEvaluatedForAlerts;
+    }
+    
+    public void setLastEvaluatedForAlerts(Long lastEvaluatedForAlerts) {
+		this.lastEvaluatedForAlerts = lastEvaluatedForAlerts;
 	}
 }

@@ -203,6 +203,8 @@ public class LevelDBLiveStatisticsDao implements LiveStatisticsDao {
 			for (String key : keysToDeleteList) {
 				batch.delete(bytes(key));
 			}
+			
+			db.write(batch);
 		} finally {
 			try {
 				batch.close();

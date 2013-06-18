@@ -41,8 +41,8 @@ public class ManagerDbPluginService {
         loader = ServiceLoader.load(EurekaJDBPluginService.class);
         for (EurekaJDBPluginService pluginService : loader) {
         	logger.info("Calling setup for plugin: " + pluginService.getPluginName());
-            pluginService.setup();
             pluginService.setApplicationServices(EurekaJManagerApplicationServices.getInstance());
+            logger.info("Setup for plugin: " + pluginService.getPluginName() + " complete");
         }
     }
 
@@ -62,6 +62,7 @@ public class ManagerDbPluginService {
 
         for (EurekaJDBPluginService pluginService : loader) {
             if (pluginService.getPluginName().equalsIgnoreCase(wantedPluginName)) {
+            	pluginService.setup();
                 returnPlugin = pluginService;
                 break;
             }

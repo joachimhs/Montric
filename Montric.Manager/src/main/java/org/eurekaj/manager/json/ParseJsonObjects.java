@@ -97,11 +97,11 @@ public class ParseJsonObjects {
         }
         
         if (userJsonObject.has("firstName")) {
-            user.setFirstName(userJsonObject.getString("firstName"));
+            user.setFirstname(userJsonObject.getString("firstName"));
         }
         
         if (userJsonObject.has("lastName")) {
-            user.setLastName(userJsonObject.getString("lastName"));
+            user.setLastname(userJsonObject.getString("lastName"));
         }
         
         if (userJsonObject.has("country")) {

@@ -55,9 +55,9 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
         String messageContent = getHttpMessageContent(e);
         try {
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(messageContent);
-            log.info("LiveStatistics: " + jsonObject);
+            //log.info("LiveStatistics: " + jsonObject);
             String accountName = getAccountForAccessToken(jsonObject);
-            log.info("Belongs to Account: " + accountName);
+            //log.info("Belongs to Account: " + accountName);
             
             if (jsonObject.has("storeLiveStatistics") && accountName != null) {
             	

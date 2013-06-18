@@ -465,3 +465,24 @@ div.selectableList div.is-selected:before {
     padding: 0px;
     text-wrap: none;
 }
+
+.rickshaw_graph .detail .x_label { display: none }
+.rickshaw_graph .detail .item { line-height: 1.4; padding: 0.5em }
+.detail_swatch { display: inline-block; width: 10px; height: 10px; margin: 0 4px 0 0 }
+.rickshaw_graph .detail .date { color: #d0d0d0; font-weight: 600; }
+.chart {
+    position: relative;
+    left: 40px;
+}
+.legend {
+    display: inline-block;
+    background: #404040;
+    color: white;
+    position: absolute;
+    left: 20px;
+}
+
+.legend_header {
+    font-size: 18px;
+    color: white;
+}
