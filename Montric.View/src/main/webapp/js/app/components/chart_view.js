@@ -100,7 +100,7 @@ Montric.ChartView = Ember.View.extend({
 
                     var hoverHtml = "";
 
-                    var hoverHtml = '<span class="date">' + new Date(point.value.x * 1000).toUTCString() + '</span><br />';
+                    var hoverHtml = '<span class="date">' + new Date(point.value.x).toUTCString() + '</span><br />';
 
                     args.detail.sort(function(a, b) { return a.order - b.order }).forEach( function(d) {
                         if (!d.series.color) {
@@ -182,7 +182,7 @@ Montric.ChartView = Ember.View.extend({
                 graph: graph,
                 ticks: 9,
                 tickFormat: function(x) {
-                    return d3.time.format('%d/%m %H:%M:%S')(new Date(x));
+                    return dateFormat(x, "dd/mm HH:MM:ss");
                 }
             } );
 

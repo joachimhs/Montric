@@ -257,8 +257,12 @@ public class BuildJsonObjectsUtil {
         		JSONObject seriesValueObject = new JSONObject();
 				seriesValueObject.put("x", dp.getX().longValue() + chartOffsetMs);
 				Number yVal = dp.getY();
-                
-        		seriesValueObject.put("y", yVal);
+                if (yVal == null) { 
+                	seriesValueObject.put("y", seriesValueObject.NULL); 
+            	} 
+                else {
+                	seriesValueObject.put("y", yVal);
+                }
         		seriesDataArray.put(seriesValueObject);
         	}
         	seriesObject.put("data", seriesDataArray);
