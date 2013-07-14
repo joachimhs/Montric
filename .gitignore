@@ -11,3 +11,5 @@ tmp
 *.iws
 EurekaJ.Agent/dependency-reduced-pom.xml
 rebel.xml
+dist
+node_modules

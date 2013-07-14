@@ -23,9 +23,11 @@ Montric.ChartsController = Ember.ArrayController.extend({
     startTimer: function() {
         var controller = this;
         var intervalId = setInterval(function () {
-            if (controller.get('controllers.application').get('showLiveCharts')) {
-                controller.reloadCharts();
-            }
+            Ember.run(function() {
+                if (controller.get('controllers.application').get('showLiveCharts')) {
+                    controller.reloadCharts();
+                }
+            });
         }, 15000);
 
         this.set('chartTimerId', intervalId);
