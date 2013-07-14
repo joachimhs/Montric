@@ -79,7 +79,7 @@ Montric.MainChartsRoute = Ember.Route.extend({
         console.log('MainChartsRoute setupController: ' + controller);
 
         Montric.MainMenuModel.find();
-        var mainMenu = Montric.store.filter(Montric.MainMenuModel, function(data) {
+        var mainMenu = Montric.MainMenuModel.filter(function(data) {
             if (data.get('parent') === null) { return true; }
         });
 

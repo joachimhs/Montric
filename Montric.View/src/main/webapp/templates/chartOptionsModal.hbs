@@ -1,0 +1,10 @@
+<div class="modal-header centerAlign">
+    <button type="button" class="close" data-dismiss="modal" class="floatRight">x</button>
+    <h1 class="centerAlign">Chart Options</h1>
+</div>
+<div class="modal-body">
+    {{view Montric.TabView controllerBinding="this"}}
+</div>
+<div class="modal-footer">
+    {{view Montric.BootstrapButton content="Apply Changes" action="updateChartDates" target="controller"}}
+</div>

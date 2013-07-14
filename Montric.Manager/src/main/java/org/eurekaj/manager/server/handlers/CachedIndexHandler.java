@@ -92,7 +92,9 @@ public class CachedIndexHandler extends EurekaJGenericChannelHandler {
 					}
 					
 					//cache and remove this <script src tag from the DOM 
-					scriptPathList.add(new ScriptFile(scriptSrc, cb.toString(Charset.defaultCharset())));
+					if (cb != null) {
+						scriptPathList.add(new ScriptFile(scriptSrc, cb.toString(Charset.defaultCharset())));
+					}
 					scriptElement.remove();
 				}
 			}
@@ -123,6 +125,7 @@ public class CachedIndexHandler extends EurekaJGenericChannelHandler {
 		Document htmlDocument = null;
 		
 		File input = new File(this.rootPath + path);
+		logger.info("Parsing file: " + input.getAbsolutePath());
 		if (input != null && input.exists() && input.isFile()) {
 			htmlDocument = Jsoup.parse(input, "UTF-8");
 		}

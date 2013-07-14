@@ -1,0 +1,47 @@
+<div id="adminTabLeftMenu">
+    {{view Ember.TextField valueBinding="newAlertName" classNames="input-medium mediumTopPadding"}}
+        <button class="btn" {{action createNewAlert}}>Add</button>
+    {{view Montric.SelectableListView listItemsBinding="content" deleteAction="deleteSelectedAlert" selectedItemBinding="controller.selectedItem"}}
+</div>
+
+{{#if selectedItem}}<div id="adminTabRightContent">
+    <h1>{{selectedItem.id}}</h1>
+    <table class="table">
+    <tr>
+        <td>Activated:</td>
+        <td colspan="3">{{view Ember.Checkbox checkedBinding="selectedItem.alertActivated"}}</td>
+    </tr>
+    <tr>
+        <td>Error Value:</td>
+        <td>{{view Ember.TextField valueBinding="selectedItem.alertErrorValue" classNames="input-mini"}}</td>
+        <td>Warning Value:</td>
+        <td>{{view Ember.TextField valueBinding="selectedItem.alertWarningValue" classNames="input-mini"}}</td>
+    </tr>
+    <tr>
+        <td>Alert Type:</td>
+        <td>{{view Montric.Select classNames="input-medium" valueBinding="selectedItem.alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>
+        <td>Alert Delay:</td>
+        <td>{{view Ember.TextField valueBinding="selectedItem.alertDelay" classNames="input-mini"}}</td>
+    </tr>
+    <tr>
+        <td>Alert Source:</td>
+        <td colspan="3">
+
+        <div>{{#if selectedItem.alertSource}}{{selectedItem.alertSource}}{{else}}None Selected{{/if}}</div>
+        <div style="max-height: 250px; overflow: scroll; margin-bottom: 15px;" class="azureBlueBackground azureBlueBorderThin">
+            {{view Montric.SelectableLeafTreeView itemsBinding="controllers.administrationMenu.rootNodes" selectedItemBinding="selectedItem.alertSource"}}
+        </div>
+    </td>
+    </tr>
+    <tr>
+        <td>Email Notification:</td>
+        <td>{{view Montric.MultiSelectableListView listItemsBinding="emailGroups" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>
+        <td>Plugin Notification:</td>
+        <td>_List of pluigns_</td>
+    </tr>
+    <tr class="footer">
+        <td colspan="4"><button {{action doCommitAlert}} class="btn" style="width: 100%;">Save Alert</button></td>
+    </tr>
+    </table>
+</div>{{/if}}
+{{view Montric.ConfirmDialogView elementId="adminAlertConfirmDialog" cancelButtonLabel="Cancel" cancelAction="doCancelAlertDeletion" okButtonLabel="Delete" okAction="doConfirmDeletion" target="controller" header="Delete Alert?" message="Are you sure you want to delete the selected alert? This action will permanently remove the alert from the system. This action cannot be undone!"}}

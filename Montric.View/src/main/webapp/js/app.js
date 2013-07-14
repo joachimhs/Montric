@@ -1,5 +1,3 @@
-Ember.ENV.RAISE_ON_DEPRECATION = true;
-
 var Montric = Ember.Application.create({
     //rootElement: '#abc',
 
@@ -26,8 +24,7 @@ $.getJSON("/user", function(data) {
 });
 
 //Montric.deferReadiness();
-
-Montric.store = DS.Store.create({
+Montric.Store = DS.Store.extend({
     adapter:  "Montric.Adapter",
     revision: 12
 });
