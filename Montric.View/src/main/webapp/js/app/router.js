@@ -89,6 +89,5 @@ Montric.MainChartsRoute = Ember.Route.extend({
         chartMenuController.set('mainChartsController', controller);
 
         controller.set('rootNodes', mainMenu);
-        controller.set('content', Montric.MainMenuModel.find());
     }
 });

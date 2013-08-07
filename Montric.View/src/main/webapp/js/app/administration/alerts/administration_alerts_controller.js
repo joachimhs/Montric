@@ -1,5 +1,5 @@
 Montric.AdministrationAlertsController = Ember.ArrayController.extend({
-    needs: ['administrationMenu', 'administrationEmailRecipients'],
+    needs: ['administrationMenu', 'administrationAlertRecipients'],
 
     newAlertName: null,
     selectedItem: null,
@@ -44,7 +44,7 @@ Montric.AdministrationAlertsController = Ember.ArrayController.extend({
         if (this.newAlertIsValid()) {
             var newAlert = Montric.AlertModel.createRecord({id: this.get('newAlertName')});
             this.set('newAlert', newAlert);
-            Montric.store.commit();
+            this.get('store').commit();
         } else {
             Montric.log('New Alert Name Not Valid!');
         }
@@ -70,7 +70,7 @@ Montric.AdministrationAlertsController = Ember.ArrayController.extend({
         if (selectedItem) {
             selectedItem.deleteRecord();
         }
-        Montric.store.commit();
+        this.get('store').commit();
         $("#adminAlertConfirmDialog").modal('hide');
     },
 
@@ -81,7 +81,7 @@ Montric.AdministrationAlertsController = Ember.ArrayController.extend({
         } else {
             selectedItem.set('alertNotifications', "[]");
         }
-        
-        Montric.store.commit();
+
+        this.get('store').commit();
     }
 });

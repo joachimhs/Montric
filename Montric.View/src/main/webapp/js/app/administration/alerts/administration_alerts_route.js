@@ -10,6 +10,6 @@ Montric.AdministrationAlertsRoute = Ember.Route.extend({
             adminController.selectTabWithId('alerts');
         }
         
-        controller.set('emailGroups', Montric.EmailGroupModel.find());
+        controller.set('alertRecipients', Montric.AlertRecipient.findAll());
     }
 });

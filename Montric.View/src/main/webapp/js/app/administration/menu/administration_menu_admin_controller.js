@@ -15,7 +15,7 @@ Montric.AdministrationMenuAdminController = Ember.ArrayController.extend({
             node.deleteRecord();
         });
         this.get('controllers.administrationMenu').deselectAllNodes();
-        Montric.store.commit();
+        this.get('store').commit();
         $("#menuAdminConfirmDialog").modal('hide');
     }
 });

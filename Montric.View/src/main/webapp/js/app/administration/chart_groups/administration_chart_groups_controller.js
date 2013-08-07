@@ -19,7 +19,7 @@ Montric.AdministrationChartGroupsController = Ember.ArrayController.extend({
     createNewChartGroup: function () {
         if (this.newChartGroupIsValid()) {
             Montric.store.createRecord(Montric.ChartGroupModel, {"id": this.get('newChartGroupName')});
-            Montric.store.commit();
+            this.get('store').commit();
             this.set('newChartGroupName', '');
         } else {
             Montric.log('New Chart Group Not Valid!');
@@ -75,11 +75,11 @@ Montric.AdministrationChartGroupsController = Ember.ArrayController.extend({
         if (selectedItem) {
             selectedItem.deleteRecord();
         }
-        Montric.store.commit();
+        this.get('store').commit();
         $("#chartGroupConfirmDialog").modal('hide');
     },
 
     doCommitChartGroup: function() {
-        Montric.store.commit();
+        this.get('store').commit();
     }
 });

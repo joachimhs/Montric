@@ -10,7 +10,7 @@ DS.RESTAdapter.registerTransform('raw', {
 });
 
 Montric.Adapter = DS.RESTAdapter.extend({
-    find: function(store, type, id) {
+    /*find: function(store, type, id) {
         var root = this.rootForType(type);
         var queryString = "";
 
@@ -46,7 +46,7 @@ Montric.Adapter = DS.RESTAdapter.extend({
                 });
             }
         });
-    }
+    }*/
 });
 
 Montric.Adapter.map(Montric.ChartSeriesModel, {

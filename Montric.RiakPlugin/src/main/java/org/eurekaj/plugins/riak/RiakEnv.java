@@ -16,6 +16,7 @@ import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.plugins.riak.dao.RiakAccountDao;
 import org.eurekaj.plugins.riak.dao.RiakAlertDao;
+import org.eurekaj.plugins.riak.dao.RiakAlertRecipientDao;
 import org.eurekaj.plugins.riak.dao.RiakGroupedStatisticsDao;
 import org.eurekaj.plugins.riak.dao.RiakLiveStatisticsDao;
 import org.eurekaj.plugins.riak.dao.RiakTreeMenuDao;
@@ -42,6 +43,7 @@ public class RiakEnv extends EurekaJDBPluginService {
     private AccountDao accountDao;
     private GroupedStatisticsDao groupedStatisticsDao;
     private TreeMenuDao treeMenuDao;
+    private AlertRecipientDao alertRecipientDao;
     private AlertEvaluationQueueDao alertEvaluationQueueDao;
 
     private IRiakClient riakClient;
@@ -134,6 +136,7 @@ public class RiakEnv extends EurekaJDBPluginService {
         accountDao = new RiakAccountDao(riakClient);
         groupedStatisticsDao = new RiakGroupedStatisticsDao(riakClient);
         treeMenuDao = new RiakTreeMenuDao(riakClient);
+        alertRecipientDao = new RiakAlertRecipientDao(riakClient);
     }
 
     @Override
@@ -158,8 +161,7 @@ public class RiakEnv extends EurekaJDBPluginService {
 
     @Override
     public AlertRecipientDao getAlertRecipientDao() {
-    	// TODO Auto-generated method stub
-    	return null;
+    	return alertRecipientDao;
     }
 
     @Override

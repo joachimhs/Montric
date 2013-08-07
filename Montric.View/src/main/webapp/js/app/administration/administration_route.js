@@ -86,7 +86,7 @@ Montric.AdministrationRoute = Ember.Route.extend({
 
         var adminMenuController = this.controllerFor('administrationMenu');
         Montric.AdminMenuModel.find();
-        var mainMenu = Montric.store.filter(Montric.AdminMenuModel, function(data) {
+        var mainMenu = Montric.AdminMenuModel.filter(function(data) {
             if (data.get('parent') === null) {
                 return true;
             }

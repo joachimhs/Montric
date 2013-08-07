@@ -34,10 +34,8 @@
     </td>
     </tr>
     <tr>
-        <td>Email Notification:</td>
-        <td>{{view Montric.MultiSelectableListView listItemsBinding="emailGroups" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>
-        <td>Plugin Notification:</td>
-        <td>_List of pluigns_</td>
+        <td>Alert Recipient:</td>
+        <td colspan="3">{{view Montric.MultiSelectableListView listItemsBinding="alertRecipients" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>
     </tr>
     <tr class="footer">
         <td colspan="4"><button {{action doCommitAlert}} class="btn" style="width: 100%;">Save Alert</button></td>

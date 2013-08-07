@@ -31,7 +31,7 @@ Montric.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
         } else {
             Montric.log('New Email Group Not Valid!');
         }
-        //Montric.store.commit();
+        //this.get('store').commit();
     },
 
     doAddEmailRecipient: function () {
@@ -68,7 +68,7 @@ Montric.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
         if (selectedEmailGroup) {
             selectedEmailGroup.deleteRecord();
         }
-        Montric.store.commit();
+        this.get('store').commit();
         this.set('selectedItem', null);
     },
 
@@ -97,6 +97,6 @@ Montric.AdministrationEmailRecipientsController = Ember.ArrayController.extend({
     },
 
     doCommitEmailGroup: function() {
-        Montric.store.commit();
+        this.get('store').commit();
     }
 });
