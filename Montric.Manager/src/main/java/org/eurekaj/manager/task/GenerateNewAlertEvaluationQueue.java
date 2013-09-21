@@ -20,29 +20,17 @@ package org.eurekaj.manager.task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.dao.AlertEvaluationQueueDao;
 import org.eurekaj.api.datatypes.Account;
-import org.eurekaj.api.datatypes.Alert;
-import org.eurekaj.api.datatypes.EmailRecipientGroup;
-import org.eurekaj.api.datatypes.LiveStatistics;
-import org.eurekaj.api.enumtypes.AlertStatus;
-import org.eurekaj.api.enumtypes.AlertType;
-import org.eurekaj.api.util.ListToString;
-import org.eurekaj.manager.datatypes.ManagerAlert;
-import org.eurekaj.manager.datatypes.ManagerTriggeredAlert;
-import org.eurekaj.manager.plugin.ManagerAlertPluginService;
 import org.eurekaj.manager.plugin.ManagerDbPluginService;
 import org.eurekaj.manager.service.AccountService;
 import org.eurekaj.manager.service.AdministrationService;
 import org.eurekaj.manager.service.TreeMenuService;
 import org.eurekaj.manager.util.DatabasePluginUtil;
-import org.eurekaj.manager.util.PropertyUtil;
 import org.eurekaj.spi.db.EurekaJDBPluginService;
 
 public class GenerateNewAlertEvaluationQueue implements Runnable {
@@ -93,21 +81,26 @@ public class GenerateNewAlertEvaluationQueue implements Runnable {
 	}
 	
 	public void run() {
-		log.info("Running GenerateNewAlertEvaluationQueue");
-		AlertEvaluationQueueDao alertEvaluationQueueDao = dbPlugin.getAlertEvaluationQueueDao();
+		try {
+			log.info("Running GenerateNewAlertEvaluationQueue");
 		
-		long evaluationThreshold = System.currentTimeMillis() - 15000;
-		
-		List<Account> accountListForEvaluation = new ArrayList<>();
-		for (Account account : dbPlugin.getAccountDao().getAccounts()) {
-			log.info("Testing to see if account " + account.getId() + " needs to be evaluated");
-			if (account.getLastEvaluatedForAlerts() == null || account.getLastEvaluatedForAlerts() < evaluationThreshold) {
-				log.info("Adding " + account.getId() + " to new queue");
-				accountListForEvaluation.add(account);
-			}
-		}		
-		
-		alertEvaluationQueueDao.addAccountsToNewQueue(accountListForEvaluation);
+			AlertEvaluationQueueDao alertEvaluationQueueDao = dbPlugin.getAlertEvaluationQueueDao();
+			
+			long evaluationThreshold = System.currentTimeMillis() - 15000;
+			
+			List<Account> accountListForEvaluation = new ArrayList<>();
+			for (Account account : dbPlugin.getAccountDao().getAccounts()) {
+				log.info("Testing to see if account " + account.getId() + " needs to be evaluated");
+				if (account.getLastEvaluatedForAlerts() == null || account.getLastEvaluatedForAlerts() < evaluationThreshold) {
+					log.info("Adding " + account.getId() + " to new queue");
+					accountListForEvaluation.add(account);
+				}
+			}		
+			
+			alertEvaluationQueueDao.addAccountsToNewQueue(accountListForEvaluation);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/*

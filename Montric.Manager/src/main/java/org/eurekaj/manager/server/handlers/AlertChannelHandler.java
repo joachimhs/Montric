@@ -56,7 +56,7 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
             HttpRequest request = (HttpRequest)e.getMessage();
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
 
-            String id = getUrlId(e, "alert_models");
+            String id = getUrlId(e, "alerts");
 
             log.info("Got: " + jsonObject.toString());
             if (isAdmin(loggedInUser) && jsonObject.has("getAlertPlugins")) {
@@ -68,7 +68,7 @@ public class AlertChannelHandler extends EurekaJGenericChannelHandler {
                     getBerkeleyTreeMenuService().persistAlert(parsedAlert);
                 }
                 JSONObject alertTopObject = new JSONObject();
-                alertTopObject.put("alert_model", BuildJsonObjectsUtil.generateAlertJSON(parsedAlert));
+                alertTopObject.put("alert", BuildJsonObjectsUtil.generateAlertJSON(parsedAlert));
 
                 jsonResponse = alertTopObject.toString();
             } else if (isUser(loggedInUser) && jsonObject.has("getTriggeredAlerts")) {

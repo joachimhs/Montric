@@ -1,2 +1,6 @@
-{{render chartMenu}}
-{{render charts}}
+{{render chartsMenu}}
+<div id="chartsArea">
+    {{#each selectedNodes}}
+        {{view Montric.ChartView chartBinding="chart"}}<br />
+    {{/each}}
+</div>

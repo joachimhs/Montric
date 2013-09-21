@@ -20,6 +20,7 @@ package org.eurekaj.manager.json;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
+import org.eurekaj.api.datatypes.basic.BasicAlert;
 import org.eurekaj.api.datatypes.basic.BasicUser;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.manager.datatypes.*;
@@ -41,32 +42,32 @@ public class ParseJsonObjects {
 	private static Logger log = Logger.getLogger(ParseJsonObjects.class.getName());
 	
     public static Alert parseAlertJson(JSONObject jsonAlert, String id, String accountName) throws JSONException {
-        ManagerAlert parsedAlert = null;
+        BasicAlert parsedAlert = null;
 
         /*
          * {"alertWarningValue":15,"alertDelay":5,"alertType":null,"alertErrorValue":12,"alertActivated":true,"alertName":"Test"}
          */
-        if (jsonAlert.has("alert_model")) {
-            parsedAlert = new ManagerAlert();
-            JSONObject alert = jsonAlert.getJSONObject("alert_model");
+        if (jsonAlert.has("alert")) {
+            parsedAlert = new BasicAlert();
+            JSONObject alert = jsonAlert.getJSONObject("alert");
             if (id == null || id.length() == 0) {
                 parsedAlert.setAlertName(parseStringFromJson(alert, "id"));
             } else {
                 parsedAlert.setAlertName(id);
             }
 
-            parsedAlert.setWarningValue(parseDoubleFromJson(alert, "alert_warning_value"));
-            parsedAlert.setErrorValue(parseDoubleFromJson(alert, "alert_error_value"));
-            parsedAlert.setGuiPath(parseStringFromJson(alert, "alert_source"));
+            parsedAlert.setWarningValue(parseDoubleFromJson(alert, "alertWarningValue"));
+            parsedAlert.setErrorValue(parseDoubleFromJson(alert, "alertErrorValue"));
+            parsedAlert.setGuiPath(parseStringFromJson(alert, "alertSource"));
             
-            Integer alertDelay = parseIntegerFromJson(alert, "alert_delay");
+            Integer alertDelay = parseIntegerFromJson(alert, "alertDelay");
             if (alertDelay == null) { alertDelay = 0; }
             parsedAlert.setAlertDelay(alertDelay.longValue());
             
-            parsedAlert.setActivated(parseBooleanFromJson(alert, "alert_activated"));
-            parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(alert, "alert_type")));
-            parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(alert, "alert_notifications"));
-            parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alert_plugins"));
+            parsedAlert.setActivated(parseBooleanFromJson(alert, "alertActivated"));
+            parsedAlert.setSelectedAlertType(AlertType.fromValue(parseStringFromJson(alert, "alertType")));
+            parsedAlert.setSelectedEmailSenderList(getStringArrayFromJson(alert, "alertNotifications"));
+            parsedAlert.setSelectedAlertPluginList(getStringArrayFromJson(alert, "alertPlugins"));
             parsedAlert.setAccountName(accountName);
         }
 

@@ -1,5 +1,5 @@
 function config(name) {
-	return require('./tasks/' + name);
+	return require('./tasks/' + name + ".js");
 }
 
 module.exports = function(grunt) {
@@ -10,7 +10,12 @@ module.exports = function(grunt) {
 		concat: config('concat'),
 		jshint: config('jshint'),
 		emberTemplates: config('emberTemplates'),
-		uglify: config('uglify')
+		uglify: config('uglify'),
+        server: config('server'),
+        watch: {
+            files: ['templates/**/*.hbs', 'js/app.js', 'js/app/**/*.js'],
+            tasks: ['emberTemplates', 'concat']
+        }
 	});
 
 	// Load the plugin that provides the "concat" task.
@@ -24,8 +29,12 @@ module.exports = function(grunt) {
 
 	// Load the plugin that provides the "jshint" task.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	
+
+    //Load the grunt watch plugin
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
 	// Default task(s).
-	grunt.registerTask('default', ['emberTemplates', 'concat', 'uglify']);
+	grunt.registerTask('dist', ['emberTemplates', 'concat', 'uglify']);
+    grunt.registerTask('default', ['watch']);
 
 };

@@ -39,6 +39,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
+		log.info("MainMenuChannelHandler");
 		String jsonResponse = "";
 		String cookieUuidToken = getCookieValue(e, "uuidToken");
         User loggedInUser = getLoggedInUser(cookieUuidToken);
@@ -48,9 +49,9 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
             HttpRequest request = (HttpRequest)e.getMessage();
             String uri = request.getUri();
 
-            String objectArrayName = "main_menu_models";
-            if (uri.contains("admin_menu_models")) {
-                objectArrayName = "admin_menu_models";
+            String objectArrayName = "mainMenus";
+            if (uri.contains("adminMenuModels")) {
+                objectArrayName = "adminMenuModels";
             }
 
             String id = UriUtil.getIdFromUri(uri, objectArrayName);

@@ -16,6 +16,7 @@ import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
 import org.eurekaj.plugins.riak.dao.RiakAccountDao;
 import org.eurekaj.plugins.riak.dao.RiakAlertDao;
+import org.eurekaj.plugins.riak.dao.RiakAlertEvaluationQueueDao;
 import org.eurekaj.plugins.riak.dao.RiakAlertRecipientDao;
 import org.eurekaj.plugins.riak.dao.RiakGroupedStatisticsDao;
 import org.eurekaj.plugins.riak.dao.RiakLiveStatisticsDao;
@@ -137,6 +138,7 @@ public class RiakEnv extends EurekaJDBPluginService {
         groupedStatisticsDao = new RiakGroupedStatisticsDao(riakClient);
         treeMenuDao = new RiakTreeMenuDao(riakClient);
         alertRecipientDao = new RiakAlertRecipientDao(riakClient);
+        alertEvaluationQueueDao = new RiakAlertEvaluationQueueDao(riakClient);
     }
 
     @Override

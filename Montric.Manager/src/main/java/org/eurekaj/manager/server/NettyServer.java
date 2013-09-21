@@ -66,13 +66,15 @@ public class NettyServer extends EurekaJWebappPluginService {
 		System.setProperty("montric.rootUser", "joachim@haagen-software.no");
 		System.setProperty("org.montric.deleteStatsOlderThanDays", "180");
 		System.setProperty("montric.db.type", "RiakPlugin");
+		//System.setProperty("montric.db.type", "LevelDBPlugin");
 		System.setProperty("org.montric.port", "8081");
 		System.setProperty("org.montric.indexCacheSeconds", "0");
 		System.setProperty("org.montric.host", "localhost");
-		System.setProperty("montric.plugin.alert.emailAlertPlugin.host", "mail.haagen-software.no");
+		System.setProperty("montric.plugin.alert.emailAlertPlugin.host", "mail.messagingengine.com");
 		System.setProperty("montric.plugin.alert.emailAlertPlugin.username", "joachim@haagen-software.no");
-		System.setProperty("montric.plugin.alert.emailAlertPlugin.password", "123");
-		System.setProperty("montric.plugin.alert.emailAlertPlugin.port", "522");
+		System.setProperty("montric.plugin.alert.emailAlertPlugin.password", "g9i5dq0z");
+		System.setProperty("montric.plugin.alert.emailAlertPlugin.port", "465");
+		System.setProperty("montric.plugin.alert.emailAlertPlugin.useSSL", "true");
 		System.setProperty("org.montric.userPort", "8081");
 		
 		nettyServer.start();

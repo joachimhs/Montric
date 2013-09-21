@@ -36,16 +36,19 @@ public class SendAlertEmailTask implements Runnable {
 	
 	@Override
 	public void run() {
+		String emailSubject = "EurekaJ Alert: " + alert.getStatus().getStatusName() + " : " + alert.getGuiPath();
+		
+		log.info("\t\tAttempting to send Email through: " + emailRecipientGroup.getSmtpServerhost() + ":" + emailRecipientGroup.getPort() + " using " + emailRecipientGroup.getSmtpUsername()
+				+ " auth with " + emailRecipientGroup.getSmtpPassword() + " via SSL: " + emailRecipientGroup.isUseSSL() + " ::: " + emailSubject);
+		
 		StringBuffer emailMessage = new StringBuffer();
 		emailMessage.append("EurekaJ Alert: ").append(alert.getGuiPath()).append(" Has changed status from ").append(oldStatus.getStatusName()).append(" to status ")
 				.append(alert.getStatus().getStatusName()).append(".\n Current Value: ").append(currValue).append(".\n Warning Value: ").append(alert.getWarningValue()).append(".\n Critical Value: ")
 				.append(alert.getErrorValue()).append(".\n Time: ").append(timeString);
 
-		String emailSubject = "EurekaJ Alert: " + alert.getStatus().getStatusName() + " : " + alert.getGuiPath();
+		
 
-		log.debug("\t\tAttempting to send Email through: " + emailRecipientGroup.getSmtpServerhost() + ":" + emailRecipientGroup.getPort() + " using " + emailRecipientGroup.getSmtpUsername()
-				+ " auth with " + emailRecipientGroup.getSmtpPassword() + " via SSL: " + emailRecipientGroup.isUseSSL() + " ::: " + emailSubject);
-
+	
 		if (emailRecipientGroup.isUseSSL()) {
 			sendEmailWithSSL(emailSubject, emailMessage.toString());
 		} else {

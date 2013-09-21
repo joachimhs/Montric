@@ -29,6 +29,11 @@ public class AlertEmailService implements AlertService {
 	
 	@Override
 	public void sendAlert(List<String> recipientList, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
+		if (!configured) {
+			configure();
+		}
+		log.debug("Status of alert plugin. Configured: " + configured + " statusMessage: " + statusMessage);
+		
 		log.debug("Scheduling alert: "+ alert.getAlertName() + " with status: " + alert.getStatus());
 		
 		AlertEmailRecipientGroup emailRecipientGroup = new AlertEmailRecipientGroup();

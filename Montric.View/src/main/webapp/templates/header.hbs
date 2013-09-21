@@ -1,9 +1,12 @@
-<span class="headerText">{{#linkTo "main"}}<img src="/img/logo-small.png" />{{/linkTo}}</span>
-{{#if controllers.user.isUser}}
-    <button class="btn btn-primary pull-right mediumTopPadding" {{action doAdmin target="controller"}}>
-        <i class="icon-cog"></i>Administration
-    </button>
-{{/if}}
-{{#if controllers.user.isAdmin}}
-    {{view Montric.BootstrapButton target="controller" action="showModal" classNames="pull-right mediumTopPadding" content="Chart Options"}}
-{{/if}}
+<div id="headerArea">
+    <span class="headerText">{{#linkTo "main"}}<img src="/img/logo-small.png" />{{/linkTo}}</span>
+    {{#if controllers.user.content.isUser}}
+        <button class="btn btn-primary pull-right smallTopPadding" {{action navigateToAdmin target="controller"}}>
+            <i class="icon-cog"></i>Administration
+        </button>
+    {{/if}}
+
+    {{#if controllers.user.content.isAdmin}}
+        <button class="btn btn-default pull-right smallTopPadding" {{action showChartOptions}}>Chart Options</button>
+    {{/if}}
+</div>

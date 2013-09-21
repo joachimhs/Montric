@@ -106,7 +106,7 @@ public class LevelDBAlertEvaluationQueueDao implements AlertEvaluationQueueDao {
 
 	@Override
 	public void deleteAccountFromEvaluationQueue(String accountName) {
-		db.delete(bytes(alertEvaluationQueueBucketKey + ";evaluation;" + accountName));
+		db.delete(bytes(alertEvaluationQueueBucketKey + ";evaluating;" + accountName));
 	}
 
 }

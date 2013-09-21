@@ -107,7 +107,7 @@ i {
     position: absolute;
     left: 0px;
     width: 230px;
-    top: 30px;
+    top: 45px;
     bottom:0px;
     overflow: scroll;
     padding-left: 10px;
@@ -118,7 +118,7 @@ i {
     position: absolute;
     left: 250px;
     right: 10px;
-    top: 30px;
+    top: 45px;
     border: 1px solid #cdd0d4;
     border-radius: 5px;
 }

@@ -147,7 +147,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
         HttpRequest request = (HttpRequest)e.getMessage();
         String uri = request.getUri();
-        String id = UriUtil.getIdFromUri(uri, "chart_models");
+        String id = UriUtil.getIdFromUri(uri, "charts");
         String cookieUuidToken = getCookieValue(e, "uuidToken");
         
         User loggedInUser = getLoggedInUser(cookieUuidToken);

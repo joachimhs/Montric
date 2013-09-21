@@ -1,0 +1,14 @@
+<div class="list-group mediumTopPadding" style="width: 95%;">
+    {{#each node in nodes}}
+        {{#if linkTo}}
+            {{#linkTo linkTo node tagName=div classNames="list-group-item"}}
+                {{selectable-list-item node=node action="showDeleteModal" param=node textWidth=textWidth}}
+            {{/linkTo}}
+        {{else}}
+            {{selectable-list-item node=node tagName=div classNames="list-group-item" action="showDeleteModal" param=node textWidth=textWidth}}
+        {{/if}}
+
+    {{/each}}
+</div>
+
+{{delete-modal id="deleteAlertModal" title="Deleting item!" action="deleteNode" item=nodeForDelete}}

@@ -1,0 +1,21 @@
+{{#if node.hasChildren}}
+    {{#if node.isExpanded}}
+        <span class="downarrow" {{action "toggleExpanded"}}></span>
+    {{else}}
+        <span class="rightarrow" {{action "toggleExpanded"}}></span>
+    {{/if}}
+
+    <span {{action "toggleExpanded"}}>{{node.name}}</span>
+{{else}}
+    {{view Ember.Checkbox checkedBinding="node.isSelected"}}
+
+    <span {{action "toggleSelected"}}>{{node.name}}</span>
+{{/if}}
+
+{{#if node.isExpanded}}
+    {{#each child in node.children}}
+        <div style="margin-left: 22px;">
+            {{tree-menu-node node=child}}
+        </div>
+    {{/each}}
+{{/if}}

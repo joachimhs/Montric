@@ -32,13 +32,13 @@ public class BasicAlert implements Alert, Comparable<Alert> {
     }
 
     public BasicAlert(String accountName, String alertName) {
-        this.id = accountName + ";" + alertName;
+        this.id = alertName;
         this.accountName = accountName;
         this.alertName = alertName;
     }
 
     public BasicAlert(Alert alert) {
-        this.id = alert.getAccountName() + ";" + alert.getAlertName();
+        this.id = alert.getAlertName();
         this.accountName = alert.getAccountName();
         this.alertName = alert.getAlertName();
         this.guiPath = alert.getGuiPath();
@@ -58,11 +58,6 @@ public class BasicAlert implements Alert, Comparable<Alert> {
 
     public void setId(String id) {
         this.id = id;
-        String[] parts = this.id.split(";");
-        if (parts.length == 2) {
-            this.accountName = parts[0];
-            this.alertName = parts[1];
-        }
     }
 
     public String getAlertName() {

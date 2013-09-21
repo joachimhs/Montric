@@ -168,9 +168,9 @@ public class BuildJsonObjectsUtil {
         JSONObject treeJson = new JSONObject();
         treeJson.put("id", guiPath);
         treeJson.put("name", guiPath);
-        treeJson.put("parent_id", JSONObject.NULL);
-        treeJson.put("node_type", type);
-        treeJson.put("children_ids", new JSONArray());
+        treeJson.put("parent", JSONObject.NULL);
+        treeJson.put("nodeType", type);
+        treeJson.put("children", new JSONArray());
 
         String chartId = "";
         if (type.equalsIgnoreCase("chart")) {
@@ -181,18 +181,18 @@ public class BuildJsonObjectsUtil {
         	chartId = "_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
         }
 
-        treeJson.put("chart_id", chartId);
+        treeJson.put("chart", chartId);
 
         if (guiPath.contains(":")) {
             //Split GUI Path into name and parent
             treeJson.put("name", getTreeNodeName(guiPath));
             String parentPath = getParentPath(guiPath);
-            treeJson.put("parent_id", parentPath);
+            treeJson.put("parent", parentPath);
 
             //Mark parent objects as having children nodes
             if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
                 JSONObject parentNode = nodesBuilt.get(parentPath);
-                JSONArray childrenArray = parentNode.getJSONArray("children_ids");
+                JSONArray childrenArray = parentNode.getJSONArray("children");
                 childrenArray.put(guiPath);
             }
         }
@@ -244,7 +244,7 @@ public class BuildJsonObjectsUtil {
         
     	JSONObject containerObject = new JSONObject();
         JSONObject chartModelObject = new JSONObject();
-        chartModelObject.put("id", chartId);
+        chartModelObject.put("id", chartId.replaceAll("\\%20", " "));
 
         JSONArray seriesArray = new JSONArray();
         
@@ -278,7 +278,7 @@ public class BuildJsonObjectsUtil {
         	seriesArray.put(seriesObject);
         	chartModelObject.put("series", seriesArray);
         	chartModelObject.put("name", label);
-            containerObject.put("chart_model", chartModelObject);
+            containerObject.put("chart", chartModelObject);
         }
         
         
@@ -445,31 +445,31 @@ public class BuildJsonObjectsUtil {
             alertArray.put(alertObject);
         }
         JSONObject alertObject = new JSONObject();
-        alertObject.put("alert_models", alertArray);
+        alertObject.put("alerts", alertArray);
         return alertObject.toString();
     }
 
 	public static JSONObject generateAlertJSON(Alert alert) throws JSONException {
 		JSONObject alertObject = new JSONObject();
 		alertObject.put("id", alert.getAlertName());
-		alertObject.put("alert_warning_value", alert.getWarningValue());
-		alertObject.put("alert_error_value", alert.getErrorValue());
-		alertObject.put("alert_source", alert.getGuiPath());
-		alertObject.put("alert_delay", alert.getAlertDelay());
-		alertObject.put("alert_type", alert.getSelectedAlertType().getTypeName());
-		alertObject.put("alert_activated", alert.isActivated());
+		alertObject.put("alertWarningValue", alert.getWarningValue());
+		alertObject.put("alertErrorValue", alert.getErrorValue());
+		alertObject.put("alertSource", alert.getGuiPath());
+		alertObject.put("alertDelay", alert.getAlertDelay());
+		alertObject.put("alertType", alert.getSelectedAlertType().getTypeName());
+		alertObject.put("alertActivated", alert.isActivated());
 
 		JSONArray emailGroupArray = new JSONArray();
 		for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
 		    emailGroupArray.put(emailRecipientGroup);
 		}
-		alertObject.put("alert_notifications", ListToString.convertFromListToJsonString(alert.getSelectedEmailSenderList(), ","));
+		alertObject.put("alertNotifications", ListToString.convertFromListToJsonString(alert.getSelectedEmailSenderList(), ","));
 		
 		JSONArray selectedPluginsArray = new JSONArray();
 		for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
 			selectedPluginsArray.put(selectedPlugin);
 		}
-		alertObject.put("alert_plugin_ids", selectedPluginsArray);
+		alertObject.put("alertPlugins", selectedPluginsArray);
 
 		return alertObject;
 	}

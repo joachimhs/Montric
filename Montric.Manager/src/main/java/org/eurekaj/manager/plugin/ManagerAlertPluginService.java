@@ -7,6 +7,7 @@ import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.Alert;
+import org.eurekaj.api.datatypes.AlertRecipient;
 import org.eurekaj.api.enumtypes.AlertStatus;
 import org.eurekaj.manager.util.ClassPathUtil;
 import org.eurekaj.spi.alert.EurekaJAlertPluginService;
@@ -33,11 +34,12 @@ public class ManagerAlertPluginService {
 		return pluginService;
 	}
 	
-	public void sendAlert(String pluginName, List<String> recipients, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
-		log.debug("Finding an alert plugin to send the alert");
+	public void sendAlert(AlertRecipient alertRecipient, List<String> recipients, Alert alert, AlertStatus oldStatus, double currValue, String timeString) {
+		log.debug("Finding an alert plugin to send the alert: " + loader + " pluginName: " + alertRecipient.getPluginName());
 		
 		for (EurekaJAlertPluginService pluginService : loader) {
-			if (pluginService.getAlertPluginName().equals(pluginName)) {
+			log.debug("plugin name: " + pluginService.getAlertPluginName() + " :: " + alertRecipient.getPluginName());
+			if (pluginService.getAlertPluginName().equals(alertRecipient.getPluginName())) {
 				log.debug("Sending alert through plugin: " + pluginService.getAlertPluginName());
 				pluginService.getAlertService().sendAlert(recipients, alert, oldStatus, currValue, timeString);
 			}

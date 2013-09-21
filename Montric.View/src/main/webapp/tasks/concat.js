@@ -5,7 +5,7 @@ module.exports = {
 	},
 	dist: {
 		// the files to concatenate
-		src: ['js/app.js', 'js/app/**/*.js', 'dist/templates.js'],
+		src: ['js/app.js', 'js/app/**/*.js'],
 		// the location of the resulting JS file
 		dest: 'dist/<%= pkg.name %>.js'
 	}
