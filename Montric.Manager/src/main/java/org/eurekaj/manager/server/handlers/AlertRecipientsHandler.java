@@ -25,27 +25,39 @@ public class AlertRecipientsHandler extends EurekaJGenericChannelHandler {
 		User loggedInUser = getLoggedInUser(cookieUuidToken);
 		String messageContent = getHttpMessageContent(e);
 
+		String id = getUrlId(e, "alertRecipients");
+		
 		logger.info(messageContent);
 
 		if (isGet(e) && isAdmin(loggedInUser)) { // Get account for current user
 			List<AlertRecipient> alertRecipientList = getAdministrationService().getAlertRecipients(loggedInUser.getAccountName());
 			JsonArray alertArray = new JsonArray();
 			for (AlertRecipient ar : alertRecipientList) {
-				alertArray.add(new Gson().toJsonTree(ar, BasicAlertRecipient.class));
+				BasicAlertRecipient basicAr = new BasicAlertRecipient(ar);
+				alertArray.add(new Gson().toJsonTree(basicAr, BasicAlertRecipient.class));
 			}
 			
 			JsonObject alertPlugins = new JsonObject();
-			alertPlugins.add("alert_recipients", alertArray);
+			alertPlugins.add("alertRecipients", alertArray);
 
 			jsonResponse = alertPlugins.toString();
 		} else if ((isPost(e) || isPut(e)) && isAdmin(loggedInUser)) {
-			BasicAlertRecipient alertRecipient = new Gson().fromJson(messageContent, BasicAlertRecipient.class);
+			AlertRecipientModel alertRecipientModel = new Gson().fromJson(messageContent, AlertRecipientModel.class);
+			BasicAlertRecipient alertRecipient = alertRecipientModel.getAlertRecipient();
+			
+			if (id != null) {
+				alertRecipient.setId(id);
+			}
 			alertRecipient.setAccountName(loggedInUser.getAccountName());
+			
+			
+			logger.info("Persisting Alert Recipient: " + new Gson().toJson(alertRecipient));
+			
 			getAdministrationService().persistAlertRecipient(alertRecipient);
 			
-			jsonResponse = new Gson().toJson(alertRecipient);
+			alertRecipientModel.setAlertRecipient(alertRecipient);
+			jsonResponse = new Gson().toJson(alertRecipientModel);
 		} else if (isDelete(e) && isAdmin(loggedInUser)) {
-			String id = getUrlId(e, "alert_recipients");
 			getAdministrationService().deleteAlertRecipient(loggedInUser.getAccountName(), id);
 			
 			logger.info("Deleting Alert Recipient with id: " + id + " for account: " + loggedInUser.getAccountName());
@@ -54,5 +66,17 @@ public class AlertRecipientsHandler extends EurekaJGenericChannelHandler {
 		
 		logger.info("jsonResponse: " + jsonResponse);
 		writeContentsToBuffer(ctx, jsonResponse, "text/json");
+	}
+	
+	private class AlertRecipientModel {
+		private BasicAlertRecipient alertRecipient;
+		
+		public BasicAlertRecipient getAlertRecipient() {
+			return alertRecipient;
+		}
+		
+		public void setAlertRecipient(BasicAlertRecipient alertRecipient) {
+			this.alertRecipient = alertRecipient;
+		}
 	}
 }

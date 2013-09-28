@@ -136,8 +136,8 @@ public class ParseJsonObjects {
 
         //{"chart_group_model":{"id":"New Group","chart_group_path":null}}
 
-        if (jsonGroup.has("chart_group_model")) {
-            JSONObject chartGroupObject = jsonGroup.getJSONObject("chart_group_model");
+        if (jsonGroup.has("chartGroup")) {
+            JSONObject chartGroupObject = jsonGroup.getJSONObject("chartGroup");
             groupedStatistics = new ManagerGroupedStatistics();
             if (id != null) {
                 groupedStatistics.setName(id);
@@ -149,7 +149,7 @@ public class ParseJsonObjects {
                 groupedStatistics.setAccountName(accountName);
             }
 
-            groupedStatistics.setGroupedPathList(getStringArrayFromJson(chartGroupObject, "chart_group_path"));
+            groupedStatistics.setGroupedPathList(getStringArrayFromJson(chartGroupObject, "chartGroups"));
         }
 
         return groupedStatistics;

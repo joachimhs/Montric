@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>Alert Type:</td>
-        <td>{{! view Montric.Select classNames="input-medium" valueBinding="alertType" contentBinding="alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>
+        <td>{{view Ember.Select classNames="input-medium" valueBinding="alertType" contentBinding="controller.alertTypes" optionLabelPath="content.value" optionValuePath="content.key"}}</td>
         <td>Alert Delay:</td>
         <td>{{view Ember.TextField valueBinding="alertDelay" classNames="input-mini"}}</td>
     </tr>
@@ -23,16 +23,18 @@
 
         <div>{{#if alertSource}}{{alertSource}}{{else}}None Selected{{/if}}</div>
         <div style="max-height: 250px; overflow: scroll; margin-bottom: 15px;" class="azureBlueBackground azureBlueBorderThin">
-            {{! view Montric.SelectableLeafTreeView itemsBinding="controllers.administrationMenu.rootNodes" selectedItemBinding="selectedItem.alertSource"}}
+            {{tree-menu rootNodes=controllers.admin.rootNodes allowMultipleSelections=false selectedNode=alertSource}}
         </div>
     </td>
     </tr>
     <tr>
         <td>Alert Recipient:</td>
-        <td colspan="3">{{! view Montric.MultiSelectableListView listItemsBinding="alertRecipients" selectedItemsBinding="selectedItem.alertNotificationArray"}}</td>
+        <td colspan="3">
+            {{multi-selectable-list nodes=alertRecipients selectedNodes=alertNotifications}}
+        </td>
     </tr>
     <tr class="footer">
-        <td colspan="4"><button {{action doCommitAlert}} class="btn" style="width: 100%;">Save Alert</button></td>
+        <td colspan="4"><button {{action doCommitAlert}} class="btn btn-primary" style="width: 100%;">Save Alert</button></td>
     </tr>
     </table>
 </div>

@@ -2,13 +2,13 @@
     {{#each node in nodes}}
         {{#if linkTo}}
             {{#linkTo linkTo node tagName=div classNames="list-group-item"}}
-                {{selectable-list-item node=node action="showDeleteModal" param=node textWidth=textWidth}}
+                {{selectable-list-item node=node action="showDeleteModal" textWidth=textWidth}}
             {{/linkTo}}
         {{else}}
-            {{selectable-list-item node=node tagName=div classNames="list-group-item" action="showDeleteModal" param=node textWidth=textWidth}}
+            {{selectable-list-item node=node tagName=div classNames="list-group-item" action="showDeleteModal" textWidth=textWidth}}
         {{/if}}
 
     {{/each}}
 </div>
 
-{{delete-modal id="deleteAlertModal" title="Deleting item!" action="deleteNode" item=nodeForDelete}}
+{{delete-modal elementId=deleteModalId item=nodeForDelete}}

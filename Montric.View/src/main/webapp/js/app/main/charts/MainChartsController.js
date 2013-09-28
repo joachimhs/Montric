@@ -57,7 +57,7 @@ Montric.MainChartsController = Ember.ArrayController.extend({
 
     stopTimer: function() {
         if (this.get('chartTimerId') != null) {
-            Montric.log('stopping timer');
+            console.log('stopping timer');
             clearInterval(this.get('chartTimerId'));
             this.set('chartTimerId', null);
         }

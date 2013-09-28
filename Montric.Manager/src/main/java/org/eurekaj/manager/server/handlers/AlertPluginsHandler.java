@@ -36,7 +36,7 @@ public class AlertPluginsHandler  extends EurekaJGenericChannelHandler {
 				alertArray.add(pluginObject);
 			}
 
-			alertPlugins.add("alert_plugins", alertArray);
+			alertPlugins.add("alertPlugins", alertArray);
 			jsonResponse = alertPlugins.toString();
 		}
 		

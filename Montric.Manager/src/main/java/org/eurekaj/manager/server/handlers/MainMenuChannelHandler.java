@@ -50,8 +50,8 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
             String uri = request.getUri();
 
             String objectArrayName = "mainMenus";
-            if (uri.contains("adminMenuModels")) {
-                objectArrayName = "adminMenuModels";
+            if (uri.contains("adminMenus")) {
+                objectArrayName = "adminMenus";
             }
 
             String id = UriUtil.getIdFromUri(uri, objectArrayName);

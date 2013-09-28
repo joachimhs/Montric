@@ -7,15 +7,19 @@
 
     <span {{action "toggleExpanded"}}>{{node.name}}</span>
 {{else}}
-    {{view Ember.Checkbox checkedBinding="node.isSelected"}}
+    {{#if controller.allowMultipleSelections}}
+        {{view Ember.Checkbox checkedBinding="node.isSelected"}}
 
-    <span {{action "toggleSelected"}}>{{node.name}}</span>
+        <span {{action "toggleSelected"}}>{{node.name}}</span>
+    {{else}}
+        <span {{action "selectNode" node}} {{bind-attr class=isSelected}}>{{node.name}}</span>
+    {{/if}}
 {{/if}}
 
 {{#if node.isExpanded}}
     {{#each child in node.children}}
         <div style="margin-left: 22px;">
-            {{tree-menu-node node=child}}
+            {{tree-menu-node node=child action="selectNode" selectedNode=selectedNode allowMultipleSelections=allowMultipleSelections}}
         </div>
     {{/each}}
 {{/if}}

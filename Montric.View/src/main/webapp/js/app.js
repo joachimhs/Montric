@@ -11,10 +11,11 @@ $.getJSON("/user", function(data) {
         var cookieUser = Montric.User.create();
         cookieUser.setProperties(data["user"]);
         Montric.set('cookieUser', cookieUser);
+        console.log("User: " + data["user"]);
     } else {
         Montric.set('cookieUser', null);
-    }*/
-
+    }
+*/
     console.log('advancing readiness');
     Montric.advanceReadiness();
 });

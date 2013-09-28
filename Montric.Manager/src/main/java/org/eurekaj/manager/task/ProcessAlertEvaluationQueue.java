@@ -52,8 +52,8 @@ public class ProcessAlertEvaluationQueue  implements Runnable {
 							for (String alertPluginId : alert.getSelectedEmailSenderList()) {
 								AlertRecipient alertRecipient = dbPlugin.getAlertRecipientDao().getAlertRecipient(alert.getAccountName(), alertPluginId);
 								List<String> recipients = new ArrayList<>();
-								for (IdObject idObject : alertRecipient.getRecipients()) {
-									recipients.add(idObject.getId());
+								for (String idObject : alertRecipient.getRecipients()) {
+									recipients.add(idObject);
 								}
 								
 								logger.info("Sending alert through plugin: " + alertPluginId);

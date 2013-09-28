@@ -463,7 +463,13 @@ public class BuildJsonObjectsUtil {
 		for (String emailRecipientGroup : alert.getSelectedEmailSenderList()) {
 		    emailGroupArray.put(emailRecipientGroup);
 		}
-		alertObject.put("alertNotifications", ListToString.convertFromListToJsonString(alert.getSelectedEmailSenderList(), ","));
+		
+		JSONArray alertNotificationArray = new JSONArray();
+		for (String notification : alert.getSelectedEmailSenderList()) {
+			alertNotificationArray.put(notification);
+		}
+		
+		alertObject.put("alertNotifications", alertNotificationArray);
 		
 		JSONArray selectedPluginsArray = new JSONArray();
 		for (String selectedPlugin : alert.getSelectedAlertPluginList()) {
@@ -533,7 +539,7 @@ public class BuildJsonObjectsUtil {
 
             groupsArray.put(group);
         }
-        ig.put("chart_group_path", groupsArray.toString());
+        ig.put("chartGroups", groupsArray);
 
         return ig;
     }

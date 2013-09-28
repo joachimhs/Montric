@@ -439,7 +439,7 @@ div.selectableList div button {
     margin-right: 2px;
 }
 
-div.selectableList div.is-selected {
+div.selectableList span.is-selected {
     background: #03005e;
     color: #fff;
     padding: 2px;
@@ -447,7 +447,7 @@ div.selectableList div.is-selected {
     white-space: nowrap;
 }
 
-div.selectableList div.is-selected:before {
+div.selectableList span.is-selected:before {
     content: '';
     float: left;
     width: 0;
@@ -457,7 +457,9 @@ div.selectableList div.is-selected:before {
     margin-top: 3px;
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
-    border-left: 6px solid white;
+    border-right: 6px solid #03005e;
+    border-left: 6px solid #03005e;
+
 }
 
 .livicon {

@@ -2,6 +2,12 @@ Montric.UserController = Ember.Controller.extend({
     init: function() {
         var controller = this;
 
+        var cookie = this.readCookie("uuidToken");
+        console.log('COOKIE UUID: ' + cookie);
+        if (cookie) {
+            this.set('uuidToken', cookie);
+        }
+
         console.log('Calling Mozilla Persona Watch')
         navigator.id.watch({
 
@@ -64,7 +70,7 @@ Montric.UserController = Ember.Controller.extend({
             this.set('content', this.store.find('user', this.get('uuidToken')));
         }
 
-    }.observes('uuidToken'),
+    }.observes('uuidToken').on('init'),
 
     isLoggedIn: function() {
         return this.get('content.id') != undefined && this.get('content.id') != null;

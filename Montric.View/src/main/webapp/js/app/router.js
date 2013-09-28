@@ -8,11 +8,17 @@ Montric.Router.map(function () {
             this.resource('alerts', {path: "/alerts"}, function() {
                 this.route('alert', {path: "/:alert_id"});
             });
-            this.route('chartGroups');
+            this.resource('chartGroups', {path: "/chartGroups"}, function() {
+                this.route('chartGroup', {path: "/:chart_group_id"});
+            });
+            this.resource('alertRecipients', {path: "/alert_recipients"}, function() {
+                this.route('alertRecipient', {path: "/:alert_recipient_id"});
+            });
+
             this.route('mainMenu');
             this.route('accessTokens');
             this.route('accounts');
-            this.route('alertRecipients');
+
         });
     });
 });

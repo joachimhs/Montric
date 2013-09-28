@@ -1,0 +1,8 @@
+<div id="adminTabLeftMenu">
+    {{view Ember.TextField valueBinding="newChartGroupName" classNames="input-medium mediumTopPadding"}}
+    <button class="btn btn-default" {{action "createNewChartGroup"}}>Add</button>
+    <br />
+    {{selectable-list nodes=controller.model textWidth=75 linkTo="chartGroups.chartGroup"}}
+</div>
+
+{{outlet}}

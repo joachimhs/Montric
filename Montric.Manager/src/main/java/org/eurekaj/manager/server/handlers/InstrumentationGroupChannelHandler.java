@@ -52,7 +52,7 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
             JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
             HttpRequest request = (HttpRequest)e.getMessage();
             String uri = request.getUri();
-            String id = UriUtil.getIdFromUri(uri, "chart_group_models");
+            String id = UriUtil.getIdFromUri(uri, "chartGroups");
 
             if (id != null) {
                 id = id.replaceAll("\\%20", " ");
@@ -66,11 +66,11 @@ public class InstrumentationGroupChannelHandler extends EurekaJGenericChannelHan
                     getBerkeleyTreeMenuService().persistGroupInstrumentation(groupedStatistics);
                 }
                 JSONObject topObject = new JSONObject();
-                topObject.put("chart_group_model", BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics));
+                topObject.put("chartGroup", BuildJsonObjectsUtil.generateChartGroupJson(groupedStatistics));
                 jsonResponse = topObject.toString();
             } else if (isAdmin(loggedInUser) && isGet(e)) {
                 JSONObject topObject = new JSONObject();
-                topObject.put("chart_group_models", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics(loggedInUser.getAccountName())));
+                topObject.put("chartGroups", BuildJsonObjectsUtil.generateInstrumentationGroupsJson(getBerkeleyTreeMenuService().getGroupedStatistics(loggedInUser.getAccountName())));
 
             	jsonResponse = topObject.toString();
                 log.debug("Got InstrumentationGroups:\n" + jsonResponse);

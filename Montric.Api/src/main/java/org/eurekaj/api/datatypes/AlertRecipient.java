@@ -8,5 +8,5 @@ public interface AlertRecipient {
 	public String getId();
 	public String getAccountName();
 	public String getPluginName();
-	public List<IdObject> getRecipients();
+	public List<String> getRecipients();
 }

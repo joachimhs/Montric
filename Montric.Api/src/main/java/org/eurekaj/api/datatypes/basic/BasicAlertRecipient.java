@@ -1,5 +1,6 @@
 package org.eurekaj.api.datatypes.basic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eurekaj.api.datatypes.AlertRecipient;
@@ -8,17 +9,22 @@ public class BasicAlertRecipient implements AlertRecipient {
 	private String id;
 	private String accountName;
 	private String pluginName;
-	private List<IdObject> recipients;
+	private List<String> recipients;
 	
 	public BasicAlertRecipient() {
-		// TODO Auto-generated constructor stub
+		recipients = new ArrayList<>();
 	}
 	
 	public BasicAlertRecipient(AlertRecipient alertRecipient) {
+		this();
+		
 		this.id = alertRecipient.getId();
 		this.accountName = alertRecipient.getAccountName();
 		this.pluginName = alertRecipient.getPluginName();
-		this.recipients = alertRecipient.getRecipients();
+		
+		if (alertRecipient.getRecipients() != null) {
+			this.recipients = alertRecipient.getRecipients();
+		}
 	}
 
 	public String getId() {
@@ -46,11 +52,12 @@ public class BasicAlertRecipient implements AlertRecipient {
 		this.pluginName = pluginName;
 	}
 
-	public List<IdObject> getRecipients() {
+	@Override
+	public List<String> getRecipients() {
 		return recipients;
 	}
-
-	public void setRecipients(List<IdObject> recipients) {
+	
+	public void setRecipients(List<String> recipients) {
 		this.recipients = recipients;
 	}
 }
