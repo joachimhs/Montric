@@ -15,8 +15,10 @@ Montric.Router.map(function () {
                 this.route('alertRecipient', {path: "/:alert_recipient_id"});
             });
 
-            this.route('mainMenu');
-            this.route('accessTokens');
+            this.route('mainMenuAdmin', {path: "/main_menu"});
+            this.resource('accessTokens', {path: "access_tokens"}, function() {
+                this.route('accessToken', {path: "/:access_token_id"});
+            });
             this.route('accounts');
 
         });

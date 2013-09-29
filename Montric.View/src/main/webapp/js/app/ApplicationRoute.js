@@ -1,4 +1,5 @@
 Montric.ApplicationRoute = Ember.Route.extend({
+
     actions: {
         doLogout: function() {
             console.log('Logging out!');
@@ -13,6 +14,13 @@ Montric.ApplicationRoute = Ember.Route.extend({
 
     redirect: function(controller) {
         Montric.set('appInitialized', true);
-        this.transitionTo('login');
+        console.log('APP ROUTE REDIRECT');
+
+        var cookieUuid = Montric.readCookie("uuidToken");
+        console.log('READING COOKIE: ' + cookieUuid);
+
+        if (!cookieUuid) {
+            this.transitionTo('login');
+        }
     }
 });

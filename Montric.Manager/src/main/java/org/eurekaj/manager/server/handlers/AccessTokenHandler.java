@@ -32,11 +32,15 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
         
         logger.info("cookieUuidToken: " + cookieUuidToken);
         
+        String id = getUrlId(e, "accessTokens");
+        
     	logger.info("Http Message Content: " + getHttpMessageContent(e));
         JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
         
         if ((isPost(e) || isPut(e)) && isAdmin(loggedInUser)) {
-        	BasicAccessToken newAccessToken = new Gson().fromJson(getHttpMessageContent(e), BasicAccessToken.class);
+        	AccessTokenModel accessTokenModel = new Gson().fromJson(getHttpMessageContent(e), AccessTokenModel.class);
+        	BasicAccessToken newAccessToken = accessTokenModel.getAccessToken();
+        	
         	Account account = getAccountService().getAccount(loggedInUser.getAccountName());
         	
         	if (account != null && newAccessToken != null && newAccessToken.getId() != null && newAccessToken.getId().length() >= 16) {
@@ -52,7 +56,7 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
         		getAccountService().persistAccount(account);
         	}
         	
-        	jsonResponse = new Gson().toJson(newAccessToken);
+        	jsonResponse = new Gson().toJson(accessTokenModel);
         } else if (isGet(e) && isAdmin(loggedInUser)) {
         	logger.info("Account Name: " + loggedInUser.getAccountName());
         	Account account = getAccountService().getAccount(loggedInUser.getAccountName());
@@ -71,9 +75,9 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
         	}
         	
         	JsonObject accessTokensJson = new JsonObject();
-        	accessTokensJson.add("access_tokens", accessTokenArray);
+        	accessTokensJson.add("accessTokens", accessTokenArray);
         	jsonResponse = accessTokensJson.toString();
-        } else if (isDelete(e) && isAdmin(loggedInUser)) {
+        } else if (isDelete(e) && isAdmin(loggedInUser) && id != null) {
         	
         }
             	
@@ -81,5 +85,17 @@ public class AccessTokenHandler extends EurekaJGenericChannelHandler {
 
         logger.info("jsonResponse: " + jsonResponse);
         writeContentsToBuffer(ctx, jsonResponse, "text/json");
+	}
+	
+	private class AccessTokenModel {
+		private BasicAccessToken accessToken;
+		
+		public BasicAccessToken getAccessToken() {
+			return accessToken;
+		}
+		
+		public void setAccessToken(BasicAccessToken accessToken) {
+			this.accessToken = accessToken;
+		}
 	}
 }

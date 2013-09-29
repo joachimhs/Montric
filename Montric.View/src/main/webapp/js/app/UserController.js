@@ -1,8 +1,10 @@
 Montric.UserController = Ember.Controller.extend({
+    needs: 'application',
+
     init: function() {
         var controller = this;
 
-        var cookie = this.readCookie("uuidToken");
+        var cookie = Montric.readCookie("uuidToken");
         console.log('COOKIE UUID: ' + cookie);
         if (cookie) {
             this.set('uuidToken', cookie);
@@ -23,7 +25,7 @@ Montric.UserController = Ember.Controller.extend({
                         console.log(res);
                         if (res.uuidToken) {
                             console.log('setting uuidToken: ' + res.uuidToken);
-                            controller.createCookie("uuidToken", res.uuidToken, 1);
+                            Montric.createCookie("uuidToken", res.uuidToken, 1);
                         }
 
                         if (res.registered === true) {
@@ -34,7 +36,6 @@ Montric.UserController = Ember.Controller.extend({
                         } else {
                             console.log('onLogin success. Not Registered');
                             controller.set('newUuidToken', res.uuidToken);
-                            //controller.transitionToRoute('login.register');
                         }
                     },
                     error: function(xhr, status, err) { console.log("error: " + status + " error: " + err); }
@@ -44,7 +45,7 @@ Montric.UserController = Ember.Controller.extend({
             onlogout: function() {
                 console.log('Logout not yet implemented on server. Deleting cookie on client');
                 controller.set('content', null);
-                controller.eraseCookie("uuidToken");
+                Montric.eraseCookie("uuidToken");
 
                 /*$.ajax({
                     type: 'POST',
@@ -81,34 +82,12 @@ Montric.UserController = Ember.Controller.extend({
             console.log('user is not registered in Montric. Transitioning to Registration');
             this.transitionToRoute('login.register');
         } else if (this.get('content.isUser')) {
-            console.log('user is logged in and is a user. Transitioning to charts');
-            //this.transitionToRoute('main.charts');
-            this.transitionToRoute('alerts');
-        }
-    }.observes('content.userRole'),
+            console.log('user is logged in and is a user.');
+            console.log('currentPath: ' + this.get('currentPath'));
 
-    createCookie: function(name, value, days) {
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime()+(days*24*60*60*1000));
-            var expires = "; expires="+date.toGMTString();
+            if (this.get('controllers.application.currentPath') === 'main.login.index') {
+                this.transitionToRoute('main.charts');
+            }
         }
-        else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/";
-    },
-
-    readCookie:function (name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    },
-
-    eraseCookie:function (name) {
-        this.createCookie(name, "", -1);
-    }
+    }.observes('content.userRole')
 });
