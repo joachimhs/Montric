@@ -1,12 +1,26 @@
 <div id="headerArea">
     <span class="headerText">{{#linkTo "main"}}<img src="/img/logo-small.png" />{{/linkTo}}</span>
     {{#if controllers.user.content.isUser}}
-        <button class="btn btn-primary pull-right smallTopPadding" {{action navigateToAdmin target="controller"}}>
+        <button class="btn btn-primary pull-right smallTopPadding" {{action "navigateToAdmin" target="controller"}}>
             <i class="icon-cog"></i>Administration
         </button>
     {{/if}}
 
     {{#if controllers.user.content.isAdmin}}
-        <button class="btn btn-default pull-right smallTopPadding" {{action showChartOptions}}>Chart Options</button>
+        <button class="btn btn-default pull-right smallTopPadding" {{action "showChartOptions"}}>Chart Options</button>
     {{/if}}
 </div>
+
+{{chart-options elementId="chartOptionsModal"
+    timezones=controllers.application.timezones
+    selectedTimezone=controllers.application.selectedTimezone
+    chartTimespans=controllers.application.chartTimespans
+    selectedChartTimespan=controllers.application.selectedChartTimespan
+    chartResolutions=controllers.application.chartResolutions
+    selectedChartResolution=controllers.application.selectedChartResolution
+    selectedChartFromString=controllers.application.selectedChartFromString
+    selectedChartToString=controllers.application.selectedChartToString
+    action="savingChartOptions"
+    showLiveCharts="showLiveCharts"
+    showHistoricCharts="showHistoricCharts"
+}}

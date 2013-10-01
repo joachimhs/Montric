@@ -1,0 +1,74 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Chart Options</h4>
+        </div>
+        <div class="modal-body">
+            <div class="btn-toolbar">
+                <button {{bind-attr class=liveTabClass}} {{action "showLiveCharts"}} style="cursor:pointer">
+                    Live Charts
+                </button>
+                <button {{bind-attr class=historicTabClass}} {{action "showHistoricCharts"}} style="cursor:pointer">
+                    Historic Charts
+                </button>
+            </div>
+
+            linkTo: {{liveTabClass}} <br />
+
+            <form class="form-horizontal" role="form">
+                {{#if isLiveActive}}
+                    <div class="form-group">
+                        <label for="liveTimezoneInput" class="col-lg-2 control-label">Timezone: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.Select elementId="liveTimezoneInput" class="form-control" contentBinding="timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="selectedTimezone" prompt="Select Timezone"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="liveTimespanInput" class="col-lg-2 control-label">Timespan: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.Select lementId="liveTimespanInput" class="form-control" contentBinding="chartTimespans" optionLabelPath="content.timespanName" optionValuePath="content.timespanValue" selectionBinding="selectedChartTimespan" prompt="Select Timespan"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="liveResolutionInput" class="col-lg-2 control-label">Resolution: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.Select elementId="liveResolutionInput" class="form-control" contentBinding="chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="selectedChartResolution" prompt="Select Resolution"}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isHistoricActive}}
+                    <div class="form-group">
+                        <label for="historicTimezoneInput" class="col-lg-2 control-label">Timezone: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.Select elementId="historicTimezoneInput" class="form-control" contentBinding="timezones" optionLabelPath="content.timezoneName" optionValuePath="content.timezoneId" selectionBinding="selectedTimezone" prompt="Select Timezone"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="historicFromInput" class="col-lg-2 control-label">From: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.TextField elementId="historicFromInput" class="form-control" valueBinding="selectedChartFromString"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="historicToInput" class="col-lg-2 control-label">To: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.TextField elementId="historicToInput" class="form-control" valueBinding="selectedChartToString"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="historicResolutionInput" class="col-lg-2 control-label">Timezone: </label>
+                        <div class="col-lg-10">
+                            {{view Ember.Select elementId="historicResolutionInput" class="form-control" contentBinding="chartResolutions" optionLabelPath="content.chartResolutionName" optionValuePath="content.chartResolutionValue" selectionBinding="selectedChartResolution" prompt="Select Resolution"}}
+                        </div>
+                    </div>
+                {{/if}}
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" {{action "saveChartOptions"}}>Save Changes</button>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

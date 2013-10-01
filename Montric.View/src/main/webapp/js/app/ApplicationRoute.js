@@ -9,6 +9,10 @@ Montric.ApplicationRoute = Ember.Route.extend({
         navigateToAdmin: function() {
             console.log('Navigating to Admin');
             this.transitionTo('admin');
+        },
+
+        showChartOptions: function() {
+            $("#chartOptionsModal").modal('show');
         }
     },
 

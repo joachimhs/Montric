@@ -144,7 +144,7 @@ Montric.ApplicationController = Ember.Controller.extend({
             this.set('selectedChartFrom', fromDate);
         }
 
-        var chartsController = this.get('controllers.charts');
+        var chartsController = this.get('controllers.mainCharts');
         console.log('chartsController');
         console.log(chartsController);
 
