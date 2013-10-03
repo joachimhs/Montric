@@ -1,12 +1,17 @@
 <div id="headerArea">
     <span class="headerText">{{#linkTo "main"}}<img src="/img/logo-small.png" />{{/linkTo}}</span>
+
     {{#if controllers.user.content.isUser}}
+        <button class="btn btn-danger pull-right smallTopPadding" {{action "logOut"}}>Log Out</button>
+    {{/if}}
+
+    {{#if controllers.user.content.isAdmin}}
         <button class="btn btn-primary pull-right smallTopPadding" {{action "navigateToAdmin" target="controller"}}>
             <i class="icon-cog"></i>Administration
         </button>
     {{/if}}
 
-    {{#if controllers.user.content.isAdmin}}
+    {{#if controllers.user.content.isUser}}
         <button class="btn btn-default pull-right smallTopPadding" {{action "showChartOptions"}}>Chart Options</button>
     {{/if}}
 </div>

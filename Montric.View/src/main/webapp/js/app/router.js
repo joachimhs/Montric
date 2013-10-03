@@ -1,7 +1,7 @@
 Montric.Router.map(function () {
     this.resource("main", {path: "/"}, function () {
         this.resource("login", {path: "/login"}, function () {
-
+            this.route('register');
         });
         this.route('charts');
         this.resource("admin", {path: "/admin"}, function() {

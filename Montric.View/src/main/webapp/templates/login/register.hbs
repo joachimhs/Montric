@@ -1,0 +1,56 @@
+<div class="registerBox well">
+    {{#if controllers.user.newUuidToken}}
+        <h1>Register a new Account!</h1>
+        <p>You have successfully logged in via Mozilla persona, but you email address is currently not associated with a Montric account.</p>
+        <p>In order to set up an account for you, we need some additional information!</p>
+    <form role="form-horizontal">
+        <div class="form-group">
+            <label class="control-label">Account Name</label>
+                {{view Ember.TextField valueBinding="accountName" classNames="form-control"}}
+                {{#if accountNameValidationError}}
+                    <span class="help-block">{{accountNameValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputFirstName">First Name</label>
+                {{view Ember.TextField valueBinding="firstName" classNames="form-control"}}
+                {{#if firstNameValidationError}}
+                    <span class="help-block">{{firstNameValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputLastName">Last Name</label>
+                {{view Ember.TextField valueBinding="lastName" classNames="form-control"}}
+                {{#if lastNameValidationError}}
+                    <span class="help-block">{{lastNameValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputCompany">Company</label>
+                {{view Ember.TextField valueBinding="company" classNames="form-control"}}
+                {{#if companyValidationError}}
+                    <span class="help-block">{{companyValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputCountry">Country</label>
+                {{view Ember.TextField valueBinding="country" classNames="form-control"}}
+                {{#if countryValidationError}}
+                    <span class="help-block">{{countryValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputUsage">What will you use Montric for?</label>
+                {{view Ember.TextArea valueBinding="usage" rows="7" classNames="form-control"}}
+                {{#if usageValidationError}}
+                    <span class="help-block">{{usageValidationError}}</span>
+                {{/if}}
+        </div>
+        <div class="form-actions" style="background: none;">
+            <button type="submit" class="btn btn-primary" {{action "registerNewAccount"}}>Register New Account</button>
+        </div>
+    {{else}}
+        <h1>Waiting for Mozilla Persona...</h1>
+    {{/if}}
+</form>
+</div>

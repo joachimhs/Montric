@@ -174,9 +174,8 @@ div.registerBox {
     margin-left: auto;
     margin-right: auto;
     position: fixed;
-    top: 50%;
+    top: 5%;
     left: 50%;
-    margin-top: -250px;
     margin-left: -250px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
 }

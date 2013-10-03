@@ -198,14 +198,14 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
                 		logger.info("Returning user: " + jsonResponse);
             		} else {
             			logger.info("User not Authenticated!");
-                		jsonResponse = "{\"error\": \"user_not_authenticated\"}";
+                		jsonResponse = "{\"user\": {\"id\": \"" + cookieUuidToken + "\", \"userRole\": \"unAuthorized\"}}";
             		}
             	} else {
             		logger.info("User not Authenticated!");
-            		jsonResponse = "{\"error\": \"user_not_authenticated\"}";
+            		jsonResponse = "{\"user\": {\"id\": \"" + cookieUuidToken + "\", \"userRole\": \"unAuthorized\"}}";
             	}
             } else if (isGet(e) && cookieUuidToken == null) {
-            	jsonResponse = "{\"error\": \"user_not_authenticated\"}";
+            	jsonResponse = "{\"user\": {\"id\": \"" + cookieUuidToken + "\", \"userRole\": \"unAuthorized\"}}";
             }
         } catch (JSONException jsonException) {
             throw new IOException("Unable to process JSON Request", jsonException);

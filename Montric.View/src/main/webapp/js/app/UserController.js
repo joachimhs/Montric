@@ -1,5 +1,5 @@
 Montric.UserController = Ember.Controller.extend({
-    needs: 'application',
+    needs: ['application', 'mainCharts'],
 
     init: function() {
         var controller = this;
@@ -36,6 +36,7 @@ Montric.UserController = Ember.Controller.extend({
                         } else {
                             console.log('onLogin success. Not Registered');
                             controller.set('newUuidToken', res.uuidToken);
+                            controller.transitionToRoute('login.register');
                         }
                     },
                     error: function(xhr, status, err) { console.log("error: " + status + " error: " + err); }
@@ -43,9 +44,10 @@ Montric.UserController = Ember.Controller.extend({
             },
 
             onlogout: function() {
-                console.log('Logout not yet implemented on server. Deleting cookie on client');
+                //console.log('Logout not yet implemented on server. Deleting cookie on client');
                 controller.set('content', null);
-                Montric.eraseCookie("uuidToken");
+                controller.set('uuidToken', null);
+                //Montric.eraseCookie("uuidToken");
 
                 /*$.ajax({
                     type: 'POST',
@@ -69,6 +71,9 @@ Montric.UserController = Ember.Controller.extend({
 
         if (this.get('uuidToken')) {
             this.set('content', this.store.find('user', this.get('uuidToken')));
+        } else {
+            this.set('content', null);
+            this.transitionToRoute('login.index');
         }
 
     }.observes('uuidToken').on('init'),
@@ -78,14 +83,21 @@ Montric.UserController = Ember.Controller.extend({
     }.property('content.id'),
 
     userRoleObserver: function() {
-        if (this.get('content.isUnregistered')) {
+        if (this.get('content.isNotAuthenticated')) {
+            console.log('user is not authenticated in Montric. Transitioning to Login');
+            this.transitionToRoute('login.index');
+        }else if (this.get('content.isUnregistered')) {
             console.log('user is not registered in Montric. Transitioning to Registration');
             this.transitionToRoute('login.register');
         } else if (this.get('content.isUser')) {
             console.log('user is logged in and is a user.');
-            console.log('currentPath: ' + this.get('currentPath'));
 
-            if (this.get('controllers.application.currentPath') === 'main.login.index') {
+
+            if (this.get('controllers.application.currentPath') === 'main.login.index' ||
+                this.get('controllers.application.currentPath') === 'main.login.register') {
+
+                console.log('resetting mainCharts controller');
+                this.set('controllers.mainCharts.content', null);
                 this.transitionToRoute('main.charts');
             }
         }

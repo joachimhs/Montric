@@ -22,5 +22,9 @@ Montric.User = DS.Model.extend({
 
     isUnregistered: function() {
         return this.get('userRole') === 'unregistered';
+    }.property('userRole'),
+
+    isNotAuthenticated: function() {
+        return !(this.get('isUser') || this.get('isUnregistered'));
     }.property('userRole')
 });

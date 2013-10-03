@@ -77,7 +77,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
                 JSONObject keyObject = new JSONObject(new JSONTokener(decoded));
                 
                 String filterChartType = null;
-                if (uri.contains("admin_menu_models")) {
+                if (uri.contains("adminMenu")) {
                 	filterChartType = "chart";
                 }
 
@@ -98,7 +98,7 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
         }
 
         if (jsonResponse.length() <= 2) {
-            jsonResponse = "{}";
+            jsonResponse = "{\"mainMenus\": []}";
         }
         writeContentsToBuffer(ctx, jsonResponse, "text/json");
 	}

@@ -13,6 +13,11 @@ Montric.ApplicationRoute = Ember.Route.extend({
 
         showChartOptions: function() {
             $("#chartOptionsModal").modal('show');
+        },
+
+        logOut: function() {
+            Montric.createCookie('uuidToken');
+            navigator.id.logout();
         }
     },
 
