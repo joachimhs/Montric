@@ -97,11 +97,11 @@
 			<artifactId>riakPlugin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.montric.plugin</groupId>
 			<artifactId>aggregateLiveStatisticsPlugin</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency-->
 		<!--dependency> <groupId>org.eurekaJ.plugin</groupId> <artifactId>liveStatisticsCounterPlugin</artifactId> 
 			<version>${project.version}</version> </dependency -->
 		<dependency>
