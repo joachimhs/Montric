@@ -86,7 +86,9 @@ Montric.UserController = Ember.Controller.extend({
         if (this.get('content.isNotAuthenticated')) {
             console.log('user is not authenticated in Montric. Transitioning to Login');
             this.transitionToRoute('login.index');
-        }else if (this.get('content.isUnregistered')) {
+        } else if (this.get('content.isNew')) {
+            this.transitionToRoute('login.activation');
+        } else if (this.get('content.isUnregistered')) {
             console.log('user is not registered in Montric. Transitioning to Registration');
             this.transitionToRoute('login.register');
         } else if (this.get('content.isUser')) {
@@ -94,7 +96,8 @@ Montric.UserController = Ember.Controller.extend({
 
 
             if (this.get('controllers.application.currentPath') === 'main.login.index' ||
-                this.get('controllers.application.currentPath') === 'main.login.register') {
+                this.get('controllers.application.currentPath') === 'main.login.register' ||
+                this.get('controllers.application.currentPath') === 'main.login.activation') {
 
                 console.log('resetting mainCharts controller');
                 this.set('controllers.mainCharts.content', null);

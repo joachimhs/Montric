@@ -2,7 +2,7 @@
     {{view Ember.TextField valueBinding="newAlertRecipientName" classNames="input-medium mediumTopPadding"}}
     <button class="btn btn-default" {{action createNewAlertRecipient}}>Add</button>
     <br />
-    {{selectable-list nodes=controller.model textWidth=75 linkTo="alertRecipients.alertRecipient"}}
+    {{selectable-list nodes=controller.arrangedContent textWidth=75 linkTo="alertRecipients.alertRecipient"}}
 </div>
 
 {{outlet}}

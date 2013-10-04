@@ -1,9 +1,0 @@
-<div class="loginBox well">
-    <h1>Montric Login</h1>
-    <p>Montric is currently in Beta. You are free to register an account, but your data will only be retained for one week. Throughout the beta-period we will expand the retention. Towards the end of the beta-period we will add subscription plans with different retention lengths.</p>
-    {{#if controllers.user.isLoggingIn}}
-        <div style="margin-top: 20px; text-align: center;"><a href="#" class="persona-button"><span>Signing In... Please Wait</span></a></div>
-    {{else}}
-        <div style="margin-top: 20px; text-align: center;"><a href="#" class="persona-button" {{action doLogin}}><span>Sign in with Mozilla Persona</span></a></div>
-    {{/if}}
-</div>

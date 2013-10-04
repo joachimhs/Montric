@@ -8,6 +8,10 @@ Montric.User = DS.Model.extend({
     country: DS.attr('string'),
     usage: DS.attr('string'),
 
+    isNew: function() {
+        return this.get('userRole') === 'new';
+    }.property('userRole'),
+
     isUser: function() {
         return this.get('userRole') === 'user' || this.get('userRole') === 'beta' || this.get('isAdmin') || this.get('isRoot');
     }.property('userRole'),

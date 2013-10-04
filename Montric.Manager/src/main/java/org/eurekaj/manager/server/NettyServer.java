@@ -61,12 +61,12 @@ public class NettyServer extends EurekaJWebappPluginService {
 		
 		System.setProperty("basedir", "/Users/jhsmbp/Projects/Montric/Montric.View/src/main/webapp");
 		//System.setProperty("basedir", "/Users/joahaa/Projects/HaagenSoftwareWeb");
-		System.setProperty("montric.db.absPath", "/srv/montric/montricData");
+		//System.setProperty("montric.db.absPath", "/srv/montric/montricData");
 		System.setProperty("montric.db.riak.hosts", "192.168.1.201 192.168.1.202 192.168.1.203");
 		System.setProperty("montric.rootUser", "joachim@haagen-software.no");
 		System.setProperty("org.montric.deleteStatsOlderThanDays", "180");
-		//System.setProperty("montric.db.type", "RiakPlugin");
-		System.setProperty("montric.db.type", "LevelDBPlugin");
+		System.setProperty("montric.db.type", "RiakPlugin");
+		//System.setProperty("montric.db.type", "LevelDBPlugin");
 		System.setProperty("org.montric.port", "8081");
 		System.setProperty("org.montric.indexCacheSeconds", "0");
 		System.setProperty("org.montric.host", "localhost");

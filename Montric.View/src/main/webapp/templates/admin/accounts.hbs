@@ -1,1 +1,18 @@
-Accounts
+<table class="table table-striped table-hover">
+    <thead>
+    <tr style="font-weight: 600;">
+        <td>Account Name</td>
+        <td>Account Type</td>
+        <td>Action</td>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each arrangedContent}}
+        <tr>
+            <td>{{id}} - {{accountType}}</td>
+            <td>{{view Ember.Select contentBinding="controller.validAccountTypes" valueBinding="accountType" prompt="Select an account type"}}</td>
+            <td><button class="btn btn-primary" {{action "updateAccount" this}}>Update</button></td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

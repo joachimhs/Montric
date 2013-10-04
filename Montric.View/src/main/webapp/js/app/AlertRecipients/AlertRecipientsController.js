@@ -1,6 +1,8 @@
 Montric.AlertRecipientsController = Ember.ArrayController.extend({
     newAlertRecipientName: null,
-
+    sortProperties: ['id'],
+    sortAscending: true,
+    
     actions: {
         createNewAlertRecipient: function() {
             this.doCreateNewAlertRecipient();

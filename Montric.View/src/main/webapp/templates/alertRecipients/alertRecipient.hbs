@@ -17,7 +17,6 @@
     <tr>
         <td colspan="3">
             <div style="max-height: 150px; max-height: 150px; overflow: scroll; width: 100%" class="azureBlueBackground azureBlueBorderThin">
-                {{! view Montric.SelectableListView listItemsBinding="recipients" deleteAction="deleteSelectedRecipient" maxCharacters="120" selectedItemBinding="controller.selectedRecipient"}}
                 {{multi-selectable-list nodes=recipients selectedNodes=selectedRecipients}}
             </div>
             <button {{action "doDeleteSelectedRecipients"}} class="btn btn-success" style="width: 100%;">Delete selected Recipients from Alert Recipient</button>

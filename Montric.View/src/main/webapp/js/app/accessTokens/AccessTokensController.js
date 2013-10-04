@@ -1,5 +1,7 @@
 Montric.AccessTokensController = Ember.ArrayController.extend({
     newAccessTokenName: null,
+    sortProperties: ['id'],
+    sortAscending: true,
 
     actions: {
         createNewAccessToken: function () {

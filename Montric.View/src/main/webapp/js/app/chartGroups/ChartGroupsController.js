@@ -1,5 +1,7 @@
 Montric.ChartGroupsController = Ember.ArrayController.extend({
     needs: 'admin',
+    sortProperties: ['id'],
+    sortAscending: true,
 
     actions: {
         createNewChartGroup: function () {
