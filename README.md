@@ -28,7 +28,7 @@ Below you will find a few screenshots of what the current 1.5 development versio
 ###Configuring Charts
 ![Configuring Charts] (http://stuff.haagen.name/ej2.png)
 
-###Administrering your account
+###Account Administration
 ![Administrering your account] (http://stuff.haagen.name/ej3.png)
 
 ###Disabling lines inside the charts
