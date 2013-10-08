@@ -25,7 +25,7 @@ public class RiakTreeMenuDao implements TreeMenuDao {
 
 	@Override
 	public void persistTreeMenu(Statistics statistics) {
-		logger.info("Persisting tree menu: " + statistics.getGuiPath() + " for account: " + statistics.getAccountName());
+		//logger.info("Persisting tree menu: " + statistics.getGuiPath() + " for account: " + statistics.getAccountName());
 		Bucket myBucket = null;
         try {
             myBucket = riakClient.fetchBucket("Statistics;" + statistics.getAccountName()).execute();

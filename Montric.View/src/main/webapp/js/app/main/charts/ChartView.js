@@ -76,7 +76,7 @@ Montric.ChartView = Ember.View.extend({
                 element: document.getElementById(elementId + "_chart"),
                 width: width,
                 height: height,
-                renderer: 'line',
+                renderer: 'lineplot',
                 series: series,
                 min: 0
             } );
