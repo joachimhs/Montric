@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    	<parent>
+	        <groupId>org.montric</groupId>
+			<artifactId>montric.parent</artifactId>
+	        <version>0.9-SNAPSHOT</version>
+	    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <name>Montric Aggregate Live Statistics Plugin</name>
+    <groupId>org.montric.plugin</groupId>
+    <artifactId>aggregateLiveStatisticsPlugin</artifactId>
+
+    <build>
+
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>ISO-8859-1</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.montric</groupId>
+            <artifactId>montric.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>

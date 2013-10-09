@@ -23,6 +23,7 @@
 		<module>Montric.AlertEmailPlugin</module>
 		<module>Montric.LevelDBPlugin</module>
 		<module>Montric.RiakPlugin</module>
+		<module>Montric.AggregateLiveStatisticsPlugin</module>
     </modules>
 
 	<build>

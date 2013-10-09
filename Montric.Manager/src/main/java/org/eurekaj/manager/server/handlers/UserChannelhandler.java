@@ -239,7 +239,14 @@ public class UserChannelhandler extends EurekaJGenericChannelHandler {
 		assertionJson.addProperty("assertion", messageContent);
 		String host = System.getProperty("org.montric.host", "localhost");
 		Integer port = IntegerParser.parseIntegerFromString(System.getProperty("org.montric.userPort"), 80);
-		assertionJson.addProperty("audience", "http://" + host + ":" + port);
+		String protocol = "http://";
+		
+		if (port.equals(443)) {
+			protocol = "https://";
+		}
+		
+		logger.info("Setting audience: " + protocol + host + ":" + port);
+		assertionJson.addProperty("audience", protocol + host + ":" + port);
 		
 		//TODO: Need to handle this: Mozilla Persona Response: {"status":"failure","reason":"audience mismatch: port mismatch"}
 		int statusCode = -1;
