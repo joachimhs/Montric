@@ -423,13 +423,14 @@ div.selectableList {
     margin-left: 0px;
     margin-right: 10px;
     margin-bottom: 15px;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 div.selectableList div {
     list-style: none;
     cursor: pointer;
     line-height: 20px;
-    overflow: hidden;
     white-space: nowrap;
 }
 

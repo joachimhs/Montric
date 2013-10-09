@@ -14,6 +14,8 @@ Montric.AdminController = Ember.Controller.extend({
             }
         });
 
+        rootNodes.sort(Montric.AdminMenu.compareNodes);
+
         console.log('Finished iterating over admin menu nodes. found ' + rootNodes.get('length') + " root nodes");
         this.set('rootNodes', rootNodes);
     }.observes('content.isLoaded'),

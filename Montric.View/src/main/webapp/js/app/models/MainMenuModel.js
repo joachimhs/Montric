@@ -18,5 +18,26 @@ Montric.MainMenu = DS.Model.extend({
 
     isAlert: function() {
         return this.get('nodeType') === 'alert';
-    }.property('nodeType')
+    }.property('nodeType'),
+
+    isExpandedObserver: function() {
+        console.log('isExpanded: ' + this.get('id'));
+        if (this.get('isExpanded')) {
+            var children = this.get('children.content');
+            if (children) {
+                console.log('Sorting children');
+                children.sort(Montric.MainMenu.compareNodes);
+            }
+        }
+    }.observes('isExpanded')
+});
+
+Montric.MainMenu.reopenClass({
+    compareNodes: function(nodeOne, nodeTwo) {
+        if (nodeOne.get('id') > nodeTwo.get('id'))
+            return 1;
+        if (nodeOne.get('id') < nodeTwo.get('id'))
+            return -1;
+        return 0;
+    }
 });

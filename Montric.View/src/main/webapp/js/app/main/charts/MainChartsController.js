@@ -3,15 +3,17 @@ Montric.MainChartsController = Ember.ArrayController.extend({
 
     contentIsLoadedObserver: function() {
         console.log('Main Menu Content isLoaded: ' + this.get('content.isLoaded'));
+        var rootNodes = Ember.A();
 
         if (this.get('content.isLoaded')) {
-            var rootNodes = Ember.A();
             console.log('Starting iteration over menu nodes');
             this.get('content').forEach(function(node) {
                 if (node.get('parent') === null) {
                     rootNodes.pushObject(node);
                 }
             });
+
+            rootNodes.sort(Montric.MainMenu.compareNodes);
 
             console.log('Finished iterating over menu nodes. found ' + rootNodes.get('length') + " root nodes");
         }

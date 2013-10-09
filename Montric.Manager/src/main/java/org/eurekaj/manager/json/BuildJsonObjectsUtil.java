@@ -158,9 +158,11 @@ public class BuildJsonObjectsUtil {
         }
 
         for (GroupedStatistics groupedStatistics : groupedStatisticsList) {
-            String guiPath = "Grouped Statistics:" + groupedStatistics.getName();
-            JSONObject jsonNode = buildTreeNode(guiPath, nodesBuilt, "grouped_statistics");
-            nodesBuilt.put(guiPath, jsonNode);
+        	if (groupedStatistics.getGroupedPathList().size() > 0) {
+        		String guiPath = "Grouped Statistics:" + groupedStatistics.getName();
+        		JSONObject jsonNode = buildTreeNode(guiPath, nodesBuilt, "grouped_statistics");
+        		nodesBuilt.put(guiPath, jsonNode);
+        	}
         }
     }
 
