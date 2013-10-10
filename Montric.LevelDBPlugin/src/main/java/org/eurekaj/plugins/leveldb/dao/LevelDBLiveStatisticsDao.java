@@ -47,22 +47,14 @@ public class LevelDBLiveStatisticsDao implements LiveStatisticsDao {
 	@Override
 	public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
 		Double valueDouble = LiveStatisticsUtil.parseDouble(value);
-        Double calculatedValue = LiveStatisticsUtil.calculateValueBasedOnUnitType(valueDouble, unitType);
-
         long hoursSince1970 = timeperiod / 240;
-        int fifteenSecondPeriodsSinceStartOfHour = LiveStatisticsUtil.getFifteensecondTimeperiodsSinceStartOfHour(timeperiod * 15);
 
         BasicMetricHour storedMetricHour = getMetricHour(accountName, guiPath, hoursSince1970);
         if (storedMetricHour == null) {
             storedMetricHour = new BasicMetricHour(guiPath, accountName, hoursSince1970, valueType.toString(), unitType.toString());
         }
 
-        Double prevValue = storedMetricHour.getMetrics()[fifteenSecondPeriodsSinceStartOfHour];
-        if (prevValue == null) {
-            storedMetricHour.getMetrics()[fifteenSecondPeriodsSinceStartOfHour] = calculatedValue;
-        } else {
-            storedMetricHour.getMetrics()[fifteenSecondPeriodsSinceStartOfHour] = LiveStatisticsUtil.calculateValueBasedOnValueType(prevValue, calculatedValue, valueType);
-        }
+        storedMetricHour.addStatistic(new BasicLiveStatistics(guiPath, accountName, timeperiod, valueDouble, valueType.value(), unitType.value()));
         
         db.put(bytes(liveStatsBucketKey + accountName + ";" + hoursSince1970 + ";" + guiPath), bytes(gson.toJson(storedMetricHour)));
 	}
@@ -71,9 +63,7 @@ public class LevelDBLiveStatisticsDao implements LiveStatisticsDao {
 	public void storeIncomingStatistics(List<LiveStatistics> liveStatisticsList) {
 		for (LiveStatistics ls : liveStatisticsList) {
             long hoursSince1970 = ls.getTimeperiod() / 240;
-            int fifteenSecondPeriodsSinceStartOfHour = LiveStatisticsUtil.getFifteensecondTimeperiodsSinceStartOfHour(ls.getTimeperiod() * 15);
-            Double calculatedValue = LiveStatisticsUtil.calculateValueBasedOnUnitType(ls.getValue(), UnitType.fromValue(ls.getUnitType()));
-
+            
             BasicMetricHour mhToStore = metricHoursToStoreHash.get(ls.getAccountName() + ";" + ls.getGuiPath() + ";" + hoursSince1970);
             boolean wasInStoreHash = mhToStore != null;
 
@@ -92,7 +82,7 @@ public class LevelDBLiveStatisticsDao implements LiveStatisticsDao {
                 mhToStore = new BasicMetricHour(ls.getGuiPath(), ls.getAccountName(), hoursSince1970, ls.getValueType(), ls.getUnitType());
             }
 
-            mhToStore.getMetrics()[fifteenSecondPeriodsSinceStartOfHour] = LiveStatisticsUtil.calculateValueBasedOnValueType(ls, calculatedValue, ValueType.fromValue(ls.getValueType()));
+            mhToStore.addStatistic(ls);
 
             if (!wasInStoreHash) {
                 metricHoursToStoreHash.put(ls.getAccountName() + ";" + ls.getGuiPath() + ";" + hoursSince1970, mhToStore);

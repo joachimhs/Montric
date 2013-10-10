@@ -156,7 +156,6 @@ public class RiakAccountDao implements AccountDao {
 	
 	@Override
 	public AccessToken getAccessToken(String accessToken) {
-		logger.info("getting access token: " + accessToken);
 		BasicAccessToken session = null;
 		
 		Bucket myBucket = null;

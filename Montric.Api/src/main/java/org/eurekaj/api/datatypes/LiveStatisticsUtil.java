@@ -44,36 +44,16 @@ public class LiveStatisticsUtil {
 
         return valueReturn;
     }
-
-    public static Double calculateValueBasedOnValueType(LiveStatistics oldStat, Double newValue, ValueType valueType) {
-        Double valueReturn = newValue;
-
-        if (newValue == null) {
-            //in this case, the return value is NULL regardless.
-            valueReturn = null;
-        } else if (valueType == ValueType.VALUE) {
-            valueReturn = newValue;
-        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AGGREGATE) {
-            valueReturn = oldStat.getValue() + newValue;
-        } else if (oldStat != null && oldStat.getValue() != null && valueType == ValueType.AVERAGE) {
-            valueReturn = (oldStat.getValue() + newValue) / 2;
-        }
-
-        return valueReturn;
-    }
     
-    public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType) {
+    public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType, Integer numMeasurements) {
         Double valueReturn = newValue;
 
-        if (newValue == null) {
-            //in this case, the return value is NULL regardless.
-            valueReturn = null;
-        } else if (valueType == ValueType.VALUE) {
+        if (valueType == ValueType.VALUE) {
             valueReturn = newValue;
         } else if (oldValue != null && valueType == ValueType.AGGREGATE) {
             valueReturn = oldValue + newValue;
         } else if (oldValue != null && valueType == ValueType.AVERAGE) {
-            valueReturn = (oldValue + newValue) / 2;
+            valueReturn = ((oldValue * numMeasurements) + newValue) / (numMeasurements + 1);
         }
 
         return valueReturn;
