@@ -479,9 +479,16 @@ div.selectableList span.is-selected:before {
 .legend {
     display: inline-block;
     background: #404040;
+    opacity:0.6;
+    filter:alpha(opacity=60); /* For IE8 and earlier */
     color: white;
     position: absolute;
     left: 20px;
+}
+
+.legend:Hover {
+    opacity:0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
 }
 
 .legend_header {

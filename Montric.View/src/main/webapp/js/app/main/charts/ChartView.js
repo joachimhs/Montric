@@ -146,7 +146,7 @@ Montric.ChartView = Ember.View.extend({
                     this.element.appendChild(dot);
 
                     if (point.active) {
-                        item.className = 'item leftitem active';
+
                         dot.className = 'dot active';
                     }
 
@@ -156,15 +156,30 @@ Montric.ChartView = Ember.View.extend({
                         this.onRender(args);
                     }
 
-                    //If item moves over to the right half of the chart, move the hover detail to the left instead
-                    if (this.graph.x(point.value.x) > (width / 2)) {
-                        var itemWidth = $('#' + elementId + "_hoverdiv").outerWidth();
+                    var rightArrow = this.graph.x(point.value.x) > (width / 2);
+                    var bottomArrow = this.graph.y(point.value.y) > (height / 2);
+                    var itemWidth = $('#' + elementId + "_hoverdiv").outerWidth();
+                    var itemHeight = $('#' + elementId + "_hoverdiv").outerHeight();
+
+
+                    if (rightArrow && bottomArrow) {
+                        item.className = 'item rightitemBottom active';
+                        $('#' + elementId + "_hoverdiv").css({
+                            left: $('#' + elementId + "_hoverdiv").position().left - itemWidth - 25 + "px",
+                            top: $('#' + elementId + "_hoverdiv").position().top - itemHeight + 25 + "px"
+                        });
+                    } else if (rightArrow && !bottomArrow) {
                         item.className = 'item rightitem active';
                         $('#' + elementId + "_hoverdiv").css({
                             left: $('#' + elementId + "_hoverdiv").position().left - itemWidth - 25 + "px"
                         });
-
-                        item.style.left = item.style.left - itemWidth;
+                    } else if (!rightArrow && bottomArrow) {
+                        item.className = 'item leftitemBottom active';
+                        $('#' + elementId + "_hoverdiv").css({
+                            top: $('#' + elementId + "_hoverdiv").position().top - itemHeight + 25 + "px"
+                        });
+                    } else if (!rightArrow && !bottomArrow) {
+                        item.className = 'item leftitem active';
                     }
                 }
             });

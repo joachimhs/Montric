@@ -21,6 +21,9 @@ Montric.Router.map(function () {
                 this.route('accessToken', {path: "/:access_token_id"});
             });
             this.route('accounts');
+            this.resource('users', {path: "/users"}, function() {
+                this.route('user', {path: "/:user_id"});
+            });
 
         });
     });

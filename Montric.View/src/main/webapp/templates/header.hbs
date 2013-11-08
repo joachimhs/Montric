@@ -1,19 +1,24 @@
 <div id="headerArea">
     <span class="headerText">{{#linkTo "main"}}<img src="/img/logo-small.png" />{{/linkTo}}</span>
 
-    {{#if controllers.user.content.isUser}}
-        <button class="btn btn-danger pull-right smallTopPadding" {{action "logOut"}}>Log Out</button>
-    {{/if}}
+    <div class="pull-right smallTopPadding">
+        {{controllers.user.content.accountName}}:
 
-    {{#if controllers.user.content.isAdmin}}
-        <button class="btn btn-primary pull-right smallTopPadding" {{action "navigateToAdmin" target="controller"}}>
-            <i class="icon-cog"></i>Administration
-        </button>
-    {{/if}}
+        {{#if controllers.user.content.isUser}}
+            <button class="btn btn-default" {{action "showChartOptions"}}>Chart Options</button>
+        {{/if}}
 
-    {{#if controllers.user.content.isUser}}
-        <button class="btn btn-default pull-right smallTopPadding" {{action "showChartOptions"}}>Chart Options</button>
-    {{/if}}
+        {{#if controllers.user.content.isAdmin}}
+            <button class="btn btn-primary" {{action "navigateToAdmin" target="controller"}}>
+                <i class="icon-cog"></i>Administration
+            </button>
+        {{/if}}
+
+        {{#if controllers.user.content.isUser}}
+            <button class="btn btn-danger" {{action "logOut"}}>Log Out</button>
+        {{/if}}
+    </div>
+
 </div>
 
 {{chart-options elementId="chartOptionsModal"
