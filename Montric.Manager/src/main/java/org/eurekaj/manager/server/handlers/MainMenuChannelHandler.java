@@ -42,10 +42,14 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 		log.info("MainMenuChannelHandler");
 		String jsonResponse = "";
 		String cookieUuidToken = getCookieValue(e, "uuidToken");
-        User loggedInUser = getLoggedInUser(cookieUuidToken);
+		User loggedInUser = null;
+		if (cookieUuidToken != null) {
+			loggedInUser = getLoggedInUser(cookieUuidToken);
+		} 
+        JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
+        String accountName = getAccountForAccessToken(jsonObject);
         
         try {        	
-            JSONObject jsonObject = BuildJsonObjectsUtil.extractJsonContents(getHttpMessageContent(e));
             HttpRequest request = (HttpRequest)e.getMessage();
             String uri = request.getUri();
 
@@ -66,7 +70,12 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
             	
             	log.info("Deleting Main Menu Item with id: " + id);
             	
-            } else if (isUser(loggedInUser) && isGet(e)) {
+            } else if (isUser(loggedInUser) || accountName != null) {
+            	String loggedInAccountName = accountName;
+            	if (accountName == null) {
+            		loggedInAccountName = loggedInUser.getAccountName();
+            	}
+            	
             	String decoded = "{}";
             	if (uri.contains("?") && uri.contains("{") && uri.contains("}")) {
             		decoded = URLDecoder.decode(uri.substring(uri.lastIndexOf('?')+1, uri.length()), "UTF-8");
@@ -82,9 +91,9 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
                 }
 
                 JSONArray menuItems = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject("menuID",
-                        getBerkeleyTreeMenuService().getTreeMenu(loggedInUser.getAccountName()),
-                        getBerkeleyTreeMenuService().getAlerts(loggedInUser.getAccountName()),
-                        getBerkeleyTreeMenuService().getGroupedStatistics(loggedInUser.getAccountName()),
+                        getBerkeleyTreeMenuService().getTreeMenu(loggedInAccountName),
+                        getBerkeleyTreeMenuService().getAlerts(loggedInAccountName),
+                        getBerkeleyTreeMenuService().getGroupedStatistics(loggedInAccountName),
                         0, 15, true, filterChartType);
 
                 JSONObject menuItemsObj = new JSONObject();
@@ -113,17 +122,17 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
     }]";*/
 	
 	
-	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject, User loggedInUser) throws JSONException {
+	private String buildInstrumentationMenuNode(String jsonResponse, JSONObject jsonObject, String accountName) throws JSONException {
 		if (jsonObject.has("getInstrumentationMenuNode")) {
 		    String nodeId = jsonObject.getString("getInstrumentationMenuNode");
-		    Statistics node = getBerkeleyTreeMenuService().getTreeMenu(nodeId, loggedInUser.getAccountName());
+		    Statistics node = getBerkeleyTreeMenuService().getTreeMenu(nodeId, accountName);
 		    jsonResponse = BuildJsonObjectsUtil.buildInstrumentationNode(node).toString();
 		    log.debug("Got Node: \n" + jsonResponse);
 		}
 		return jsonResponse;
 	}
 
-	private String buildInstrumentationMenu(String jsonResponse, JSONObject jsonObject, User loggedInUser) throws JSONException {
+	private String buildInstrumentationMenu(String jsonResponse, JSONObject jsonObject, String accountName) throws JSONException {
 		if (jsonObject.has("getInstrumentationMenu")) {
 		    String menuId = jsonObject.getString("getInstrumentationMenu");
 		    boolean includeCharts = jsonObject.has("includeCharts") && jsonObject.getBoolean("includeCharts");
@@ -133,9 +142,9 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 		        includeChartType = jsonObject.getString("nodeType");
 		    }
 		    jsonResponse = BuildJsonObjectsUtil.buildTreeTypeMenuJsonObject(menuId,
-		            getBerkeleyTreeMenuService().getTreeMenu(loggedInUser.getAccountName()),
-		            getBerkeleyTreeMenuService().getAlerts(loggedInUser.getAccountName()),
-		            getBerkeleyTreeMenuService().getGroupedStatistics(loggedInUser.getAccountName()),
+		            getBerkeleyTreeMenuService().getTreeMenu(accountName),
+		            getBerkeleyTreeMenuService().getAlerts(accountName),
+		            getBerkeleyTreeMenuService().getGroupedStatistics(accountName),
 		            0, 15, includeCharts, includeChartType).toString();
 
 		    log.debug("Got Tree Type Menu:\n" + jsonResponse);
@@ -143,12 +152,12 @@ public class MainMenuChannelHandler extends EurekaJGenericChannelHandler {
 		return jsonResponse;
 	}
 
-	private void deleteInstrumentationMenuNode(JSONObject jsonObject, User loggedInUser) throws JSONException {
+	private void deleteInstrumentationMenuNode(JSONObject jsonObject, String accountName) throws JSONException {
 		if (jsonObject.has("deleteInstrumentationMenuNodes")) {
 			JSONArray nodes = jsonObject.getJSONArray("deleteInstrumentationMenuNodes");
 			for (int i = 0; i < nodes.length(); i++) {
 				String guiPath = nodes.getString(i);
-				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath, loggedInUser.getAccountName());
+				getBerkeleyTreeMenuService().deleteTreeMenuNode(guiPath, accountName);
 			}
 			
 		}

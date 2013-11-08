@@ -96,17 +96,4 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
         	writeContentsToBuffer(ctx, jsonResponse, "text/json");
         }
     }
-
-    private String getAccountForAccessToken(JSONObject jsonObject) throws JSONException {
-    	String accountName = null;
-
-        if (jsonObject.has("liveStatisticsToken") && jsonObject.getString("liveStatisticsToken").length() >= 16) {
-        	AccessToken accessToken = getAccountService().getAccessToken(jsonObject.getString("liveStatisticsToken"));
-        	if (accessToken != null) {
-        		accountName = accessToken.getAccountName();
-        	}
-        }
-        
-        return accountName;
-    }
 }

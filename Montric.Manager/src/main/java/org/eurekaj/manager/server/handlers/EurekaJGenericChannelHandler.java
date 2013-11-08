@@ -16,6 +16,7 @@ import java.net.URLDecoder;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Session;
 import org.eurekaj.api.datatypes.User;
 import org.eurekaj.manager.service.*;
@@ -35,6 +36,8 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 import org.jboss.netty.util.CharsetUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
 	private static Logger logger = Logger.getLogger(EurekaJGenericChannelHandler.class.getName());
@@ -251,5 +254,24 @@ public class EurekaJGenericChannelHandler extends SimpleChannelUpstreamHandler {
         }
 
         return uri;
+    }
+    
+    public String getAccountForAccessToken(JSONObject jsonObject) throws JSONException {
+    	String accountName = null;
+    	String key = "accessToken";
+    	
+    	//Backwards compatibility to pre-1.0
+    	if (jsonObject.has("liveStatisticsToken")) {
+    		key = "liveStatisticsToken";
+    	}
+
+        if (jsonObject.has(key) && jsonObject.getString(key).length() >= 16) {
+        	AccessToken accessToken = getAccountService().getAccessToken(jsonObject.getString(key));
+        	if (accessToken != null) {
+        		accountName = accessToken.getAccountName();
+        	}
+        }
+        
+        return accountName;
     }
 }
