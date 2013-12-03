@@ -46,8 +46,8 @@ public class TreeMenuServiceImpl implements TreeMenuService {
         return dbPlugin;
     }
 
-    public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
-		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, accountName, timeperiod, value, valueType, unitType);
+    public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType, Long count) {
+		getDbPlugin().getLiveStatissticsDao().storeIncomingStatistics(guiPath, accountName, timeperiod, value, valueType, unitType, count);
 		getDbPlugin().getTreeMenuDao().persistTreeMenu(new BasicStatistics(guiPath, accountName, "Y"));
 	}
 	

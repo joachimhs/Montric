@@ -17,13 +17,13 @@ public class BasicMetricHour {
     private String accountName;
     private Long hoursSince1970;
     private Double [] metrics;
-    private Integer[] measurementCount;
+    private Long[] measurementCount;
     private String valueType;
     private String unitType;
 
     public BasicMetricHour() {
     	metrics = new Double[240];
-        measurementCount = new Integer[240];
+        measurementCount = new Long[240];
 	}
     
     public BasicMetricHour(String guiPath, String accountName, Long hoursSince1970, String valueType, String unitType) {
@@ -40,19 +40,24 @@ public class BasicMetricHour {
     	int fifteenSecondPeriodsSinceStartOfHour = LiveStatisticsUtil.getFifteensecondTimeperiodsSinceStartOfHour(liveStatistics.getTimeperiod() * 15);
         Double calculatedValue = LiveStatisticsUtil.calculateValueBasedOnUnitType(liveStatistics.getValue(), UnitType.fromValue(liveStatistics.getUnitType()));
         
-        Double value = metrics[fifteenSecondPeriodsSinceStartOfHour];
-        Integer count = measurementCount[fifteenSecondPeriodsSinceStartOfHour];
+        Double storedValue = metrics[fifteenSecondPeriodsSinceStartOfHour];
+        Long storedCount = measurementCount[fifteenSecondPeriodsSinceStartOfHour];
         
-        if (count == null) {
-        	count = 0;
+        Long newCount = liveStatistics.getCount();
+        if (newCount == null) {
+        	newCount = 1l;
         }
         
-        if (value == null) {
-        	value = calculatedValue;
-        	count = 1;
+        if (storedCount == null) {
+        	storedCount = 0l;
+        }
+        
+        if (storedValue == null) {
+        	storedValue = calculatedValue;
+        	storedCount = newCount;
         } else {
-        	value = LiveStatisticsUtil.calculateValueBasedOnValueType(value, calculatedValue, ValueType.fromValue(liveStatistics.getValueType()), count);
-        	count = count + 1;
+        	storedValue = LiveStatisticsUtil.calculateValueBasedOnValueType(storedValue, calculatedValue, ValueType.fromValue(liveStatistics.getValueType()), storedCount, newCount);
+        	storedCount = storedCount + newCount;
         }
         
         if (this.getUnitType() == null) {
@@ -63,8 +68,8 @@ public class BasicMetricHour {
         	this.setValueType(liveStatistics.getValueType());
         }
         
-        metrics[fifteenSecondPeriodsSinceStartOfHour] = value;
-        measurementCount[fifteenSecondPeriodsSinceStartOfHour] = count;
+        metrics[fifteenSecondPeriodsSinceStartOfHour] = storedValue;
+        measurementCount[fifteenSecondPeriodsSinceStartOfHour] = storedCount;
     }
 
     public String getGuiPath() {
@@ -98,6 +103,14 @@ public class BasicMetricHour {
     public void setMetrics(Double[] metrics) {
         this.metrics = metrics;
     }
+    
+    public Long[] getMeasurementCount() {
+		return measurementCount;
+	}
+    
+    public void setMeasurementCount(Long[] measurementCount) {
+		this.measurementCount = measurementCount;
+	}
 
     public String getValueType() {
         return valueType;

@@ -32,5 +32,6 @@ public interface LiveStatistics extends Comparable<LiveStatistics> {
     public Double getValue();
     public String getValueType();
     public String getUnitType();
+    public Long getCount();
 
 }

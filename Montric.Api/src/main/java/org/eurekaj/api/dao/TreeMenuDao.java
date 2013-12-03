@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.eurekaj.api.datatypes.*;
 
-public interface TreeMenuDao {
+public interface TreeMenuDao extends MontricDao {
 
 	public List<Statistics> getTreeMenu(String accountName);
 

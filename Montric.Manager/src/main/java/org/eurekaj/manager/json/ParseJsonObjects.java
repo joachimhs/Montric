@@ -21,6 +21,7 @@ package org.eurekaj.manager.json;
 import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.*;
 import org.eurekaj.api.datatypes.basic.BasicAlert;
+import org.eurekaj.api.datatypes.basic.BasicLiveStatistics;
 import org.eurekaj.api.datatypes.basic.BasicUser;
 import org.eurekaj.api.enumtypes.AlertType;
 import org.eurekaj.manager.datatypes.*;
@@ -155,11 +156,11 @@ public class ParseJsonObjects {
         return groupedStatistics;
     }
 
-    public static ManagerLiveStatistics parseLiveStatistics(JSONObject jsonLiveStatistics, String accountName) {
-        ManagerLiveStatistics liveStatistics = null;
+    public static BasicLiveStatistics parseLiveStatistics(JSONObject jsonLiveStatistics, String accountName) {
+    	BasicLiveStatistics liveStatistics = null;
 
         if (jsonLiveStatistics.has("guiPath")) {
-            liveStatistics = new ManagerLiveStatistics();
+            liveStatistics = new BasicLiveStatistics();
             liveStatistics.setAccountName(accountName);
             liveStatistics.setGuiPath(parseStringFromJson(jsonLiveStatistics, "guiPath"));
             liveStatistics.setTimeperiod(parseLongFromJson(jsonLiveStatistics, "timeperiod"));

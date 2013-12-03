@@ -28,9 +28,11 @@ public class Main {
 		eurekaJClassLoader = new PluginClassLoader(Thread.currentThread().getClass().getClassLoader());
 		
 		//-Dorg.eurekaj.webappDirectory=/srv/eurekaj/webapp -Dorg.eurekaj.pluginDirectory=/srv/eurekaj/plugins
-		String pluginsDir = System.getProperty("org.montric.pluginDirectory", "/srv/eurekaj/plugins");
+		String pluginsDir = System.getProperty("org.montric.pluginDirectory", "/srv/montric/plugins");
 		String webappDir = System.getProperty("org.montric.webappDirectory", "/srv/eurekaj/webapp");
 		System.setProperty("basedir", webappDir);
+		
+		loadPluginsFromDir(pluginsDir);
 		
 		/*Versions versions = getEurekaJVersions();
 		Version version = versions.getEurekaJVersions().get(0);

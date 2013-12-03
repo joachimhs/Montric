@@ -27,7 +27,7 @@ import org.eurekaj.api.enumtypes.ValueType;
 
 public interface TreeMenuService {
 
-	public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType);
+	public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType, Long count);
 	
 	public List<Statistics> getTreeMenu(String accountName);
 	

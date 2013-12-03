@@ -32,14 +32,15 @@ import java.util.List;
  * Time: 9:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface LiveStatisticsDao {
+public interface LiveStatisticsDao extends MontricDao {
 
     public void storeIncomingStatistics(String guiPath,
                                         String accountName,
                                         Long timeperiod,
 			                            String value,
                                         ValueType valueType,
-                                        UnitType unitType);
+                                        UnitType unitType, 
+                                        Long count);
 
     public void storeIncomingStatistics(List<LiveStatistics> liveStatisticsList);
 

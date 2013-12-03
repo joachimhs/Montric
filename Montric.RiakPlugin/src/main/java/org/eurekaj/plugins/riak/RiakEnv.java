@@ -69,7 +69,7 @@ public class RiakEnv extends EurekaJDBPluginService {
 
         List<LiveStatistics> liveStatisticsList = new ArrayList<LiveStatistics>();
         while (index <= numMetrics) {
-            liveStatisticsList.add(new BasicLiveStatistics("EurekaJAgent:Memory:Heap:Used", "ACCOUNT", from15SecPeriod + index, new Double(index), ValueType.AGGREGATE.value(), UnitType.N.value()));
+            liveStatisticsList.add(new BasicLiveStatistics("EurekaJAgent:Memory:Heap:Used", "ACCOUNT", from15SecPeriod + index, new Double(index), ValueType.AGGREGATE.value(), UnitType.N.value(), 1l));
             index++;
         }
 

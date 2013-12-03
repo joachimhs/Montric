@@ -38,6 +38,6 @@ import static com.sun.btrace.BTraceUtils.*;
 		String timePeriodStr = strcat(str(timePeriod), "]");		
 		
 		String liveThreadFormat = strcat("[Value;", property("btrace.agent"));
-		printAggregation("", threadsLiveCount,  strcat(strcat(liveThreadFormat, ";Threads;%1$s:ThreadCount;%2$s;n;value;"), timePeriodStr));
+		printAggregation("", threadsLiveCount,  strcat(strcat(liveThreadFormat, ";Threads:%1$s:ThreadCount;%2$s;n;value;1;"), timePeriodStr));
     }
 } 

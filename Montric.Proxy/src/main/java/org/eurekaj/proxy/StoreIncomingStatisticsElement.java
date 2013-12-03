@@ -31,6 +31,7 @@ public class StoreIncomingStatisticsElement {
     private String value;
     private String valueType;
     private String unitType;
+    private String count;
 
     public String getGuiPath() {
         return guiPath;
@@ -71,4 +72,12 @@ public class StoreIncomingStatisticsElement {
     public void setUnitType(String unitType) {
         this.unitType = unitType;
     }
+    
+    public String getCount() {
+		return count;
+	}
+    
+    public void setCount(String count) {
+		this.count = count;
+	}
 }

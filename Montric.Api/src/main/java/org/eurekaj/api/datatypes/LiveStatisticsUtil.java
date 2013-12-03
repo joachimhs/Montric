@@ -45,7 +45,7 @@ public class LiveStatisticsUtil {
         return valueReturn;
     }
     
-    public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType, Integer numMeasurements) {
+    public static Double calculateValueBasedOnValueType(Double oldValue, Double newValue, ValueType valueType, Long oldNumMeasurements, Long newNumMeasurements) {
         Double valueReturn = newValue;
 
         if (valueType == ValueType.VALUE) {
@@ -53,7 +53,7 @@ public class LiveStatisticsUtil {
         } else if (oldValue != null && valueType == ValueType.AGGREGATE) {
             valueReturn = oldValue + newValue;
         } else if (oldValue != null && valueType == ValueType.AVERAGE) {
-            valueReturn = ((oldValue * numMeasurements) + newValue) / (numMeasurements + 1);
+            valueReturn = ((oldValue * oldNumMeasurements) + (newValue * newNumMeasurements) / (oldNumMeasurements + newNumMeasurements));
         }
 
         return valueReturn;

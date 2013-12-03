@@ -21,7 +21,7 @@ package org.eurekaJ.manager.util;
 import static org.junit.Assert.*;
 
 import org.eurekaj.api.datatypes.LiveStatistics;
-import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
+import org.eurekaj.api.datatypes.basic.BasicLiveStatistics;
 import org.eurekaj.manager.util.ChartUtil;
 import org.jsflot.xydata.XYDataList;
 import org.jsflot.xydata.XYDataSetCollection;
@@ -70,48 +70,48 @@ public class ChartUtilTest {
     public void setUp() {
         liveStatisticsList = new ArrayList<LiveStatistics>();
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540055000l / 15000, 6d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540070000l / 15000, 8d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540085000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540055000l / 15000, 6d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540070000l / 15000, 8d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540085000l / 15000, 7d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540100000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540115000l / 15000, 11d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540130000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540100000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540115000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540130000l / 15000, 7d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540145000l / 15000, 12d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540160000l / 15000, 8d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540175000l / 15000, 10d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540145000l / 15000, 12d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540160000l / 15000, 8d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540175000l / 15000, 10d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540190000l / 15000, 12d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540205000l / 15000, 11d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540220000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540190000l / 15000, 12d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540205000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540220000l / 15000, 7d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540235000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540250000l / 15000, 11d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540265000l / 15000, 10d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540235000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540250000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540265000l / 15000, 10d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540280000l / 15000, 12d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540295000l / 15000, 8d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540310000l / 15000, 10d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540280000l / 15000, 12d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540295000l / 15000, 8d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540310000l / 15000, 10d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540325000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540340000l / 15000, 11d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540355000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540325000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540340000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540355000l / 15000, 7d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540370000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540385000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540400000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540370000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540385000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540400000l / 15000, 11d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540415000l / 15000, 7d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540430000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540445000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540415000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540430000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540445000l / 15000, 9d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540460000l / 15000, 11d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540475000l / 15000, 7d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540490000l / 15000, 10d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540460000l / 15000, 11d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540475000l / 15000, 7d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540490000l / 15000, 10d));
 
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540505000l / 15000, 9d));
-        liveStatisticsList.add(new ManagerLiveStatistics("guipath", "ACCOUNT", 1295540520000l / 15000, 10d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540505000l / 15000, 9d));
+        liveStatisticsList.add(new BasicLiveStatistics("guipath", "ACCOUNT", 1295540520000l / 15000, 10d));
     }
 
     @Test

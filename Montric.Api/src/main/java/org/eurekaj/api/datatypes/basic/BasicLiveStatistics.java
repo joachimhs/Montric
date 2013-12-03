@@ -16,6 +16,8 @@ public class BasicLiveStatistics implements LiveStatistics, Comparable<LiveStati
     private Double value;
     private String valueType;
     private String unitType;
+    private Long count;
+    
     private Boolean calculated;
 
     public BasicLiveStatistics() {
@@ -26,15 +28,17 @@ public class BasicLiveStatistics implements LiveStatistics, Comparable<LiveStati
         this.timeperiod = timeperiod;
         this.accountName = accountName;
         this.value = value;
+        this.count = 1l;
     }
 
-    public BasicLiveStatistics(String guiPath, String accountName, Long timeperiod, Double value, String valueType, String unitType) {
+    public BasicLiveStatistics(String guiPath, String accountName, Long timeperiod, Double value, String valueType, String unitType, Long count) {
         this.guiPath = guiPath;
         this.accountName = accountName;
         this.timeperiod = timeperiod;
         this.value = value;
         this.valueType = valueType;
         this.unitType = unitType;
+        this.count = count;
     }
 
     public String getGuiPath() {
@@ -116,6 +120,15 @@ public class BasicLiveStatistics implements LiveStatistics, Comparable<LiveStati
     public void setCalculated(Boolean calculated) {
         this.calculated = calculated;
     }
+    
+    @Override
+    public Long getCount() {
+	    return this.count;
+    }
+    
+     public void setCount(Long count) {
+		this.count = count;
+	}
 
     public int compareTo(LiveStatistics other) {
         if (other == null || other.getTimeperiod() == null) {

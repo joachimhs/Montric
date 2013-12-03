@@ -29,7 +29,7 @@ import java.util.List;
  * Time: 9:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface GroupedStatisticsDao {
+public interface GroupedStatisticsDao extends MontricDao {
     public void persistGroupInstrumentation(GroupedStatistics groupedStatistics);
 
     public GroupedStatistics getGroupedStatistics(String name, String accountName);

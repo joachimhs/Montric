@@ -27,6 +27,46 @@
             </plugin>
         </plugins>
     </build>
+    
+    <profiles>
+		<profile>
+			<id>assembly</id>
+			<activation>
+				<property>
+					<name>!skip.assembly</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>1.5</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+								<configuration>
+									<finalName>leveldb-${project.version}-plugin</finalName>
+									<filters>
+										<filter>
+											<excludes>
+												<exclude>META-INF/ECLIPSEF.RSA</exclude>
+												<exclude>META-INF/ECLIPSEF.SF</exclude>
+												<exclude>META-INF/eclipse.inf</exclude>
+											</excludes>
+										</filter>
+									</filters>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
     <dependencies>
 		<dependency>

@@ -38,7 +38,7 @@ public class Main {
     private String scriptPath;
     private String endpointUrl;
     private String username;
-    private String password;
+    private String accessToken;
     private ClientGZipContentCompression gzipClient;
 
     public static void main(String[] args) {
@@ -53,7 +53,7 @@ public class Main {
             throw new RuntimeException("Required properties file missing: 'config.properties'");
         }
 
-        gzipClient = new ClientGZipContentCompression(endpointUrl, username, password);
+        gzipClient = new ClientGZipContentCompression(endpointUrl, username, accessToken);
      
         String enablePTP = System.getProperty("org.eurekaj.proxy.enablePTP", "true");
         log.info("org.eurekaj.proxy.enablePTP: " + enablePTP);
@@ -76,7 +76,14 @@ public class Main {
                 List<File> scriptOutputfileList = FileMatcher.getScriptOutputFilesInDirectory(scriptPath);
 
                 for (File scriptOutputfile : scriptOutputfileList) {
-                    String json = ParseStatistics.parseBtraceFile(scriptOutputfile, password);
+                	long kilobytes = scriptOutputfile.length() / 1024;
+                	
+                	if (kilobytes > 256) {
+                		log.info("Montric Proxy cannot read files larger than 256 KiB. Skipping: " + scriptOutputfile.getAbsolutePath());
+                		continue;
+                	}
+                	
+                    String json = ParseStatistics.parseBtraceFile(scriptOutputfile, accessToken);
                     log.debug("Attempting to send JSON contents of: " + scriptOutputfile.getName() + " length: " + json.length());
 
                     int statusCode = gzipClient.sendGzipOverHttp(json);
@@ -132,7 +139,7 @@ public class Main {
     private void setProperties(Properties properties) {
         scriptPath = (String)properties.get("montric.proxy.scriptpath");
         endpointUrl = (String)properties.get("montric.proxy.endpoint");
-        password = (String)properties.get("montric.proxy.password");
+        accessToken = (String)properties.get("montric.proxy.accessToken");
 
         if (scriptPath == null || scriptPath.length() == 1) {
             throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.scriptpath' is defined. Example: montric.proxy.scriptpath=/path/to/btrace/scripts");
@@ -142,8 +149,8 @@ public class Main {
             throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.endpoint' is defined. Example: montric.proxy.endpoint=http://hostname:port");
         }
 
-        if (password == null || password.length() == 1) {
-            throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.scriptpath' is defined. Example: montric.proxy.password=password");
+        if (accessToken == null || accessToken.length() == 1) {
+            throw new RuntimeException("The properties file 'config.properties' requires that the property 'montric.proxy.accessToken' is defined. Example: montric.proxy.accessToken=password");
         }
 
 	}

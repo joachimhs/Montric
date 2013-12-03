@@ -16,7 +16,7 @@ import org.eurekaj.api.datatypes.User;
  * Time: 5:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface AccountDao {
+public interface AccountDao extends MontricDao {
     public List<Account> getAccounts();
 
     public Account getAccount(String accountName);

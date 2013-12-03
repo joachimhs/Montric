@@ -42,7 +42,7 @@ public class RiakLiveStatisticsDao implements LiveStatisticsDao {
     }
 
     @Override
-    public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType) {
+    public void storeIncomingStatistics(String guiPath, String accountName, Long timeperiod, String value, ValueType valueType, UnitType unitType, Long count) {
         Double valueDouble = LiveStatisticsUtil.parseDouble(value);
         long hoursSince1970 = timeperiod / 240;
 
@@ -54,7 +54,7 @@ public class RiakLiveStatisticsDao implements LiveStatisticsDao {
                 storedMetricHour = new BasicMetricHour(guiPath, accountName, hoursSince1970, valueType.toString(), unitType.toString());
             }
 
-            storedMetricHour.addStatistic(new BasicLiveStatistics(guiPath, accountName, timeperiod, valueDouble, valueType.value(), unitType.value()));
+            storedMetricHour.addStatistic(new BasicLiveStatistics(guiPath, accountName, timeperiod, valueDouble, valueType.value(), unitType.value(), count));
 
             myBucket.store("" + guiPath, storedMetricHour).execute();
         } catch (RiakRetryFailedException e) {
@@ -85,7 +85,7 @@ public class RiakLiveStatisticsDao implements LiveStatisticsDao {
     }
 
     private void persistRecentMetricHours() {
-        if ((System.currentTimeMillis() - metricHoursLastPersited) > 10000) {
+        if ((System.currentTimeMillis() - metricHoursLastPersited) > 5000) {
             //Persist metric hours received in the last 10 seconds
 
             List<BasicMetricHour> listOne = new ArrayList<BasicMetricHour>();
@@ -96,7 +96,7 @@ public class RiakLiveStatisticsDao implements LiveStatisticsDao {
             //storageThreadPool.submit(new StoreMetricHourListThread(listThree, riakClient));
             //storageThreadPool.submit(new StoreMetricHourListThread(listFour, riakClient));
 
-            logger.info("Persisting metric hours received in the last 10 seconds in 4 threads: " + metricHoursToStoreHash.size());
+            logger.info("Persisting metric hours received in the last 5 seconds in 4 threads: " + metricHoursToStoreHash.size());
 
             metricHoursToStoreHash.clear();
             metricHoursLastPersited = System.currentTimeMillis();
@@ -178,7 +178,7 @@ public class RiakLiveStatisticsDao implements LiveStatisticsDao {
             Long timeperiod = (hoursSince1970 * 240) + index;
 
             //logger.info("Creating LiveStats for: " + metricHour.getId() + " with value: " + metricHour.getValueAt(index));
-            retList.add(new BasicLiveStatistics(metricHour.getGuiPath(), metricHour.getAccountName(), timeperiod, metricHour.getMetrics()[index], metricHour.getValueType(), metricHour.getUnitType()));
+            retList.add(new BasicLiveStatistics(metricHour.getGuiPath(), metricHour.getAccountName(), timeperiod, metricHour.getMetrics()[index], metricHour.getValueType(), metricHour.getUnitType(), metricHour.getMeasurementCount()[index]));
         }
 
         return retList;

@@ -18,9 +18,9 @@ import java.util.Deque;
 			removeFirst(gcTimes);
 			
 			Appendable sb = Strings.newStringBuilder();
-			Strings.append(sb, "[GCTime;");
+			Strings.append(sb, "[Value;");
 			Strings.append(sb, property("btrace.agent"));
-			Strings.append(sb, ";");
+			Strings.append(sb, ";Memory:GC:Time Spent In GC;");
 			Strings.append(sb, str(gcTime)); 
 			Strings.append(sb, ";");
 			Strings.append(sb, str(timePeriod)); 

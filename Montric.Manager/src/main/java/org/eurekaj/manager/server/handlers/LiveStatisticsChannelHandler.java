@@ -26,9 +26,9 @@ import org.apache.log4j.Logger;
 import org.eurekaj.api.datatypes.AccessToken;
 import org.eurekaj.api.datatypes.Account;
 import org.eurekaj.api.datatypes.LiveStatistics;
+import org.eurekaj.api.datatypes.basic.BasicLiveStatistics;
 import org.eurekaj.api.enumtypes.UnitType;
 import org.eurekaj.api.enumtypes.ValueType;
-import org.eurekaj.manager.datatypes.ManagerLiveStatistics;
 import org.eurekaj.manager.json.BuildJsonObjectsUtil;
 import org.eurekaj.manager.json.ParseJsonObjects;
 import org.eurekaj.manager.plugin.ManagerProcessIncomingStatisticsPluginService;
@@ -65,17 +65,18 @@ public class LiveStatisticsChannelHandler extends EurekaJGenericChannelHandler {
                 List<LiveStatistics> liveStatList = new ArrayList<LiveStatistics>();
 
                 for (int index = 0; index < statList.length(); index++) {
-                    ManagerLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index), accountName);
+                	BasicLiveStatistics liveStatistics = ParseJsonObjects.parseLiveStatistics(statList.getJSONObject(index), accountName);
                     liveStatList.add(liveStatistics);
                     
                     String agent = liveStatistics.getGuiPath().substring(0, liveStatistics.getGuiPath().indexOf(":"));
-                    ManagerLiveStatistics agentStats = new ManagerLiveStatistics();
+                    BasicLiveStatistics agentStats = new BasicLiveStatistics();
                     agentStats.setGuiPath(agent + ":Agent Statistics:API Call Count");
                     agentStats.setAccountName(accountName);
                     agentStats.setTimeperiod(liveStatistics.getTimeperiod());
                     agentStats.setUnitType(UnitType.N.value());
                     agentStats.setValueType(ValueType.AGGREGATE.value());
                     agentStats.setValue(1d);
+                    agentStats.setCount(1l);
                     
                     liveStatList.add(agentStats);
                 }

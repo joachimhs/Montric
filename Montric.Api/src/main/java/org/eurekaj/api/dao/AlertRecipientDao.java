@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eurekaj.api.datatypes.AlertRecipient;
 
-public interface AlertRecipientDao {
+public interface AlertRecipientDao extends MontricDao {
 	
 	public List<AlertRecipient> getAlertRecipients(String accountName);
 	

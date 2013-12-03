@@ -34,7 +34,7 @@ public class ParseStatistics {
 	private static final Logger log = Logger.getLogger(ParseStatistics.class);
 	private static String DELIMETER = ";";
 	
-    public static String parseBtraceFile(File file, String password) throws IOException {
+    public static String parseBtraceFile(File file, String accessToken) throws IOException {
         ParseStatistics parser = new ParseStatistics();
 		List<StoreIncomingStatisticsElement> statElemList = new ArrayList<StoreIncomingStatisticsElement>();
 
@@ -54,15 +54,9 @@ public class ParseStatistics {
 			if (line.startsWith("Value;")) {
 	    		line = line.substring("Value;".length());
 	    		statElemList.addAll(parser.processValueInstrumentation(line));
-	    	} else if (line.startsWith("HeapMemory;" )) {
-	    		line = line.substring("HeapMemory;".length());
+	    	} else if (line.startsWith("Memory;" )) {
+	    		line = line.substring("Memory;".length());
 	    		statElemList.addAll(parser.processHeapMemory(line));
-	    	} else if(line.startsWith("NonHeapMemory;")) {
-	    		line = line.substring("NonHeapMemory;".length());
-	    		statElemList.addAll(parser.processNonHeapMemory(line));
-	    	} else if (line.startsWith("MemoryPool;")) {
-	    		line = line.substring("MemoryPool;".length());
-	    		statElemList.addAll(parser.processMemoryPool(line));
 	    	} else if(line.startsWith("Threads;")) {
 	    		line = line.substring("Threads;".length());
 	    		statElemList.addAll(parser.processThreads(line));
@@ -77,11 +71,11 @@ public class ParseStatistics {
 	    	line = inStream.readLine();
 		}
 
-        StringBuilder jsonBuilder = convertStatListToJson(statElemList, password);
+        StringBuilder jsonBuilder = convertStatListToJson(statElemList, accessToken);
 		return jsonBuilder.toString();
 	}
 
-	public static StringBuilder convertStatListToJson(List<StoreIncomingStatisticsElement> statElemList, String password) {
+	public static StringBuilder convertStatListToJson(List<StoreIncomingStatisticsElement> statElemList, String accessToken) {
 		StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{ \"storeLiveStatistics\": [");
         for (int index = 0; index < statElemList.size() - 1; index++) {
@@ -106,7 +100,10 @@ public class ParseStatistics {
             jsonBuilder.append("\"unitType\": \"" + element.getUnitType() + "\"");
             jsonBuilder.append("}");
         }
-        jsonBuilder.append("], \"liveStatisticsToken\": \"" + password + "\" }");
+        jsonBuilder.append("], \"accessToken\": \"" + accessToken + "\" }");
+        
+        log.info(jsonBuilder.toString());
+        
 		return jsonBuilder;
 	}
 	
@@ -127,17 +124,17 @@ public class ParseStatistics {
 		String avgWalltime;
 		String minWalltime;
 		String maxWalltime;
-        String guiPath = null;
+        String path = null;
 
         if (params.length >= 13 && !line.contains("N/A")) {
             if (params.length == 13) {
-                guiPath = "Custom";
+                path = "Custom";
             }
             if (params.length == 14) {
-                guiPath = params[13];
+                path = params[13];
             }
 
-            if (guiPath != null && guiPath.length() > 0) {
+            if (path != null && path.length() > 0) {
                 agentName = params[0];
                 className = params[1];
                 methodName = params[2];
@@ -164,7 +161,7 @@ public class ParseStatistics {
                 StringBuilder sb = new StringBuilder();
                 sb.append(agentName).
                 append(":").
-                append(guiPath).
+                append(path).
                 append(":").
                 append(className).
                 append(":").
@@ -176,6 +173,7 @@ public class ParseStatistics {
                 statElem.setValue(invocations);
                 statElem.setUnitType(UnitType.N.value());
                 statElem.setValueType(ValueType.AGGREGATE.value());
+                statElem.setCount(invocations);
                 statList.add(statElem);
 
                 StoreIncomingStatisticsElement statElem2 = new StoreIncomingStatisticsElement();
@@ -184,6 +182,7 @@ public class ParseStatistics {
                 statElem2.setValue(totalSelftime);
                 statElem2.setUnitType(UnitType.NS.value());
                 statElem2.setValueType(ValueType.AGGREGATE.value());
+                statElem2.setCount(invocations);
                 statList.add(statElem2);
 
                 StoreIncomingStatisticsElement statElem3 = new StoreIncomingStatisticsElement();
@@ -192,6 +191,7 @@ public class ParseStatistics {
                 statElem3.setValue(avgSelftime);
                 statElem3.setUnitType(UnitType.NS.value());
                 statElem3.setValueType(ValueType.AVERAGE.value());
+                statElem3.setCount(invocations);
                 statList.add(statElem3);
 
                 StoreIncomingStatisticsElement statElem4 = new StoreIncomingStatisticsElement();
@@ -200,6 +200,7 @@ public class ParseStatistics {
                 statElem4.setValue(maxSelftime);
                 statElem4.setUnitType(UnitType.NS.value());
                 statElem4.setValueType(ValueType.VALUE.value());
+                statElem4.setCount(invocations);
                 statList.add(statElem4);
 
                 StoreIncomingStatisticsElement statElem5 = new StoreIncomingStatisticsElement();
@@ -208,6 +209,7 @@ public class ParseStatistics {
                 statElem5.setValue(minSelftime);
                 statElem5.setUnitType(UnitType.NS.value());
                 statElem5.setValueType(ValueType.VALUE.value());
+                statElem5.setCount(invocations);
                 statList.add(statElem5);
 
                 StoreIncomingStatisticsElement statElem6 = new StoreIncomingStatisticsElement();
@@ -216,6 +218,7 @@ public class ParseStatistics {
                 statElem6.setValue(totalWalltime);
                 statElem6.setUnitType(UnitType.NS.value());
                 statElem6.setValueType(ValueType.AGGREGATE.value());
+                statElem6.setCount(invocations);
                 statList.add(statElem6);
 
                 StoreIncomingStatisticsElement statElem7 = new StoreIncomingStatisticsElement();
@@ -224,6 +227,7 @@ public class ParseStatistics {
                 statElem7.setValue(avgWalltime);
                 statElem7.setUnitType(UnitType.NS.value());
                 statElem7.setValueType(ValueType.AVERAGE.value());
+                statElem7.setCount(invocations);
                 statList.add(statElem7);
 
                 StoreIncomingStatisticsElement statElem8 = new StoreIncomingStatisticsElement();
@@ -232,6 +236,7 @@ public class ParseStatistics {
                 statElem8.setValue(maxWalltime);
                 statElem8.setUnitType(UnitType.NS.value());
                 statElem8.setValueType(ValueType.VALUE.value());
+                statElem8.setCount(invocations);
                 statList.add(statElem8);
 
                 StoreIncomingStatisticsElement statElem9 = new StoreIncomingStatisticsElement();
@@ -240,6 +245,7 @@ public class ParseStatistics {
                 statElem9.setValue(minWalltime);
                 statElem9.setUnitType(UnitType.NS.value());
                 statElem9.setValueType(ValueType.VALUE.value());
+                statElem9.setCount(invocations);
                 statList.add(statElem9);
             }
         }
@@ -280,20 +286,28 @@ public class ParseStatistics {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		
 		String[] params = line.split(DELIMETER);
-		if (params.length == 7) {
+		if (params.length == 4 || params.length == 7) {
 			
 			String agentName = params[0];
-			String guiPath = params[1];
-			String path = params[2].replaceAll("_", " ");
-			String value = params[3];
-			Long timeperiod;
-            UnitType unitType = getUnitType(params[4]);
-            ValueType valueType = getValueType(params[5]);
-
-
-
-			String timestampStr = params[6];
-			timeperiod = 0l;
+			String path = params[1].replaceAll("_", " ");
+			String value = params[2];
+			
+			String timestampStr = "";
+			String count = "1";
+			
+			UnitType unitType = UnitType.N;
+            ValueType valueType = ValueType.VALUE;
+            
+			if (params.length == 4) {
+				timestampStr = params[3];
+			} else {
+				unitType = getUnitType(params[3]);
+	            valueType = getValueType(params[4]);
+	            count = params[5];
+	            timestampStr = params[6];
+			}
+		
+			Long timeperiod = 0l;
 			try {
 				timeperiod = Long.parseLong(timestampStr);
 				timeperiod = ((long)(timeperiod / 15000));
@@ -304,9 +318,7 @@ public class ParseStatistics {
 			StringBuilder sb = new StringBuilder();
 			sb.append(agentName)
 				.append(":")
-				.append(guiPath)
-				.append(":")
-			.append(path);
+				.append(path);
 			
 			StoreIncomingStatisticsElement statElem = new StoreIncomingStatisticsElement();
 			statElem.setGuiPath(sb.toString());
@@ -314,6 +326,7 @@ public class ParseStatistics {
 			statElem.setValue(value);
             statElem.setValueType(valueType.value());
             statElem.setUnitType((unitType.value()));
+            statElem.setCount(count);
 			statList.add(statElem);
 		}
 		return statList;
@@ -323,19 +336,24 @@ public class ParseStatistics {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
 		String[] params = line.split(DELIMETER);
 		String agentName;
+		String path;
 		String maxMem;
 		String usedMem;
 		String commitedMem;
 		String initMem;
 		String timestampStr;
-		
-		if (params.length == 6) {
+				
+		//[Memory;MontricAgent;NonHeap;136314880;22769864;44236800;24313856;1386068325000]
+
+				
+		if (params.length == 7) {
 			agentName = params[0];
-			maxMem = params[1];
-			usedMem = params[2];
-			commitedMem = params[3];
-			initMem = params[4];
-			timestampStr = params[5];
+			path = params[1];
+			maxMem = params[2];
+			usedMem = params[3];
+			commitedMem = params[4];
+			initMem = params[5];
+			timestampStr = params[6];
 			Long timeperiod = 0l;
 			try {
 				timeperiod = Long.parseLong(timestampStr);
@@ -345,35 +363,39 @@ public class ParseStatistics {
 			}
 
 			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
-			initElem.setGuiPath(agentName + ":Memory:Heap:Init");
+			initElem.setGuiPath(agentName + ":" + path + ":Init");
 			initElem.setTimeperiod(timeperiod);
 			initElem.setValue(initMem);
             initElem.setUnitType(UnitType.N.value());
             initElem.setValueType(ValueType.VALUE.value());
+            initElem.setCount("1");
 			statList.add(initElem);
 			
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
-			maxElem.setGuiPath(agentName + ":Memory:Heap:Max");
+			maxElem.setGuiPath(agentName + ":" + path + ":Max");
 			maxElem.setTimeperiod(timeperiod);
 			maxElem.setValue(maxMem);
             maxElem.setUnitType(UnitType.N.value());
             maxElem.setValueType(ValueType.VALUE.value());
+            maxElem.setCount("1");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
-			usedElem.setGuiPath(agentName + ":Memory:Heap:Used");
+			usedElem.setGuiPath(agentName + ":" + path + ":Used");
 			usedElem.setTimeperiod(timeperiod);
 			usedElem.setValue(usedMem);
             usedElem.setUnitType(UnitType.N.value());
             usedElem.setValueType(ValueType.VALUE.value());
+            usedElem.setCount("1");            
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(agentName + ":Memory:Heap:Committed");
+			commitedElem.setGuiPath(agentName + ":" + path + ":Committed");
 			commitedElem.setTimeperiod(timeperiod);
 			commitedElem.setValue(commitedMem);
             commitedElem.setUnitType(UnitType.N.value());
             commitedElem.setValueType(ValueType.VALUE.value());
+            commitedElem.setCount("1");
 			statList.add(commitedElem);
 			
 		}
@@ -401,22 +423,23 @@ public class ParseStatistics {
 		//logService.storeLog(agentName, millisecond, logTrace);
 	}
 	
-	public List<StoreIncomingStatisticsElement> processNonHeapMemory(String line) {
+	public List<StoreIncomingStatisticsElement> processThreads(String line) {
 		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
+		
 		String[] params = line.split(DELIMETER);
 		String agentName;
-		String maxMem;
-		String usedMem;
-		String commitedMem;
-		String initMem;
+		String path;
+		String threadCount;
+		String peakThreadCount;
+		String totatStartedThreads;
 		String timestampStr;
 		
 		if (params.length == 6) {
 			agentName = params[0];
-			maxMem = params[1];
-			usedMem = params[2];
-			commitedMem = params[3];
-			initMem = params[4];
+			path = params[1];
+			threadCount = params[2];
+			peakThreadCount = params[3];
+			totatStartedThreads = params[4];
 			timestampStr = params[5];
 			Long timeperiod = 0l;
 			try {
@@ -426,87 +449,31 @@ public class ParseStatistics {
 				log.error("Unable to read in timestamp");
 			}
 
-			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
-			initElem.setGuiPath(agentName + ":Memory:NonHeap:Init");
-			initElem.setTimeperiod(timeperiod);
-			initElem.setValue(initMem);
-            initElem.setUnitType(UnitType.N.value());
-            initElem.setValueType(ValueType.VALUE.value());
-			statList.add(initElem);
-			
 			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
-			maxElem.setGuiPath(agentName + ":Memory:NonHeap:Max");
-			maxElem.setTimeperiod(timeperiod);
-			maxElem.setValue(maxMem);
-            maxElem.setUnitType(UnitType.N.value());
-            maxElem.setValueType(ValueType.VALUE.value());
-			statList.add(maxElem);
-			
-			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
-			usedElem.setGuiPath(agentName + ":Memory:NonHeap:Used");
-			usedElem.setTimeperiod(timeperiod);
-			usedElem.setValue(usedMem);
-            usedElem.setUnitType(UnitType.N.value());
-            usedElem.setValueType(ValueType.VALUE.value());
-			statList.add(usedElem);
-			
-			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(agentName + ":Memory:NonHeap:Committed");
-			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setValue(commitedMem);
-            commitedElem.setUnitType(UnitType.N.value());
-            commitedElem.setValueType(ValueType.VALUE.value());
-			statList.add(commitedElem);
-		}
-		return statList;
-	}
-	
-	public List<StoreIncomingStatisticsElement> processThreads(String line) {
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String threadCount;
-		String peakThreadCount;
-		String totatStartedThreads;
-		String timestampStr;
-		
-		if (params.length == 5) {
-			agentName = params[0];
-			threadCount = params[1];
-			peakThreadCount = params[2];
-			totatStartedThreads = params[3];
-			timestampStr = params[4];
-			Long timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
-			} catch (NumberFormatException nfe) {
-				log.error("Unable to read in timestamp");
-			}
-
-			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
-			maxElem.setGuiPath(agentName + ":Threads:ThreadCount");
+			maxElem.setGuiPath(agentName + ":" + path + ":ThreadCount");
 			maxElem.setTimeperiod(timeperiod);
 			maxElem.setValue(threadCount);
             maxElem.setUnitType(UnitType.N.value());
             maxElem.setValueType(ValueType.VALUE.value());
+            maxElem.setCount("1");
 			statList.add(maxElem);
 			
 			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
-			usedElem.setGuiPath(agentName + ":Threads:PeakThreadCount");
+			usedElem.setGuiPath(agentName + ":" + path + ":PeakThreadCount");
 			usedElem.setTimeperiod(timeperiod);
 			usedElem.setValue(peakThreadCount);
             usedElem.setUnitType(UnitType.N.value());
             usedElem.setValueType(ValueType.VALUE.value());
+            usedElem.setCount("1");
 			statList.add(usedElem);
 			
 			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(agentName + ":Threads:TotalStartedThreads");
+			commitedElem.setGuiPath(agentName + ":" + path + ":TotalStartedThreads");
 			commitedElem.setTimeperiod(timeperiod);
 			commitedElem.setValue(totatStartedThreads);
             commitedElem.setUnitType(UnitType.N.value());
             commitedElem.setValueType(ValueType.VALUE.value());
+            commitedElem.setCount("1");
 			statList.add(commitedElem);
 		}
 		return statList;
@@ -545,69 +512,6 @@ public class ParseStatistics {
             maxElem.setUnitType(UnitType.N.value());
             maxElem.setValueType(ValueType.VALUE.value());
 			statList.add(maxElem);
-		}
-		return statList;
-	}
-	
-	public List<StoreIncomingStatisticsElement> processMemoryPool(String line) {
-		List<StoreIncomingStatisticsElement> statList = new ArrayList<StoreIncomingStatisticsElement>();
-		
-		String[] params = line.split(DELIMETER);
-		String agentName;
-		String name;
-		String maxMem;
-		String usedMem;
-		String commitedMem;
-		String initMem;
-		String timestampStr;
-
-		if (params.length == 7) {
-			agentName = params[0];
-			name = params[1].replaceAll("_", " ");
-			maxMem = params[2];
-			usedMem = params[3];
-			commitedMem = params[4];
-			initMem = params[5];			
-			timestampStr = params[6];
-			Long timeperiod = 0l;
-			try {
-				timeperiod = Long.parseLong(timestampStr);
-				timeperiod = ((long)(timeperiod / 15000)); //Round down to nearest 15 second period 00, 15, 30, 45
-			} catch (NumberFormatException nfe) {
-				log.error("Unable to read in timestamp");
-			}
-			
-			StoreIncomingStatisticsElement initElem = new StoreIncomingStatisticsElement();
-			initElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Init");
-			initElem.setTimeperiod(timeperiod);
-			initElem.setValue(initMem);
-            initElem.setUnitType(UnitType.N.value());
-            initElem.setValueType(ValueType.VALUE.value());
-			statList.add(initElem);
-			
-			StoreIncomingStatisticsElement maxElem = new StoreIncomingStatisticsElement();
-			maxElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Max");
-			maxElem.setTimeperiod(timeperiod);
-			maxElem.setValue(maxMem);
-            maxElem.setUnitType(UnitType.N.value());
-            maxElem.setValueType(ValueType.VALUE.value());
-			statList.add(maxElem);
-			
-			StoreIncomingStatisticsElement usedElem = new StoreIncomingStatisticsElement();
-			usedElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Used");
-			usedElem.setTimeperiod(timeperiod);
-			usedElem.setValue(usedMem);
-            usedElem.setUnitType(UnitType.N.value());
-            usedElem.setValueType(ValueType.VALUE.value());
-			statList.add(usedElem);
-			
-			StoreIncomingStatisticsElement commitedElem = new StoreIncomingStatisticsElement();
-			commitedElem.setGuiPath(agentName + ":Memory:MemoryPool:" + name + ":Committed");
-			commitedElem.setTimeperiod(timeperiod);
-			commitedElem.setValue(commitedMem);
-            commitedElem.setUnitType(UnitType.N.value());
-            commitedElem.setValueType(ValueType.VALUE.value());
-			statList.add(commitedElem);
 		}
 		return statList;
 	}

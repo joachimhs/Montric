@@ -23,7 +23,7 @@ import org.eurekaj.api.datatypes.TriggeredAlert;
 
 import java.util.List;
 
-public interface AlertDao {
+public interface AlertDao extends MontricDao {
     public void persistAlert(Alert alert);
 
     public Alert getAlert(String alertName, String accountName);

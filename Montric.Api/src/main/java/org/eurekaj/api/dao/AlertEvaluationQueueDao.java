@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eurekaj.api.datatypes.Account;
 
-public interface AlertEvaluationQueueDao {
+public interface AlertEvaluationQueueDao extends MontricDao {
 	public void addAccountNamesToNewQueue(List<String> accountNameList);
 	
 	public void addAccountsToNewQueue(List<Account> accountList);

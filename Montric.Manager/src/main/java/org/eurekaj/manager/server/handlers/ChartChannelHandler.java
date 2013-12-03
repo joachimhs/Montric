@@ -192,7 +192,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
 
                 //TODO: This if-else code block needs refactoring. Its not DRY
                 if (isAlertChart(id)) {
-                    id = id.replaceAll("\\%20", " ");
+                    id = id.replaceAll("\\%20", " ").replaceAll("\\%25", "%");
                     String alertName = id.substring(8, id.length());
                     log.info("isAlert! " + alertName);
                     alert = getBerkeleyTreeMenuService().getAlert(alertName, loggedInAccountName);
@@ -210,7 +210,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     log.info("alert: " + alert);
                     log.info("chartPath: " + chartPath);
                 } else if (isGroupedStatisticsChart(id)) {
-                    id = id.replaceAll("\\%20", " ");
+                    id = id.replaceAll("\\%20", " ").replaceAll("\\%25", "%");
                     chartPath = id;
                     String groupName = id.substring(5, id.length());
 
@@ -229,7 +229,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                         }
                     }
                 } else {
-                    id = id.replaceAll("\\%20", " ");
+                    id = id.replaceAll("\\%20", " ").replaceAll("\\%25", "%");
                     chartPath = id;
                     log.info("ID: " + id);
                     seriesLabel = chartPath;
@@ -238,7 +238,7 @@ public class ChartChannelHandler extends EurekaJGenericChannelHandler {
                     valueCollection = ChartUtil.generateChart(liveList, seriesLabel, fromPeriod * 15000, toPeriod * 15000, chartResolution);
                 }
 
-                Statistics statistics = getBerkeleyTreeMenuService().getTreeMenu(chartPath, loggedInAccountName);
+                //Statistics statistics = getBerkeleyTreeMenuService().getTreeMenu(chartPath, loggedInAccountName);
                 //if (statistics != null || isGroupedStatisticsChart(keyObject) || isAlertChart(keyObject)) {
                 jsonResponse = BuildJsonObjectsUtil.generateChartData(chartId, chartPath, valueCollection, chartOffset);
 

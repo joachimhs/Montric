@@ -18,6 +18,7 @@
 */
 package org.eurekaj.manager.json;
 
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,8 +169,8 @@ public class BuildJsonObjectsUtil {
 
     private static JSONObject buildTreeNode(String guiPath, HashMap<String, JSONObject> nodesBuilt, String type) throws JSONException {
         JSONObject treeJson = new JSONObject();
-        treeJson.put("id", guiPath);
-        treeJson.put("name", guiPath);
+        treeJson.put("id", guiPath.replaceAll("\\%", "%25"));
+        treeJson.put("name", guiPath.replaceAll("\\%", "%25"));
         treeJson.put("parent", JSONObject.NULL);
         treeJson.put("nodeType", type);
         treeJson.put("children", new JSONArray());
@@ -183,7 +184,7 @@ public class BuildJsonObjectsUtil {
         	chartId = "_gs_:" + guiPath.substring(guiPath.lastIndexOf(":") + 1, guiPath.length());
         }
 
-        treeJson.put("chart", chartId);
+        treeJson.put("chart", chartId.replaceAll("\\%", "%25"));
 
         if (guiPath.contains(":")) {
             //Split GUI Path into name and parent
@@ -195,7 +196,7 @@ public class BuildJsonObjectsUtil {
             if (nodesBuilt != null && nodesBuilt.get(parentPath) != null) {
                 JSONObject parentNode = nodesBuilt.get(parentPath);
                 JSONArray childrenArray = parentNode.getJSONArray("children");
-                childrenArray.put(guiPath);
+                childrenArray.put(guiPath.replaceAll("\\%", "%25"));
             }
         }
 
